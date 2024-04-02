@@ -28,4 +28,23 @@ While the Main Focus in on the Pollen Exchange, Nepflow and the underlying Datam
 
 ## Current Datamodel
 The data model to be developed is still in the modeling phase, but the following data model is currently being worked on
-![First Draft](DataModel.png)
+![First Draft](https://github.com/Lavicola/Nepflow/blob/master/DataModel.png)
+
+### Species, Clone, User and Nepenthes
+- A species is a specific Nepenthes such as "villosa".
+- A species has "seedgrown" specimens on the one hand, but also clones that have a specific code (BE-3225).
+- A user breeds or collects specific Nepenthes, which can either represent a specific clone or be "seedgrown".
+
+&rarr; Through the "Species" node it is later possible to find out how many different, unique clones but also seedgrown specimens exist for them<br>
+&rarr; The "Nepenthes" node, like the species node, represents a specific species. By linking it to the clone, it is then possible to extract information about the exact species. In principle, a relation Clone <--GROWS-- User would also be possible, but this would mean that the "Species" node would also have to be read in order to read the specific species. Instead, the Nepenthes node stores the information of the species and clone redundantly, because in most cases it is necessary to look for partial graph of an user in order to see which Nepenthes he grows. In the future, however, this modeling will make it possible to find out how many users have a particular clone via the Clone -- Nepenthes edges.
+
+### Nepenthes, Offer
+Another piece of information to be analyzed is to find out how often a particular Nepenthes has flowered for a user. While modeling using nodes "flowering" "not flowering" etc. would lead to super nodes, the node "Offer" is introduced instead. Each edge between "Offer" and "Nepenthes" then represents the number of times a Nepenthes has flowered.
+
+
+### User, Trade, Nepenthes, Offer
+The "Trade" node is used to model a pollen exchange. This is related to the initiator and the user who must respond by accepting or rejecting it. Furthermore, both "offers" are referenced in order to guarantee that a request can only be made once for each "trade". The last node is the "Grex", which is created after a successful trade and pollination and references the parent plants and the breeders.
+
+
+
+
