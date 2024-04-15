@@ -1,7 +1,6 @@
 package com.nepflow.UserManagement.Model;
 
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -22,14 +21,11 @@ public class VerificationToken {
     @GeneratedValue
     private String id;
 
-    /** The token. */
     private String token;
 
-    /** The user. */
     @Relationship("VERIFIES")
     private User user;
 
-    /** The expiry date. */
     private Date expiryDate;
 
     /**

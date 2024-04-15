@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import java.util.Collection;
 
 @Data
+@Node
 public class Privilege {
     /** The id. */
     @Id

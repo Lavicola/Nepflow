@@ -64,8 +64,8 @@ public class UserTest {
     public void UserTest(@Autowired Neo4jClient client) {
         System.out.println("Test inserting Users using Repository");
         // Assign
-        User user = new User("test@aol.de", "hamata", "hello_world");
-        User user2 = new User("test@aol.de", "hamata", "hello_world");
+        User user = new User("test@aol.de", "hamata", "hello_world","");
+        User user2 = new User("test@aol.de", "hamata", "hello_world","");
         Optional<Long> result1;
         Optional<Long> result2;
         // Act
@@ -91,8 +91,8 @@ public class UserTest {
         Role analysisRole = new Role("analyst");
         Privilege privilege1 = new Privilege("Read");
         Privilege privilege2 = new Privilege("Analyze");
-        User user = new User("test@aol.de", "hamata", "hello_world");
-        User user2 = new User("test2@aol.de", "hamata", "hello_world");
+        User user = new User("test@aol.de", "hamata", "hello_world","");
+        User user2 = new User("test2@aol.de", "hamata", "hello_world","");
         standardRole.setPrivileges(Set.of(privilege1));
         analysisRole.setPrivileges(Set.of(privilege1, privilege2));
         user.setRoles(List.of(standardRole));

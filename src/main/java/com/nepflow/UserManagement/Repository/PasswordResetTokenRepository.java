@@ -5,9 +5,7 @@ import com.nepflow.UserManagement.Model.User;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
-import java.util.Date;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @EnableNeo4jRepositories
 public interface PasswordResetTokenRepository extends Neo4jRepository<PasswordResetToken,String> {
@@ -15,6 +13,8 @@ public interface PasswordResetTokenRepository extends Neo4jRepository<PasswordRe
     Optional<PasswordResetToken> findByToken(String token);
 
     Optional<PasswordResetToken> findByUser(User user);
+
+    Optional<PasswordResetToken> findByTokenAndUser(String token,User user);
 
     //Stream<PasswordResetToken> findAllByExpiryDateLessThan(Date now);
 

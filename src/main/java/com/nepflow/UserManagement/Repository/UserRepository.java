@@ -6,9 +6,11 @@ import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 
 import java.util.Optional;
 @EnableNeo4jRepositories
-public interface UserRepository extends Neo4jRepository<User,String> {
+public interface UserRepository extends Neo4jRepository<User,Long> {
+
 
     Optional<User> findUserByEmailOrUsername(String email, String username);
+    Optional<User> findByUsername(String username);
 
     void delete(User user);
 

@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  title: User Management
+  description: |-
+    Using the SpringUserFramework as Starting Point this Specification converts all described endpoints into a specification
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: localhost
+paths:
+  /user/register:
+    post:
+      summary: Register a new user
+      description: Endpoint to register a new user.
+      requestBody:
+        description: User registration data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User registered successfully.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '409':
+          description: Email or Username already taken
+          content:
+            text/plain:
+              schema:
+                type: string
+  /user/login:
+    post:
+      summary: Login with credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '201':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Email or Username already taken
+        '409':
+          description: Email or Username already taken
+          content:
+            text/plain:
+              schema:
+                type: string
+  /user/verify/{token}:
+    get:
+      tags:
+        - user
+      summary: Verify Useraccount.
+      parameters:
+        - name: token
+          in: path
+          required: true
+          description: Value of the generated Token
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User verified successfully.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '409':
+          description: Something went wrong
+          content:
+            text/plain:
+              schema:
+                type: string
+  /user/forgot-password:
+    post:
+      summary: Reset Password for an existing User
+      description: Endpoint to reset Password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPassword'
+      responses:
+        '200':
+          description: If Combination right an Email will be sent to restore the password.
+  /user/forgot-password/{token}:
+    get:
+      tags:
+        - user
+      summary: Verify the Password Change Request
+      parameters:
+        - name: token
+          in: path
+          required: true
+          description: Value of the generated Token
+          schema:
+            type: string
+      responses:
+        '200':
+          description: If Token was right you may change your password
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        contactInformation:
+          type: string
+    UserPassword:
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+        username:
+          type: string
+        password:
+          type: string

@@ -1,60 +1,67 @@
 package com.nepflow.UserManagement.Model;
 import lombok.Data;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.neo4j.core.schema.*;
 
+import java.util.Date;
 import java.util.List;
 
+
+// TODO Change Date to timestmap UTC
 @Data
 @Node
-//@EntityListeners(AuditingEntityListener.class)
 public class User {
 
-    public enum Provider {
-        LOCAL, FACEBOOK, GOOGLE, APPLE
-    }
 
     /** The id. */
     @Id
     @GeneratedValue
-    private String id;
+    private Long id;
 
+    @Property("username")
     private String username;
 
+    @Property
     private String email;
 
-    private Provider provider = Provider.LOCAL;
-
+    @Property
     private String password;
 
-    private boolean enabled;
+    @Property
+    private String contactInformation;
 
-    //private Date registrationDate;
+    @Property
+    private boolean isEnabled;
 
-    //private Date lastActivityDate;
+    @Property
+    @CreatedDate
+    private Date registrationDate;
 
+    @Property
     private int failedLoginAttempts;
 
+    @Property
     private boolean locked;
 
-    //@Temporal(TemporalType.TIMESTAMP)
-    //private Date lockedDate;
+    @Property
+    private Date lockedDate;
 
     @Relationship("BELONGS_TO")
     private List<Role> roles;
 
 
-    public User(String email,String username,String password){
+    public User(String email,String username,String password,String contactInformation){
+        super();
         this.email = email;
         this.username = username;
         this.password = password;
+        this.contactInformation = contactInformation;
     }
 
     public User() {
         super();
-        this.enabled = false;
+        this.isEnabled = false;
+        this.registrationDate = new Date();
     }
 
 
@@ -62,10 +69,6 @@ public class User {
         return this.roles;
     }
 
-//    @PreUpdate
- //   public void setLastActivityDate() {
-  //      setLastActivityDate(new Date());
-   // }
 
 }
 
