@@ -14,7 +14,7 @@ In addition to the wealth of websites offering special features for Nepenthes an
 ## Key Tasks and Questions Nepflow aims to answer
 While the Main Focus in on the Pollen Exchange, Nepflow and the underlying Datamodel aims to answer the following questions (the list is not exhaustive):
 1. what is the family tree of a Nepenthes
-2  How often does a particular Nepenthes flower on a particular person?
+2.  How often does a particular Nepenthes flower on a particular person?
 3. which Nepenthes are crossed particularly frequently?
 4. what is the crossing success rate of a user?
 5. are there Nepenthes that are sterile or rarely bear seeds?
@@ -26,24 +26,39 @@ While the Main Focus in on the Pollen Exchange, Nepflow and the underlying Datam
 - OpenAPI
 - Neo4j 
 
-## Current Datamodel
+## Current Datamodel(Overview)
 The data model to be developed is still in the modeling phase, but the following data model is currently being worked on
-![First Draft](https://github.com/Lavicola/Nepflow/blob/master/DataModel.png)
+![First Draft](DatamodelOverview)
 
 ### Species, Clone, User and Nepenthes
 - A species is a specific Nepenthes such as "villosa".
-- A species has "seedgrown" specimens on the one hand, but also clones that have a specific code (BE-3225).
-- A user breeds or collects specific Nepenthes, which can either represent a specific clone or be "seedgrown".
+- A species has a Clone which can either be "seedgrown", but also clones which are propagted in an a Laboratory(Producer) with a specific code (e.g. BE-3225)
+- A user grows specific Nepenthes, which can either represent a specific clone (once again either "seedgrown" or "propagted")
+&rarr; A missing "Producer" Edge means the Clone must be Seedgrown  
+&rarr; Through the "Species" node it is later possible to find out how many different, unique clones, but also seedgrown specimens exist for them  
+&rarr; A User grows "Nepenthes". Via traversing the "Clone" and the "Species" can be found. This prevents super Nodes in Clones and also enables a clearer Datamodel.
 
-&rarr; Through the "Species" node it is later possible to find out how many different, unique clones but also seedgrown specimens exist for them<br>
-&rarr; The "Nepenthes" node, like the species node, represents a specific species. By linking it to the clone, it is then possible to extract information about the exact species. In principle, a relation Clone <--GROWS-- User would also be possible, but this would mean that the "Species" node would also have to be read in order to read the specific species. Instead, the Nepenthes node stores the information of the species and clone redundantly, because in most cases it is necessary to look for partial graph of an user in order to see which Nepenthes he grows. In the future, however, this modeling will make it possible to find out how many users have a particular clone via the Clone -- Nepenthes edges.
-
-### Nepenthes, Offer
-Another piece of information to be analyzed is to find out how often a particular Nepenthes has flowered for a user. While modeling using nodes "flowering" "not flowering" etc. would lead to super nodes, the node "Offer" is introduced instead. Each edge between "Offer" and "Nepenthes" then represents the number of times a Nepenthes has flowered.
+### FlowerOffer
+Since the goal is to combine a PollenExchange with a familytree for Nepenthes a User must be able to "publish" a new "FlowerOffer". This FlowerOffer contains relationships to the User and the flowering Nepenthes he offers.  
+&rarr; Using the "flowers" relationship to a "FlowerOffer", the Question "how often did a specific Nepenthes bloom" answered, but also more general Questions.
 
 
-### User, Trade, Nepenthes, Offer
-The "Trade" node is used to model a pollen exchange. This is related to the initiator and the user who must respond by accepting or rejecting it. Furthermore, both "offers" are referenced in order to guarantee that a request can only be made once for each "trade". The last node is the "Grex", which is created after a successful trade and pollination and references the parent plants and the breeders.
+### Datamodel(Species)
+While the first Datamodel gives an Overview, it is missing the functinality for the PollenExchange. Therefore the following Datamodel shows an Example on how the Datamodel looks like after a Trade(PollenExchange), if two
+Users have the same Species.  
+![First Draft](DatamodelSpecies)  
+The Datamodel shows two different Clones of the same species. A User with an open FlowerOffer is able to initiate a Trade where he offers a specific FlowerOffer. For the start relationship the other Party has a "pending". Using this Information the User can then either "accept" or "refuse" the trade. If the Edge is "accepted" both Parties can confirm a new "Grex" once they received their seeds.
+&rarr; Using this Datamodel it is possible to prevent User creating duplicate Trades  
+&rarr; Using the "initiate" edge we can track the amount of Trades a specific User initiated.  
+&rarr; Using the "results_in" edge we can detect how many Trade actually resulted in a new Grex, which means we are able to track the amount of failures e.g. User did not send seed back or seeds were faulty.  
+&rarr; Using this Datamodel the offspring results in a new clone Node with a relation to the Species
+
+### Datamodel(Hybrid)
+In case of two different Species as Parents a Trade(PollenExchange) would almost look like the Species Datamodel with some minor changes.  
+![First Draft](DatamodelSpecies)  
+&rarr; The Grex contains "Hybrid" Nodes. These will be like the "Clones" Nodes, except that they don´t have a location.
+&rarr; The "Hybrid" Node might get an explicit realtion to the two users who created this Grex. Otherwise implicit traversing from father/mother -- Nepenthes -- User
+
 
 
 
