@@ -28,7 +28,7 @@ While the Main Focus in on the Pollen Exchange, Nepflow and the underlying Datam
 
 ## Current Datamodel(Overview)
 The data model to be developed is still in the modeling phase, but the following data model is currently being worked on
-![First Draft](DatamodelOverview)
+![First Draft](https://github.com/Lavicola/Nepflow/blob/master/DatamodelOverview.png)
 
 ### Species, Clone, User and Nepenthes
 - A species is a specific Nepenthes such as "villosa".
@@ -46,7 +46,7 @@ Since the goal is to combine a PollenExchange with a familytree for Nepenthes a 
 ### Datamodel(Species)
 While the first Datamodel gives an Overview, it is missing the functinality for the PollenExchange. Therefore the following Datamodel shows an Example on how the Datamodel looks like after a Trade(PollenExchange), if two
 Users have the same Species.  
-![First Draft](DatamodelSpecies)  
+![First Draft](https://github.com/Lavicola/Nepflow/blob/master/DatamodelSpecies%20.png)
 The Datamodel shows two different Clones of the same species. A User with an open FlowerOffer is able to initiate a Trade where he offers a specific FlowerOffer. For the start relationship the other Party has a "pending". Using this Information the User can then either "accept" or "refuse" the trade. If the Edge is "accepted" both Parties can confirm a new "Grex" once they received their seeds.
 &rarr; Using this Datamodel it is possible to prevent User creating duplicate Trades  
 &rarr; Using the "initiate" edge we can track the amount of Trades a specific User initiated.  
@@ -55,7 +55,7 @@ The Datamodel shows two different Clones of the same species. A User with an ope
 
 ### Datamodel(Hybrid)
 In case of two different Species as Parents a Trade(PollenExchange) would almost look like the Species Datamodel with some minor changes.  
-![First Draft](DatamodelSpecies)  
+![First Draft](https://github.com/Lavicola/Nepflow/blob/master/DatamodelHybrid.png)
 &rarr; The Grex contains "Hybrid" Nodes. These will be like the "Clones" Nodes, except that they don´t have a location.
 &rarr; The "Hybrid" Node might get an explicit realtion to the two users who created this Grex. Otherwise implicit traversing from father/mother -- Nepenthes -- User
 
