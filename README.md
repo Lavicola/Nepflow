@@ -26,6 +26,9 @@ While the Main Focus in on the Pollen Exchange, Nepflow and the underlying Datam
 - OpenAPI
 - Neo4j 
 
+## Wireframes Frontend
+For a rough overview of the different pages, see [Wireframes](https://app.moqups.com/Fi0hP5DnuFjdzxUPjcqYW32ByDKFwJDz/view/page/ae3f4a291), which are updated/improved/extended at irregular intervals.
+
 ## Current Datamodel(Overview)
 The data model to be developed is still in the modeling phase, but the following data model is currently being worked on
 ![First Draft](https://github.com/Lavicola/Nepflow/blob/master/DatamodelOverview.png)
