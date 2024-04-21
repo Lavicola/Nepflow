@@ -1,0 +1,26 @@
+spring:
+  profiles:
+    active: default
+  server:
+    port: 8080
+  data:
+    neo4j:
+      repositories:
+        type: imperative
+  neo4j:
+    uri: bolt://localhost:7687
+    authentication:
+      username: neo4j
+      password: password
+
+
+okta:
+  oauth2:
+    issuer: INSERT
+    client-id: INSERT
+    client-secret: INSERT
+
+jackson:
+  date-format: org.openapitools.RFC3339DateFormat
+  serialization:
+    WRITE_DATES_AS_TIMESTAMPS: false

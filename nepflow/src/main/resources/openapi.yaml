@@ -1,0 +1,254 @@
+openapi: 3.0.0
+tags:
+  - name: User
+    description: Operations to manage User
+info:
+  title: Nepflow User
+  description: |-
+    API for User Operations
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:4200/api
+paths:
+  /users:
+    post:
+      summary: Create an User in the Application with minimal sensitive Information.
+      tags:
+        - User
+
+      requestBody:
+        description: empty body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+
+      responses:
+        '201':
+          description: Profile created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        '204':
+          description: Error
+    put:
+      summary: Update Information of User
+      tags:
+        - User
+      requestBody:
+        description: User DTO with all changeable values
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDTO'
+      responses:
+        '201':
+          description: Profile changed successfully.
+        '204':
+          description: Error
+    get:
+      summary: get all Users
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        '404':
+          description: No Information found for User
+  /users/{username}/profile:
+    get:
+      summary: get Userinformation
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDTO'
+        '404':
+          description: No Information found for User
+  /user/{username}/nepenthes:
+    get:
+      summary: get Overview of Nepenthes a User grows
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NepenthesDTO'
+        '404':
+          description: No Information found for User
+
+  /user/{username}/nepenthes/{id}:
+    get:
+      summary: get details of a certain nepenthes a user grows
+      tags:
+        - User
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: name
+          schema:
+            type: string
+          required: true
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NepenthesDTO'
+        '404':
+          description: Nepenthes of User not found
+
+  /species:
+    get:
+      summary: get all Species
+      tags:
+        - nepenthes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeciesDTO'
+        '404':
+          description: No Species found
+  /species/{name}:
+    get:
+      summary: get a Species and their clones
+      tags:
+        - nepenthes
+      parameters:
+        - in: path
+          name: name
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeciesDTO'
+        '404':
+          description: Species not found
+  /species/{name}/{clone}:
+    get:
+      tags:
+        - nepenthes
+      summary: get s specific clone
+      parameters:
+        - in: path
+          name: name
+          schema:
+            type: string
+          required: true
+
+        - in: path
+          name: clone
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpeciesDTO'
+        '404':
+          description: Clone does not exist
+
+
+components:
+  schemas:
+    SpeciesDTO:
+      type: object
+      properties:
+        species:
+          type: string
+        clones:
+          type: array
+          items:
+            type: string
+        sex:
+          type: string
+        origin:
+          type: string
+        producer:
+          type: string
+        flowers:
+          description: amount of times the plant flowered
+          type: string
+        image:
+          description: amount of times the plant flowered
+          type: string
+
+
+
+    NepenthesDTO:
+      type: object
+      properties:
+        species:
+          type: string
+        clone:
+          type: string
+        sex:
+          type: string
+        origin:
+          type: string
+        producer:
+          type: string
+        flowers:
+          description: amount of times the plant flowered
+          type: string
+        image:
+          description: amount of times the plant flowered
+          type: string
+
+    UserDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        contactInformation:
+          type: string
+        region:
+          type: string
+          description: EU/USA
+
