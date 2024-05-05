@@ -26,7 +26,6 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
-
 	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'com.okta.spring', name: 'okta-spring-boot-starter', version: '3.0.6'
@@ -34,7 +33,6 @@ dependencies {
 	implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.6'
 
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.0'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '3.2.0'
 	runtimeOnly group: 'com.h2database', name: 'h2', version: '2.2.220'
 
 
@@ -48,25 +46,29 @@ dependencies {
 		exclude group: "commons-logging"
 	}
 
+	implementation group: 'com.google.guava', name: 'guava', version: '33.1.0-jre'
+
 	annotationProcessor 'org.projectlombok:lombok'
+
+
 }
 
-task generateOpenAPI(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
 	generatorName.set("spring")
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/OpenAPI/UserOpenAPI.yaml")
+	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
 	def openapi_spec = openapiSpecFile.absolutePath
-
 	configOptions.set([
 			delegatePattern           : "true",
 			useJakartaEe			  : "true",
 			globalProperty            : "apis",
-			generateApiDocumentation  : "false",
+			generateApiDocumentation  : "true",
 			generateModelTests        : "false",
 			generateModelDocumentation: "false",
 			generateApiTests          : "false",
 			models                    : "false",
 			generateModels            : "false",
-			modelPackage              : "com.nepflow.Dto",
+			useTags					  : "true",
+			modelPackage              : "com.nepflow.NepenthesManagement.Dto",
 	])
 	typeMappings = ['string+date-time': 'LocalDateTime']
 	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
@@ -74,10 +76,40 @@ task generateOpenAPI(type: org.openapitools.generator.gradle.plugin.tasks.Genera
 	]
 	inputSpec.set(openapi_spec)
 	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
-	apiPackage.set("com.nepflow.Controller")
+	apiPackage.set("com.nepflow.NepenthesManagement.Controller")
 	invokerPackage.set("")
 
 }
+
+
+task generateOpenAPIUserManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	generatorName.set("spring")
+	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/UserManagement/openAPI/UserManagementOpenAPI.yaml")
+	def openapi_spec = openapiSpecFile.absolutePath
+	configOptions.set([
+			delegatePattern           : "true",
+			useJakartaEe			  : "true",
+			globalProperty            : "apis",
+			generateApiDocumentation  : "true",
+			generateModelTests        : "false",
+			generateModelDocumentation: "false",
+			generateApiTests          : "false",
+			models                    : "false",
+			generateModels            : "false",
+			useTags					  : "true",
+			modelPackage              : "com.nepflow.UserManagement.Dto",
+	])
+	typeMappings = ['string+date-time': 'LocalDateTime']
+	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
+					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+	]
+	inputSpec.set(openapi_spec)
+	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+	apiPackage.set("com.nepflow.UserManagement.Controller")
+	invokerPackage.set("")
+
+}
+
 
 
 tasks.named('test') {

@@ -1,5 +1,3 @@
-
-
 <div *ngIf="user && user.username; else notLoggedIn">
   <h2>Hello User {{ user.username }}</h2>
 </div>
@@ -19,19 +17,19 @@
 
   <div>
     <mat-form-field>
-      <mat-label>contactInformation:</mat-label>
+      <mat-label>Contact Information:</mat-label>
       <input matInput formControlName="contactInformation">
     </mat-form-field>
   </div>
 
   <mat-form-field>
-    <mat-label>Region</mat-label>
-    <select matNativeControl required>
-      <option value="eu">Europe</option>
-      <option value="usa">USA</option>
-    </select>
+    <mat-select formControlName="country" placeholder="Select Country">
+      <mat-option *ngFor="let country of combinedList" [value]="country.code">
+        {{ country.name }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 
-
-
+  <button type="submit" mat-raised-button color="primary">Submit</button>
 </form>
+

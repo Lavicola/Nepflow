@@ -1,0 +1,13 @@
+<mat-form-field class="example-full-width">
+  <mat-label>Nepenthes</mat-label>
+  <input type="text"
+         placeholder=""
+         matInput
+         [formControl]="nepenthesControl"
+         [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let name of filteredOptions | async" [value]="name" (click)="selectedNepenthes($event, name)">
+      {{ name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

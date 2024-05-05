@@ -4,7 +4,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
-import { UserService } from './services/user.service';
+import { UsermanagementService } from './services/usermanagement.service';
 
 /**
  * Module that provides all services and configuration.
@@ -14,7 +14,7 @@ import { UserService } from './services/user.service';
   exports: [],
   declarations: [],
   providers: [
-    UserService,
+    UsermanagementService,
     ApiConfiguration
   ],
 })
@@ -31,7 +31,7 @@ export class ApiModule {
     }
   }
 
-  constructor( 
+  constructor(
     @Optional() @SkipSelf() parentModule: ApiModule,
     @Optional() http: HttpClient
   ) {

@@ -9,6 +9,11 @@ import {RouterModule, RouterOutlet} from "@angular/router";
 })
 export class AppComponent {
   title = 'nepflowFrontend';
+  newNepenthesRoute: string = "nepenthes/add";
+  newCloneRoute: string = "nepenthes/clone/add";
+  userAddCloneToProfile: string = "user/nepenthes/add";
   profileRoute: string = "user/profile";
   myPlantsRoute: string = "user/profile/nepenthes";
+  nepenthesAdd: string = "user/nepenthes/add";
+
 }

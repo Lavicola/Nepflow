@@ -1,254 +1,317 @@
 openapi: 3.0.0
-tags:
-  - name: User
-    description: Operations to manage User
 info:
-  title: Nepflow User
-  description: |-
-    API for User Operations
+  description: API for Nepenthes Operations
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Nepflow Nepenthes
   version: 1.0.0
 servers:
-  - url: http://localhost:4200/api
+- url: http://localhost:4200/api
+tags:
+- description: Operations to manage Nepenthes
+  name: NepenthesManagement
 paths:
-  /users:
+  /nepenthes:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/NepenthesDTO'
+                type: array
+          description: OK
+        "404":
+          description: No nepenthes found
+      summary: get all nepenthes
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
     post:
-      summary: Create an User in the Application with minimal sensitive Information.
-      tags:
-        - User
-
       requestBody:
-        description: empty body
-        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserDTO'
-
-      responses:
-        '201':
-          description: Profile created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDTO'
-        '204':
-          description: Error
-    put:
-      summary: Update Information of User
-      tags:
-        - User
-      requestBody:
-        description: User DTO with all changeable values
+              $ref: '#/components/schemas/NepenthesDTO'
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserDTO'
       responses:
-        '201':
-          description: Profile changed successfully.
-        '204':
-          description: Error
-    get:
-      summary: get all Users
-      tags:
-        - User
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDTO'
-        '404':
-          description: No Information found for User
-  /users/{username}/profile:
-    get:
-      summary: get Userinformation
-      tags:
-        - User
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDTO'
-        '404':
-          description: No Information found for User
-  /user/{username}/nepenthes:
-    get:
-      summary: get Overview of Nepenthes a User grows
-      tags:
-        - User
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: OK
+        "200":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NepenthesDTO'
-        '404':
-          description: No Information found for User
-
-  /user/{username}/nepenthes/{id}:
-    get:
-      summary: get details of a certain nepenthes a user grows
+          description: OK
+        "404":
+          description: No nepenthes found
+      summary: Create new nepenthes
       tags:
-        - User
+      - NepenthesManagement
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+  /nepenthes/{name}:
+    get:
       parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-        - in: path
-          name: name
-          schema:
-            type: string
-          required: true
-
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
       responses:
-        '200':
-          description: OK
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NepenthesDTO'
-        '404':
-          description: Nepenthes of User not found
-
-  /species:
-    get:
-      summary: get all Species
-      tags:
-        - nepenthes
-      responses:
-        '200':
+                $ref: '#/components/schemas/NepenthesClonesDTO'
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SpeciesDTO'
-        '404':
-          description: No Species found
-  /species/{name}:
-    get:
-      summary: get a Species and their clones
+        "404":
+          description: nepenthes not found
+      summary: get a nepenthes and their clones
       tags:
-        - nepenthes
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+  /nepenthes/{name}/{clone}:
+    get:
       parameters:
-        - in: path
-          name: name
-          schema:
-            type: string
-          required: true
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clone
+        required: true
+        schema:
+          type: string
+        style: simple
       responses:
-        '200':
-          description: OK
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpeciesDTO'
-        '404':
-          description: Species not found
-  /species/{name}/{clone}:
-    get:
-      tags:
-        - nepenthes
-      summary: get s specific clone
-      parameters:
-        - in: path
-          name: name
-          schema:
-            type: string
-          required: true
-
-        - in: path
-          name: clone
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
+                $ref: '#/components/schemas/_nepenthes__name___clone__get_200_response'
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SpeciesDTO'
-        '404':
+        "404":
           description: Clone does not exist
-
-
+      summary: get s specific clone
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+  /clone/iv:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IVCloneDTO'
+        description: Clone DTO with new values
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IVCloneDTO'
+          description: OK
+        "404":
+          description: No nepenthes found
+      summary: add a new iv clone of a nepenthes
+      tags:
+      - NepenthesManagement
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IVCloneDTO'
+        description: Clone DTO with new values
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IVCloneDTO'
+          description: OK
+        "404":
+          description: No nepenthes found
+      summary: change information of an existing clone
+      tags:
+      - NepenthesManagement
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+  /clone/ic:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneDTO'
+        description: Clone DTO with new values
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloneDTO'
+          description: OK
+        "404":
+          description: No nepenthes found
+      summary: add a new ic clone of a nepenthes
+      tags:
+      - NepenthesManagement
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+    put:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneDTO'
+        description: Clone DTO with new values
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloneDTO'
+          description: OK
+        "404":
+          description: No nepenthes found
+      summary: change information of an existing clone
+      tags:
+      - NepenthesManagement
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+  /mountain:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MountainDTO'
+        description: MountainDTO with all necessary Attributes
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MountainDTO'
+          description: OK
+        "500":
+          description: Internal Error
+      summary: add a new Mountain
+      tags:
+      - NepenthesManagement
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
+  /producer:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProducerDTO'
+        description: DTO with all necessary Attributes
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProducerDTO'
+          description: OK
+        "500":
+          description: Internal Error
+      summary: add a new Producer
+      tags:
+      - NepenthesManagement
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
 components:
   schemas:
-    SpeciesDTO:
-      type: object
+    NepenthesDTO:
+      type: string
+    MountainDTO:
+      type: string
+    ProducerDTO:
+      type: string
+    CloneDTO:
+      example:
+        nepenthes: nepenthes
+        mountain: mountain
+        sex: sex
+        id: id
       properties:
-        species:
+        id:
+          type: string
+        nepenthes:
+          type: string
+        mountain:
+          type: string
+        sex:
+          type: string
+      type: object
+    IVCloneDTO:
+      allOf:
+      - $ref: '#/components/schemas/CloneDTO'
+      - properties:
+          producer:
+            $ref: '#/components/schemas/ProducerDTO'
+        required:
+        - producer
+        type: object
+    NepenthesClonesDTO:
+      example:
+        nepenthes: nepenthes
+        clones:
+        - null
+        - null
+      properties:
+        nepenthes:
           type: string
         clones:
-          type: array
           items:
-            type: string
-        sex:
-          type: string
-        origin:
-          type: string
-        producer:
-          type: string
-        flowers:
-          description: amount of times the plant flowered
-          type: string
-        image:
-          description: amount of times the plant flowered
-          type: string
-
-
-
-    NepenthesDTO:
+            $ref: '#/components/schemas/NepenthesClonesDTO_clones_inner'
+          type: array
       type: object
-      properties:
-        species:
-          type: string
-        clone:
-          type: string
-        sex:
-          type: string
-        origin:
-          type: string
-        producer:
-          type: string
-        flowers:
-          description: amount of times the plant flowered
-          type: string
-        image:
-          description: amount of times the plant flowered
-          type: string
-
-    UserDTO:
-      type: object
-      properties:
-        username:
-          type: string
-        contactInformation:
-          type: string
-        region:
-          type: string
-          description: EU/USA
-
+    _nepenthes__name___clone__get_200_response:
+      oneOf:
+      - $ref: '#/components/schemas/CloneDTO'
+      - $ref: '#/components/schemas/IVCloneDTO'
+      x-one-of-name: NepenthesNameCloneGet200Response
+    NepenthesClonesDTO_clones_inner:
+      anyOf:
+      - $ref: '#/components/schemas/CloneDTO'
+      - $ref: '#/components/schemas/IVCloneDTO'
