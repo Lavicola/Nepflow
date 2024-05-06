@@ -3,10 +3,6 @@ spring:
     active: default
   server:
     port: 8080
-  data:
-    neo4j:
-      repositories:
-        type: imperative
   neo4j:
     uri: bolt://localhost:7687
     authentication:

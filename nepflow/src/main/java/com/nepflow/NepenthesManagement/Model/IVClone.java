@@ -12,11 +12,11 @@ public class IVClone extends Clone{
         super(cloneId, nepenthes);
     }
 
-
     @Setter
     @Relationship("PROPAGATED_BY")
     Producer producer;
 
+    /*
     public boolean equals(Object o) {
         super.equals(o);
         if (o == this) {
@@ -29,5 +29,5 @@ public class IVClone extends Clone{
 
         return Objects.equals(ivClone.cloneId, this.cloneId) && this.nepenthes.equals(ivClone.nepenthes);
     }
-
+*/
 }

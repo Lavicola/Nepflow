@@ -10,8 +10,7 @@ public class ICClone extends Clone{
         super(cloneId, nepenthes);
     }
 
-
-
+/*
     public boolean equals(Object o) {
         super.equals(o);
         if (o == this) {
@@ -25,7 +24,7 @@ public class ICClone extends Clone{
         return Objects.equals(ICClone.cloneId, this.cloneId) && this.nepenthes.equals(ICClone.nepenthes);
     }
 
-
+*/
 
 
 }

@@ -31,5 +31,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return authentication.getName();
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        return this.userRepository.findUserByUsername(username);
+    }
+
 
 }

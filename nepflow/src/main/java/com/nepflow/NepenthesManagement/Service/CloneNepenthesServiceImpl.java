@@ -1,8 +1,6 @@
 package com.nepflow.NepenthesManagement.Service;
 
 
-import com.nepflow.NepenthesManagement.Model.Clone;
-
 import com.nepflow.NepenthesManagement.Model.IVClone;
 import com.nepflow.NepenthesManagement.Model.ICClone;
 import com.nepflow.NepenthesManagement.Model.Nepenthes;
@@ -11,11 +9,12 @@ import com.nepflow.NepenthesManagement.Repository.NepenthesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class CloneNepenthesServiceImpl implements CloneNepenthesService {
 
+
+    @Autowired
+    NepenthesAndCloneRetrivalService nepenthesAndCloneRetrivalService;
 
     @Autowired
     CloneRepository cloneRepository;
@@ -24,12 +23,9 @@ public class CloneNepenthesServiceImpl implements CloneNepenthesService {
     NepenthesRepository nepenthesRepository;
 
 
-
-
-
     @Override
     public boolean preconditionFulfilledClone(String cloneId, String nepenthesName) {
-        return !this.cloneRepository.existsByCloneIdAndNepenthesName(cloneId,nepenthesName);
+        return !this.cloneRepository.existsCloneByCloneIdAndNepenthesName(cloneId,nepenthesName);
     }
 
 
@@ -38,7 +34,7 @@ public class CloneNepenthesServiceImpl implements CloneNepenthesService {
         if(!this.preconditionFulfilledClone(cloneId,nepenthesName)){
             return false;
         }
-        Nepenthes nepenthes = this.getNepenthes(nepenthesName);
+        Nepenthes nepenthes = this.nepenthesAndCloneRetrivalService.getNepenthes(nepenthesName);
         ICClone ICClone = new ICClone(cloneId,nepenthes);
         this.cloneRepository.save(ICClone);
         return true;
@@ -46,17 +42,19 @@ public class CloneNepenthesServiceImpl implements CloneNepenthesService {
 
     @Override
     public boolean createNewNepenthesIVClone(String cloneId, String nepenthesName) {
-        Nepenthes nepenthes = this.getNepenthes(nepenthesName);
+        if(!this.preconditionFulfilledClone(cloneId,nepenthesName)){
+            return false;
+        }
+        Nepenthes nepenthes = this.nepenthesAndCloneRetrivalService.getNepenthes(nepenthesName);
         IVClone ivClone = new IVClone(cloneId,nepenthes);
         this.cloneRepository.save(ivClone);
 
-
-        return false;
+        return true;
     }
 
     @Override
     public boolean createNewNepenthes(String name) {
-        if (this.nepenthesExists(name)) {
+        if (this.nepenthesAndCloneRetrivalService.nepenthesExists(name)) {
             return false;
         }
 
@@ -66,35 +64,5 @@ public class CloneNepenthesServiceImpl implements CloneNepenthesService {
 
 
 
-    @Override
-    public Nepenthes getNepenthes(String name) {
-        return this.nepenthesRepository.findNepenthesByName(name);
-    }
 
-    @Override
-    public Clone getNepenthesClone(String cloneId, String nepenthesName) {
-        return this.cloneRepository.findClonesByCloneIdAndNepenthesName(cloneId, nepenthesName);
-    }
-
-    @Override
-    public List<Nepenthes> getNepenthes() {
-        return this.nepenthesRepository.findAll();
-    }
-
-    @Override
-    public List<Clone> getClonesOfNepenthes(String name) {
-        return this.cloneRepository.findClonesByNepenthesName(name);
-    }
-
-
-    @Override
-    public boolean cloneExists(String cloneId, String nepenthesName) {
-        return this.cloneRepository.existsByCloneIdAndNepenthesName(cloneId, nepenthesName);
-
-    }
-
-    @Override
-    public boolean nepenthesExists(String nepenthesName) {
-        return this.nepenthesRepository.existsByName(nepenthesName);
-    }
 }

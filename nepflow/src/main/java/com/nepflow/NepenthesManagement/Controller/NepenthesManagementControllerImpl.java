@@ -7,6 +7,8 @@ import com.nepflow.NepenthesManagement.Model.IVClone;
 import com.nepflow.NepenthesManagement.Model.Nepenthes;
 import com.nepflow.NepenthesManagement.Service.CloneMetadataService;
 import com.nepflow.NepenthesManagement.Service.CloneNepenthesService;
+import com.nepflow.NepenthesManagement.Service.NepenthesAndCloneRetrivalService;
+import com.nepflow.NepenthesManagement.Service.NepenthesAndCloneRetrivalServiceImpl;
 import com.nepflow.UserManagement.Service.UserManagementService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +30,11 @@ public class NepenthesManagementControllerImpl implements NepenthesManagementApi
     CloneNepenthesService cloneNepenthesService;
 
     @Autowired
+    NepenthesAndCloneRetrivalService nepenthesAndCloneRetrivalService;
+
+    @Autowired
     ModelMapper modelMapper;
 
-/*
-    public ResponseEntity<CloneDTO> clonePost() {
-        return ResponseEntity.ok(null);
-    }
-
-
-    public ResponseEntity<CloneDTO> clonePut(CloneDTO cloneDTO) {
-
-        return ResponseEntity.ok(null);
-    }
-*/
 
 
     public ResponseEntity<IVCloneDTO> cloneIvPost(IVCloneDTO ivCloneDTO) {
@@ -81,7 +75,7 @@ public class NepenthesManagementControllerImpl implements NepenthesManagementApi
     }
 
     public ResponseEntity<List<String>> nepenthesGet() {
-        List<String> names = this.cloneNepenthesService.getNepenthes()
+        List<String> names = this.nepenthesAndCloneRetrivalService.getNepenthes()
                 .stream()
                 .map(Nepenthes::getName)
                 .collect(Collectors.toList());
@@ -97,21 +91,23 @@ public class NepenthesManagementControllerImpl implements NepenthesManagementApi
 
     public ResponseEntity<NepenthesNameCloneGet200Response> nepenthesNameCloneGet(String name,
                                                                                   String clone) {
-        Clone cloneNepenthes = this.cloneNepenthesService.getNepenthesClone(clone, name);
+        Clone cloneNepenthes = this.nepenthesAndCloneRetrivalService.getNepenthesClone(clone, name);
 
 
         return ResponseEntity.ok(this.modelMapper.map(cloneNepenthes, CloneDTO.class));
     }
 
     public ResponseEntity<NepenthesClonesDTO> nepenthesNameGet(String name) {
-        List<Clone> clones = this.cloneNepenthesService.getClonesOfNepenthes(name);
+        List<Clone> clones = this.nepenthesAndCloneRetrivalService.getClonesOfNepenthes(name);
         NepenthesClonesDTO nepenthesClonesDTO = new NepenthesClonesDTO();
         nepenthesClonesDTO.setNepenthes(name);
         nepenthesClonesDTO.clones(
-                clones.stream().map(clone ->
-                        this.modelMapper.map(clone, NepenthesClonesDTOClonesInner.class)
-                ).collect(Collectors.toList())
-        );
+                clones.stream().map(clone -> {
+                    NepenthesClonesDTOClonesInner dtoClone = new NepenthesClonesDTOClonesInner();
+                    dtoClone.setId(clone.getCloneId());
+                    dtoClone.setNepenthes(name);
+                    return dtoClone;
+                }).collect(Collectors.toList()));
 
         return ResponseEntity.ok(nepenthesClonesDTO);
     }

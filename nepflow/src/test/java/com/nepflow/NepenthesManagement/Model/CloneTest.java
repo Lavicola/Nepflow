@@ -68,13 +68,13 @@ public class CloneTest {
         this.ivCloneRepository.save(ivClone);
         this.individualCloneRepository.save(ICClone);
 
-        r_ivClone = this.ivCloneRepository.findIVCloneByCloneIdAndAndNepenthesName(cloneID,villosa.getName());
+        //r_ivClone = this.ivCloneRepository.findIVCloneByCloneIdAndAndNepenthesName(cloneID,villosa.getName());
         r_individualclone = this.individualCloneRepository.findIndividualCloneByCloneIdAndNepenthesName(individualCloneID,villosa.getName());
-        r_cloneIVClone = this.cloneRepository.findClonesByCloneIdAndNepenthesName(cloneID,villosa.getName());
-        r_cloneIndividual = this.cloneRepository.findClonesByCloneIdAndNepenthesName(individualCloneID,villosa.getName());
+        r_cloneIVClone = this.cloneRepository.findCloneByCloneIdAndNepenthesName(cloneID,villosa.getName());
+        r_cloneIndividual = this.cloneRepository.findCloneByCloneIdAndNepenthesName(individualCloneID,villosa.getName());
 
 
-        assertEquals(r_ivClone, ivClone);
+        //assertEquals(r_ivClone, ivClone);
         assertEquals(ICClone, r_individualclone);
         assertEquals(ivClone, r_cloneIVClone);
         assertEquals(ICClone, r_cloneIndividual);

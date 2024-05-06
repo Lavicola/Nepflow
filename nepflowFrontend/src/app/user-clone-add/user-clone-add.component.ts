@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import {CloneComponent} from "../clone/clone.component";
-import {NepenthesComponent} from "../nepenthes/nepenthes.component";
-import {DropdownSharedSelectedNepenthesNameService} from "../ComponentService/DropdownSharedSelectedNepenthesNameService";
-import {NepenthesManagementService} from "../services/nepenthes-management.service";
+import {Component} from '@angular/core';
+import {
+  DropdownSharedSelectedNepenthesNameService
+} from "../ComponentService/DropdownSharedSelectedNepenthesNameService";
 import {DropdownSharedSelectedCloneIdService} from "../ComponentService/DropdownSharedSelectedCloneIdService";
+import {UserCloneDto} from "../models/user-clone-dto";
+import {GrowlistmanagementService} from "../services/growlistmanagement.service";
 
 @Component({
   selector: 'app-user-clone-add',
@@ -14,9 +15,10 @@ export class UserCloneAddComponent {
 
   selectedNepenthes: string = "";
   selectedClone: string = "";
+  clone: UserCloneDto = {};
 
 
-  constructor(public nepenthesService: NepenthesManagementService,
+  constructor(public growlistService: GrowlistmanagementService,
               private dropdownServiceNepenthes: DropdownSharedSelectedNepenthesNameService,
               private dropdownServiceClones: DropdownSharedSelectedCloneIdService
   ) {
@@ -31,7 +33,14 @@ export class UserCloneAddComponent {
   }
 
   addNepenthesToCollection() {
-    console.log(this.selectedClone)
-    console.log(this.selectedNepenthes)
+    this.clone = {
+      cloneId: this.selectedClone,
+      nepenthesName: this.selectedNepenthes,
+    }
+    this.growlistService.userNepenthesPost({body: this.clone}).subscribe({
+      next: (userCloneDTO) => this.clone = userCloneDTO,
+      error: (error) => console.log(error)
+    })
+
   }
 }

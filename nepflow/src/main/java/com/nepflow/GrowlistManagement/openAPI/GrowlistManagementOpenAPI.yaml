@@ -1,0 +1,94 @@
+openapi: 3.0.0
+tags:
+  - name: Growlistmanagement
+    description: Operations to add/remove Plants to the Useraccount
+info:
+  title: Nepflow User
+  description: |-
+    API for Growlist Operations
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:4200/api
+paths:
+  /user/nepenthes:
+    get:
+      summary: get all nepenthes of currently logged in User
+      tags:
+        - Growlistmanagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserCloneDTO'
+        '404':
+          description: User not found
+    post:
+      summary: Add Clone of a Nepenthes to currently logged in User
+      tags:
+        - Growlistmanagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCloneDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCloneDTO'
+        '500':
+          description: Error, could not add Nepenthes Clone to user
+
+  /{user}/nepenthes:
+    get:
+      summary: get Nepenthes of a specific User
+      tags:
+        - Growlistmanagement
+      parameters:
+        - in: path
+          name: user
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserCloneDTO'
+
+        '404':
+          description: Error, User not found
+
+
+
+components:
+  schemas:
+    UserCloneDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        cloneId:
+          type: string
+        nepenthesName:
+          type: string
+        user:
+          description: Name of the User who grows this specific Clone
+          type: string
+
+
+

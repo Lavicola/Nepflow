@@ -2,6 +2,7 @@ package com.nepflow.NepenthesManagement.Model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.*;
 
 import java.util.Objects;
@@ -11,11 +12,8 @@ import java.util.Objects;
 @Getter
 public abstract class Clone {
 
-    @Id
-    @GeneratedValue
-    private String uuid;
 
-    @Relationship("IDENTICALLY_TO")
+    @Relationship(value = "SPECIES_OF",direction = Relationship.Direction.OUTGOING)
     Nepenthes nepenthes;
 
     @Setter
@@ -27,7 +25,12 @@ public abstract class Clone {
     Sex sex;
 
     @Property
+    @Id
     String cloneId;
+
+    @Version
+    private Long version;
+
 
     public Clone(String cloneId, Nepenthes nepenthes) {
         this.cloneId = cloneId;
@@ -35,6 +38,7 @@ public abstract class Clone {
     }
 
 
+/*
     public boolean equals(Object o) {
         assertNotNull(o);
         assertIsExpectedObject(o);
@@ -57,4 +61,5 @@ public abstract class Clone {
     public int hashCode() {
         return Objects.hash(this.getCloneId(), this.getNepenthes().getName());
     }
+    */
 }

@@ -15,14 +15,4 @@ public interface CloneNepenthesService {
     public boolean preconditionFulfilledClone(String cloneId, String nepenthesName);
 
 
-    public Clone getNepenthesClone(String cloneId, String nepenthesName);
-
-    public boolean cloneExists(String cloneId, String nepenthesName);
-    public boolean nepenthesExists(String nepenthesName);
-
-    public Nepenthes getNepenthes(String name);
-    public List<Nepenthes> getNepenthes();
-    public List<Clone> getClonesOfNepenthes(String name);
-
-
 }

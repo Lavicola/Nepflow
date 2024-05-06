@@ -110,6 +110,33 @@ task generateOpenAPIUserManagement(type: org.openapitools.generator.gradle.plugi
 
 }
 
+task generateOpenAPIGrowlistManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	generatorName.set("spring")
+	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/GrowlistManagement/openAPI/GrowlistManagementOpenAPI.yaml")
+	def openapi_spec = openapiSpecFile.absolutePath
+	configOptions.set([
+			delegatePattern           : "true",
+			useJakartaEe			  : "true",
+			globalProperty            : "apis",
+			generateApiDocumentation  : "true",
+			generateModelTests        : "false",
+			generateModelDocumentation: "false",
+			generateApiTests          : "false",
+			models                    : "false",
+			generateModels            : "false",
+			useTags					  : "true",
+			modelPackage              : "com.nepflow.GrowlistManagement.Dto",
+	])
+	typeMappings = ['string+date-time': 'LocalDateTime']
+	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
+					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+	]
+	inputSpec.set(openapi_spec)
+	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+	apiPackage.set("com.nepflow.GrowlistManagement.Controller")
+	invokerPackage.set("")
+
+}
 
 
 tasks.named('test') {
