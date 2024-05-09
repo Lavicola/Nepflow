@@ -63,6 +63,32 @@ In case of two different Species as Parents a Trade(PollenExchange) would almost
 &rarr; The "Hybrid" Node might get an explicit realtion to the two users who created this Grex. Otherwise implicit traversing from father/mother -- Nepenthes -- User
 
 
+### Class Diagram Clones
+In the Domain "Nepenthes" there are several different types of Clones we must introduce in order to get a full Picture of the Domain:
+- A Clone itself is an abstract Type since it is missing the context.
+- A "hybrid" consists of at two different types of "SpeciesClones".
+- A "Multi-Hybrid" consists of at least three different species which also includes F2 hybrids e.g (villosa x hamata) x villosa
+- Both "hybrid" and "Multi-Hybrid" contain a mother and father part as property
+- A IVClone and a ICClone only differs in the fact that a IVClone is propagated in a laboratory (therefore has a Producer)
+&rarr; Using a Graphdatabase allows us to restrict the Search space using labels
+![Clones](https://github.com/Lavicola/Nepflow/blob/master/ClassDiagramClones.png)
+
+
+### Rough Overview of Components
+![components](https://github.com/Lavicola/Nepflow/blob/master/MainComponents.png)
+I am Fan of modularity and therefore I always try to realize this.
+In Nepflow I am thinking roughly of four different Components:
+- UserManagement
+- NepenthesManagement, which is used in order to add new Clones/Nepenthes to the Application
+- GrowListManagement, which realized the functionallity to add different types of Clones to a specific User and therefore needs to access information of both Components
+- PollenExhcnange, which will realize the functionallity for Trades. This Components needs to access GrowlistManagement and UserManagement.
+
+### Example of GrowlistManagement as a Graph
+![components](https://github.com/Lavicola/Nepflow/blob/master/exampleGrowlist.PNG)
+The yellow Nodes represent an instance of a specific Clone.
+
+
+
 
 
 
