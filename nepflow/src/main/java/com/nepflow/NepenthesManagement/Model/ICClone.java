@@ -1,30 +1,36 @@
 package com.nepflow.NepenthesManagement.Model;
 
+import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.Objects;
 
+
+/**
+ * An ICClone is a clone which is Unique and does not get propagated by a Laboratory
+ *
+ */
+
+
 @Node
-public class ICClone extends Clone{
-    public ICClone(String cloneId, Nepenthes nepenthes) {
-        super(cloneId, nepenthes);
+public class ICClone extends SpeciesClone {
+
+
+    public ICClone(String name,String cloneId, Nepenthes nepenthes) {
+        super(name,cloneId, nepenthes);
+        this.cloneId = cloneId;
+        this.nepenthes = nepenthes;
     }
 
-/*
-    public boolean equals(Object o) {
-        super.equals(o);
-        if (o == this) {
-            return true;
-        }
-        if(this.getClass() != o.getClass()){
-            return false;
-        }
-        ICClone ICClone = (ICClone) o;
-
-        return Objects.equals(ICClone.cloneId, this.cloneId) && this.nepenthes.equals(ICClone.nepenthes);
+    @Override
+    IVClone asIVClone() {
+        return new IVClone(this.name,this.cloneId, this.nepenthes);
     }
 
-*/
-
+    @Override
+    ICClone asICClone() {
+        return this;
+    }
 
 }

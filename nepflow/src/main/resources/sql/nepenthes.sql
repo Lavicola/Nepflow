@@ -1,7 +1,11 @@
 abalata
 abgracilis
+mindanaoensis
+sp. #1
+sp. #2
 adnata
 adrianii
+rowanae
 aenigma
 alata
 alba
@@ -31,6 +35,7 @@ bracteosa
 burbidgeae
 burkei
 cabanae
+carunculata
 campanulata
 ceciliae
 chang
@@ -57,7 +62,9 @@ extincta
 eymae
 faizaliana
 flava
+globosa
 fractiflexa
+fallax
 fusca
 gantungensis
 glabrata
@@ -79,6 +86,8 @@ inermis
 insignis
 izumiae
 jacquelineae
+spec. Pseudoklossii
+spec. "Tawarensis"
 jamban
 junghuhnii
 justinae
@@ -92,6 +101,7 @@ krabiensis
 lamii
 latiffiana
 lavicola
+spec Anipahan
 leonardoi
 leyte
 lingulata
@@ -117,11 +127,14 @@ mindanacensis
 minima
 mira
 mirabilis
+mirabilis var. echinostoma
+mirabilis var. globosa
 misoolensis
 mollis
 monticola
 muluensis
 murudensis
+oblanceolata
 naga
 nebularum
 negros
@@ -197,3 +210,4 @@ weda
 xiphioides
 zakriana
 zygon
+sp. Papua

@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * NepenthesClonesDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-04T16:31:16.635966249+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-11T01:52:33.806154159+02:00[Europe/Berlin]")
 public class NepenthesClonesDTO {
 
   private String nepenthes;

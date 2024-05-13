@@ -58,7 +58,7 @@ public class GrowlistManagementApiControllerImpl implements GrowlistmanagementAp
                     userCloneDTO.setId(clone.getId());
                     userCloneDTO.setUser(clone.getUser().getUsername());
                     userCloneDTO.setCloneId(clone.getClone().getCloneId()); // Fixed the method name
-                    userCloneDTO.setNepenthesName(clone.getClone().getNepenthes().getName());
+
                     return userCloneDTO;
                 })
                 .collect(Collectors.toList());

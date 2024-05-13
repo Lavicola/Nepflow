@@ -1,21 +1,19 @@
 package com.nepflow.NepenthesManagement.Model;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
-public class Sex {
+public class Location {
 
     @Id
-    private String sex;
+    String location;
 
-    public Sex(String sex) {
-        this.sex = sex;
-
+    public Location(String location) {
+        this.location = location;
     }
+
 
 
 }

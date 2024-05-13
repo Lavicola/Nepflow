@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.nepflow.NepenthesManagement.Dto.CloneDTO;
+import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.IVCloneDTO;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -22,10 +22,10 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("NepenthesClonesDTO_clones_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-04T16:31:16.635966249+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-11T01:52:33.806154159+02:00[Europe/Berlin]")
 public class NepenthesClonesDTOClonesInner {
 
-  private String id;
+  private String clonId;
 
   private String nepenthes;
 
@@ -46,24 +46,24 @@ public class NepenthesClonesDTOClonesInner {
     this.producer = producer;
   }
 
-  public NepenthesClonesDTOClonesInner id(String id) {
-    this.id = id;
+  public NepenthesClonesDTOClonesInner clonId(String clonId) {
+    this.clonId = clonId;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get clonId
+   * @return clonId
   */
   
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public String getId() {
-    return id;
+  @Schema(name = "clonId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("clonId")
+  public String getClonId() {
+    return clonId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setClonId(String clonId) {
+    this.clonId = clonId;
   }
 
   public NepenthesClonesDTOClonesInner nepenthes(String nepenthes) {
@@ -155,7 +155,7 @@ public class NepenthesClonesDTOClonesInner {
       return false;
     }
     NepenthesClonesDTOClonesInner nepenthesClonesDTOClonesInner = (NepenthesClonesDTOClonesInner) o;
-    return Objects.equals(this.id, nepenthesClonesDTOClonesInner.id) &&
+    return Objects.equals(this.clonId, nepenthesClonesDTOClonesInner.clonId) &&
         Objects.equals(this.nepenthes, nepenthesClonesDTOClonesInner.nepenthes) &&
         Objects.equals(this.mountain, nepenthesClonesDTOClonesInner.mountain) &&
         Objects.equals(this.sex, nepenthesClonesDTOClonesInner.sex) &&
@@ -164,14 +164,14 @@ public class NepenthesClonesDTOClonesInner {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nepenthes, mountain, sex, producer);
+    return Objects.hash(clonId, nepenthes, mountain, sex, producer);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class NepenthesClonesDTOClonesInner {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    clonId: ").append(toIndentedString(clonId)).append("\n");
     sb.append("    nepenthes: ").append(toIndentedString(nepenthes)).append("\n");
     sb.append("    mountain: ").append(toIndentedString(mountain)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");

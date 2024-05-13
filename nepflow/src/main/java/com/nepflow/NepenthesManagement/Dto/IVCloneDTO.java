@@ -19,10 +19,10 @@ import jakarta.annotation.Generated;
  * IVCloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-04T16:31:16.635966249+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-11T01:52:33.806154159+02:00[Europe/Berlin]")
 public class IVCloneDTO implements NepenthesNameCloneGet200Response {
 
-  private String id;
+  private String clonId;
 
   private String nepenthes;
 
@@ -43,24 +43,24 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.producer = producer;
   }
 
-  public IVCloneDTO id(String id) {
-    this.id = id;
+  public IVCloneDTO clonId(String clonId) {
+    this.clonId = clonId;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get clonId
+   * @return clonId
   */
   
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public String getId() {
-    return id;
+  @Schema(name = "clonId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("clonId")
+  public String getClonId() {
+    return clonId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setClonId(String clonId) {
+    this.clonId = clonId;
   }
 
   public IVCloneDTO nepenthes(String nepenthes) {
@@ -152,7 +152,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
       return false;
     }
     IVCloneDTO ivCloneDTO = (IVCloneDTO) o;
-    return Objects.equals(this.id, ivCloneDTO.id) &&
+    return Objects.equals(this.clonId, ivCloneDTO.clonId) &&
         Objects.equals(this.nepenthes, ivCloneDTO.nepenthes) &&
         Objects.equals(this.mountain, ivCloneDTO.mountain) &&
         Objects.equals(this.sex, ivCloneDTO.sex) &&
@@ -161,14 +161,14 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nepenthes, mountain, sex, producer);
+    return Objects.hash(clonId, nepenthes, mountain, sex, producer);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class IVCloneDTO {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    clonId: ").append(toIndentedString(clonId)).append("\n");
     sb.append("    nepenthes: ").append(toIndentedString(nepenthes)).append("\n");
     sb.append("    mountain: ").append(toIndentedString(mountain)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGe
     nameGenerator = FullyQualifiedAnnotationBeanNameGenerator.class
 )
 @ComponentScan(
-    basePackages = {"org.openapitools", "com.nepflow.GrowlistManagement.Controller" , "org.openapitools.configuration"},
+    basePackages = {"org.openapitools", "com.nepflow.NepenthesManagement.Controller" , "org.openapitools.configuration"},
     nameGenerator = FullyQualifiedAnnotationBeanNameGenerator.class
 )
 public class OpenApiGeneratorApplication {

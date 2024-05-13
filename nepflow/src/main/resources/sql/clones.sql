@@ -223,10 +223,6 @@ BE-3772,ventricosa
 BE-3224,vieillardii
 BE-4599,vieillardii
 BE-3225,villosa
-BE-3249,Heliamphora nutans
-BE-3251,Heliamphora nutans
-BE-3250,Heliamphora minor
-BE-3252,Heliamphora tatei
 BE-3254,burkei
 BE-4512,burkei
 BE-4527,burkei
@@ -243,7 +239,7 @@ BE-3463,lingulata
 BE-3299,alba
 BE-3307,robcantleyi
 BE-3517,robcantleyi
-BE-3308,hurrelliana
+BE-3308,mollis
 BE-3340,treubiana
 BE-3341,treubiana
 BE-3346,thai
@@ -276,7 +272,6 @@ BE-3879,glandulifera
 BE-3704,longifolia
 BE-3736,eymae
 BE-3770,aenigma
-BE-3833,Heliamphora heterodoxa
 BE-3839,pervillei
 BE-3856,bokorensis
 BE-3857,bokorensis
@@ -393,10 +388,10 @@ AW-N_iz.04,izumiae
 AW-N_iz.06,izumiae
 AW-N_iz.07,izumiae
 AW-N_iz.09,izumiae
-AW-N_jaq_1-04.04,jacquelinae
-AW-N_jaq_1-04.05,jacquelinae
-AW-N_jaq_1-04.07,jacquelinae
-AW-N_jaq_1-04.10,jacquelinae
+AW-N_jaq_1-04.04,jacquelineae
+AW-N_jaq_1-04.05,jacquelineae
+AW-N_jaq_1-04.07,jacquelineae
+AW-N_jaq_1-04.10,jacquelineae
 AW-N_jamb_TG.RSC,jamban
 AW-N_khas.01,khasiana
 AW-N_lam_Dor.02,lamii
@@ -536,14 +531,11 @@ AW-N_raj_T.06,rajah
 AW-N_raj_T.RSC,rajah
 AW-N_rc.ISC,robcantleyi
 AW-N_spat_ABG.01,spathulata
-AW-N_sp_taw.ISC,spec.
-AW-N_sp_taw.RSC,spec.
-AW-N_sp_taw.RC,spec.
-AW-N_sp_kem.ABG,spec.
-AW-N_sp_psk.01,spec.
-AW-N_sp_psk.03,spec.
-AW-N_sp_psk.Ho,spec.
-AW-N_sp_psk.RC,spec.
+AW-N_sp_taw.ISC,spec. "Tawarensis"
+AW-N_sp_taw.RSC,spec. "Tawarensis"
+AW-N_sp_psk.01,spec. Pseudoklossii
+AW-N_sp_psk.03,spec. Pseudoklossii
+AW-N_sp_psk.Ho,spec. Pseudoklossii
 AW-N_tlg.RSC,talangensis
 AW-N_tom.05,tomoriana
 AW-N_truncr.01,truncata
@@ -562,12 +554,6 @@ AW-N_vil.MT03,villosa
 AW-N_vil.MT04,villosa
 AW-N_virid.01,viridis
 AW-N_virid.RC,viridis
-AW-Nx_trus.01,x
-AW-Nx_trus.02,x
-AW-Nx_trus.03,x
-AW-Nx_trus.04,x
-AW-Nx_trus.B,x
-AW-Nx_trus.RC,x
 AW-N_ad.03,adnata
 AW-N_adrian.02,adrianii
 AW-N_adrian.03,adrianii
@@ -578,7 +564,6 @@ AW-N_alboBL.RC,albomarginata
 AW-N_albor.01,albomarginata
 AW-N_amp.RedStripes01,ampullaria
 AW-N_amp.RC,ampullaria
-AW_N_amp_Tay05.Langtrieb,ampullaria
 AW-N_arist.ISC,aristolochioides
 AW-N_arist.AC01,aristolochioides
 AW-N_arist.AC02,aristolochioides
@@ -610,7 +595,6 @@ AW-N_dans.J3,danseri
 AW-N_dens.C,densiflora
 AW-N_diat_98.07,diatas
 AW-N_diat_98.MR,diatas
-AW-N_diat_98.RC,diatas
 AW-dis.01,distillatoria
 AW-N_ed_tb.01,edwardsiana
 AW-N_ed_tb.02,edwardsiana
@@ -647,7 +631,7 @@ AW-AW-N_eust_J.RC,eustachya
 AW-N_glab.01,glabrata
 AW-N_glab.Langtrieb,glabrata
 AW-N_glab.RC,glabrata
-AW-N_al_GRP.01,gracilliflora
+AW-N_al_GRP.01,graciliflora
 AW-N_gym_S.01,gymnamphora
 AW-N_gymJ.01,gymnamphora
 AW-N_gymJ.Langtrieb,gymnamphora
@@ -664,7 +648,7 @@ AW-N_hems.04,hemsleyana
 AW-N_hisp_TG.01,hispida
 AW-N_instay.RSC,insignis
 AW-N_instay.RC,insignis
-AW-N_kit.01,kitanglat
+AW-N_kit.01,kitanglad
 AW-N_kloss.01,klossii
 AW-N_kloss.03,klossii
 AW-N_kloss.05,klossii
@@ -692,9 +676,9 @@ AW-N_rhomb_J.01,rhombicaulis
 AW-N_rhomb_J.Langtrieb,rhombicaulis
 AW-N_sib_MDR.13,sibuyanensis
 AW-N_sing_A.01,singalana
-AW-N_sp_Anip.01,spec
-AW-N_sp_Anip.02,spec
-AW-N_sp_Anip.03,spec
+AW-N_sp_Anip.01,spec Anipahan
+AW-N_sp_Anip.02,spec Anipahan
+AW-N_sp_Anip.03,spec Anipahan
 AW-N_spect_BH.02,spectabilis
 AW-N_spect_BH.05,spectabilis
 AW-N_spect_BH.RC,spectabilis
@@ -716,3 +700,124 @@ AW-N_vog.TG01,vogelii
 AW-N_vog.RC,vogelii
 AW-N_zak_fusc_CR.03,zakriana
 AW-N_zak_fusc_TR.05,zakriana
+FV-001,glabrata,Sulawesi
+FV-001-01,glabrata,Sulawesi
+FV-002,vieillardii,Blue River National Park
+FV-002-01,vieillardii,Blue River National Park
+FV-003,truncata,Mindanao
+FV-003-01,truncata,Mindanao
+FV-004,peltata,Mount Hamiguitan
+FV-004-01,peltata,Mount Hamiguitan
+FV-005,sibuyanensis,Mount Guiting-Guiting
+FV-005-01,sibuyanensis,Mount Guiting-Guiting
+FV-007,bellii,Surigao del Norte
+FV-007-01,bellii,Surigao del Norte
+FV-014,sanguinea,Malaysia
+FV-014-01,sanguinea,Malaysia
+FV-015,hirsuta,Bako National Park
+FV-015-01,hirsuta,Bako National Park
+FV-017,diatas,Mount Bandahara
+FV-017-01,diatas,Mount Bandahara
+FV-026,harauensis,Harau Valley
+FV-026-01,harauensis,Harau Valley
+FV-026-02,harauensis,Harau Valley
+FV-026-04,harauensis,Harau Valley
+FV-026-05,harauensis,Harau Valley
+FV-030,clipeata,Mount Kelam
+FV-030-01,clipeata,Mount Kelam,Male
+FV-030-03,clipeata,Mount Kelam,Female
+FV-030-04,clipeata,Mount Kelam,Female
+FV-030-05,clipeata,Mount Kelam,Female
+FV-030-07,clipeata,Mount Kelam,Female
+FV-030-09,clipeata,Mount Kelam,Female
+FV-030-10,clipeata,Mount Kelam,Male
+FV-030-11,clipeata,Mount Kelam,Female
+FV-030-12,clipeata,Mount Kelam,Female
+FV-030-13,clipeata,Mount Kelam,Male
+FV-030-16,clipeata,Mount Kelam,Female
+FV-030-17,clipeata,Mount Kelam,Female
+FV-033,singalana,Mount Kunyit
+FV-033-01,singalana,Mount Kunyit
+FV-034,albomarginata,Penang Island
+FV-034-01,albomarginata,Penang Island
+FV-036,palawanensis,Sultan Peak
+FV-036-01,palawanensis,Sultan Peak
+FV-037,alba,Mount Tahan
+FV-037-01,alba,Mount Tahan
+FV-040,sumatrana,Sibolga
+FV-040-ISC,sumatrana
+FV-041,ephippiata,Hose Mountains
+FV-041-01,ephippiata,Hose Mountains
+FV-043,khasiana,Khasi Hills
+FV-043-ISC,khasiana,Meghalaya
+FV-044,sp. Papua,Mount Doorman
+FV-044-01,sp. Papua,Mount Doorman
+FV-045,clipeata,Mount Kelam
+FV-045-01,clipeata,Mount Kelam,Female
+FV-045-02,clipeata,Mount Kelam,Female
+FV-046,clipeata,Mount Kelam
+FV-046-ISC,clipeata,Mount Kelam
+FV-049,pervillei,Mount Copolia
+FV-049-01,pervillei,Mount Copolia
+FV-049-02,pervillei,Mount Copolia
+FV-049-03,pervillei,Mount Copolia
+FV-049-04,pervillei,Mount Copolia
+FV-049-06,pervillei,Mount Copolia
+FV-049-08,pervillei,Mount Copolia
+FV-049-13,pervillei,Mount Copolia
+FV-049-14,pervillei,Mount Copolia
+FV-049-15,pervillei,Mount Copolia
+FV-050,pervillei,Mount Trois Frères
+FV-050-01,pervillei,Mount Trois Frères
+FV-050-02,pervillei,Mount Trois Frères
+FV-050-04,pervillei,Mount Trois Frères
+FV-050-05,pervillei,Mount Trois Frères
+FV-050-06,pervillei,Mount Trois Frères
+FV-050-07,pervillei,Mount Trois Frères
+FV-050-08,pervillei,Mount Trois Frères
+FV-050-12,pervillei,Mount Trois Frères
+FV-050-13,pervillei,Mount Trois Frères
+FV-050-19,pervillei,Mount Trois Frères
+FV-052,truncata,Mindanao
+FV-052-ISC,truncata,Mindanao
+FV-061,edwardsiana,Marai Parai
+FV-061-01,edwardsiana,Marai Parai
+FV-061-02,edwardsiana,Marai Parai
+FV-061-03,edwardsiana,Marai Parai
+FV-061-04,edwardsiana,Marai Parai
+FV-061-05,edwardsiana,Marai Parai
+FV-061-06,edwardsiana,Marai Parai
+FV-061-07,edwardsiana,Marai Parai
+FV-061-08,edwardsiana,Marai Parai
+FV-061-09,edwardsiana,Marai Parai
+FV-061-10,edwardsiana,Marai Parai
+FV-061-11,edwardsiana,Marai Parai
+FV-061-13,edwardsiana,Marai Parai
+FV-061-14,edwardsiana,Marai Parai
+FV-061-15,edwardsiana,Marai Parai
+FV-061-17,edwardsiana,Marai Parai
+FV-061-18,edwardsiana,Marai Parai
+FV-061-19,edwardsiana,Marai Parai
+FV-066,bokorensis,Mount Bokor
+FV-066-06,bokorensis,Mount Bokor
+FV-066-13,bokorensis,Mount Bokor
+FV-066-16,bokorensis,Mount Bokor
+FV-091,mapuluensis,Tabalar Mountains
+FV-091-ISC,mapuluensis,Tabalar Mountains
+FV-091-08,mapuluensis,Tabalar Mountains
+FV-091-09,mapuluensis,Tabalar Mountains
+FV-091-16,mapuluensis,Tabalar Mountains
+FV-091-18,mapuluensis,Tabalar Mountains
+FV-092,longiptera,Dairi Regency
+FV-092-ISC,longiptera,Dairi Regency
+FV-098,truncata,Mindanao
+FV-098-01,truncata,Mindanao
+FV-115,stenophylla,Mamut Mine
+FV-115-ISC,stenophylla,Mamut Mine
+FV-126,villosa,Mount Kinabalu
+FV-126-ISC,villosa,Mount Kinabalu
+FV-133,kongkandana,Songkhla Province
+FV-133-ISC,kongkandana,Songkhla Province
+FV-134,andamana,Phag Nga Province
+FV-134-ISC,andamana,Phag Nga Province
+FV-144,suratensis,Surat Thani

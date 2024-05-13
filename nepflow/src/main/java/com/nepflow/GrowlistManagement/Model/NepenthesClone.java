@@ -1,8 +1,7 @@
 package com.nepflow.GrowlistManagement.Model;
 
 import com.nepflow.NepenthesManagement.Model.Clone;
-import com.nepflow.NepenthesManagement.Model.IVClone;
-import com.nepflow.NepenthesManagement.Repository.CloneRepository;
+import com.nepflow.NepenthesManagement.Model.SpeciesClone;
 import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
 import org.springframework.data.annotation.Version;
@@ -28,7 +27,7 @@ public class NepenthesClone {
 
     @Relationship(value = "IDENTICALLY_TO",direction = Relationship.Direction.OUTGOING)
     @Getter
-    IVClone clone;
+    Clone clone;
 
     @Version
     private Long version;
@@ -38,7 +37,7 @@ public class NepenthesClone {
 
     }
 
-    public NepenthesClone(User user,IVClone clone){
+    public NepenthesClone(User user,Clone clone){
         this.user = user;
         this.clone = clone;
     }

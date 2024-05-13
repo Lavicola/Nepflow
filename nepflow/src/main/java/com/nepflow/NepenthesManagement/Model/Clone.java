@@ -2,64 +2,62 @@ package com.nepflow.NepenthesManagement.Model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.*;
 
+import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 
-@Node("Clone")
+@Node
 @Getter
 public abstract class Clone {
 
+    // TODO at some point use validation annotation
+    public static Set<String> validPlants = new HashSet<>();
 
-    @Relationship(value = "SPECIES_OF",direction = Relationship.Direction.OUTGOING)
-    Nepenthes nepenthes;
 
-    @Setter
-    @Relationship("ORIGIN")
-    Mountain mountain;
+
+    @Id
+    @GeneratedValue
+    private String id;
+
+    @Property
+    protected String cloneId;
+
+    @Getter
+    protected String name;
 
     @Setter
     @Relationship("HAS_SEX")
-    Sex sex;
+    protected Sex sex;
 
-    @Property
-    @Id
-    String cloneId;
+    @Relationship(value = "OFFSPRING_FROM", direction = Relationship.Direction.OUTGOING)
+    protected Grex grex;
 
     @Version
     private Long version;
 
-
-    public Clone(String cloneId, Nepenthes nepenthes) {
+    protected Clone(String cloneId, Grex grex) {
         this.cloneId = cloneId;
-        this.nepenthes = nepenthes;
+        this.grex = grex;
+    }
+
+    protected Clone(String name,String cloneId) {
+        this.name = name;
+        this.cloneId = cloneId;
     }
 
 
-/*
-    public boolean equals(Object o) {
-        assertNotNull(o);
-        assertIsExpectedObject(o);
-        return true;
-    }
 
-    public void assertNotNull(Object o) {
-        if (o == null) {
-            throw new IllegalArgumentException("object was null");
-        }
-    }
-
-    public void assertIsExpectedObject(Object o) {
-        if (o instanceof Clone) {
-            return;
-        }
-        throw new IllegalArgumentException("Object must be Clone, IndividualClone or IVClone");
-    }
-
-    public int hashCode() {
-        return Objects.hash(this.getCloneId(), this.getNepenthes().getName());
-    }
-    */
 }
+
+

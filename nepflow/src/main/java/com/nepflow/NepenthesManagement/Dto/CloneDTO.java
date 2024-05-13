@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -19,75 +18,53 @@ import jakarta.annotation.Generated;
  * CloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-04T16:31:16.635966249+02:00[Europe/Berlin]")
-public class CloneDTO implements NepenthesNameCloneGet200Response {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-11T01:52:33.806154159+02:00[Europe/Berlin]")
+public class CloneDTO {
 
-  private String id;
+  private String clonId;
 
-  private String nepenthes;
-
-  private String mountain;
+  private String name;
 
   private String sex;
 
-  public CloneDTO id(String id) {
-    this.id = id;
+  public CloneDTO clonId(String clonId) {
+    this.clonId = clonId;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get clonId
+   * @return clonId
   */
   
-  @Schema(name = "id", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public String getId() {
-    return id;
+  @Schema(name = "clonId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("clonId")
+  public String getClonId() {
+    return clonId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setClonId(String clonId) {
+    this.clonId = clonId;
   }
 
-  public CloneDTO nepenthes(String nepenthes) {
-    this.nepenthes = nepenthes;
+  public CloneDTO name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get nepenthes
-   * @return nepenthes
+   * Get name
+   * @return name
   */
   
-  @Schema(name = "nepenthes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("nepenthes")
-  public String getNepenthes() {
-    return nepenthes;
+  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("name")
+  public String getName() {
+    return name;
   }
 
-  public void setNepenthes(String nepenthes) {
-    this.nepenthes = nepenthes;
-  }
-
-  public CloneDTO mountain(String mountain) {
-    this.mountain = mountain;
-    return this;
-  }
-
-  /**
-   * Get mountain
-   * @return mountain
-  */
-  
-  @Schema(name = "mountain", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("mountain")
-  public String getMountain() {
-    return mountain;
-  }
-
-  public void setMountain(String mountain) {
-    this.mountain = mountain;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public CloneDTO sex(String sex) {
@@ -119,24 +96,22 @@ public class CloneDTO implements NepenthesNameCloneGet200Response {
       return false;
     }
     CloneDTO cloneDTO = (CloneDTO) o;
-    return Objects.equals(this.id, cloneDTO.id) &&
-        Objects.equals(this.nepenthes, cloneDTO.nepenthes) &&
-        Objects.equals(this.mountain, cloneDTO.mountain) &&
+    return Objects.equals(this.clonId, cloneDTO.clonId) &&
+        Objects.equals(this.name, cloneDTO.name) &&
         Objects.equals(this.sex, cloneDTO.sex);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, nepenthes, mountain, sex);
+    return Objects.hash(clonId, name, sex);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CloneDTO {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    nepenthes: ").append(toIndentedString(nepenthes)).append("\n");
-    sb.append("    mountain: ").append(toIndentedString(mountain)).append("\n");
+    sb.append("    clonId: ").append(toIndentedString(clonId)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");
     sb.append("}");
     return sb.toString();

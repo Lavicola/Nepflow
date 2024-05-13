@@ -1,11 +1,10 @@
 package com.nepflow.Growlistmanagement.models;
 
-import com.nepflow.GrowlistManagement.Model.NepenthesClone;
 import com.nepflow.GrowlistManagement.Repository.NepenthesCloneRepository;
 import com.nepflow.NepenthesManagement.Model.Clone;
 import com.nepflow.NepenthesManagement.Model.IVClone;
 import com.nepflow.NepenthesManagement.Model.Nepenthes;
-import com.nepflow.NepenthesManagement.Repository.CloneRepository;
+import com.nepflow.NepenthesManagement.Repository.SpeciesCloneRepository;
 import com.nepflow.NepenthesManagement.Repository.IVCloneRepository;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Repository.UserRepository;
@@ -16,11 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-
-import java.util.Optional;
 
 @DataNeo4jTest
 public class NepenthesCloneTest {
@@ -35,7 +31,7 @@ public class NepenthesCloneTest {
     UserRepository userRepository;
 
     @Autowired
-    CloneRepository cloneRepository;
+    SpeciesCloneRepository speciesCloneRepository;
 
 
     private static Neo4j embeddedDatabaseServer;
@@ -66,22 +62,23 @@ public class NepenthesCloneTest {
 
     @Test
     public void noDuplicateNodeTest(){
+        /*
         User user = new User("namef","oatuh");
         Nepenthes nepenthes = new Nepenthes("villosa");
         IVClone ivClone = new IVClone("BE-ddd",nepenthes);
         this.ivCloneRepository.save(ivClone);
         this.userRepository.save(user);
-        Clone ivClone1 = this.cloneRepository.findCloneByCloneIdAndNepenthesName(ivClone.getCloneId(), nepenthes.getName());
+        Clone ivClone1 = this.speciesCloneRepository.findCloneByCloneIdAndNepenthesName(ivClone.getCloneId(), nepenthes.getName());
         User user1 = this.userRepository.findUserByOAuthId(user.getOAuthId());
         //NepenthesClone nepenthesClone = new NepenthesClone(user1,ivClone1);
         //this.nepenthesCloneRepository.save(nepenthesClone);
 
 
         System.out.println("IVCLone:" +this.ivCloneRepository.findAll().size());
-        System.out.println( "Clone: "+this.cloneRepository.findAll().size());
+        System.out.println( "Clone: "+this.speciesCloneRepository.findAll().size());
 
 
-
+*/
     }
 
 

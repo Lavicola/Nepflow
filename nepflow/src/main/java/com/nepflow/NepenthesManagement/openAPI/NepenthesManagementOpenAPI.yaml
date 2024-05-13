@@ -95,7 +95,7 @@ paths:
             application/json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/CloneDTO'
+                  - $ref: '#/components/schemas/ICCloneDTO'
                   - $ref: '#/components/schemas/IVCloneDTO'
 
         '404':
@@ -123,11 +123,10 @@ paths:
           description: No nepenthes found
 
     put:
-      summary: change information of an existing clone
+      summary: add/edit information of an existing clone (only sex allowed)
       tags:
         - NepenthesManagement
       requestBody:
-        description: Clone DTO with new values
         required: true
         content:
           application/json:
@@ -156,7 +155,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CloneDTO'
+              $ref: '#/components/schemas/ICCloneDTO'
 
       responses:
         '200':
@@ -164,15 +163,50 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CloneDTO'
+                $ref: '#/components/schemas/ICCloneDTO'
         '404':
           description: No nepenthes found
     put:
-      summary: change information of an existing clone
+      summary: add/edit information of an existing clone (only sex allowed)
       tags:
         - NepenthesManagement
       requestBody:
         description: Clone DTO with new values
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ICCloneDTO'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICCloneDTO'
+        '404':
+          description: No nepenthes found
+  /clone/hybrid:
+    get:
+      summary: get all hybrids
+      tags:
+        - NepenthesManagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CloneDTO'
+    post:
+      summary: add a new hybrid
+      tags:
+        - NepenthesManagement
+
+      requestBody:
         required: true
         content:
           application/json:
@@ -186,9 +220,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CloneDTO'
-        '404':
-          description: No nepenthes found
 
+  /clone/multihybrid:
+    get:
+      summary: get all multihybrids
+      tags:
+        - NepenthesManagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CloneDTO'
+
+    post:
+      summary: add a new multihybrid
+      tags:
+        - NepenthesManagement
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneDTO'
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloneDTO'
 
 
   /mountain:
@@ -246,10 +312,23 @@ components:
     ProducerDTO:
       type: string
 
+
     CloneDTO:
       type: object
       properties:
-        id:
+        clonId:
+          type: string
+        name:
+          type: string
+        sex:
+          type: string
+
+
+
+    ICCloneDTO:
+      type: object
+      properties:
+        clonId:
           type: string
         nepenthes:
           $ref: '#/components/schemas/NepenthesDTO'
@@ -260,7 +339,7 @@ components:
 
     IVCloneDTO:
       allOf:
-        - $ref: '#/components/schemas/CloneDTO'
+        - $ref: '#/components/schemas/ICCloneDTO'
         - type: object
           required:
             - producer
@@ -277,7 +356,7 @@ components:
           type: array
           items:
             anyOf:
-              - $ref: '#/components/schemas/CloneDTO'
+              - $ref: '#/components/schemas/ICCloneDTO'
               - $ref: '#/components/schemas/IVCloneDTO'
 
 

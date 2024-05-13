@@ -1,17 +1,19 @@
 package com.nepflow.NepenthesManagement.Service;
 
-import com.nepflow.NepenthesManagement.Model.Mountain;
+import com.nepflow.NepenthesManagement.Model.Location;
 import com.nepflow.NepenthesManagement.Model.Producer;
-import com.nepflow.NepenthesManagement.Repository.MountainRepository;
+import com.nepflow.NepenthesManagement.Repository.LocationRepository;
 import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CloneMetadataServiceImpl implements CloneMetadataService {
 
     @Autowired
-    MountainRepository mountainRepository;
+    LocationRepository locationRepository;
 
     @Autowired
     ProducerRepository producerRepository;
@@ -19,11 +21,11 @@ public class CloneMetadataServiceImpl implements CloneMetadataService {
     @Override
     public boolean createMountain(String mountainName) {
         // maybe separate between checking and actually saving
-        Mountain mountain = this.mountainRepository.findMountainByName(mountainName);
-        if (mountain != null) {
+        Optional<Location> location = this.locationRepository.findById(mountainName);
+        if (location.isPresent()) {
             return false;
         }
-        this.mountainRepository.save(new Mountain(mountainName));
+        this.locationRepository.save(new Location(mountainName));
         return true;
     }
 

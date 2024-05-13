@@ -6,28 +6,35 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.Objects;
 
-@Node
-public class IVClone extends Clone{
-    public IVClone(String cloneId, Nepenthes nepenthes) {
-        super(cloneId, nepenthes);
-    }
+/**
+ * An IVClone is a clone which is propagated in a Laboratory
+ * Certain IVClone represent a Pool of Clones and not one individual Clone
+ */
 
+@Node
+public class IVClone extends SpeciesClone {
+
+    // TODO Producer must be linked if an IV clone is added
     @Setter
     @Relationship("PROPAGATED_BY")
     Producer producer;
 
-    /*
-    public boolean equals(Object o) {
-        super.equals(o);
-        if (o == this) {
-            return true;
-        }
-        if(this.getClass() != o.getClass()){
-            return false;
-        }
-        IVClone ivClone = (IVClone) o;
 
-        return Objects.equals(ivClone.cloneId, this.cloneId) && this.nepenthes.equals(ivClone.nepenthes);
+    public IVClone(String name, String cloneId, Nepenthes nepenthes) {
+        super(name, cloneId, nepenthes);
+        this.cloneId = cloneId;
+
     }
-*/
+
+    @Override
+    IVClone asIVClone() {
+        return this;
+    }
+
+    @Override
+    ICClone asICClone() {
+        return new ICClone(this.name,this.cloneId, this.nepenthes);
+    }
+
+
 }
