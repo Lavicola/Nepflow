@@ -4,8 +4,10 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nepflow.NepenthesManagement.Dto.CloneGrexDTO;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.nepflow.NepenthesManagement.Dto.CloneGrexDTO;
+import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
+import com.nepflow.NepenthesManagement.Dto.IVCloneDTO;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -17,11 +19,12 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * IVCloneDTO
+ * CloneSpeciesGet200ResponseInner
  */
 
+@JsonTypeName("_clone_species__get_200_response_inner")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
-public class IVCloneDTO implements NepenthesNameCloneGet200Response {
+public class CloneSpeciesGet200ResponseInner {
 
   private String cloneId;
 
@@ -37,18 +40,18 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
 
   private String producer;
 
-  public IVCloneDTO() {
+  public CloneSpeciesGet200ResponseInner() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public IVCloneDTO(String producer) {
+  public CloneSpeciesGet200ResponseInner(String producer) {
     this.producer = producer;
   }
 
-  public IVCloneDTO cloneId(String cloneId) {
+  public CloneSpeciesGet200ResponseInner cloneId(String cloneId) {
     this.cloneId = cloneId;
     return this;
   }
@@ -68,7 +71,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.cloneId = cloneId;
   }
 
-  public IVCloneDTO name(String name) {
+  public CloneSpeciesGet200ResponseInner name(String name) {
     this.name = name;
     return this;
   }
@@ -88,7 +91,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.name = name;
   }
 
-  public IVCloneDTO sex(String sex) {
+  public CloneSpeciesGet200ResponseInner sex(String sex) {
     this.sex = sex;
     return this;
   }
@@ -108,7 +111,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.sex = sex;
   }
 
-  public IVCloneDTO nepenthesName(CloneGrexDTO nepenthesName) {
+  public CloneSpeciesGet200ResponseInner nepenthesName(CloneGrexDTO nepenthesName) {
     this.nepenthesName = nepenthesName;
     return this;
   }
@@ -128,7 +131,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.nepenthesName = nepenthesName;
   }
 
-  public IVCloneDTO location(String location) {
+  public CloneSpeciesGet200ResponseInner location(String location) {
     this.location = location;
     return this;
   }
@@ -148,7 +151,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.location = location;
   }
 
-  public IVCloneDTO grex(CloneGrexDTO grex) {
+  public CloneSpeciesGet200ResponseInner grex(CloneGrexDTO grex) {
     this.grex = grex;
     return this;
   }
@@ -168,7 +171,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.grex = grex;
   }
 
-  public IVCloneDTO producer(String producer) {
+  public CloneSpeciesGet200ResponseInner producer(String producer) {
     this.producer = producer;
     return this;
   }
@@ -196,14 +199,14 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    IVCloneDTO ivCloneDTO = (IVCloneDTO) o;
-    return Objects.equals(this.cloneId, ivCloneDTO.cloneId) &&
-        Objects.equals(this.name, ivCloneDTO.name) &&
-        Objects.equals(this.sex, ivCloneDTO.sex) &&
-        Objects.equals(this.nepenthesName, ivCloneDTO.nepenthesName) &&
-        Objects.equals(this.location, ivCloneDTO.location) &&
-        Objects.equals(this.grex, ivCloneDTO.grex) &&
-        Objects.equals(this.producer, ivCloneDTO.producer);
+    CloneSpeciesGet200ResponseInner cloneSpeciesGet200ResponseInner = (CloneSpeciesGet200ResponseInner) o;
+    return Objects.equals(this.cloneId, cloneSpeciesGet200ResponseInner.cloneId) &&
+        Objects.equals(this.name, cloneSpeciesGet200ResponseInner.name) &&
+        Objects.equals(this.sex, cloneSpeciesGet200ResponseInner.sex) &&
+        Objects.equals(this.nepenthesName, cloneSpeciesGet200ResponseInner.nepenthesName) &&
+        Objects.equals(this.location, cloneSpeciesGet200ResponseInner.location) &&
+        Objects.equals(this.grex, cloneSpeciesGet200ResponseInner.grex) &&
+        Objects.equals(this.producer, cloneSpeciesGet200ResponseInner.producer);
   }
 
   @Override
@@ -214,7 +217,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class IVCloneDTO {\n");
+    sb.append("class CloneSpeciesGet200ResponseInner {\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");

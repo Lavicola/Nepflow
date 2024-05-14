@@ -1,6 +1,5 @@
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.GrowlistManagement.Dto.UserCloneDTO;
 import com.nepflow.GrowlistManagement.Model.NepenthesClone;
 import com.nepflow.GrowlistManagement.Service.GrowListService;
 import com.nepflow.UserManagement.Model.User;
@@ -13,8 +12,9 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
-public class GrowlistManagementApiControllerImpl implements GrowlistmanagementApiDelegate {
+public class GrowlistManagementApiControllerImpl {
+
+    /*
     @Autowired
     AuthenticationService authenticationService;
 
@@ -65,6 +65,6 @@ public class GrowlistManagementApiControllerImpl implements GrowlistmanagementAp
         return userCloneDTOs;
     }
 
-
+*/
 }
 

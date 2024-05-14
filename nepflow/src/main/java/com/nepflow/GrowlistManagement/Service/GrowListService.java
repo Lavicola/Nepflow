@@ -10,9 +10,6 @@ import java.util.List;
 public interface GrowListService {
 
     NepenthesClone addNepenthesCloneToUser(String cloneId, String nepenthesName, User user);
-    // does the clone actually exists for the Nepenthes?
-    boolean verifyCloneAndNepenthesCombination(String cloneId,String nepenthesName);
-
     List<NepenthesClone> getNepenthesOfUser(User user);
 
 

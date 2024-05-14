@@ -6,23 +6,11 @@ import java.util.List;
 
 public interface NepenthesManagementRetrievalService {
 
-    public boolean cloneExists(String cloneId, String nepenthesName);
-    public boolean nepenthesExists(String nepenthesName);
+    List<Nepenthes> getNepenthesList();
+    Clone getCloneByID(String cloneId);
+    public List<Clone> getClonesByNepenthesName(String name);
+    public List<SpeciesClone> getSpeciesClones();
 
-    Nepenthes getNepenthes(String name);
-
-    List<Nepenthes> getNepenthes();
-    List<SpeciesClone> getClonesOfNepenthes(String name);
-
-    List<Hybrid> getAllHybrids();
-    List<Hybrid> getHybridsByName(String name);
-    Hybrid getHybridsByCloneId(String cloneId);
-
-    List<MultiHybrid> getAllMultiHybrids();
-    List<MultiHybrid> getMultiHybridsByName(String name);
-    MultiHybrid getMultiHybridsByCloneId(String cloneId);
-
-    Clone getNepenthesClone(String cloneId, String nepenthesName);
 
 
 }

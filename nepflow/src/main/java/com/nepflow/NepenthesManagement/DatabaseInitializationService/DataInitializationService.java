@@ -1,10 +1,7 @@
 package com.nepflow.NepenthesManagement.DatabaseInitializationService;
 
 import com.nepflow.NepenthesManagement.Model.*;
-import com.nepflow.NepenthesManagement.Repository.LocationRepository;
-import com.nepflow.NepenthesManagement.Repository.SexRepository;
-import com.nepflow.NepenthesManagement.Repository.SpeciesCloneRepository;
-import com.nepflow.NepenthesManagement.Repository.NepenthesRepository;
+import com.nepflow.NepenthesManagement.Repository.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +26,7 @@ public class DataInitializationService {
 
 
     @Autowired
-    SpeciesCloneRepository speciesCloneRepository;
+    CloneRepository speciesCloneRepository;
 
     @Autowired
     NepenthesRepository nepenthesRepository;
@@ -57,35 +54,34 @@ public class DataInitializationService {
         lines = this.getLines(ClonesSQL);
         for (String line : lines) {
             String[] parts = line.split(",");
-            if (this.speciesCloneRepository.existsSpeciesCloneByCloneIdAndNepenthesName(parts[0], parts[1])) {
+            if (this.speciesCloneRepository.existsCloneByCloneId(parts[0])) {
                 continue;
             }
             Nepenthes nepenthes = this.nepenthesRepository.findNepenthesByName(parts[1]);
             SpeciesClone clone;
-            if(parts[0].contains("ISC")){
-                clone = new ICClone(nepenthes.getName(),parts[0], nepenthes);
-            }else{
-                clone = new IVClone(nepenthes.getName(),parts[0], nepenthes);
+            if (parts[0].contains("ISC")) {
+                clone = new ICClone(nepenthes.getName(), nepenthes, null, null);
+            } else {
+                clone = new IVClone(nepenthes.getName(), parts[0], nepenthes, null, null);
             }
             Optional<Location> mountain;
             Optional<Sex> sex;
-            if(parts.length >= 3){
+            if (parts.length >= 3) {
                 mountain = this.locationRepository.findById(parts[2]);
-                if(mountain.isPresent()){
+                if (mountain.isPresent()) {
                     clone.setLocation(mountain.get());
-                }else{
+                } else {
                     clone.setLocation(this.locationRepository.save(new Location(parts[2])));
                 }
             }
-            if(parts.length >= 4){
+            if (parts.length >= 4) {
                 sex = this.sexRepository.findById(parts[3]);
-                if(!sex.isPresent()){
+                if (!sex.isPresent()) {
                     clone.setSex(this.sexRepository.save(new Sex(parts[3])));
-                }else{
+                } else {
                     clone.setSex(sex.get());
                 }
             }
-
 
 
             this.speciesCloneRepository.save(clone);

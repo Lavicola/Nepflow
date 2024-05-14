@@ -17,15 +17,18 @@ import java.util.Objects;
 public class ICClone extends SpeciesClone {
 
 
-    public ICClone(String name,String cloneId, Nepenthes nepenthes) {
-        super(name,cloneId, nepenthes);
-        this.cloneId = cloneId;
+    public ICClone(String name, Nepenthes nepenthes, Location location, Sex sex) {
+        super(name,nepenthes,location,sex);
         this.nepenthes = nepenthes;
+    }
+
+    protected ICClone(String name,String cloneId, Nepenthes nepenthes, Location location, Sex sex) {
+        super(name,cloneId,nepenthes,location,sex);
     }
 
     @Override
     IVClone asIVClone() {
-        return new IVClone(this.name,this.cloneId, this.nepenthes);
+        return new IVClone(name,cloneId,nepenthes,location,sex);
     }
 
     @Override

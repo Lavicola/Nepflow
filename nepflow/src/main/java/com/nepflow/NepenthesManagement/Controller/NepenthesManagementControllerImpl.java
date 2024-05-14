@@ -1,12 +1,16 @@
 package com.nepflow.NepenthesManagement.Controller;
+import com.nepflow.NepenthesManagement.Model.Clone;
 
-import com.nepflow.NepenthesManagement.Dto.*;
-import com.nepflow.NepenthesManagement.Model.*;
-import com.nepflow.NepenthesManagement.Service.CloneMetadataService;
-import com.nepflow.NepenthesManagement.Service.CloneNepenthesService;
+import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
+import com.nepflow.NepenthesManagement.Dto.IVCloneDTO;
+import com.nepflow.NepenthesManagement.Model.ICClone;
+import com.nepflow.NepenthesManagement.Model.IVClone;
+import com.nepflow.NepenthesManagement.Model.Nepenthes;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementRetrievalService;
+import com.nepflow.NepenthesManagement.Service.NepenthesManagementservice;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -16,104 +20,59 @@ import java.util.stream.Collectors;
 @Controller
 public class NepenthesManagementControllerImpl implements NepenthesManagementApiDelegate {
 
-
     @Autowired
-    CloneMetadataService cloneMetadataService;
-
-    @Autowired
-    CloneNepenthesService cloneNepenthesService;
-
-
-    @Autowired
-    NepenthesManagementRetrievalService nepenthesManagementRetrievalService;
+    NepenthesManagementservice nepenthesManagementservice;
 
     @Autowired
     ModelMapper modelMapper;
 
+    @Autowired
+    NepenthesManagementRetrievalService nepenthesManagementRetrievalService;
 
-    public ResponseEntity<List<CloneDTO>> cloneHybridGet() {
-        return null;
-    }
-
-    public ResponseEntity<IVCloneDTO> cloneIvPost(IVCloneDTO ivCloneDTO) {
-        IVClone ivClone = this.modelMapper.map(ivCloneDTO, IVClone.class);
-
-
-        return null;
-    }
-
-    public ResponseEntity<IVCloneDTO> cloneIvPut(IVCloneDTO ivCloneDTO) {
-        IVClone ivClone = this.modelMapper.map(ivCloneDTO, IVClone.class);
-
-        return null;
-    }
-
-
-    public ResponseEntity<CloneDTO> cloneIcPut(CloneDTO cloneDTO) {
-        ICClone ivClone = this.modelMapper.map(cloneDTO, ICClone.class);
-
-        return null;
-    }
-
-    public ResponseEntity<CloneDTO> cloneIcPost(CloneDTO cloneDTO) {
-        ICClone ivClone = this.modelMapper.map(cloneDTO, ICClone.class);
-
-
-        return null;
-    }
-
-
-    public ResponseEntity<String> mountainPost(String mountainName) {
-        if (this.cloneMetadataService.createMountain(mountainName)) {
-            return ResponseEntity.ok(mountainName);
-        }
-        return ResponseEntity.internalServerError().body(null);
-    }
 
     public ResponseEntity<List<String>> nepenthesGet() {
-        List<String> names = this.nepenthesManagementRetrievalService.getNepenthes()
-                .stream()
-                .map(Nepenthes::getName)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(names);
+        List<String> nepenthesNames = this.nepenthesManagementRetrievalService.getNepenthesList().
+                stream().
+                map(nepenthes -> nepenthes.getName()).collect(Collectors.toList());
+
+        return ResponseEntity.ok(nepenthesNames);
     }
 
-    public ResponseEntity<String> nepenthesPost(String nepenthesName) {
-        if (this.cloneNepenthesService.createNewNepenthes(nepenthesName)) {
-            return ResponseEntity.ok(nepenthesName);
-        }
-        return ResponseEntity.internalServerError().body(null);
+    public ResponseEntity<String> nepenthesPost(String name) {
+        Nepenthes nepenthes = this.modelMapper.map(name,Nepenthes.class);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<NepenthesNameCloneGet200Response> nepenthesNameCloneGet(String name,
-                                                                                  String clone) {
-        Clone cloneNepenthes = this.nepenthesManagementRetrievalService.getNepenthesClone(clone, name);
 
-        return ResponseEntity.ok(this.modelMapper.map(cloneNepenthes, NepenthesNameCloneGet200Response.class));
+    public ResponseEntity<ICCloneDTO> cloneSpeciesIcPost(ICCloneDTO icCloneDTO) {
+        Clone clone = this.modelMapper.map(icCloneDTO, ICClone.class);
+
+        return null;
     }
 
-    public ResponseEntity<NepenthesClonesDTO> nepenthesNameGet(String name) {
-        List<SpeciesClone> clones = this.nepenthesManagementRetrievalService.getClonesOfNepenthes(name);
-        NepenthesClonesDTO nepenthesClonesDTO = new NepenthesClonesDTO();
-        nepenthesClonesDTO.setNepenthes(name);
-        nepenthesClonesDTO.clones(
-                clones.stream().map(clone -> {
-                    NepenthesClonesDTOClonesInner dtoClone = new NepenthesClonesDTOClonesInner();
-                    dtoClone.clonId(clone.getCloneId());
-                    dtoClone.setNepenthes(name);
-                    return dtoClone;
-                }).collect(Collectors.toList()));
+    public ResponseEntity<IVCloneDTO> cloneSpeciesIvPost(IVCloneDTO ivCloneDTO) {
+        Clone clone = this.modelMapper.map(ivCloneDTO, IVClone.class);
 
-        return ResponseEntity.ok(nepenthesClonesDTO);
+        return null;
     }
 
-    public ResponseEntity<String> producerPost(String producerName) {
+    public ResponseEntity<ICCloneDTO> cloneHybridsIcPost(ICCloneDTO icCloneDTO) {
 
-        if (this.cloneNepenthesService.createNewNepenthes(producerName)) {
-            return ResponseEntity.ok(producerName);
-        }
+        return null;
+    }
 
-        return ResponseEntity.internalServerError().body(null);
+    public ResponseEntity<IVCloneDTO> cloneHybridsIvPost(IVCloneDTO ivCloneDTO) {
+        return null;
+    }
+
+    public ResponseEntity<ICCloneDTO> cloneMultiHybridIcPost(ICCloneDTO icCloneDTO) {
+        return null;
+
+    }
+
+    public ResponseEntity<IVCloneDTO> cloneMultiHybridIvPost(IVCloneDTO ivCloneDTO) {
+
+        return null;
 
     }
 }

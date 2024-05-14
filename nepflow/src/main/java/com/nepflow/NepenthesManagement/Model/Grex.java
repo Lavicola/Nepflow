@@ -1,11 +1,8 @@
 package com.nepflow.NepenthesManagement.Model;
 
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
-
-import java.util.List;
 
 @Node
 public class Grex {
@@ -30,13 +27,13 @@ public class Grex {
         String format;
         if (mother instanceof SpeciesClone && father instanceof SpeciesClone) {
             format = "%s x %s";
-        } else if (mother instanceof Hybrid && father instanceof SpeciesClone) {
+        } else if (mother instanceof ICHybrid && father instanceof SpeciesClone) {
             format = "(%s) x %s";
-        } else if (mother instanceof SpeciesClone && father instanceof Hybrid) {
+        } else if (mother instanceof SpeciesClone && father instanceof ICHybrid) {
             format = "%s x (%s)";
-        } else if (mother instanceof SpeciesClone && father instanceof MultiHybrid) {
+        } else if (mother instanceof SpeciesClone && father instanceof ICMultiHybrid) {
             format = "%s x (%s)";
-        } else if (mother instanceof MultiHybrid && father instanceof SpeciesClone) {
+        } else if (mother instanceof ICMultiHybrid && father instanceof SpeciesClone) {
             format = "(%s) x %s";
         } else {
             format = "(%s) x (%s)";

@@ -10,17 +10,30 @@ import java.util.List;
 @Repository
 public interface CloneRepository extends Neo4jRepository<Clone,String> {
 
+
+    Clone findCloneByCloneId(String cloneId);
+
+    List<Clone> findClonesByName(String name);
+
+    boolean existsCloneByCloneId(String cloneId);
+
+
+    @Query("match(n:SpeciesClone) return n")
+    List<SpeciesClone> getAllSpeciesClones();
+
+
+
     @Query("match(n:IVClone) return n")
     List<IVClone> getAllIVClones();
 
     @Query("match(n:ICClone) return n")
     List<ICClone> getAllICClones();
 
-    @Query("match(n:Hybrid) return n")
-    List<Hybrid> getAllHybrids();
+    @Query("match(n:HybridClone) return n")
+    List<ICHybrid> getAllHybrids();
 
-    @Query("match(n:MultiHybrid) return n")
-    List<MultiHybrid> getAllMultiHybrids();
+    @Query("match(n:MultiHybridClone) return n")
+    List<ICMultiHybrid> getAllMultiHybrids();
 
 
 

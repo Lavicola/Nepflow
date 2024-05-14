@@ -26,11 +26,6 @@ public abstract class SpeciesClone extends Clone {
         this.nepenthes = nepenthes;
     }
 
-    protected SpeciesClone(String name, String cloneId, Nepenthes nepenthes, Location location) {
-        super(name,cloneId);
-        this.nepenthes = nepenthes;
-        this.location = location;
-    }
 
     protected SpeciesClone(String name, String cloneId, Nepenthes nepenthes, Location location, Sex sex) {
         super(name,cloneId);
@@ -38,7 +33,12 @@ public abstract class SpeciesClone extends Clone {
         this.location = location;
         this.sex = sex;
     }
-
+    protected SpeciesClone(String name, Nepenthes nepenthes, Location location, Sex sex) {
+        super(name);
+        this.nepenthes = nepenthes;
+        this.location = location;
+        this.sex = sex;
+    }
 
     @Override
     public String getName() {

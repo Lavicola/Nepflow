@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
             .addFilterAfter(new CookieCsrfFilter(), BasicAuthenticationFilter.class)
-            .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class);
+           .addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class);
 
         return http.build();
     }

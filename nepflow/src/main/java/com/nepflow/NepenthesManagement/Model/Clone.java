@@ -24,13 +24,8 @@ public abstract class Clone {
     // TODO at some point use validation annotation
     public static Set<String> validPlants = new HashSet<>();
 
-
-
-    @Id
-    @GeneratedValue
-    private String id;
-
     @Property
+    @Id
     protected String cloneId;
 
     @Getter
@@ -46,14 +41,19 @@ public abstract class Clone {
     @Version
     private Long version;
 
-    protected Clone(String cloneId, Grex grex) {
+    protected Clone(String name, String cloneId, Grex grex) {
+        this.name = name;
         this.cloneId = cloneId;
         this.grex = grex;
     }
 
-    protected Clone(String name,String cloneId) {
+    protected Clone(String name, String cloneId) {
         this.name = name;
         this.cloneId = cloneId;
+    }
+
+    protected Clone(String name) {
+        this.name = name;
     }
 
 

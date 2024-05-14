@@ -3,6 +3,7 @@ package com.nepflow.GrowlistManagement.Service;
 import com.nepflow.GrowlistManagement.Model.NepenthesClone;
 import com.nepflow.GrowlistManagement.Repository.NepenthesCloneRepository;
 import com.nepflow.NepenthesManagement.Model.Clone;
+import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.SpeciesCloneRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementRetrievalService;
 import com.nepflow.UserManagement.Model.User;
@@ -24,22 +25,21 @@ public class GrowListserviceImpl implements GrowListService{
     @Autowired
     SpeciesCloneRepository speciesCloneRepository;
 
+    @Autowired
+    CloneRepository cloneRepository;
+
     @Transactional("transactionManager")
     public NepenthesClone addNepenthesCloneToUser(String cloneId,String nepenthesName, User user) {
-        if(!this.verifyCloneAndNepenthesCombination(cloneId,nepenthesName)){
+        Clone clone = this.nepenthesManagementRetrievalService.getCloneByID(cloneId);
+        if(clone == null){
             return null;
         }
-        Clone clone =  this.speciesCloneRepository.findSpeciesCloneByCloneIdAndNepenthesName(cloneId,nepenthesName);
         NepenthesClone nepenthesClone = new NepenthesClone(user,clone);
         this.nepenthesCloneRepository.save(nepenthesClone);
         return nepenthesClone;
     }
 
-    @Override
-    public boolean verifyCloneAndNepenthesCombination(String cloneId,String nepenthesName) {
 
-        return this.nepenthesManagementRetrievalService.cloneExists(cloneId,nepenthesName);
-    }
 
     @Override
     public List<NepenthesClone> getNepenthesOfUser(User user) {

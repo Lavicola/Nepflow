@@ -1,6 +1,7 @@
 package com.nepflow.NepenthesManagement.Controller;
 
-import com.nepflow.NepenthesManagement.Dto.CloneDTO;
+import com.nepflow.NepenthesManagement.Dto.CloneHybridsGet200ResponseInner;
+import com.nepflow.NepenthesManagement.Dto.CloneSpeciesGet200ResponseInner;
 import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.IVCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.NepenthesClonesDTO;
@@ -29,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-11T01:52:33.806154159+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
 @Controller
 @RequestMapping("${openapi.nepflowNepenthes.base-path:/api}")
 public class NepenthesManagementApiController implements NepenthesManagementApi {

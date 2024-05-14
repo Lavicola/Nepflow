@@ -17,11 +17,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * IVCloneDTO
+ * ICCloneDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
-public class IVCloneDTO implements NepenthesNameCloneGet200Response {
+public class ICCloneDTO implements NepenthesNameCloneGet200Response {
 
   private String cloneId;
 
@@ -35,20 +35,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
 
   private CloneGrexDTO grex;
 
-  private String producer;
-
-  public IVCloneDTO() {
-    super();
-  }
-
-  /**
-   * Constructor with only required parameters
-   */
-  public IVCloneDTO(String producer) {
-    this.producer = producer;
-  }
-
-  public IVCloneDTO cloneId(String cloneId) {
+  public ICCloneDTO cloneId(String cloneId) {
     this.cloneId = cloneId;
     return this;
   }
@@ -68,7 +55,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.cloneId = cloneId;
   }
 
-  public IVCloneDTO name(String name) {
+  public ICCloneDTO name(String name) {
     this.name = name;
     return this;
   }
@@ -88,7 +75,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.name = name;
   }
 
-  public IVCloneDTO sex(String sex) {
+  public ICCloneDTO sex(String sex) {
     this.sex = sex;
     return this;
   }
@@ -108,7 +95,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.sex = sex;
   }
 
-  public IVCloneDTO nepenthesName(CloneGrexDTO nepenthesName) {
+  public ICCloneDTO nepenthesName(CloneGrexDTO nepenthesName) {
     this.nepenthesName = nepenthesName;
     return this;
   }
@@ -128,7 +115,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.nepenthesName = nepenthesName;
   }
 
-  public IVCloneDTO location(String location) {
+  public ICCloneDTO location(String location) {
     this.location = location;
     return this;
   }
@@ -148,7 +135,7 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.location = location;
   }
 
-  public IVCloneDTO grex(CloneGrexDTO grex) {
+  public ICCloneDTO grex(CloneGrexDTO grex) {
     this.grex = grex;
     return this;
   }
@@ -168,26 +155,6 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     this.grex = grex;
   }
 
-  public IVCloneDTO producer(String producer) {
-    this.producer = producer;
-    return this;
-  }
-
-  /**
-   * Get producer
-   * @return producer
-  */
-  @NotNull 
-  @Schema(name = "producer", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("producer")
-  public String getProducer() {
-    return producer;
-  }
-
-  public void setProducer(String producer) {
-    this.producer = producer;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -196,32 +163,30 @@ public class IVCloneDTO implements NepenthesNameCloneGet200Response {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    IVCloneDTO ivCloneDTO = (IVCloneDTO) o;
-    return Objects.equals(this.cloneId, ivCloneDTO.cloneId) &&
-        Objects.equals(this.name, ivCloneDTO.name) &&
-        Objects.equals(this.sex, ivCloneDTO.sex) &&
-        Objects.equals(this.nepenthesName, ivCloneDTO.nepenthesName) &&
-        Objects.equals(this.location, ivCloneDTO.location) &&
-        Objects.equals(this.grex, ivCloneDTO.grex) &&
-        Objects.equals(this.producer, ivCloneDTO.producer);
+    ICCloneDTO icCloneDTO = (ICCloneDTO) o;
+    return Objects.equals(this.cloneId, icCloneDTO.cloneId) &&
+        Objects.equals(this.name, icCloneDTO.name) &&
+        Objects.equals(this.sex, icCloneDTO.sex) &&
+        Objects.equals(this.nepenthesName, icCloneDTO.nepenthesName) &&
+        Objects.equals(this.location, icCloneDTO.location) &&
+        Objects.equals(this.grex, icCloneDTO.grex);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cloneId, name, sex, nepenthesName, location, grex, producer);
+    return Objects.hash(cloneId, name, sex, nepenthesName, location, grex);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class IVCloneDTO {\n");
+    sb.append("class ICCloneDTO {\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");
     sb.append("    nepenthesName: ").append(toIndentedString(nepenthesName)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    grex: ").append(toIndentedString(grex)).append("\n");
-    sb.append("    producer: ").append(toIndentedString(producer)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,6 +1,7 @@
 package com.nepflow.NepenthesManagement.Controller;
 
-import com.nepflow.NepenthesManagement.Dto.CloneDTO;
+import com.nepflow.NepenthesManagement.Dto.CloneHybridsGet200ResponseInner;
+import com.nepflow.NepenthesManagement.Dto.CloneSpeciesGet200ResponseInner;
 import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.IVCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.NepenthesClonesDTO;
@@ -22,7 +23,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link NepenthesManagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-11T01:52:33.806154159+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
 public interface NepenthesManagementApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -30,16 +31,16 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * GET /clone/hybrid : get all hybrids
+     * GET /clone/hybrids/ : get all Species Clones
      *
      * @return OK (status code 200)
-     * @see NepenthesManagementApi#cloneHybridGet
+     * @see NepenthesManagementApi#cloneHybridsGet
      */
-    default ResponseEntity<List<CloneDTO>> cloneHybridGet() {
+    default ResponseEntity<List<CloneHybridsGet200ResponseInner>> cloneHybridsGet() {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"clonId\" : \"clonId\", \"sex\" : \"sex\", \"name\" : \"name\" }, { \"clonId\" : \"clonId\", \"sex\" : \"sex\", \"name\" : \"name\" } ]";
+                    String exampleString = "[ null, null ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -50,17 +51,17 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * POST /clone/hybrid : add a new hybrid
+     * POST /clone/hybrids/ic : add a new iv hybrid clone
      *
-     * @param cloneDTO  (required)
+     * @param icCloneDTO  (required)
      * @return OK (status code 200)
-     * @see NepenthesManagementApi#cloneHybridPost
+     * @see NepenthesManagementApi#cloneHybridsIcPost
      */
-    default ResponseEntity<CloneDTO> cloneHybridPost(CloneDTO cloneDTO) {
+    default ResponseEntity<ICCloneDTO> cloneHybridsIcPost(ICCloneDTO icCloneDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"clonId\" : \"clonId\", \"sex\" : \"sex\", \"name\" : \"name\" }";
+                    String exampleString = "{ \"sex\" : \"sex\", \"name\" : \"name\", \"nepenthesName\" : { \"cloneId\" : \"cloneId\" }, \"cloneId\" : \"cloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -71,18 +72,18 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * POST /clone/ic : add a new ic clone of a nepenthes
+     * PUT /clone/hybrids/ic
      *
-     * @param icCloneDTO Clone DTO with new values (required)
+     * @param icCloneDTO  (required)
      * @return OK (status code 200)
      *         or No nepenthes found (status code 404)
-     * @see NepenthesManagementApi#cloneIcPost
+     * @see NepenthesManagementApi#cloneHybridsIcPut
      */
-    default ResponseEntity<ICCloneDTO> cloneIcPost(ICCloneDTO icCloneDTO) {
+    default ResponseEntity<ICCloneDTO> cloneHybridsIcPut(ICCloneDTO icCloneDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"nepenthes\" : \"nepenthes\", \"mountain\" : \"mountain\", \"clonId\" : \"clonId\", \"sex\" : \"sex\" }";
+                    String exampleString = "{ \"sex\" : \"sex\", \"name\" : \"name\", \"nepenthesName\" : { \"cloneId\" : \"cloneId\" }, \"cloneId\" : \"cloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -93,36 +94,13 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * PUT /clone/ic : add/edit information of an existing clone (only sex allowed)
+     * POST /clone/hybrids/iv : add a new iv hybrid
      *
-     * @param icCloneDTO Clone DTO with new values (required)
+     * @param ivCloneDTO  (required)
      * @return OK (status code 200)
-     *         or No nepenthes found (status code 404)
-     * @see NepenthesManagementApi#cloneIcPut
+     * @see NepenthesManagementApi#cloneHybridsIvPost
      */
-    default ResponseEntity<ICCloneDTO> cloneIcPut(ICCloneDTO icCloneDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"nepenthes\" : \"nepenthes\", \"mountain\" : \"mountain\", \"clonId\" : \"clonId\", \"sex\" : \"sex\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * POST /clone/iv : add a new iv clone of a nepenthes
-     *
-     * @param ivCloneDTO Clone DTO with new values (required)
-     * @return OK (status code 200)
-     *         or No nepenthes found (status code 404)
-     * @see NepenthesManagementApi#cloneIvPost
-     */
-    default ResponseEntity<IVCloneDTO> cloneIvPost(IVCloneDTO ivCloneDTO) {
+    default ResponseEntity<IVCloneDTO> cloneHybridsIvPost(IVCloneDTO ivCloneDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -137,14 +115,14 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * PUT /clone/iv : add/edit information of an existing clone (only sex allowed)
+     * PUT /clone/hybrids/iv
      *
      * @param ivCloneDTO  (required)
      * @return OK (status code 200)
      *         or No nepenthes found (status code 404)
-     * @see NepenthesManagementApi#cloneIvPut
+     * @see NepenthesManagementApi#cloneHybridsIvPut
      */
-    default ResponseEntity<IVCloneDTO> cloneIvPut(IVCloneDTO ivCloneDTO) {
+    default ResponseEntity<IVCloneDTO> cloneHybridsIvPut(IVCloneDTO ivCloneDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -159,16 +137,16 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * GET /clone/multihybrid : get all multihybrids
+     * GET /clone/multi-hybrid/ : get all multi-hybrid Clones
      *
      * @return OK (status code 200)
-     * @see NepenthesManagementApi#cloneMultihybridGet
+     * @see NepenthesManagementApi#cloneMultiHybridGet
      */
-    default ResponseEntity<List<CloneDTO>> cloneMultihybridGet() {
+    default ResponseEntity<List<CloneHybridsGet200ResponseInner>> cloneMultiHybridGet() {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"clonId\" : \"clonId\", \"sex\" : \"sex\", \"name\" : \"name\" }, { \"clonId\" : \"clonId\", \"sex\" : \"sex\", \"name\" : \"name\" } ]";
+                    String exampleString = "[ null, null ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -179,17 +157,17 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * POST /clone/multihybrid : add a new multihybrid
+     * POST /clone/multi-hybrid/ic : add a new iv multi-hybrid clone
      *
-     * @param cloneDTO  (required)
+     * @param icCloneDTO  (required)
      * @return OK (status code 200)
-     * @see NepenthesManagementApi#cloneMultihybridPost
+     * @see NepenthesManagementApi#cloneMultiHybridIcPost
      */
-    default ResponseEntity<CloneDTO> cloneMultihybridPost(CloneDTO cloneDTO) {
+    default ResponseEntity<ICCloneDTO> cloneMultiHybridIcPost(ICCloneDTO icCloneDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"clonId\" : \"clonId\", \"sex\" : \"sex\", \"name\" : \"name\" }";
+                    String exampleString = "{ \"sex\" : \"sex\", \"name\" : \"name\", \"nepenthesName\" : { \"cloneId\" : \"cloneId\" }, \"cloneId\" : \"cloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -200,14 +178,185 @@ public interface NepenthesManagementApiDelegate {
     }
 
     /**
-     * POST /mountain : add a new Mountain
+     * PUT /clone/multi-hybrid/ic
      *
-     * @param body MountainDTO with all necessary Attributes (required)
+     * @param icCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     * @see NepenthesManagementApi#cloneMultiHybridIcPut
+     */
+    default ResponseEntity<ICCloneDTO> cloneMultiHybridIcPut(ICCloneDTO icCloneDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"sex\" : \"sex\", \"name\" : \"name\", \"nepenthesName\" : { \"cloneId\" : \"cloneId\" }, \"cloneId\" : \"cloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /clone/multi-hybrid/iv : add a new iv multi-hybrid
+     *
+     * @param ivCloneDTO  (required)
+     * @return OK (status code 200)
+     * @see NepenthesManagementApi#cloneMultiHybridIvPost
+     */
+    default ResponseEntity<IVCloneDTO> cloneMultiHybridIvPost(IVCloneDTO ivCloneDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "null";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /clone/multi-hybrid/iv
+     *
+     * @param ivCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     * @see NepenthesManagementApi#cloneMultiHybridIvPut
+     */
+    default ResponseEntity<IVCloneDTO> cloneMultiHybridIvPut(IVCloneDTO ivCloneDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "null";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /clone/species/ : get all Species Clones
+     *
+     * @return OK (status code 200)
+     * @see NepenthesManagementApi#cloneSpeciesGet
+     */
+    default ResponseEntity<List<CloneSpeciesGet200ResponseInner>> cloneSpeciesGet() {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ null, null ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /clone/species/ic : add a new iv clone of a nepenthes
+     *
+     * @param icCloneDTO Clone DTO with new values (required)
+     * @return OK (status code 200)
+     * @see NepenthesManagementApi#cloneSpeciesIcPost
+     */
+    default ResponseEntity<ICCloneDTO> cloneSpeciesIcPost(ICCloneDTO icCloneDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"sex\" : \"sex\", \"name\" : \"name\", \"nepenthesName\" : { \"cloneId\" : \"cloneId\" }, \"cloneId\" : \"cloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /clone/species/ic
+     *
+     * @param icCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     * @see NepenthesManagementApi#cloneSpeciesIcPut
+     */
+    default ResponseEntity<ICCloneDTO> cloneSpeciesIcPut(ICCloneDTO icCloneDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"sex\" : \"sex\", \"name\" : \"name\", \"nepenthesName\" : { \"cloneId\" : \"cloneId\" }, \"cloneId\" : \"cloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /clone/species/iv : add a new iv clone of a nepenthes
+     *
+     * @param ivCloneDTO Clone DTO with new values (required)
+     * @return OK (status code 200)
+     * @see NepenthesManagementApi#cloneSpeciesIvPost
+     */
+    default ResponseEntity<IVCloneDTO> cloneSpeciesIvPost(IVCloneDTO ivCloneDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "null";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /clone/species/iv
+     *
+     * @param ivCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     * @see NepenthesManagementApi#cloneSpeciesIvPut
+     */
+    default ResponseEntity<IVCloneDTO> cloneSpeciesIvPut(IVCloneDTO ivCloneDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "null";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /location : add a new Location
+     *
+     * @param body LocationdTo with all necessary Attributes (required)
      * @return OK (status code 200)
      *         or Internal Error (status code 500)
-     * @see NepenthesManagementApi#mountainPost
+     * @see NepenthesManagementApi#locationPost
      */
-    default ResponseEntity<String> mountainPost(String body) {
+    default ResponseEntity<String> locationPost(String body) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

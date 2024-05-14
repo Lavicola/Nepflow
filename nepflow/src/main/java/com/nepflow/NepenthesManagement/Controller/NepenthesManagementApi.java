@@ -5,7 +5,8 @@
  */
 package com.nepflow.NepenthesManagement.Controller;
 
-import com.nepflow.NepenthesManagement.Dto.CloneDTO;
+import com.nepflow.NepenthesManagement.Dto.CloneHybridsGet200ResponseInner;
+import com.nepflow.NepenthesManagement.Dto.CloneSpeciesGet200ResponseInner;
 import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.IVCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.NepenthesClonesDTO;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-11T01:52:33.806154159+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
 @Validated
 @Tag(name = "NepenthesManagement", description = "Operations to manage Nepenthes")
 public interface NepenthesManagementApi {
@@ -42,102 +43,70 @@ public interface NepenthesManagementApi {
     }
 
     /**
-     * GET /clone/hybrid : get all hybrids
+     * GET /clone/hybrids/ : get all Species Clones
      *
      * @return OK (status code 200)
      */
     @Operation(
-        operationId = "cloneHybridGet",
-        summary = "get all hybrids",
+        operationId = "cloneHybridsGet",
+        summary = "get all Species Clones",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CloneDTO.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CloneHybridsGet200ResponseInner.class)))
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/clone/hybrid",
+        value = "/clone/hybrids/",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<CloneDTO>> cloneHybridGet(
+    default ResponseEntity<List<CloneHybridsGet200ResponseInner>> cloneHybridsGet(
         
     ) {
-        return getDelegate().cloneHybridGet();
+        return getDelegate().cloneHybridsGet();
     }
 
 
     /**
-     * POST /clone/hybrid : add a new hybrid
+     * POST /clone/hybrids/ic : add a new iv hybrid clone
      *
-     * @param cloneDTO  (required)
+     * @param icCloneDTO  (required)
      * @return OK (status code 200)
      */
     @Operation(
-        operationId = "cloneHybridPost",
-        summary = "add a new hybrid",
+        operationId = "cloneHybridsIcPost",
+        summary = "add a new iv hybrid clone",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CloneDTO.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ICCloneDTO.class))
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/clone/hybrid",
+        value = "/clone/hybrids/ic",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<CloneDTO> cloneHybridPost(
-        @Parameter(name = "CloneDTO", description = "", required = true) @Valid @RequestBody CloneDTO cloneDTO
+    default ResponseEntity<ICCloneDTO> cloneHybridsIcPost(
+        @Parameter(name = "ICCloneDTO", description = "", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
     ) {
-        return getDelegate().cloneHybridPost(cloneDTO);
+        return getDelegate().cloneHybridsIcPost(icCloneDTO);
     }
 
 
     /**
-     * POST /clone/ic : add a new ic clone of a nepenthes
+     * PUT /clone/hybrids/ic
      *
-     * @param icCloneDTO Clone DTO with new values (required)
+     * @param icCloneDTO  (required)
      * @return OK (status code 200)
      *         or No nepenthes found (status code 404)
      */
     @Operation(
-        operationId = "cloneIcPost",
-        summary = "add a new ic clone of a nepenthes",
-        tags = { "NepenthesManagement" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ICCloneDTO.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "No nepenthes found")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/clone/ic",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<ICCloneDTO> cloneIcPost(
-        @Parameter(name = "ICCloneDTO", description = "Clone DTO with new values", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
-    ) {
-        return getDelegate().cloneIcPost(icCloneDTO);
-    }
-
-
-    /**
-     * PUT /clone/ic : add/edit information of an existing clone (only sex allowed)
-     *
-     * @param icCloneDTO Clone DTO with new values (required)
-     * @return OK (status code 200)
-     *         or No nepenthes found (status code 404)
-     */
-    @Operation(
-        operationId = "cloneIcPut",
-        summary = "add/edit information of an existing clone (only sex allowed)",
+        operationId = "cloneHybridsIcPut",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
@@ -148,58 +117,55 @@ public interface NepenthesManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/clone/ic",
+        value = "/clone/hybrids/ic",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<ICCloneDTO> cloneIcPut(
-        @Parameter(name = "ICCloneDTO", description = "Clone DTO with new values", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
+    default ResponseEntity<ICCloneDTO> cloneHybridsIcPut(
+        @Parameter(name = "ICCloneDTO", description = "", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
     ) {
-        return getDelegate().cloneIcPut(icCloneDTO);
+        return getDelegate().cloneHybridsIcPut(icCloneDTO);
     }
 
 
     /**
-     * POST /clone/iv : add a new iv clone of a nepenthes
+     * POST /clone/hybrids/iv : add a new iv hybrid
      *
-     * @param ivCloneDTO Clone DTO with new values (required)
+     * @param ivCloneDTO  (required)
      * @return OK (status code 200)
-     *         or No nepenthes found (status code 404)
      */
     @Operation(
-        operationId = "cloneIvPost",
-        summary = "add a new iv clone of a nepenthes",
+        operationId = "cloneHybridsIvPost",
+        summary = "add a new iv hybrid",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = IVCloneDTO.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "No nepenthes found")
+            })
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/clone/iv",
+        value = "/clone/hybrids/iv",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<IVCloneDTO> cloneIvPost(
-        @Parameter(name = "IVCloneDTO", description = "Clone DTO with new values", required = true) @Valid @RequestBody IVCloneDTO ivCloneDTO
+    default ResponseEntity<IVCloneDTO> cloneHybridsIvPost(
+        @Parameter(name = "IVCloneDTO", description = "", required = true) @Valid @RequestBody IVCloneDTO ivCloneDTO
     ) {
-        return getDelegate().cloneIvPost(ivCloneDTO);
+        return getDelegate().cloneHybridsIvPost(ivCloneDTO);
     }
 
 
     /**
-     * PUT /clone/iv : add/edit information of an existing clone (only sex allowed)
+     * PUT /clone/hybrids/iv
      *
      * @param ivCloneDTO  (required)
      * @return OK (status code 200)
      *         or No nepenthes found (status code 404)
      */
     @Operation(
-        operationId = "cloneIvPut",
-        summary = "add/edit information of an existing clone (only sex allowed)",
+        operationId = "cloneHybridsIvPut",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
@@ -210,83 +176,317 @@ public interface NepenthesManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.PUT,
-        value = "/clone/iv",
+        value = "/clone/hybrids/iv",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<IVCloneDTO> cloneIvPut(
+    default ResponseEntity<IVCloneDTO> cloneHybridsIvPut(
         @Parameter(name = "IVCloneDTO", description = "", required = true) @Valid @RequestBody IVCloneDTO ivCloneDTO
     ) {
-        return getDelegate().cloneIvPut(ivCloneDTO);
+        return getDelegate().cloneHybridsIvPut(ivCloneDTO);
     }
 
 
     /**
-     * GET /clone/multihybrid : get all multihybrids
+     * GET /clone/multi-hybrid/ : get all multi-hybrid Clones
      *
      * @return OK (status code 200)
      */
     @Operation(
-        operationId = "cloneMultihybridGet",
-        summary = "get all multihybrids",
+        operationId = "cloneMultiHybridGet",
+        summary = "get all multi-hybrid Clones",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CloneDTO.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CloneHybridsGet200ResponseInner.class)))
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/clone/multihybrid",
+        value = "/clone/multi-hybrid/",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<CloneDTO>> cloneMultihybridGet(
+    default ResponseEntity<List<CloneHybridsGet200ResponseInner>> cloneMultiHybridGet(
         
     ) {
-        return getDelegate().cloneMultihybridGet();
+        return getDelegate().cloneMultiHybridGet();
     }
 
 
     /**
-     * POST /clone/multihybrid : add a new multihybrid
+     * POST /clone/multi-hybrid/ic : add a new iv multi-hybrid clone
      *
-     * @param cloneDTO  (required)
+     * @param icCloneDTO  (required)
      * @return OK (status code 200)
      */
     @Operation(
-        operationId = "cloneMultihybridPost",
-        summary = "add a new multihybrid",
+        operationId = "cloneMultiHybridIcPost",
+        summary = "add a new iv multi-hybrid clone",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = CloneDTO.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ICCloneDTO.class))
             })
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/clone/multihybrid",
+        value = "/clone/multi-hybrid/ic",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<CloneDTO> cloneMultihybridPost(
-        @Parameter(name = "CloneDTO", description = "", required = true) @Valid @RequestBody CloneDTO cloneDTO
+    default ResponseEntity<ICCloneDTO> cloneMultiHybridIcPost(
+        @Parameter(name = "ICCloneDTO", description = "", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
     ) {
-        return getDelegate().cloneMultihybridPost(cloneDTO);
+        return getDelegate().cloneMultiHybridIcPost(icCloneDTO);
     }
 
 
     /**
-     * POST /mountain : add a new Mountain
+     * PUT /clone/multi-hybrid/ic
      *
-     * @param body MountainDTO with all necessary Attributes (required)
+     * @param icCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     */
+    @Operation(
+        operationId = "cloneMultiHybridIcPut",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ICCloneDTO.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "No nepenthes found")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/clone/multi-hybrid/ic",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<ICCloneDTO> cloneMultiHybridIcPut(
+        @Parameter(name = "ICCloneDTO", description = "", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
+    ) {
+        return getDelegate().cloneMultiHybridIcPut(icCloneDTO);
+    }
+
+
+    /**
+     * POST /clone/multi-hybrid/iv : add a new iv multi-hybrid
+     *
+     * @param ivCloneDTO  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "cloneMultiHybridIvPost",
+        summary = "add a new iv multi-hybrid",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = IVCloneDTO.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/clone/multi-hybrid/iv",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<IVCloneDTO> cloneMultiHybridIvPost(
+        @Parameter(name = "IVCloneDTO", description = "", required = true) @Valid @RequestBody IVCloneDTO ivCloneDTO
+    ) {
+        return getDelegate().cloneMultiHybridIvPost(ivCloneDTO);
+    }
+
+
+    /**
+     * PUT /clone/multi-hybrid/iv
+     *
+     * @param ivCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     */
+    @Operation(
+        operationId = "cloneMultiHybridIvPut",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = IVCloneDTO.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "No nepenthes found")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/clone/multi-hybrid/iv",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<IVCloneDTO> cloneMultiHybridIvPut(
+        @Parameter(name = "IVCloneDTO", description = "", required = true) @Valid @RequestBody IVCloneDTO ivCloneDTO
+    ) {
+        return getDelegate().cloneMultiHybridIvPut(ivCloneDTO);
+    }
+
+
+    /**
+     * GET /clone/species/ : get all Species Clones
+     *
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "cloneSpeciesGet",
+        summary = "get all Species Clones",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CloneSpeciesGet200ResponseInner.class)))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/clone/species/",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<CloneSpeciesGet200ResponseInner>> cloneSpeciesGet(
+        
+    ) {
+        return getDelegate().cloneSpeciesGet();
+    }
+
+
+    /**
+     * POST /clone/species/ic : add a new iv clone of a nepenthes
+     *
+     * @param icCloneDTO Clone DTO with new values (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "cloneSpeciesIcPost",
+        summary = "add a new iv clone of a nepenthes",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ICCloneDTO.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/clone/species/ic",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<ICCloneDTO> cloneSpeciesIcPost(
+        @Parameter(name = "ICCloneDTO", description = "Clone DTO with new values", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
+    ) {
+        return getDelegate().cloneSpeciesIcPost(icCloneDTO);
+    }
+
+
+    /**
+     * PUT /clone/species/ic
+     *
+     * @param icCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     */
+    @Operation(
+        operationId = "cloneSpeciesIcPut",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ICCloneDTO.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "No nepenthes found")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/clone/species/ic",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<ICCloneDTO> cloneSpeciesIcPut(
+        @Parameter(name = "ICCloneDTO", description = "", required = true) @Valid @RequestBody ICCloneDTO icCloneDTO
+    ) {
+        return getDelegate().cloneSpeciesIcPut(icCloneDTO);
+    }
+
+
+    /**
+     * POST /clone/species/iv : add a new iv clone of a nepenthes
+     *
+     * @param ivCloneDTO Clone DTO with new values (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "cloneSpeciesIvPost",
+        summary = "add a new iv clone of a nepenthes",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = IVCloneDTO.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/clone/species/iv",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<IVCloneDTO> cloneSpeciesIvPost(
+        @Parameter(name = "IVCloneDTO", description = "Clone DTO with new values", required = true) @Valid @RequestBody IVCloneDTO ivCloneDTO
+    ) {
+        return getDelegate().cloneSpeciesIvPost(ivCloneDTO);
+    }
+
+
+    /**
+     * PUT /clone/species/iv
+     *
+     * @param ivCloneDTO  (required)
+     * @return OK (status code 200)
+     *         or No nepenthes found (status code 404)
+     */
+    @Operation(
+        operationId = "cloneSpeciesIvPut",
+        tags = { "NepenthesManagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = IVCloneDTO.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "No nepenthes found")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/clone/species/iv",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<IVCloneDTO> cloneSpeciesIvPut(
+        @Parameter(name = "IVCloneDTO", description = "", required = true) @Valid @RequestBody IVCloneDTO ivCloneDTO
+    ) {
+        return getDelegate().cloneSpeciesIvPut(ivCloneDTO);
+    }
+
+
+    /**
+     * POST /location : add a new Location
+     *
+     * @param body LocationdTo with all necessary Attributes (required)
      * @return OK (status code 200)
      *         or Internal Error (status code 500)
      */
     @Operation(
-        operationId = "mountainPost",
-        summary = "add a new Mountain",
+        operationId = "locationPost",
+        summary = "add a new Location",
         tags = { "NepenthesManagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
@@ -297,14 +497,14 @@ public interface NepenthesManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/mountain",
+        value = "/location",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<String> mountainPost(
-        @Parameter(name = "body", description = "MountainDTO with all necessary Attributes", required = true) @Valid @RequestBody String body
+    default ResponseEntity<String> locationPost(
+        @Parameter(name = "body", description = "LocationdTo with all necessary Attributes", required = true) @Valid @RequestBody String body
     ) {
-        return getDelegate().mountainPost(body);
+        return getDelegate().locationPost(body);
     }
 
 

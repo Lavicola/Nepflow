@@ -14,16 +14,16 @@ import java.util.Objects;
 @Node
 public class IVClone extends SpeciesClone {
 
-    // TODO Producer must be linked if an IV clone is added
     @Setter
     @Relationship("PROPAGATED_BY")
     Producer producer;
 
 
-    public IVClone(String name, String cloneId, Nepenthes nepenthes) {
-        super(name, cloneId, nepenthes);
-        this.cloneId = cloneId;
 
+    public IVClone(String name,String cloneId, Nepenthes nepenthes, Location location, Sex sex) {
+        super(name,cloneId, nepenthes,location,sex);
+        assert producer != null: "IV Clone without Producer makes no sense";
+        this.producer = producer;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class IVClone extends SpeciesClone {
 
     @Override
     ICClone asICClone() {
-        return new ICClone(this.name,this.cloneId, this.nepenthes);
+        return new ICClone(name,cloneId,nepenthes,location,sex);
     }
 
 
