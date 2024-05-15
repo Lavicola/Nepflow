@@ -1,11 +1,8 @@
 package com.nepflow.NepenthesManagement.Controller;
-import com.nepflow.NepenthesManagement.Model.Clone;
+import com.nepflow.NepenthesManagement.Model.*;
 
 import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.IVCloneDTO;
-import com.nepflow.NepenthesManagement.Model.ICClone;
-import com.nepflow.NepenthesManagement.Model.IVClone;
-import com.nepflow.NepenthesManagement.Model.Nepenthes;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementRetrievalService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementservice;
 import org.modelmapper.ModelMapper;
@@ -45,13 +42,19 @@ public class NepenthesManagementControllerImpl implements NepenthesManagementApi
 
 
     public ResponseEntity<ICCloneDTO> cloneSpeciesIcPost(ICCloneDTO icCloneDTO) {
-        Clone clone = this.modelMapper.map(icCloneDTO, ICClone.class);
+        SpeciesClone clone = new ICClone();
+        this.nepenthesManagementservice.createNewSpeciesClone(clone,
+                icCloneDTO.getNepenthes(),icCloneDTO.getCloneId(),
+                icCloneDTO.getLocation(),icCloneDTO.getSex(),null);
 
         return null;
     }
 
     public ResponseEntity<IVCloneDTO> cloneSpeciesIvPost(IVCloneDTO ivCloneDTO) {
-        Clone clone = this.modelMapper.map(ivCloneDTO, IVClone.class);
+        SpeciesClone clone = new IVClone();
+        this.nepenthesManagementservice.createNewSpeciesClone(clone,
+                ivCloneDTO.getNepenthes(),ivCloneDTO.getCloneId(),
+                ivCloneDTO.getLocation(),ivCloneDTO.getSex(),ivCloneDTO.getProducer());
 
         return null;
     }

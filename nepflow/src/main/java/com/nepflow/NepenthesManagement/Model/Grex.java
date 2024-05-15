@@ -31,10 +31,10 @@ public class Grex {
             format = "(%s) x %s";
         } else if (mother instanceof SpeciesClone && father instanceof ICHybrid) {
             format = "%s x (%s)";
-        } else if (mother instanceof SpeciesClone && father instanceof ICMultiHybrid) {
-            format = "%s x (%s)";
-        } else if (mother instanceof ICMultiHybrid && father instanceof SpeciesClone) {
-            format = "(%s) x %s";
+     //   } else if (mother instanceof SpeciesClone && father instanceof ICMultiHybrid) {
+     //       format = "%s x (%s)";
+   //     } else if (mother instanceof ICMultiHybrid && father instanceof SpeciesClone) {
+   //         format = "(%s) x %s";
         } else {
             format = "(%s) x (%s)";
         }

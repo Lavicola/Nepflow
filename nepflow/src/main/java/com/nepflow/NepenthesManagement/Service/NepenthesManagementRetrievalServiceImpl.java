@@ -23,6 +23,11 @@ public class NepenthesManagementRetrievalServiceImpl implements NepenthesManagem
     }
 
     @Override
+    public Nepenthes getNepenthes(String name) {
+        return this.nepenthesRepository.findNepenthesByName(name);
+    }
+
+    @Override
     public Clone getCloneByID(String cloneId) {
         return this.cloneRepository.findCloneByCloneId(cloneId);
     }

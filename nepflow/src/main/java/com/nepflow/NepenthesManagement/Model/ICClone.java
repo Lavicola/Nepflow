@@ -1,10 +1,7 @@
 package com.nepflow.NepenthesManagement.Model;
 
-import lombok.Setter;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
-
-import java.util.Objects;
 
 
 /**
@@ -17,18 +14,19 @@ import java.util.Objects;
 public class ICClone extends SpeciesClone {
 
 
-    public ICClone(String name, Nepenthes nepenthes, Location location, Sex sex) {
-        super(name,nepenthes,location,sex);
-        this.nepenthes = nepenthes;
+    public ICClone(){
+        super();
     }
 
-    protected ICClone(String name,String cloneId, Nepenthes nepenthes, Location location, Sex sex) {
-        super(name,cloneId,nepenthes,location,sex);
+
+    protected ICClone(String name, Nepenthes nepenthes, Location location, Sex sex) {
+        super(name,nepenthes,location,sex);
     }
+
 
     @Override
     IVClone asIVClone() {
-        return new IVClone(name,cloneId,nepenthes,location,sex);
+        return new IVClone(name,cloneId,nepenthes,location,sex,null);
     }
 
     @Override

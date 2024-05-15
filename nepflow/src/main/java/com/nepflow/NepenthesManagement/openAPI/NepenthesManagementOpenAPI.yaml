@@ -11,7 +11,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: http://localhost:4200/api
+  - url: http://localhost:8080/api
 
 paths:
   /nepenthes:
@@ -457,8 +457,8 @@ components:
           type: string
         sex:
           type: string
-        nepenthesName:
-          $ref: '#/components/schemas/CloneGrexDTO'
+        nepenthes:
+          $ref: '#/components/schemas/NepenthesDTO'
         Location:
           $ref: '#/components/schemas/LocationDTO'
         grex:
@@ -487,3 +487,15 @@ components:
             anyOf:
               - $ref: '#/components/schemas/ICCloneDTO'
               - $ref: '#/components/schemas/IVCloneDTO'
+
+
+
+
+
+
+
+
+
+
+
+

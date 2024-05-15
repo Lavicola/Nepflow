@@ -60,31 +60,31 @@ public class DataInitializationService {
             Nepenthes nepenthes = this.nepenthesRepository.findNepenthesByName(parts[1]);
             SpeciesClone clone;
             if (parts[0].contains("ISC")) {
-                clone = new ICClone(nepenthes.getName(), nepenthes, null, null);
+                //clone = new ICClone(nepenthes.getName(), nepenthes, null, null);
             } else {
-                clone = new IVClone(nepenthes.getName(), parts[0], nepenthes, null, null);
+               // clone = new IVClone(nepenthes.getName(), parts[0], nepenthes, null, null);
             }
             Optional<Location> mountain;
             Optional<Sex> sex;
             if (parts.length >= 3) {
                 mountain = this.locationRepository.findById(parts[2]);
                 if (mountain.isPresent()) {
-                    clone.setLocation(mountain.get());
+                    //clone.setLocation(mountain.get());
                 } else {
-                    clone.setLocation(this.locationRepository.save(new Location(parts[2])));
+                   // clone.setLocation(this.locationRepository.save(new Location(parts[2])));
                 }
             }
             if (parts.length >= 4) {
                 sex = this.sexRepository.findById(parts[3]);
                 if (!sex.isPresent()) {
-                    clone.setSex(this.sexRepository.save(new Sex(parts[3])));
+                    //clone.setSex(this.sexRepository.save(new Sex(parts[3])));
                 } else {
-                    clone.setSex(sex.get());
+                    //clone.setSex(sex.get());
                 }
             }
 
 
-            this.speciesCloneRepository.save(clone);
+            //this.speciesCloneRepository.save(clone);
 
         }
     }

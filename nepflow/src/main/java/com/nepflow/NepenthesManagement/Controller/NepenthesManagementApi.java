@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T00:38:12.962208100+02:00[Europe/Berlin]")
 @Validated
 @Tag(name = "NepenthesManagement", description = "Operations to manage Nepenthes")
 public interface NepenthesManagementApi {

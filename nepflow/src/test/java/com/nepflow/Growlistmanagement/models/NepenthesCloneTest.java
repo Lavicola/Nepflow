@@ -5,7 +5,6 @@ import com.nepflow.NepenthesManagement.Model.Clone;
 import com.nepflow.NepenthesManagement.Model.IVClone;
 import com.nepflow.NepenthesManagement.Model.Nepenthes;
 import com.nepflow.NepenthesManagement.Repository.SpeciesCloneRepository;
-import com.nepflow.NepenthesManagement.Repository.IVCloneRepository;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Repository.UserRepository;
 import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
@@ -24,8 +23,6 @@ public class NepenthesCloneTest {
     @Autowired
     NepenthesCloneRepository nepenthesCloneRepository;
 
-    @Autowired
-    IVCloneRepository ivCloneRepository;
 
     @Autowired
     UserRepository userRepository;

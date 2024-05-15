@@ -1,18 +1,11 @@
 package com.nepflow.NepenthesManagement.Model;
 
-import org.springframework.data.neo4j.core.schema.Node;
+public class ICMultiHybrid extends MultiHybrid{
 
-@Node
-public class ICMultiHybrid extends MultiHybridClone {
+    ICMultiHybrid(){
 
-
-    protected ICMultiHybrid(String name, String cloneId) {
-        super(name, cloneId);
     }
-
-
-    protected ICMultiHybrid(String name, String cloneId, Grex grex) {
-        super(name, cloneId,grex);
+    public ICMultiHybrid(String name, Grex grex, Sex sex) {
+        super(name, grex, sex);
     }
-
 }

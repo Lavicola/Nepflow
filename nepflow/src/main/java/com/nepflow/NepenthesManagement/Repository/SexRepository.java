@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SexRepository extends Neo4jRepository<Sex,String> {
 
+    Sex findSexBySex(String sex);
 
 }

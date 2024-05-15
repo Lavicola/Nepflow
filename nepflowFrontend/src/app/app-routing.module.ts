@@ -4,7 +4,7 @@ import {UserOverviewComponent} from "./user-overview/user-overview.component";
 import {NepenthesOverviewComponent} from "./nepenthes-overview/nepenthes-overview.component";
 import {NepenthesAddComponent} from "./nepenthes-add/nepenthes-add.component";
 import {CloneComponent} from "./clone/clone.component";
-import {UserCloneAddComponent} from "./user-clone-add/user-clone-add.component";
+import {UserAddCloneComponent} from "./user-add-clone/user-add-clone.component";
 
 const routes: Routes = [
 
@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: "nepenthes/clone/add", component: CloneComponent},
 
   {path: "user/profile", component: UserOverviewComponent},
-  {path: "user/nepenthes/add", component: UserCloneAddComponent},
+  {path: "user/nepenthes/add", component: UserAddCloneComponent},
 
   {path: "user/:name/profile", component: UserOverviewComponent},
 

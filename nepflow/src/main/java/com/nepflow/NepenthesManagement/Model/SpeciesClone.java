@@ -1,5 +1,6 @@
 package com.nepflow.NepenthesManagement.Model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.Relationship;
@@ -21,32 +22,43 @@ public abstract class SpeciesClone extends Clone {
     @Relationship("ORIGIN")
     Location location;
 
-    protected SpeciesClone(String name,String cloneId,Nepenthes nepenthes) {
-        super(name,cloneId);
-        this.nepenthes = nepenthes;
-    }
-
-
-    protected SpeciesClone(String name, String cloneId, Nepenthes nepenthes, Location location, Sex sex) {
-        super(name,cloneId);
+    SpeciesClone(String name, Nepenthes nepenthes, Location location, Sex sex) {
+        assert nepenthes != null : "Nepenthes is not allowed to be null!";
+        this.name = name;
         this.nepenthes = nepenthes;
         this.location = location;
         this.sex = sex;
     }
-    protected SpeciesClone(String name, Nepenthes nepenthes, Location location, Sex sex) {
-        super(name);
-        this.nepenthes = nepenthes;
-        this.location = location;
-        this.sex = sex;
+
+    public SpeciesClone() {
+        super();
     }
+
 
     @Override
     public String getName() {
         return this.nepenthes.getName();
     }
 
-    // Since they are similar and differ in just some relationships like Producer we can ease the program flow this way
+
+    public SpeciesClone createNewClones(String name, String cloneId, Nepenthes nepenthes, Location location, Sex sex, Producer producer) {
+        if (producer != null) {
+            return new IVClone(name, cloneId, nepenthes, location, sex, producer);
+        } else {
+            return new ICClone(name, nepenthes, location, sex);
+        }
+    }
+
+    public IVClone createNewIVClone(String name, String cloneId, Nepenthes nepenthes, Location location, Sex sex, Producer producer) {
+        return new IVClone(name, cloneId, nepenthes, location, sex, producer);
+    }
+
+    public ICClone createNewICClone(String name, Nepenthes nepenthes, Location location, Sex sex) {
+        return new ICClone(name, nepenthes, location, sex);
+    }
+
     abstract IVClone asIVClone();
+
     abstract ICClone asICClone();
 
 }

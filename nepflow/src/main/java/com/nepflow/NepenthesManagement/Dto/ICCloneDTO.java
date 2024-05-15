@@ -20,7 +20,7 @@ import jakarta.annotation.Generated;
  * ICCloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T00:38:12.962208100+02:00[Europe/Berlin]")
 public class ICCloneDTO implements NepenthesNameCloneGet200Response {
 
   private String cloneId;
@@ -29,7 +29,7 @@ public class ICCloneDTO implements NepenthesNameCloneGet200Response {
 
   private String sex;
 
-  private CloneGrexDTO nepenthesName;
+  private String nepenthes;
 
   private String location;
 
@@ -95,24 +95,24 @@ public class ICCloneDTO implements NepenthesNameCloneGet200Response {
     this.sex = sex;
   }
 
-  public ICCloneDTO nepenthesName(CloneGrexDTO nepenthesName) {
-    this.nepenthesName = nepenthesName;
+  public ICCloneDTO nepenthes(String nepenthes) {
+    this.nepenthes = nepenthes;
     return this;
   }
 
   /**
-   * Get nepenthesName
-   * @return nepenthesName
+   * Get nepenthes
+   * @return nepenthes
   */
-  @Valid 
-  @Schema(name = "nepenthesName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("nepenthesName")
-  public CloneGrexDTO getNepenthesName() {
-    return nepenthesName;
+  
+  @Schema(name = "nepenthes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("nepenthes")
+  public String getNepenthes() {
+    return nepenthes;
   }
 
-  public void setNepenthesName(CloneGrexDTO nepenthesName) {
-    this.nepenthesName = nepenthesName;
+  public void setNepenthes(String nepenthes) {
+    this.nepenthes = nepenthes;
   }
 
   public ICCloneDTO location(String location) {
@@ -167,14 +167,14 @@ public class ICCloneDTO implements NepenthesNameCloneGet200Response {
     return Objects.equals(this.cloneId, icCloneDTO.cloneId) &&
         Objects.equals(this.name, icCloneDTO.name) &&
         Objects.equals(this.sex, icCloneDTO.sex) &&
-        Objects.equals(this.nepenthesName, icCloneDTO.nepenthesName) &&
+        Objects.equals(this.nepenthes, icCloneDTO.nepenthes) &&
         Objects.equals(this.location, icCloneDTO.location) &&
         Objects.equals(this.grex, icCloneDTO.grex);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cloneId, name, sex, nepenthesName, location, grex);
+    return Objects.hash(cloneId, name, sex, nepenthes, location, grex);
   }
 
   @Override
@@ -184,7 +184,7 @@ public class ICCloneDTO implements NepenthesNameCloneGet200Response {
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");
-    sb.append("    nepenthesName: ").append(toIndentedString(nepenthesName)).append("\n");
+    sb.append("    nepenthes: ").append(toIndentedString(nepenthes)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    grex: ").append(toIndentedString(grex)).append("\n");
     sb.append("}");

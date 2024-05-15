@@ -53,6 +53,7 @@ dependencies {
 }
 
 task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	doNotTrackState("")
 	generatorName.set("spring")
 	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
 	def openapi_spec = openapiSpecFile.absolutePath

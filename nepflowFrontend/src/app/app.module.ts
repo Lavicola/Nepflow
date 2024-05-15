@@ -17,7 +17,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NepenthesAddComponent} from "./nepenthes-add/nepenthes-add.component";
 import {NepenthesComponent} from "./nepenthes/nepenthes.component";
 import {CloneComponent} from "./clone/clone.component";
-import {UserCloneAddComponent} from "./user-clone-add/user-clone-add.component";
+import {UserAddCloneComponent} from "./user-add-clone/user-add-clone.component";
 
 @NgModule({
   declarations: [
@@ -27,8 +27,8 @@ import {UserCloneAddComponent} from "./user-clone-add/user-clone-add.component";
     NepenthesComponent,
     NepenthesAddComponent,
     CloneComponent,
-    UserCloneAddComponent,
-    NepenthesOverviewComponent
+    NepenthesOverviewComponent,
+    UserAddCloneComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +49,7 @@ import {UserCloneAddComponent} from "./user-clone-add/user-clone-add.component";
       useClass: HeadersInterceptor,
       multi: true
     }
-],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

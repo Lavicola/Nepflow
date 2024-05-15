@@ -32,8 +32,6 @@ public interface CloneRepository extends Neo4jRepository<Clone,String> {
     @Query("match(n:HybridClone) return n")
     List<ICHybrid> getAllHybrids();
 
-    @Query("match(n:MultiHybridClone) return n")
-    List<ICMultiHybrid> getAllMultiHybrids();
 
 
 

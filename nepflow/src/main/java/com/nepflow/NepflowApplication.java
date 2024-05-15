@@ -1,7 +1,12 @@
 package com.nepflow;
 
+import com.nepflow.NepenthesManagement.Dto.ICCloneDTO;
+import com.nepflow.NepenthesManagement.Model.ICClone;
+import com.nepflow.NepenthesManagement.Model.Nepenthes;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 
+import org.modelmapper.spi.MappingContext;
 import org.neo4j.cypherdsl.core.renderer.Dialect;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,12 +31,15 @@ public class NepflowApplication {
 
 	@Configuration
 	public class ModelMapperConfig {
+
+
+
 		@Bean
 		public ModelMapper modelMapper() {
+			ModelMapper modelMapper = new ModelMapper();
 
-			
 
-			return new ModelMapper();
+			return modelMapper;
 		}
 	}
 

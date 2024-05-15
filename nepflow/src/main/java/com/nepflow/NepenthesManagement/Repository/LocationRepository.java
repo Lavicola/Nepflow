@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LocationRepository extends Neo4jRepository<Location, String> {
 
+    Location findLocationByName(String name);
+
 }

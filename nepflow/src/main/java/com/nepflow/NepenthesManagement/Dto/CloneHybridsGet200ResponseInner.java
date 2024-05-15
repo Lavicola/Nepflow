@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("_clone_hybrids__get_200_response_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T00:38:12.962208100+02:00[Europe/Berlin]")
 public class CloneHybridsGet200ResponseInner {
 
   private String cloneId;
@@ -32,7 +32,7 @@ public class CloneHybridsGet200ResponseInner {
 
   private String sex;
 
-  private CloneGrexDTO nepenthesName;
+  private String nepenthes;
 
   private String location;
 
@@ -111,24 +111,24 @@ public class CloneHybridsGet200ResponseInner {
     this.sex = sex;
   }
 
-  public CloneHybridsGet200ResponseInner nepenthesName(CloneGrexDTO nepenthesName) {
-    this.nepenthesName = nepenthesName;
+  public CloneHybridsGet200ResponseInner nepenthes(String nepenthes) {
+    this.nepenthes = nepenthes;
     return this;
   }
 
   /**
-   * Get nepenthesName
-   * @return nepenthesName
+   * Get nepenthes
+   * @return nepenthes
   */
-  @Valid 
-  @Schema(name = "nepenthesName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("nepenthesName")
-  public CloneGrexDTO getNepenthesName() {
-    return nepenthesName;
+  
+  @Schema(name = "nepenthes", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("nepenthes")
+  public String getNepenthes() {
+    return nepenthes;
   }
 
-  public void setNepenthesName(CloneGrexDTO nepenthesName) {
-    this.nepenthesName = nepenthesName;
+  public void setNepenthes(String nepenthes) {
+    this.nepenthes = nepenthes;
   }
 
   public CloneHybridsGet200ResponseInner location(String location) {
@@ -203,7 +203,7 @@ public class CloneHybridsGet200ResponseInner {
     return Objects.equals(this.cloneId, cloneHybridsGet200ResponseInner.cloneId) &&
         Objects.equals(this.name, cloneHybridsGet200ResponseInner.name) &&
         Objects.equals(this.sex, cloneHybridsGet200ResponseInner.sex) &&
-        Objects.equals(this.nepenthesName, cloneHybridsGet200ResponseInner.nepenthesName) &&
+        Objects.equals(this.nepenthes, cloneHybridsGet200ResponseInner.nepenthes) &&
         Objects.equals(this.location, cloneHybridsGet200ResponseInner.location) &&
         Objects.equals(this.grex, cloneHybridsGet200ResponseInner.grex) &&
         Objects.equals(this.producer, cloneHybridsGet200ResponseInner.producer);
@@ -211,7 +211,7 @@ public class CloneHybridsGet200ResponseInner {
 
   @Override
   public int hashCode() {
-    return Objects.hash(cloneId, name, sex, nepenthesName, location, grex, producer);
+    return Objects.hash(cloneId, name, sex, nepenthes, location, grex, producer);
   }
 
   @Override
@@ -221,7 +221,7 @@ public class CloneHybridsGet200ResponseInner {
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");
-    sb.append("    nepenthesName: ").append(toIndentedString(nepenthesName)).append("\n");
+    sb.append("    nepenthes: ").append(toIndentedString(nepenthes)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    grex: ").append(toIndentedString(grex)).append("\n");
     sb.append("    producer: ").append(toIndentedString(producer)).append("\n");

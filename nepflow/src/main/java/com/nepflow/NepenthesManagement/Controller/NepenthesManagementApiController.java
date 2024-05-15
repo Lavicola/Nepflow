@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-13T23:03:32.853119600+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T00:38:12.962208100+02:00[Europe/Berlin]")
 @Controller
 @RequestMapping("${openapi.nepflowNepenthes.base-path:/api}")
 public class NepenthesManagementApiController implements NepenthesManagementApi {
