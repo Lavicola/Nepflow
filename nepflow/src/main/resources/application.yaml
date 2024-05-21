@@ -16,6 +16,7 @@ okta:
     client-id: INSERT
     client-secret: INSERT
 
+
 jackson:
   date-format: org.openapitools.RFC3339DateFormat
   serialization:

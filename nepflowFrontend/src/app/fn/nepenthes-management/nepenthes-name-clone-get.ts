@@ -6,15 +6,14 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { IcCloneDto } from '../../models/ic-clone-dto';
-import { IvCloneDto } from '../../models/iv-clone-dto';
+import { SpeciesCloneDto } from '../../models/species-clone-dto';
 
 export interface NepenthesNameCloneGet$Params {
   name: string;
   clone: string;
 }
 
-export function nepenthesNameCloneGet(http: HttpClient, rootUrl: string, params: NepenthesNameCloneGet$Params, context?: HttpContext): Observable<StrictHttpResponse<(IcCloneDto | IvCloneDto)>> {
+export function nepenthesNameCloneGet(http: HttpClient, rootUrl: string, params: NepenthesNameCloneGet$Params, context?: HttpContext): Observable<StrictHttpResponse<SpeciesCloneDto>> {
   const rb = new RequestBuilder(rootUrl, nepenthesNameCloneGet.PATH, 'get');
   if (params) {
     rb.path('name', params.name, {});
@@ -26,7 +25,7 @@ export function nepenthesNameCloneGet(http: HttpClient, rootUrl: string, params:
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<(IcCloneDto | IvCloneDto)>;
+      return r as StrictHttpResponse<SpeciesCloneDto>;
     })
   );
 }

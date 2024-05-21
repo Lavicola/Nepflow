@@ -1,7 +1,5 @@
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.GrowlistManagement.Model.NepenthesClone;
-import com.nepflow.GrowlistManagement.Service.GrowListService;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;

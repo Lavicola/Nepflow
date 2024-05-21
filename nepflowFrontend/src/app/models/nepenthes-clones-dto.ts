@@ -1,9 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
-import { CloneDto } from '../models/clone-dto';
-import { IvCloneDto } from '../models/iv-clone-dto';
 import { NepenthesDto } from '../models/nepenthes-dto';
+import { SpeciesCloneDto } from '../models/species-clone-dto';
 export interface NepenthesClonesDto {
-  clones?: Array<(CloneDto | IvCloneDto)>;
+  clones?: Array<SpeciesCloneDto>;
   nepenthes?: NepenthesDto;
 }

@@ -101,7 +101,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/_nepenthes__name___clone__get_200_response'
+                allOf:
+                - $ref: '#/components/schemas/SpeciesCloneDTO'
           description: OK
         "404":
           description: Clone does not exist
@@ -169,7 +170,8 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/_clone_species__get_200_response_inner'
+                  allOf:
+                  - $ref: '#/components/schemas/SpeciesCloneDTO'
                 type: array
           description: OK
       summary: get all Species Clones
@@ -184,7 +186,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IVCloneDTO'
+              $ref: '#/components/schemas/SpeciesCloneDTO'
         description: Clone DTO with new values
         required: true
       responses:
@@ -192,7 +194,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IVCloneDTO'
+                $ref: '#/components/schemas/SpeciesCloneDTO'
           description: OK
       summary: add a new iv clone of a nepenthes
       tags:
@@ -206,14 +208,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IVCloneDTO'
+              $ref: '#/components/schemas/SpeciesCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IVCloneDTO'
+                $ref: '#/components/schemas/SpeciesCloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -229,7 +231,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ICCloneDTO'
+              $ref: '#/components/schemas/SpeciesCloneDTO'
         description: Clone DTO with new values
         required: true
       responses:
@@ -237,7 +239,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ICCloneDTO'
+                $ref: '#/components/schemas/SpeciesCloneDTO'
           description: OK
       summary: add a new iv clone of a nepenthes
       tags:
@@ -251,14 +253,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ICCloneDTO'
+              $ref: '#/components/schemas/SpeciesCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ICCloneDTO'
+                $ref: '#/components/schemas/SpeciesCloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -276,29 +278,47 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/_clone_hybrids__get_200_response_inner'
+                  allOf:
+                  - $ref: '#/components/schemas/HybridCloneDTO'
                 type: array
           description: OK
-      summary: get all Species Clones
+      summary: get all hybrid Clones
       tags:
       - NepenthesManagement
       x-accepts: application/json
       x-tags:
       - tag: NepenthesManagement
   /clone/hybrids/iv:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/HybridCloneDTO'
+                type: array
+          description: OK
+      summary: get all IV Hybrids
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IVCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IVCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
       summary: add a new iv hybrid
       tags:
@@ -312,14 +332,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IVCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IVCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -330,19 +350,36 @@ paths:
       x-tags:
       - tag: NepenthesManagement
   /clone/hybrids/ic:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/HybridCloneDTO'
+                type: array
+          description: OK
+      summary: get all IC Hybrids
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ICCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ICCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
       summary: add a new iv hybrid clone
       tags:
@@ -356,14 +393,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ICCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ICCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -381,7 +418,8 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/_clone_hybrids__get_200_response_inner'
+                  allOf:
+                  - $ref: '#/components/schemas/HybridCloneDTO'
                 type: array
           description: OK
       summary: get all multi-hybrid Clones
@@ -391,19 +429,36 @@ paths:
       x-tags:
       - tag: NepenthesManagement
   /clone/multi-hybrid/iv:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/HybridCloneDTO'
+                type: array
+          description: OK
+      summary: get all multi-hybrid IV Clones
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IVCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IVCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
       summary: add a new iv multi-hybrid
       tags:
@@ -417,14 +472,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IVCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IVCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -435,19 +490,36 @@ paths:
       x-tags:
       - tag: NepenthesManagement
   /clone/multi-hybrid/ic:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/HybridCloneDTO'
+                type: array
+          description: OK
+      summary: get all multi-hybrid IC Clones
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
     post:
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ICCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ICCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
       summary: add a new iv multi-hybrid clone
       tags:
@@ -461,14 +533,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ICCloneDTO'
+              $ref: '#/components/schemas/HybridCloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ICCloneDTO'
+                $ref: '#/components/schemas/HybridCloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -486,30 +558,7 @@ components:
       type: string
     ProducerDTO:
       type: string
-    CloneGrexDTO:
-      example:
-        mother: null
-        father: null
-        cloneId: cloneId
-      properties:
-        cloneId:
-          type: string
-        father:
-          $ref: '#/components/schemas/_nepenthes__name___clone__get_200_response'
-        mother:
-          $ref: '#/components/schemas/_nepenthes__name___clone__get_200_response'
-      type: object
-    ICCloneDTO:
-      example:
-        nepenthes: nepenthes
-        sex: sex
-        name: name
-        cloneId: cloneId
-        grex:
-          mother: null
-          father: null
-          cloneId: cloneId
-        Location: Location
+    Clone:
       properties:
         cloneId:
           type: string
@@ -517,46 +566,62 @@ components:
           type: string
         sex:
           type: string
-        nepenthes:
-          type: string
-        Location:
-          type: string
         grex:
           $ref: '#/components/schemas/CloneGrexDTO'
+        producer:
+          type: string
+      required:
+      - name
+      - sex
       type: object
-    IVCloneDTO:
+    SpeciesCloneDTO:
       allOf:
-      - $ref: '#/components/schemas/ICCloneDTO'
+      - $ref: '#/components/schemas/Clone'
       - properties:
-          producer:
-            $ref: '#/components/schemas/ProducerDTO'
+          nepenthes:
+            $ref: '#/components/schemas/NepenthesDTO'
+          Location:
+            $ref: '#/components/schemas/LocationDTO'
+          grex:
+            $ref: '#/components/schemas/CloneGrexDTO'
         required:
-        - producer
+        - nepenthes
         type: object
+    HybridCloneDTO:
+      allOf:
+      - $ref: '#/components/schemas/Clone'
+      - properties:
+          fatherName:
+            type: string
+          motherName:
+            type: string
+        type: object
+    CloneGrexDTO:
+      properties:
+        cloneId:
+          type: string
+        father:
+          $ref: '#/components/schemas/CloneGrexDTO_father'
+        mother:
+          $ref: '#/components/schemas/CloneGrexDTO_father'
+      type: object
     NepenthesClonesDTO:
       example:
         nepenthes: nepenthes
         clones:
-        - null
-        - null
+        - ""
+        - ""
       properties:
         nepenthes:
           type: string
         clones:
           items:
-            $ref: '#/components/schemas/_clone_hybrids__get_200_response_inner'
+            allOf:
+            - $ref: '#/components/schemas/SpeciesCloneDTO'
           type: array
       type: object
-    _nepenthes__name___clone__get_200_response:
+    CloneGrexDTO_father:
       oneOf:
-      - $ref: '#/components/schemas/ICCloneDTO'
-      - $ref: '#/components/schemas/IVCloneDTO'
-      x-one-of-name: NepenthesNameCloneGet200Response
-    _clone_species__get_200_response_inner:
-      anyOf:
-      - $ref: '#/components/schemas/IVCloneDTO'
-      - $ref: '#/components/schemas/ICCloneDTO'
-    _clone_hybrids__get_200_response_inner:
-      anyOf:
-      - $ref: '#/components/schemas/ICCloneDTO'
-      - $ref: '#/components/schemas/IVCloneDTO'
+      - $ref: '#/components/schemas/Clone'
+      - $ref: '#/components/schemas/SpeciesCloneDTO'
+      x-one-of-name: CloneGrexDTOFather

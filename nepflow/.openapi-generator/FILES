@@ -4,13 +4,12 @@ src/main/java/com/nepflow/NepenthesManagement/Controller/ApiUtil.java
 src/main/java/com/nepflow/NepenthesManagement/Controller/NepenthesManagementApi.java
 src/main/java/com/nepflow/NepenthesManagement/Controller/NepenthesManagementApiController.java
 src/main/java/com/nepflow/NepenthesManagement/Controller/NepenthesManagementApiDelegate.java
+src/main/java/com/nepflow/NepenthesManagement/Dto/Clone.java
 src/main/java/com/nepflow/NepenthesManagement/Dto/CloneGrexDTO.java
-src/main/java/com/nepflow/NepenthesManagement/Dto/CloneHybridsGet200ResponseInner.java
-src/main/java/com/nepflow/NepenthesManagement/Dto/CloneSpeciesGet200ResponseInner.java
-src/main/java/com/nepflow/NepenthesManagement/Dto/ICCloneDTO.java
-src/main/java/com/nepflow/NepenthesManagement/Dto/IVCloneDTO.java
+src/main/java/com/nepflow/NepenthesManagement/Dto/CloneGrexDTOFather.java
+src/main/java/com/nepflow/NepenthesManagement/Dto/HybridCloneDTO.java
 src/main/java/com/nepflow/NepenthesManagement/Dto/NepenthesClonesDTO.java
-src/main/java/com/nepflow/NepenthesManagement/Dto/NepenthesNameCloneGet200Response.java
+src/main/java/com/nepflow/NepenthesManagement/Dto/SpeciesCloneDTO.java
 src/main/java/org/openapitools/OpenApiGeneratorApplication.java
 src/main/java/org/openapitools/RFC3339DateFormat.java
 src/main/java/org/openapitools/configuration/HomeController.java

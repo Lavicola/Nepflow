@@ -6,13 +6,12 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { IcCloneDto } from '../../models/ic-clone-dto';
-import { IvCloneDto } from '../../models/iv-clone-dto';
+import { HybridCloneDto } from '../../models/hybrid-clone-dto';
 
 export interface CloneHybridsGet$Params {
 }
 
-export function cloneHybridsGet(http: HttpClient, rootUrl: string, params?: CloneHybridsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<(IcCloneDto | IvCloneDto)>>> {
+export function cloneHybridsGet(http: HttpClient, rootUrl: string, params?: CloneHybridsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<HybridCloneDto>>> {
   const rb = new RequestBuilder(rootUrl, cloneHybridsGet.PATH, 'get');
   if (params) {
   }
@@ -22,7 +21,7 @@ export function cloneHybridsGet(http: HttpClient, rootUrl: string, params?: Clon
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<(IcCloneDto | IvCloneDto)>>;
+      return r as StrictHttpResponse<Array<HybridCloneDto>>;
     })
   );
 }

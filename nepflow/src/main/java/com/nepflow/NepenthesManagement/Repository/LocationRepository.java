@@ -1,12 +1,11 @@
 package com.nepflow.NepenthesManagement.Repository;
 
-import com.nepflow.NepenthesManagement.Model.Location;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LocationRepository extends Neo4jRepository<Location, String> {
+public interface LocationRepository extends Neo4jRepository<Location,String> {
 
     Location findLocationByName(String name);
-
 }

@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nepflow.NepenthesManagement.Dto.NepenthesNameCloneGet200Response;
+import com.nepflow.NepenthesManagement.Dto.CloneGrexDTOFather;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -19,14 +19,14 @@ import jakarta.annotation.Generated;
  * CloneGrexDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T00:38:12.962208100+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T23:01:09.594573900+02:00[Europe/Berlin]")
 public class CloneGrexDTO {
 
   private String cloneId;
 
-  private NepenthesNameCloneGet200Response father;
+  private CloneGrexDTOFather father;
 
-  private NepenthesNameCloneGet200Response mother;
+  private CloneGrexDTOFather mother;
 
   public CloneGrexDTO cloneId(String cloneId) {
     this.cloneId = cloneId;
@@ -48,7 +48,7 @@ public class CloneGrexDTO {
     this.cloneId = cloneId;
   }
 
-  public CloneGrexDTO father(NepenthesNameCloneGet200Response father) {
+  public CloneGrexDTO father(CloneGrexDTOFather father) {
     this.father = father;
     return this;
   }
@@ -60,15 +60,15 @@ public class CloneGrexDTO {
   @Valid 
   @Schema(name = "father", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("father")
-  public NepenthesNameCloneGet200Response getFather() {
+  public CloneGrexDTOFather getFather() {
     return father;
   }
 
-  public void setFather(NepenthesNameCloneGet200Response father) {
+  public void setFather(CloneGrexDTOFather father) {
     this.father = father;
   }
 
-  public CloneGrexDTO mother(NepenthesNameCloneGet200Response mother) {
+  public CloneGrexDTO mother(CloneGrexDTOFather mother) {
     this.mother = mother;
     return this;
   }
@@ -80,11 +80,11 @@ public class CloneGrexDTO {
   @Valid 
   @Schema(name = "mother", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("mother")
-  public NepenthesNameCloneGet200Response getMother() {
+  public CloneGrexDTOFather getMother() {
     return mother;
   }
 
-  public void setMother(NepenthesNameCloneGet200Response mother) {
+  public void setMother(CloneGrexDTOFather mother) {
     this.mother = mother;
   }
 

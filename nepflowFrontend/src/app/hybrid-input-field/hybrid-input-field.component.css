@@ -1,0 +1,9 @@
+/* clone.css */
+.centered-input .mat-form-field-infix {
+  display: flex;
+  justify-content: center;
+}
+
+.centered-input-field {
+  text-align: center;
+}

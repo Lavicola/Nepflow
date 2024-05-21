@@ -18,6 +18,10 @@ import {NepenthesAddComponent} from "./nepenthes-add/nepenthes-add.component";
 import {NepenthesComponent} from "./nepenthes/nepenthes.component";
 import {CloneComponent} from "./clone/clone.component";
 import {UserAddCloneComponent} from "./user-add-clone/user-add-clone.component";
+import {HybridCloneComponent} from "./hybrid-clone/hybrid-clone.component";
+import {MatButtonModule} from "@angular/material/button";
+import {HybridInputFieldComponent} from "./hybrid-input-field/hybrid-input-field.component";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -28,7 +32,9 @@ import {UserAddCloneComponent} from "./user-add-clone/user-add-clone.component";
     NepenthesAddComponent,
     CloneComponent,
     NepenthesOverviewComponent,
-    UserAddCloneComponent
+    UserAddCloneComponent,
+    HybridCloneComponent,
+    HybridInputFieldComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,9 @@ import {UserAddCloneComponent} from "./user-add-clone/user-add-clone.component";
     MatToolbarModule,
     MatMenuModule,
     MatAutocompleteModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     {

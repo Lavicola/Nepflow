@@ -1,6 +1,6 @@
 package com.nepflow.NepenthesManagement.Repository;
 
-import com.nepflow.NepenthesManagement.Model.Producer;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.stereotype.Repository;
 

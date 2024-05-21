@@ -6,13 +6,13 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { IvCloneDto } from '../../models/iv-clone-dto';
+import { HybridCloneDto } from '../../models/hybrid-clone-dto';
 
 export interface CloneHybridsIvPut$Params {
-      body: IvCloneDto
+      body: HybridCloneDto
 }
 
-export function cloneHybridsIvPut(http: HttpClient, rootUrl: string, params: CloneHybridsIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+export function cloneHybridsIvPut(http: HttpClient, rootUrl: string, params: CloneHybridsIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
   const rb = new RequestBuilder(rootUrl, cloneHybridsIvPut.PATH, 'put');
   if (params) {
     rb.body(params.body, 'application/json');
@@ -23,7 +23,7 @@ export function cloneHybridsIvPut(http: HttpClient, rootUrl: string, params: Clo
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<IvCloneDto>;
+      return r as StrictHttpResponse<HybridCloneDto>;
     })
   );
 }

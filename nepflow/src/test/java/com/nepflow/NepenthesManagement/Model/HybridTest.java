@@ -1,101 +1,99 @@
 package com.nepflow.NepenthesManagement.Model;
 
+import com.nepflow.NepenthesManagement.LabelFormats;
+import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
+import com.nepflow.NepenthesManagement.Model.Labels.Label;
+import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.nepflow.NepenthesManagement.Model.Labels.Hybrid;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
-import static org.springframework.test.util.AssertionErrors.assertNotEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class HybridTest {
 
+    String nep1 = "villosa";
+    String nep2 = "lowii";
 
-    Nepenthes nep1 = new Nepenthes("villosa");
-    Nepenthes nep2 = new Nepenthes("lowii");
-    String validFormat = String.format("%s x %s".formatted(nep1.getName(),nep2.getName()));
-    Producer producer = new Producer("AW");
+    String validFormat = String.format("(%s x %s)".formatted(nep1, nep2));
 
 
     @BeforeEach
-    public void fillCloneMap(){
-        Clone.validPlants.add(nep1.getName());
-        Clone.validPlants.add(nep2.getName());
+    public void fillKnownSpecies(){
+        Label.validPlants.add(nep1);
+        Label.validPlants.add(nep2);
 
     }
 
     @Test
-    public void hybridNameTest() {
-        Hybrid hybrid = new ICHybrid(validFormat,null,null);
-        assertEquals("validFormat and Hybridname should be the same",validFormat,hybrid.getName());
-
-    }
-    @Test
-    public void nepenthesNotExistingTest() {
-        Clone.validPlants = new HashSet<>();
-        Hybrid hybrid = new ICHybrid();
-        assertThrows(AssertionError.class, () -> {
-            hybrid.createConcreteICHybrid(validFormat, null,null);
-        });
-        assertThrows(AssertionError.class, () -> {
-            hybrid.createConcreteIVHybrid(validFormat, "BE-3225",null,producer);
-        });
-    }
-
-
-
-    @Test
-    public void hybridValidFormatTest() {
-        Clone.validPlants.add("villosa");
-        Clone.validPlants.add("lowii");
-        String invalidFormat = String.format("%sx%s".formatted(nep1,nep2));
-        String invalidFormat2 = String.format("(%s) x (%s)".formatted(nep1,nep2));
+    public void hybridFormatTest() {
+        String invalidFormat = String.format("%sx%s".formatted(nep1, nep2));
+        String invalidFormat2 = String.format("(%s) x (%s)".formatted(nep1, nep2));
         String invalidFormat3 = String.format("(%s) x".formatted(nep1));
-        String invalidFormat4 = String.format("(%s x %s)".formatted(nep1,nep2));
-        String invalidFormat5 = String.format("%s X %s".formatted(nep1,nep2));
-        Hybrid hybrid = new ICHybrid();
+        String invalidFormat4 = String.format("%s x %s".formatted(nep1, nep2));
+        String invalidFormat5 = String.format("%s X %s".formatted(nep1, nep2));
 
-        hybrid.createConcreteICHybrid(validFormat, null,null);
+        new Hybrid(validFormat,0);
 
         assertThrows(AssertionError.class, () -> {
-            hybrid.createConcreteICHybrid(invalidFormat, null,null);
+            new Hybrid(invalidFormat,0);
+
         });
         assertThrows(AssertionError.class, () -> {
-            hybrid.createConcreteICHybrid(invalidFormat2, null,null);
+            new Hybrid(invalidFormat2,0);
+
         });
         assertThrows(AssertionError.class, () -> {
-            hybrid.createConcreteICHybrid(invalidFormat3, null,null);
+            new Hybrid(invalidFormat3,0);
+
         });
         assertThrows(AssertionError.class, () -> {
-            hybrid.createConcreteICHybrid(invalidFormat4, null,null);
+            new Hybrid(invalidFormat4,0);
+
         });
         assertThrows(AssertionError.class, () -> {
-            hybrid.createConcreteICHybrid(invalidFormat5, null,null);
+            new Hybrid(invalidFormat5,0);
         });
     }
+
     @Test
-    public void hybridGrexNoGrexTest() {
-        SpeciesClone speciesClone = new ICClone();
-        AbstractHybrid hybrid = new IVHybrid();
-        AbstractHybrid hybrid2;
-        SpeciesClone clone1 = speciesClone.createNewICClone(nep1.getName(),nep1,null,null);
-        SpeciesClone clone2 = speciesClone.createNewIVClone(nep2.getName(),"KLON-ID",nep2,null,null,producer);
-        Grex grex = new Grex(clone1,clone2,"id");
-        hybrid = hybrid.createHybrid(validFormat,"id",grex,producer);
-        hybrid2 = hybrid.createHybrid(validFormat,"id2",null,null);
-
-        assertEquals("Both should have the same Mother name",hybrid.getMotherName(),hybrid2.getMotherName());
-        assertEquals("Both should have the same Father name",hybrid.getFatherName(),hybrid2.getFatherName());
-        assertNotEquals("hybrid2 should not have a Grex",hybrid.getGrex(),hybrid2.getGrex());
-
+    public void hybridNotExistingSpeciesTest() {
+        Label.validPlants= new HashSet<>();
+        assertThrows(AssertionError.class, () -> {
+            new Hybrid(validFormat,0);
+        });
     }
 
+    @Test
+    public void setParentsTest() {
+        Hybrid hybrid = new Hybrid(validFormat,0);
+        assertEquals("Mother Name is false",hybrid.getMotherName(),nep1);
+        assertEquals("Father Name is false",hybrid.getFatherName(),nep2);
+    }
+
+    @Test
+    void labelICCloneIdGenerationTest(){
+        Label.addValidPlant(LabelFormats.nep1);
+        Label.addValidPlant(LabelFormats.nep2);
+        Label label1 =  new Hybrid(LabelFormats.hybridFormat1,0);
+        Label label2 = new Hybrid(LabelFormats.hybridFormat2,1);
+
+        ICClone icNepenthesClone10 = label1.addICClone(null,null);
+        ICClone icNepenthesClone11 = label1.addICClone(null,null);
+        ICClone icNepenthesClone20 = label2.addICClone(null,null);
+        ICClone icNepenthesClone21 = label2.addICClone(null,null);
+
+        Assertions.assertEquals("H-0-0",icNepenthesClone10.getCloneId(),"Clone Id is wrong");
+        Assertions.assertEquals("H-0-1",icNepenthesClone11.getCloneId(),"Clone Id is wrong");
+        Assertions.assertEquals("H-1-0",icNepenthesClone20.getCloneId(),"Clone Id is wrong");
+        Assertions.assertEquals("H-1-1",icNepenthesClone21.getCloneId(),"Clone Id is wrong");
 
 
-
+    }
 
 
 

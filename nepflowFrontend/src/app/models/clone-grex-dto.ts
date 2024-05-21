@@ -1,9 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
-import { IcCloneDto } from '../models/ic-clone-dto';
-import { IvCloneDto } from '../models/iv-clone-dto';
+import { Clone } from '../models/clone';
+import { SpeciesCloneDto } from '../models/species-clone-dto';
 export interface CloneGrexDto {
   cloneId?: string;
-  father?: (IcCloneDto | IvCloneDto);
-  mother?: (IcCloneDto | IvCloneDto);
+  father?: (Clone | SpeciesCloneDto);
+  mother?: (Clone | SpeciesCloneDto);
 }

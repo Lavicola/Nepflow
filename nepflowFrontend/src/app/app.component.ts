@@ -15,5 +15,6 @@ export class AppComponent {
   profileRoute: string = "user/profile";
   myPlantsRoute: string = "user/profile/nepenthes";
   nepenthesAdd: string = "user/nepenthes/add";
+  hybridAdd: string = "hybrid/add";
 
 }

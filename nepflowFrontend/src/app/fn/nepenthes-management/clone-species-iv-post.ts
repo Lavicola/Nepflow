@@ -6,17 +6,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { IvCloneDto } from '../../models/iv-clone-dto';
+import { SpeciesCloneDto } from '../../models/species-clone-dto';
 
 export interface CloneSpeciesIvPost$Params {
   
     /**
      * Clone DTO with new values
      */
-    body: IvCloneDto
+    body: SpeciesCloneDto
 }
 
-export function cloneSpeciesIvPost(http: HttpClient, rootUrl: string, params: CloneSpeciesIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+export function cloneSpeciesIvPost(http: HttpClient, rootUrl: string, params: CloneSpeciesIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpeciesCloneDto>> {
   const rb = new RequestBuilder(rootUrl, cloneSpeciesIvPost.PATH, 'post');
   if (params) {
     rb.body(params.body, 'application/json');
@@ -27,7 +27,7 @@ export function cloneSpeciesIvPost(http: HttpClient, rootUrl: string, params: Cl
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<IvCloneDto>;
+      return r as StrictHttpResponse<SpeciesCloneDto>;
     })
   );
 }

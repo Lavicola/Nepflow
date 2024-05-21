@@ -11,10 +11,10 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 
-@Configuration
+//@Configuration
 public class SecurityConfiguration {
 
-    @Bean
+  //  @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authz) -> authz
                 .requestMatchers("/", "/index.html", "*.ico", "*.css", "*.js","/api/user/nepenthes", "/api/user","/api/species").permitAll()

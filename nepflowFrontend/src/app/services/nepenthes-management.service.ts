@@ -11,20 +11,28 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { cloneHybridsGet } from '../fn/nepenthes-management/clone-hybrids-get';
 import { CloneHybridsGet$Params } from '../fn/nepenthes-management/clone-hybrids-get';
+import { cloneHybridsIcGet } from '../fn/nepenthes-management/clone-hybrids-ic-get';
+import { CloneHybridsIcGet$Params } from '../fn/nepenthes-management/clone-hybrids-ic-get';
 import { cloneHybridsIcPost } from '../fn/nepenthes-management/clone-hybrids-ic-post';
 import { CloneHybridsIcPost$Params } from '../fn/nepenthes-management/clone-hybrids-ic-post';
 import { cloneHybridsIcPut } from '../fn/nepenthes-management/clone-hybrids-ic-put';
 import { CloneHybridsIcPut$Params } from '../fn/nepenthes-management/clone-hybrids-ic-put';
+import { cloneHybridsIvGet } from '../fn/nepenthes-management/clone-hybrids-iv-get';
+import { CloneHybridsIvGet$Params } from '../fn/nepenthes-management/clone-hybrids-iv-get';
 import { cloneHybridsIvPost } from '../fn/nepenthes-management/clone-hybrids-iv-post';
 import { CloneHybridsIvPost$Params } from '../fn/nepenthes-management/clone-hybrids-iv-post';
 import { cloneHybridsIvPut } from '../fn/nepenthes-management/clone-hybrids-iv-put';
 import { CloneHybridsIvPut$Params } from '../fn/nepenthes-management/clone-hybrids-iv-put';
 import { cloneMultiHybridGet } from '../fn/nepenthes-management/clone-multi-hybrid-get';
 import { CloneMultiHybridGet$Params } from '../fn/nepenthes-management/clone-multi-hybrid-get';
+import { cloneMultiHybridIcGet } from '../fn/nepenthes-management/clone-multi-hybrid-ic-get';
+import { CloneMultiHybridIcGet$Params } from '../fn/nepenthes-management/clone-multi-hybrid-ic-get';
 import { cloneMultiHybridIcPost } from '../fn/nepenthes-management/clone-multi-hybrid-ic-post';
 import { CloneMultiHybridIcPost$Params } from '../fn/nepenthes-management/clone-multi-hybrid-ic-post';
 import { cloneMultiHybridIcPut } from '../fn/nepenthes-management/clone-multi-hybrid-ic-put';
 import { CloneMultiHybridIcPut$Params } from '../fn/nepenthes-management/clone-multi-hybrid-ic-put';
+import { cloneMultiHybridIvGet } from '../fn/nepenthes-management/clone-multi-hybrid-iv-get';
+import { CloneMultiHybridIvGet$Params } from '../fn/nepenthes-management/clone-multi-hybrid-iv-get';
 import { cloneMultiHybridIvPost } from '../fn/nepenthes-management/clone-multi-hybrid-iv-post';
 import { CloneMultiHybridIvPost$Params } from '../fn/nepenthes-management/clone-multi-hybrid-iv-post';
 import { cloneMultiHybridIvPut } from '../fn/nepenthes-management/clone-multi-hybrid-iv-put';
@@ -39,8 +47,7 @@ import { cloneSpeciesIvPost } from '../fn/nepenthes-management/clone-species-iv-
 import { CloneSpeciesIvPost$Params } from '../fn/nepenthes-management/clone-species-iv-post';
 import { cloneSpeciesIvPut } from '../fn/nepenthes-management/clone-species-iv-put';
 import { CloneSpeciesIvPut$Params } from '../fn/nepenthes-management/clone-species-iv-put';
-import { IcCloneDto } from '../models/ic-clone-dto';
-import { IvCloneDto } from '../models/iv-clone-dto';
+import { HybridCloneDto } from '../models/hybrid-clone-dto';
 import { LocationDto } from '../models/location-dto';
 import { locationPost } from '../fn/nepenthes-management/location-post';
 import { LocationPost$Params } from '../fn/nepenthes-management/location-post';
@@ -57,6 +64,7 @@ import { NepenthesPost$Params } from '../fn/nepenthes-management/nepenthes-post'
 import { ProducerDto } from '../models/producer-dto';
 import { producerPost } from '../fn/nepenthes-management/producer-post';
 import { ProducerPost$Params } from '../fn/nepenthes-management/producer-post';
+import { SpeciesCloneDto } from '../models/species-clone-dto';
 
 
 /**
@@ -180,7 +188,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  nepenthesNameCloneGet$Response(params: NepenthesNameCloneGet$Params, context?: HttpContext): Observable<StrictHttpResponse<(IcCloneDto | IvCloneDto)>> {
+  nepenthesNameCloneGet$Response(params: NepenthesNameCloneGet$Params, context?: HttpContext): Observable<StrictHttpResponse<SpeciesCloneDto>> {
     return nepenthesNameCloneGet(this.http, this.rootUrl, params, context);
   }
 
@@ -194,9 +202,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  nepenthesNameCloneGet(params: NepenthesNameCloneGet$Params, context?: HttpContext): Observable<(IcCloneDto | IvCloneDto)> {
+  nepenthesNameCloneGet(params: NepenthesNameCloneGet$Params, context?: HttpContext): Observable<SpeciesCloneDto> {
     return this.nepenthesNameCloneGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<(IcCloneDto | IvCloneDto)>): (IcCloneDto | IvCloneDto) => r.body)
+      map((r: StrictHttpResponse<SpeciesCloneDto>): SpeciesCloneDto => r.body)
     );
   }
 
@@ -279,7 +287,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cloneSpeciesGet$Response(params?: CloneSpeciesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<(IvCloneDto | IcCloneDto)>>> {
+  cloneSpeciesGet$Response(params?: CloneSpeciesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<SpeciesCloneDto>>> {
     return cloneSpeciesGet(this.http, this.rootUrl, params, context);
   }
 
@@ -293,9 +301,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cloneSpeciesGet(params?: CloneSpeciesGet$Params, context?: HttpContext): Observable<Array<(IvCloneDto | IcCloneDto)>> {
+  cloneSpeciesGet(params?: CloneSpeciesGet$Params, context?: HttpContext): Observable<Array<SpeciesCloneDto>> {
     return this.cloneSpeciesGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<(IvCloneDto | IcCloneDto)>>): Array<(IvCloneDto | IcCloneDto)> => r.body)
+      map((r: StrictHttpResponse<Array<SpeciesCloneDto>>): Array<SpeciesCloneDto> => r.body)
     );
   }
 
@@ -308,7 +316,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIvPut$Response(params: CloneSpeciesIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+  cloneSpeciesIvPut$Response(params: CloneSpeciesIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<SpeciesCloneDto>> {
     return cloneSpeciesIvPut(this.http, this.rootUrl, params, context);
   }
 
@@ -318,9 +326,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIvPut(params: CloneSpeciesIvPut$Params, context?: HttpContext): Observable<IvCloneDto> {
+  cloneSpeciesIvPut(params: CloneSpeciesIvPut$Params, context?: HttpContext): Observable<SpeciesCloneDto> {
     return this.cloneSpeciesIvPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IvCloneDto>): IvCloneDto => r.body)
+      map((r: StrictHttpResponse<SpeciesCloneDto>): SpeciesCloneDto => r.body)
     );
   }
 
@@ -337,7 +345,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIvPost$Response(params: CloneSpeciesIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+  cloneSpeciesIvPost$Response(params: CloneSpeciesIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpeciesCloneDto>> {
     return cloneSpeciesIvPost(this.http, this.rootUrl, params, context);
   }
 
@@ -351,9 +359,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIvPost(params: CloneSpeciesIvPost$Params, context?: HttpContext): Observable<IvCloneDto> {
+  cloneSpeciesIvPost(params: CloneSpeciesIvPost$Params, context?: HttpContext): Observable<SpeciesCloneDto> {
     return this.cloneSpeciesIvPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IvCloneDto>): IvCloneDto => r.body)
+      map((r: StrictHttpResponse<SpeciesCloneDto>): SpeciesCloneDto => r.body)
     );
   }
 
@@ -366,7 +374,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIcPut$Response(params: CloneSpeciesIcPut$Params, context?: HttpContext): Observable<StrictHttpResponse<IcCloneDto>> {
+  cloneSpeciesIcPut$Response(params: CloneSpeciesIcPut$Params, context?: HttpContext): Observable<StrictHttpResponse<SpeciesCloneDto>> {
     return cloneSpeciesIcPut(this.http, this.rootUrl, params, context);
   }
 
@@ -376,9 +384,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIcPut(params: CloneSpeciesIcPut$Params, context?: HttpContext): Observable<IcCloneDto> {
+  cloneSpeciesIcPut(params: CloneSpeciesIcPut$Params, context?: HttpContext): Observable<SpeciesCloneDto> {
     return this.cloneSpeciesIcPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IcCloneDto>): IcCloneDto => r.body)
+      map((r: StrictHttpResponse<SpeciesCloneDto>): SpeciesCloneDto => r.body)
     );
   }
 
@@ -395,7 +403,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIcPost$Response(params: CloneSpeciesIcPost$Params, context?: HttpContext): Observable<StrictHttpResponse<IcCloneDto>> {
+  cloneSpeciesIcPost$Response(params: CloneSpeciesIcPost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpeciesCloneDto>> {
     return cloneSpeciesIcPost(this.http, this.rootUrl, params, context);
   }
 
@@ -409,9 +417,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneSpeciesIcPost(params: CloneSpeciesIcPost$Params, context?: HttpContext): Observable<IcCloneDto> {
+  cloneSpeciesIcPost(params: CloneSpeciesIcPost$Params, context?: HttpContext): Observable<SpeciesCloneDto> {
     return this.cloneSpeciesIcPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IcCloneDto>): IcCloneDto => r.body)
+      map((r: StrictHttpResponse<SpeciesCloneDto>): SpeciesCloneDto => r.body)
     );
   }
 
@@ -419,7 +427,7 @@ export class NepenthesManagementService extends BaseService {
   static readonly CloneHybridsGetPath = '/clone/hybrids/';
 
   /**
-   * get all Species Clones.
+   * get all hybrid Clones.
    *
    *
    *
@@ -428,12 +436,12 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cloneHybridsGet$Response(params?: CloneHybridsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<(IcCloneDto | IvCloneDto)>>> {
+  cloneHybridsGet$Response(params?: CloneHybridsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<HybridCloneDto>>> {
     return cloneHybridsGet(this.http, this.rootUrl, params, context);
   }
 
   /**
-   * get all Species Clones.
+   * get all hybrid Clones.
    *
    *
    *
@@ -442,9 +450,42 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cloneHybridsGet(params?: CloneHybridsGet$Params, context?: HttpContext): Observable<Array<(IcCloneDto | IvCloneDto)>> {
+  cloneHybridsGet(params?: CloneHybridsGet$Params, context?: HttpContext): Observable<Array<HybridCloneDto>> {
     return this.cloneHybridsGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<(IcCloneDto | IvCloneDto)>>): Array<(IcCloneDto | IvCloneDto)> => r.body)
+      map((r: StrictHttpResponse<Array<HybridCloneDto>>): Array<HybridCloneDto> => r.body)
+    );
+  }
+
+  /** Path part for operation `cloneHybridsIvGet()` */
+  static readonly CloneHybridsIvGetPath = '/clone/hybrids/iv';
+
+  /**
+   * get all IV Hybrids.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cloneHybridsIvGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneHybridsIvGet$Response(params?: CloneHybridsIvGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<HybridCloneDto>>> {
+    return cloneHybridsIvGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * get all IV Hybrids.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cloneHybridsIvGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneHybridsIvGet(params?: CloneHybridsIvGet$Params, context?: HttpContext): Observable<Array<HybridCloneDto>> {
+    return this.cloneHybridsIvGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<HybridCloneDto>>): Array<HybridCloneDto> => r.body)
     );
   }
 
@@ -457,7 +498,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIvPut$Response(params: CloneHybridsIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+  cloneHybridsIvPut$Response(params: CloneHybridsIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneHybridsIvPut(this.http, this.rootUrl, params, context);
   }
 
@@ -467,9 +508,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIvPut(params: CloneHybridsIvPut$Params, context?: HttpContext): Observable<IvCloneDto> {
+  cloneHybridsIvPut(params: CloneHybridsIvPut$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneHybridsIvPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IvCloneDto>): IvCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
     );
   }
 
@@ -486,7 +527,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIvPost$Response(params: CloneHybridsIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+  cloneHybridsIvPost$Response(params: CloneHybridsIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneHybridsIvPost(this.http, this.rootUrl, params, context);
   }
 
@@ -500,9 +541,42 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIvPost(params: CloneHybridsIvPost$Params, context?: HttpContext): Observable<IvCloneDto> {
+  cloneHybridsIvPost(params: CloneHybridsIvPost$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneHybridsIvPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IvCloneDto>): IvCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
+    );
+  }
+
+  /** Path part for operation `cloneHybridsIcGet()` */
+  static readonly CloneHybridsIcGetPath = '/clone/hybrids/ic';
+
+  /**
+   * get all IC Hybrids.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cloneHybridsIcGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneHybridsIcGet$Response(params?: CloneHybridsIcGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<HybridCloneDto>>> {
+    return cloneHybridsIcGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * get all IC Hybrids.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cloneHybridsIcGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneHybridsIcGet(params?: CloneHybridsIcGet$Params, context?: HttpContext): Observable<Array<HybridCloneDto>> {
+    return this.cloneHybridsIcGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<HybridCloneDto>>): Array<HybridCloneDto> => r.body)
     );
   }
 
@@ -515,7 +589,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIcPut$Response(params: CloneHybridsIcPut$Params, context?: HttpContext): Observable<StrictHttpResponse<IcCloneDto>> {
+  cloneHybridsIcPut$Response(params: CloneHybridsIcPut$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneHybridsIcPut(this.http, this.rootUrl, params, context);
   }
 
@@ -525,9 +599,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIcPut(params: CloneHybridsIcPut$Params, context?: HttpContext): Observable<IcCloneDto> {
+  cloneHybridsIcPut(params: CloneHybridsIcPut$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneHybridsIcPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IcCloneDto>): IcCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
     );
   }
 
@@ -544,7 +618,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIcPost$Response(params: CloneHybridsIcPost$Params, context?: HttpContext): Observable<StrictHttpResponse<IcCloneDto>> {
+  cloneHybridsIcPost$Response(params: CloneHybridsIcPost$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneHybridsIcPost(this.http, this.rootUrl, params, context);
   }
 
@@ -558,9 +632,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneHybridsIcPost(params: CloneHybridsIcPost$Params, context?: HttpContext): Observable<IcCloneDto> {
+  cloneHybridsIcPost(params: CloneHybridsIcPost$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneHybridsIcPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IcCloneDto>): IcCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
     );
   }
 
@@ -577,7 +651,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cloneMultiHybridGet$Response(params?: CloneMultiHybridGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<(IcCloneDto | IvCloneDto)>>> {
+  cloneMultiHybridGet$Response(params?: CloneMultiHybridGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<HybridCloneDto>>> {
     return cloneMultiHybridGet(this.http, this.rootUrl, params, context);
   }
 
@@ -591,9 +665,42 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  cloneMultiHybridGet(params?: CloneMultiHybridGet$Params, context?: HttpContext): Observable<Array<(IcCloneDto | IvCloneDto)>> {
+  cloneMultiHybridGet(params?: CloneMultiHybridGet$Params, context?: HttpContext): Observable<Array<HybridCloneDto>> {
     return this.cloneMultiHybridGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Array<(IcCloneDto | IvCloneDto)>>): Array<(IcCloneDto | IvCloneDto)> => r.body)
+      map((r: StrictHttpResponse<Array<HybridCloneDto>>): Array<HybridCloneDto> => r.body)
+    );
+  }
+
+  /** Path part for operation `cloneMultiHybridIvGet()` */
+  static readonly CloneMultiHybridIvGetPath = '/clone/multi-hybrid/iv';
+
+  /**
+   * get all multi-hybrid IV Clones.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cloneMultiHybridIvGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneMultiHybridIvGet$Response(params?: CloneMultiHybridIvGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<HybridCloneDto>>> {
+    return cloneMultiHybridIvGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * get all multi-hybrid IV Clones.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cloneMultiHybridIvGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneMultiHybridIvGet(params?: CloneMultiHybridIvGet$Params, context?: HttpContext): Observable<Array<HybridCloneDto>> {
+    return this.cloneMultiHybridIvGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<HybridCloneDto>>): Array<HybridCloneDto> => r.body)
     );
   }
 
@@ -606,7 +713,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIvPut$Response(params: CloneMultiHybridIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+  cloneMultiHybridIvPut$Response(params: CloneMultiHybridIvPut$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneMultiHybridIvPut(this.http, this.rootUrl, params, context);
   }
 
@@ -616,9 +723,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIvPut(params: CloneMultiHybridIvPut$Params, context?: HttpContext): Observable<IvCloneDto> {
+  cloneMultiHybridIvPut(params: CloneMultiHybridIvPut$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneMultiHybridIvPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IvCloneDto>): IvCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
     );
   }
 
@@ -635,7 +742,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIvPost$Response(params: CloneMultiHybridIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<IvCloneDto>> {
+  cloneMultiHybridIvPost$Response(params: CloneMultiHybridIvPost$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneMultiHybridIvPost(this.http, this.rootUrl, params, context);
   }
 
@@ -649,9 +756,42 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIvPost(params: CloneMultiHybridIvPost$Params, context?: HttpContext): Observable<IvCloneDto> {
+  cloneMultiHybridIvPost(params: CloneMultiHybridIvPost$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneMultiHybridIvPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IvCloneDto>): IvCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
+    );
+  }
+
+  /** Path part for operation `cloneMultiHybridIcGet()` */
+  static readonly CloneMultiHybridIcGetPath = '/clone/multi-hybrid/ic';
+
+  /**
+   * get all multi-hybrid IC Clones.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `cloneMultiHybridIcGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneMultiHybridIcGet$Response(params?: CloneMultiHybridIcGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<HybridCloneDto>>> {
+    return cloneMultiHybridIcGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * get all multi-hybrid IC Clones.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `cloneMultiHybridIcGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  cloneMultiHybridIcGet(params?: CloneMultiHybridIcGet$Params, context?: HttpContext): Observable<Array<HybridCloneDto>> {
+    return this.cloneMultiHybridIcGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<HybridCloneDto>>): Array<HybridCloneDto> => r.body)
     );
   }
 
@@ -664,7 +804,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIcPut$Response(params: CloneMultiHybridIcPut$Params, context?: HttpContext): Observable<StrictHttpResponse<IcCloneDto>> {
+  cloneMultiHybridIcPut$Response(params: CloneMultiHybridIcPut$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneMultiHybridIcPut(this.http, this.rootUrl, params, context);
   }
 
@@ -674,9 +814,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIcPut(params: CloneMultiHybridIcPut$Params, context?: HttpContext): Observable<IcCloneDto> {
+  cloneMultiHybridIcPut(params: CloneMultiHybridIcPut$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneMultiHybridIcPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IcCloneDto>): IcCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
     );
   }
 
@@ -693,7 +833,7 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIcPost$Response(params: CloneMultiHybridIcPost$Params, context?: HttpContext): Observable<StrictHttpResponse<IcCloneDto>> {
+  cloneMultiHybridIcPost$Response(params: CloneMultiHybridIcPost$Params, context?: HttpContext): Observable<StrictHttpResponse<HybridCloneDto>> {
     return cloneMultiHybridIcPost(this.http, this.rootUrl, params, context);
   }
 
@@ -707,9 +847,9 @@ export class NepenthesManagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  cloneMultiHybridIcPost(params: CloneMultiHybridIcPost$Params, context?: HttpContext): Observable<IcCloneDto> {
+  cloneMultiHybridIcPost(params: CloneMultiHybridIcPost$Params, context?: HttpContext): Observable<HybridCloneDto> {
     return this.cloneMultiHybridIcPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<IcCloneDto>): IcCloneDto => r.body)
+      map((r: StrictHttpResponse<HybridCloneDto>): HybridCloneDto => r.body)
     );
   }
 

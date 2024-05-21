@@ -5,16 +5,19 @@ import {NepenthesOverviewComponent} from "./nepenthes-overview/nepenthes-overvie
 import {NepenthesAddComponent} from "./nepenthes-add/nepenthes-add.component";
 import {CloneComponent} from "./clone/clone.component";
 import {UserAddCloneComponent} from "./user-add-clone/user-add-clone.component";
+import {HybridCloneComponent} from "./hybrid-clone/hybrid-clone.component";
+import {HybridInputFieldComponent} from "./hybrid-input-field/hybrid-input-field.component";
 
 const routes: Routes = [
 
   { path: '', redirectTo: 'user/profile', pathMatch: 'full' },
   {path: "nepenthes/add", component: NepenthesAddComponent},
-  {path: "nepenthes/clone/add", component: CloneComponent},
+  {path: "hybrid/add", component: HybridInputFieldComponent},
 
+  {path: "user/:name/profile", component: HybridCloneComponent},
   {path: "user/profile", component: UserOverviewComponent},
-  {path: "user/nepenthes/add", component: UserAddCloneComponent},
 
+  {path: "user/nepenthes/add", component: UserAddCloneComponent},
   {path: "user/:name/profile", component: UserOverviewComponent},
 
   {path: "user/profile/nepenthes", component: NepenthesOverviewComponent},

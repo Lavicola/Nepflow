@@ -6,13 +6,12 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { IcCloneDto } from '../../models/ic-clone-dto';
-import { IvCloneDto } from '../../models/iv-clone-dto';
+import { SpeciesCloneDto } from '../../models/species-clone-dto';
 
 export interface CloneSpeciesGet$Params {
 }
 
-export function cloneSpeciesGet(http: HttpClient, rootUrl: string, params?: CloneSpeciesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<(IvCloneDto | IcCloneDto)>>> {
+export function cloneSpeciesGet(http: HttpClient, rootUrl: string, params?: CloneSpeciesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<SpeciesCloneDto>>> {
   const rb = new RequestBuilder(rootUrl, cloneSpeciesGet.PATH, 'get');
   if (params) {
   }
@@ -22,7 +21,7 @@ export function cloneSpeciesGet(http: HttpClient, rootUrl: string, params?: Clon
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<(IvCloneDto | IcCloneDto)>>;
+      return r as StrictHttpResponse<Array<SpeciesCloneDto>>;
     })
   );
 }

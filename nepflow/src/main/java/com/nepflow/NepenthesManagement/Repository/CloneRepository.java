@@ -1,38 +1,19 @@
 package com.nepflow.NepenthesManagement.Repository;
 
-import com.nepflow.NepenthesManagement.Model.*;
+import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
+import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface CloneRepository extends Neo4jRepository<Clone,String> {
+public interface CloneRepository extends Neo4jRepository<ICClone,String> {
 
+    ICClone findClonesByCloneId(String cloneId);
 
-    Clone findCloneByCloneId(String cloneId);
+    ICClone findICCloneByInternalCloneId(String internalCloneId);
 
-    List<Clone> findClonesByName(String name);
+    boolean existsByInternalCloneId(String cloneId);
 
-    boolean existsCloneByCloneId(String cloneId);
-
-
-    @Query("match(n:SpeciesClone) return n")
-    List<SpeciesClone> getAllSpeciesClones();
-
-
-
-    @Query("match(n:IVClone) return n")
-    List<IVClone> getAllIVClones();
-
-    @Query("match(n:ICClone) return n")
-    List<ICClone> getAllICClones();
-
-    @Query("match(n:HybridClone) return n")
-    List<ICHybrid> getAllHybrids();
-
-
-
+    boolean existsByCloneId(String cloneId);
 
 }

@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {NepenthesManagementService} from "../services/nepenthes-management.service";
-import {IcCloneDto} from "../models/ic-clone-dto";
 import {NepenthesDto} from "../models/nepenthes-dto";
 import {LocationDto} from "../models/location-dto";
 import {CloneGrexDto} from "../models/clone-grex-dto";
+import {SpeciesCloneDto} from "../models/species-clone-dto";
 
 @Component({
   selector: 'app-user-add-clone',
@@ -21,7 +21,7 @@ export class UserAddCloneComponent {
 
   IV() {
 
-    let icCloneObject: IcCloneDto = {
+    let icCloneObject: SpeciesCloneDto = {
       cloneId: 'BE-3225',
       name: 'villosa',
       grex: {},

@@ -1,12 +1,17 @@
 package com.nepflow.NepenthesManagement.Service;
 
-import com.nepflow.NepenthesManagement.Model.Location;
-import com.nepflow.NepenthesManagement.Model.Producer;
-import com.nepflow.NepenthesManagement.Model.Sex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 
 public interface NepenthesManagementMetaDataService {
 
-    Producer getProducer(String producer);
-    Location getLocation(String location);
-    Sex getSex(String sex);
+    Location saveLocation(String locationAsString);
+    Producer saveProducer(String producerAsString);
+
+    Location getLocation(String locationAsString);
+    Producer getProducer(String producerAsString);
+
+    Sex getSex(String sexAsString);
+
 }

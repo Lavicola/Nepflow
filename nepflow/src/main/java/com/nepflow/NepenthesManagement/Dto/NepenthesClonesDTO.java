@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nepflow.NepenthesManagement.Dto.CloneHybridsGet200ResponseInner;
+import com.nepflow.NepenthesManagement.Dto.SpeciesCloneDTO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,13 +22,13 @@ import jakarta.annotation.Generated;
  * NepenthesClonesDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T00:38:12.962208100+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-15T23:01:09.594573900+02:00[Europe/Berlin]")
 public class NepenthesClonesDTO {
 
   private String nepenthes;
 
   @Valid
-  private List<@Valid CloneHybridsGet200ResponseInner> clones;
+  private List<@Valid SpeciesCloneDTO> clones;
 
   public NepenthesClonesDTO nepenthes(String nepenthes) {
     this.nepenthes = nepenthes;
@@ -50,12 +50,12 @@ public class NepenthesClonesDTO {
     this.nepenthes = nepenthes;
   }
 
-  public NepenthesClonesDTO clones(List<@Valid CloneHybridsGet200ResponseInner> clones) {
+  public NepenthesClonesDTO clones(List<@Valid SpeciesCloneDTO> clones) {
     this.clones = clones;
     return this;
   }
 
-  public NepenthesClonesDTO addClonesItem(CloneHybridsGet200ResponseInner clonesItem) {
+  public NepenthesClonesDTO addClonesItem(SpeciesCloneDTO clonesItem) {
     if (this.clones == null) {
       this.clones = new ArrayList<>();
     }
@@ -70,11 +70,11 @@ public class NepenthesClonesDTO {
   @Valid 
   @Schema(name = "clones", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clones")
-  public List<@Valid CloneHybridsGet200ResponseInner> getClones() {
+  public List<@Valid SpeciesCloneDTO> getClones() {
     return clones;
   }
 
-  public void setClones(List<@Valid CloneHybridsGet200ResponseInner> clones) {
+  public void setClones(List<@Valid SpeciesCloneDTO> clones) {
     this.clones = clones;
   }
 
