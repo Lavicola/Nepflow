@@ -1,10 +1,12 @@
 package com.nepflow.UserManagement.Service;
 
+import com.nepflow.UserManagement.Event.UserCreatedEvent;
 import com.nepflow.UserManagement.Model.Country;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Repository.CountryRepository;
 import com.nepflow.UserManagement.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Autowired
     CountryRepository countryRepository;
 
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public List<User> getAllUsers() {
@@ -53,7 +57,9 @@ public class UserManagementServiceImpl implements UserManagementService {
         }
         Country country = this.countryRepository.findCountryByName(countryName);
         user.setCountry(country);
-        return this.userRepository.save(user);
+        this.userRepository.save(user);
+        applicationEventPublisher.publishEvent(new UserCreatedEvent(this,user));
+        return user;
     }
 
     @Override

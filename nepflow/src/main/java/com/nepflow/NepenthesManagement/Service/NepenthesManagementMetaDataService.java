@@ -14,4 +14,6 @@ public interface NepenthesManagementMetaDataService {
 
     Sex getSex(String sexAsString);
 
+    Sex saveSex(String sexAsString);
+
 }

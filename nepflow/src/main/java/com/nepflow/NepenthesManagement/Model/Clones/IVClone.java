@@ -24,6 +24,7 @@ public abstract class IVClone<L extends Label> extends ICClone<L> {
         if(sex != null){
             this.internalCloneId = IVClone.generateInternalCloneId(cloneId,sex);
         }
+        this.producer = producer;
 
     }
 

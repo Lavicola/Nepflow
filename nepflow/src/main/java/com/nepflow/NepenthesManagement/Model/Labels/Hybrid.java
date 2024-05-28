@@ -36,7 +36,7 @@ public class Hybrid extends HybridLabel {
     @Override
     boolean checkLabelFormat(String name) {
         // must be (NAME x NAME)
-        return Pattern.compile("^\\([a-zA-Z]+ x [a-zA-Z]+\\)$").matcher(name).find();
+        return Pattern.compile("^\\(\\w+ x \\w+\\)$").matcher(name).find();
     }
 
     @Override

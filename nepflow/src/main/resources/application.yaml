@@ -12,9 +12,10 @@ spring:
 
 okta:
   oauth2:
-    issuer: INSERT
-    client-id: INSERT
-    client-secret: INSERT
+    issuer: https://dev-562zgyhcw56114ld.eu.auth0.com/
+    client-id: c6CZP4ZEGbWdIeonARthJJAquBvTleWx
+    client-secret: 47IoidD09pCLoOIeEXQOHsDA3ePI0NL4bVbt8Ps1ssJFPBCzFTUZDzKDQ96HOri8
+
 
 
 jackson:

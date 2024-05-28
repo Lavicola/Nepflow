@@ -7,6 +7,7 @@ import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import lombok.Getter;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.*;
 
 import java.util.ArrayList;
@@ -43,6 +44,10 @@ public abstract class Label {
     @Getter
     String prefix;
 
+    @Version
+    private Long version;
+
+
     /**
      *
      * @param name
@@ -58,6 +63,10 @@ public abstract class Label {
         assert isValidLabelName(name);
         this.name = name;
         this.cloneList = new ArrayList<>();
+    }
+
+    public Label(){
+
     }
 
 

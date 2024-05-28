@@ -1,5 +1,6 @@
 package com.nepflow.NepenthesManagement.Service;
 
+import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
 import com.nepflow.NepenthesManagement.LabelFormats;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
@@ -19,6 +20,7 @@ import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
@@ -27,6 +29,9 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class NepenthesServiceManagementTest {
 
+
+    @MockBean
+    DataInitializationService dataInitializationService;
 
     private static Neo4j embeddedDatabaseServer;
 

@@ -7,10 +7,14 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICNepenthesClone;
+import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVNepenthesClone;
+import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
+import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
+import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,17 +27,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-//@Service
+@Service
 public class DataInitializationService {
-//TODO at some refactor, just a solution to get data for now
 
     @Value("classpath:sql/nepenthes.sql")
     private Resource LabelSQL;
-    @Value("classpath:sql/clones.sql")
-    private Resource ClonesSQL;
+    @Value("classpath:sql/clones.csv")
+    private Resource ClonesCSV;
     @Value("classpath:sql/sex.sql")
     private Resource SexSQL;
     @Value("classpath:sql/producer.sql")
@@ -43,61 +45,46 @@ public class DataInitializationService {
     LabelRepository labelRepository;
 
     @Autowired
+    NepenthesManagementService nepenthesManagementService;
+
+    @Autowired
     NepenthesManagementMetaDataService nepenthesManagementMetaDataService;
 
     @Transactional("transactionManager")
     @PostConstruct
     public void initializeModel() throws IOException {
-        List<String> lines;
-        HashMap<String, Sex> sexHashMap = new HashMap<>();
-        HashMap<String, Producer> producerHashMap = new HashMap<>();
-        HashMap<String, Nepenthes> nepenthesHashMap = new HashMap<>();
-
+        // store sex
         for (String sex:this.getLines(SexSQL)) {
-            if(sexHashMap.containsKey(sex)){
-                continue;
-            }
-            sexHashMap.put(sex,new Sex(sex));
+            this.nepenthesManagementMetaDataService.saveSex(sex);
         }
         for (String producer:this.getLines(ProducerSQL)) {
-            if(producerHashMap.containsKey(producer)){
-                continue;
-            }
-            producerHashMap.put(producer,new Producer(producer));
+            this.nepenthesManagementMetaDataService.saveProducer(producer);
         }
-        for (String producer:this.getLines(ProducerSQL)) {
-            if(producerHashMap.containsKey(producer)){
-                continue;
-            }
-            producerHashMap.put(producer,new Producer(producer));
+        for (String nepenthes:this.getLines(LabelSQL)) {
+            this.nepenthesManagementService.createLabel(new Nepenthes(nepenthes));
+            Label.addValidPlant(nepenthes);
         }
-        for (String label:this.getLines(LabelSQL)) {
-            if(nepenthesHashMap.containsKey(label)){
-                continue;
-            }
-            nepenthesHashMap.put(label,new Nepenthes(label,0));
-            labelRepository.save(nepenthesHashMap.get(label));
-        }
+
+
+
         Grex grex = null;
-        for (String line:this.getLines(ClonesSQL)) {
+        int PRODUCER_INDEX = 0;
+        int CLONE_INDEX = 1;
+        int NEPENTHES_INDEX = 2;
+        int SEX_INDEX = 3;
+        int LOCATION_INDEX = 4;
+
+        for (String line:this.getLines(ClonesCSV)) {
             String[] lineParts = line.split(",");
-            Producer producer = producerHashMap.getOrDefault(lineParts[0],null);
-            String cloneid = lineParts[1];
-            Nepenthes nepenthes = nepenthesHashMap.getOrDefault(lineParts[2],null);
-            Location location = this.nepenthesManagementMetaDataService.saveLocation(lineParts[3]);
-            Sex sex = sexHashMap.getOrDefault(lineParts[4],null);
-            ICClone ivNepenthesICClone = new IVNepenthesClone(nepenthes,cloneid,sex,grex,producer,location);
-
-
-
-
-
-
+            Label nepenthes = this.nepenthesManagementService.createLabel(new Nepenthes(lineParts[NEPENTHES_INDEX].trim()));
+            System.out.println(nepenthes.getName());
+            this.nepenthesManagementService.saveIVNepenthesClone((Nepenthes) nepenthes,
+                    lineParts[CLONE_INDEX].trim(),lineParts[SEX_INDEX],grex,
+                    lineParts[LOCATION_INDEX].trim(),lineParts[PRODUCER_INDEX]);
         }
 
 
 
-        //this.speciesCloneRepository.save(clone);
 
         }
 

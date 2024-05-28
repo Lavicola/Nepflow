@@ -4,6 +4,7 @@ package com.nepflow.NepenthesManagement.Model.CloneMetadata;
 import com.google.common.util.concurrent.CycleDetectingLockFactory;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
@@ -15,9 +16,12 @@ import java.util.stream.Collectors;
 public class Location {
 
     @Id
-    @Property
     @Getter
     String name;
+
+    @Version
+    private Long version;
+
 
     public Location(String location) {
         if (location == null || location.trim().isEmpty()) {

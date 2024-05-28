@@ -87,7 +87,7 @@ insignis
 izumiae
 jacquelineae
 spec. Pseudoklossii
-spec. "Tawarensis"
+spec. Tawarensis
 jamban
 junghuhnii
 justinae

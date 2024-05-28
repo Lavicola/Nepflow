@@ -528,8 +528,8 @@ Andreas Wistuba,AW-N_raj_T.06,rajah, , ,
 Andreas Wistuba,AW-N_raj_T.RSC,rajah , , ,
 Andreas Wistuba,AW-N_rc.ISC,robcantleyi, , ,
 Andreas Wistuba,AW-N_spat_ABG.01,spathulata, , ,
-Andreas Wistuba,AW-N_sp_taw.ISC,spec. "Tawarensis" , , ,
-Andreas Wistuba,AW-N_sp_taw.RSC,spec. "Tawarensis" , , ,
+Andreas Wistuba,AW-N_sp_taw.ISC,spec. Tawarensis , , ,
+Andreas Wistuba,AW-N_sp_taw.RSC,spec. Tawarensis , , ,
 Andreas Wistuba,AW-N_sp_psk.01,spec. Pseudoklossii , , ,
 Andreas Wistuba,AW-N_sp_psk.03,spec. Pseudoklossii , , ,
 Andreas Wistuba,AW-N_sp_psk.Ho,spec. Pseudoklossii , , ,
@@ -705,20 +705,20 @@ Floravitro,FV-004,peltata, , ,Mount Hamiguitan
 Floravitro,FV-004-01,peltata, , ,Mount Hamiguitan
 Floravitro,FV-005,sibuyanensis, , ,Mount Guiting-Guiting
 Floravitro,FV-005-01,sibuyanensis, , ,Mount Guiting-Guiting
-Floravitro,FV-007,bellii,Surigao del Norte
-Floravitro,FV-007-01,bellii, , ,Surigao del Norte
-Floravitro,FV-014,sanguinea, , ,Malaysia
-Floravitro,FV-014-01,sanguinea, , ,Malaysia
-Floravitro,FV-015,hirsuta, , ,Bako National Park
-Floravitro,FV-015-01,hirsuta, , ,Bako National Park
-Floravitro,FV-017,diatas, , ,Mount Bandahara
-Floravitro,FV-017-01,diatas, , ,Mount Bandahara
-Floravitro,FV-026,harauensis, , ,Harau Valley
-Floravitro,FV-026-01,harauensis, , ,Harau Valley
-Floravitro,FV-026-02,harauensis, , ,Harau Valley
-Floravitro,FV-026-04,harauensis, , ,Harau Valley
-Floravitro,FV-026-05,harauensis, , ,Harau Valley
-Floravitro,FV-030,clipeata, , ,Mount Kelam
+Floravitro,FV-007,bellii, ,Surigao del Norte
+Floravitro,FV-007-01,bellii, ,Surigao del Norte
+Floravitro,FV-014,sanguinea, ,Malaysia
+Floravitro,FV-014-01,sanguinea, ,Malaysia
+Floravitro,FV-015,hirsuta, ,Bako National Park
+Floravitro,FV-015-01,hirsuta, ,Bako National Park
+Floravitro,FV-017,diatas, ,Mount Bandahara
+Floravitro,FV-017-01,diatas, ,Mount Bandahara
+Floravitro,FV-026,harauensis, ,Harau Valley
+Floravitro,FV-026-01,harauensis, ,Harau Valley
+Floravitro,FV-026-02,harauensis, ,Harau Valley
+Floravitro,FV-026-04,harauensis, ,Harau Valley
+Floravitro,FV-026-05,harauensis, ,Harau Valley
+Floravitro,FV-030,clipeata, ,Mount Kelam
 Floravitro,FV-030-01,clipeata,Male,Mount Kelam
 Floravitro,FV-030-03,clipeata,Female,Mount Kelam
 Floravitro,FV-030-04,clipeata,Female,Mount Kelam
@@ -740,16 +740,16 @@ Floravitro,FV-036-01,palawanensis, ,Sultan Peak
 Floravitro,FV-037,alba, ,Mount Tahan
 Floravitro,FV-037-01,alba, ,Mount Tahan
 Floravitro,FV-040,sumatrana, ,Sibolga
-Floravitro,FV-040-ISC, ,sumatrana
+Floravitro,FV-040-ISC,sumatrana, , ,
 Floravitro,FV-041,ephippiata, ,Hose Mountains
 Floravitro,FV-041-01,ephippiata, ,Hose Mountains
 Floravitro,FV-043,khasiana, ,Khasi Hills
-Floravitro,FV-043-ISC, ,khasiana,Meghalaya
+Floravitro,FV-043-ISC,khasiana, ,Meghalaya
 Floravitro,FV-044,sp. Papua, ,Mount Doorman
 Floravitro,FV-044-01,sp. Papua, ,Mount Doorman
 Floravitro,FV-045,clipeata, ,Mount Kelam
-Floravitro,FV-045-01,clipeata,Female, ,Mount Kelam
-Floravitro,FV-045-02,clipeata,Female, ,Mount Kelam
+Floravitro,FV-045-01,clipeata,Female,Mount Kelam
+Floravitro,FV-045-02,clipeata,Female,Mount Kelam
 Floravitro,FV-046,clipeata, ,Mount Kelam
 Floravitro,FV-046-ISC,clipeata, ,Mount Kelam
 Floravitro,FV-049,pervillei, ,Mount Copolia
@@ -762,17 +762,17 @@ Floravitro,FV-049-08,pervillei, ,Mount Copolia
 Floravitro,FV-049-13,pervillei, ,Mount Copolia
 Floravitro,FV-049-14,pervillei, ,Mount Copolia
 Floravitro,FV-049-15,pervillei, ,Mount Copolia
-Floravitro,FV-050,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-01,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-02,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-04,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-05,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-06,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-07,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-08,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-12,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-13,pervillei, ,Mount Trois Frères
-Floravitro,FV-050-19,pervillei, ,Mount Trois Frères
+Floravitro,FV-050,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-01,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-02,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-04,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-05,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-06,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-07,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-08,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-12,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-13,pervillei, ,Mount Trois FrÃ¨res
+Floravitro,FV-050-19,pervillei, ,Mount Trois FrÃ¨res
 Floravitro,FV-052,truncata, ,Mindanao
 Floravitro,FV-052-ISC,truncata, ,Mindanao
 Floravitro,FV-061,edwardsiana, ,Marai Parai

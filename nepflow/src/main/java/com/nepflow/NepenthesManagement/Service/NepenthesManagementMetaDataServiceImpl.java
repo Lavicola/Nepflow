@@ -25,9 +25,13 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
 
     @Override
     public Location saveLocation(String locationAsString) {
-        Optional<Location> loc = this.locationRepository.findById(locationAsString);
-        if (loc.isPresent()) {
-            return loc.get();
+        if (locationAsString.trim().isEmpty()) {
+            return null;
+        }
+        Location location = new Location(locationAsString);
+        Location loc = this.locationRepository.findLocationByName(location.getName());
+        if (loc != null) {
+            return loc;
         } else {
             return this.locationRepository.save(new Location(locationAsString));
         }
@@ -57,5 +61,16 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
     @Override
     public Sex getSex(String sexAsString) {
         return this.sexRepository.findSexBySexAsString(sexAsString);
+    }
+
+    @Override
+    public Sex saveSex(String sexAsString) {
+        Sex rSex = this.sexRepository.findSexBySexAsString(sexAsString);
+        if (rSex != null) {
+            return rSex;
+        } else {
+            return this.sexRepository.save(new Sex(sexAsString));
+        }
+
     }
 }

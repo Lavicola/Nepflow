@@ -31,14 +31,14 @@ public class MultiHybrid extends HybridLabel{
         while (!temp.equals(name)) {
             temp = name;
             // ((NAME x NAME) x NAME) = (NAME x NAME)
-            name = name.replaceAll("\\(\\([a-zA-Z]+ x [a-zA-Z]+\\) x [a-zA-Z]+\\)", "(N x N)");
+            name = name.replaceAll("\\(\\(\\w+ x \\w+\\) x \\w+\\)", "(N x N)");
             substitionCount++;
         }
         temp = "";
         while (!temp.equals(name)) {
             temp = name;
             // (NAME x NAME) = NAME
-            name = name.replaceAll("\\([a-zA-Z]+ x [a-zA-Z]+\\)", "N");
+            name = name.replaceAll("\\(\\w+ x \\w+\\)", "N");
             substitionCount++;
 
         }
@@ -46,7 +46,7 @@ public class MultiHybrid extends HybridLabel{
         while (!temp.equals(name)) {
             temp = name;
             // NAME x NAME = ""
-            name = name.replaceAll("[a-zA-Z]+ x [a-zA-Z]+", "");
+            name = name.replaceAll("\\w+ x \\w+", "");
             substitionCount++;
         }
         return name.equals("") && substitionCount > 0;
