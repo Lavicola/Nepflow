@@ -1,3 +1,8 @@
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
 spring:
   profiles:
     active: default
@@ -7,14 +12,14 @@ spring:
     uri: bolt://localhost:7687
     authentication:
       username: neo4j
-      password: password
+      password: ENC(EbVOfPGZAJfCi+fhWvvAG0sJNLRwTgcn)
 
 
 okta:
   oauth2:
     issuer: https://dev-562zgyhcw56114ld.eu.auth0.com/
-    client-id: c6CZP4ZEGbWdIeonARthJJAquBvTleWx
-    client-secret: 47IoidD09pCLoOIeEXQOHsDA3ePI0NL4bVbt8Ps1ssJFPBCzFTUZDzKDQ96HOri8
+    client-id: ENC(sLHQm64Ck7kTs8OegMumLlvmxlYj+5PUy1HaaZZKYuPdsIMMncChHm4Q8mh/0CXu)
+    client-secret: ENC(2z2m0f3lLcvTTAz/4wFvUYOLzelI5ybeksRBLCSx0c0/h022DqQ8fjvrzKVkJajuiQNx7FTCg8xTyVqXL7WH/FCCqhrEHTXkcHYLjd+Dq88=)
 
 
 

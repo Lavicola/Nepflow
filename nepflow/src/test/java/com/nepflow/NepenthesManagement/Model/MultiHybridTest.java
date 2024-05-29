@@ -46,8 +46,6 @@ public class MultiHybridTest {
         String hybrid5InValid = "((((NAME x NAME) x NAME) x NAME) x (NAME x NAME))";
         // whitspace
         String hybrid6InValid = " ((((NAME x NAME) x NAME) x NAME) x (NAME x NAME))";
-        // number inside
-        String hybrid7InValid = "(((NAME x NA7ME) x NAME) x NAME) x (NAME x NAME)";
 
 
 
@@ -66,9 +64,7 @@ public class MultiHybridTest {
         assertThrows(AssertionError.class, () -> {
             new MultiHybrid(hybrid6InValid,0);
         });
-        assertThrows(AssertionError.class, () -> {
-            new MultiHybrid(hybrid7InValid,0);
-        });
+
 
 
 

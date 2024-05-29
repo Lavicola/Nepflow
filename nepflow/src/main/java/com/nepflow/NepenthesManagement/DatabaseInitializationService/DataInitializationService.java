@@ -53,37 +53,40 @@ public class DataInitializationService {
     @Transactional("transactionManager")
     @PostConstruct
     public void initializeModel() throws IOException {
-        // store sex
-        for (String sex:this.getLines(SexSQL)) {
-            this.nepenthesManagementMetaDataService.saveSex(sex);
+
+        if(false) {
+
+
+            // store sex
+            for (String sex : this.getLines(SexSQL)) {
+                this.nepenthesManagementMetaDataService.saveSex(sex);
+            }
+            for (String producer : this.getLines(ProducerSQL)) {
+                this.nepenthesManagementMetaDataService.saveProducer(producer);
+            }
+            for (String nepenthes : this.getLines(LabelSQL)) {
+                this.nepenthesManagementService.createLabel(new Nepenthes(nepenthes));
+                Label.addValidPlant(nepenthes);
+            }
+
+
+            Grex grex = null;
+            int PRODUCER_INDEX = 0;
+            int CLONE_INDEX = 1;
+            int NEPENTHES_INDEX = 2;
+            int SEX_INDEX = 3;
+            int LOCATION_INDEX = 4;
+
+            for (String line : this.getLines(ClonesCSV)) {
+                String[] lineParts = line.split(",");
+                Label nepenthes = this.nepenthesManagementService.createLabel(new Nepenthes(lineParts[NEPENTHES_INDEX].trim()));
+                System.out.println(nepenthes.getName());
+                this.nepenthesManagementService.saveIVNepenthesClone((Nepenthes) nepenthes,
+                        lineParts[CLONE_INDEX].trim(), lineParts[SEX_INDEX], grex,
+                        lineParts[LOCATION_INDEX].trim(), lineParts[PRODUCER_INDEX]);
+            }
+
         }
-        for (String producer:this.getLines(ProducerSQL)) {
-            this.nepenthesManagementMetaDataService.saveProducer(producer);
-        }
-        for (String nepenthes:this.getLines(LabelSQL)) {
-            this.nepenthesManagementService.createLabel(new Nepenthes(nepenthes));
-            Label.addValidPlant(nepenthes);
-        }
-
-
-
-        Grex grex = null;
-        int PRODUCER_INDEX = 0;
-        int CLONE_INDEX = 1;
-        int NEPENTHES_INDEX = 2;
-        int SEX_INDEX = 3;
-        int LOCATION_INDEX = 4;
-
-        for (String line:this.getLines(ClonesCSV)) {
-            String[] lineParts = line.split(",");
-            Label nepenthes = this.nepenthesManagementService.createLabel(new Nepenthes(lineParts[NEPENTHES_INDEX].trim()));
-            System.out.println(nepenthes.getName());
-            this.nepenthesManagementService.saveIVNepenthesClone((Nepenthes) nepenthes,
-                    lineParts[CLONE_INDEX].trim(),lineParts[SEX_INDEX],grex,
-                    lineParts[LOCATION_INDEX].trim(),lineParts[PRODUCER_INDEX]);
-        }
-
-
 
 
         }

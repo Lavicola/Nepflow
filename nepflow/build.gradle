@@ -25,12 +25,14 @@ repositories {
 
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'com.okta.spring', name: 'okta-spring-boot-starter', version: '3.0.6'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: '2.2.0'
 	implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.6'
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.0'
 	runtimeOnly group: 'com.h2database', name: 'h2', version: '2.2.220'
@@ -51,7 +53,6 @@ dependencies {
 
 
 }
-
 task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
 	doNotTrackState("")
 	generatorName.set("spring")

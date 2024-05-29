@@ -46,7 +46,49 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserCloneDTO'
         '500':
+          description: Error, could not add Specimen to user
+
+  /user/nepenthes/{specimenId}:
+    delete:
+      parameters:
+        - in: path
+          name: specimenId
+          schema:
+            type: string
+          required: true
+
+      summary: remove a clone from the growlisti If the removed plant was already used for a trade it will be a soft delete in the relation part
+      tags:
+        - Growlistmanagement
+      responses:
+        '200':
+          description: OK
+        '500':
           description: Error, could not add Nepenthes Clone to user
+    put:
+      parameters:
+        - in: path
+          name: specimenId
+          schema:
+            type: string
+          required: true
+      summary: update values
+      tags:
+        - Growlistmanagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCloneDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCloneDTO'
+        '500':
+          description: Could not update Specimen
 
   /{user}/nepenthes:
     get:
@@ -79,15 +121,14 @@ components:
     UserCloneDTO:
       type: object
       properties:
-        id:
+        specimenId:
           type: string
           format: uuid
+        labelName:
+          type: string
+        internalCloneId:
+          type: string
         cloneId:
-          type: string
-        nepenthesName:
-          type: string
-        user:
-          description: Name of the User who grows this specific Clone
           type: string
 
 

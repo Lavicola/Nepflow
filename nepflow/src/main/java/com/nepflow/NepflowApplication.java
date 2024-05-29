@@ -1,5 +1,6 @@
 package com.nepflow;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.modelmapper.ModelMapper;
 
 import org.neo4j.cypherdsl.core.renderer.Dialect;
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
-//@EnableNeo4jRepositories(basePackages = {"com.nepflow.NepenthesManagement"})
+@EnableEncryptableProperties
 public class NepflowApplication {
 
 	public static void main(String[] args) {
