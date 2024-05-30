@@ -6,7 +6,6 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
-import com.nepflow.NepenthesManagement.Model.Labels.HybridLabel;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import com.nepflow.NepenthesManagement.Repository.*;

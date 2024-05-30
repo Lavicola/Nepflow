@@ -2,16 +2,8 @@ package com.nepflow.NepenthesManagement.DatabaseInitializationService;
 
 
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
-import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
-import com.nepflow.NepenthesManagement.Model.Clones.ICNepenthesClone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVNepenthesClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
-import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;

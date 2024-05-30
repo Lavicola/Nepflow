@@ -2,12 +2,11 @@ package com.nepflow.NepenthesManagement.Model;
 
 import com.nepflow.NepenthesManagement.LabelFormats;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
+import com.nepflow.NepenthesManagement.Model.Labels.Hybrid;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
-import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.nepflow.NepenthesManagement.Model.Labels.Hybrid;
 
 import java.util.HashSet;
 

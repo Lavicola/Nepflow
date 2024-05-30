@@ -1,14 +1,12 @@
 package com.nepflow.UserManagement.Controller;
 
 import com.nepflow.UserManagement.Dto.UserDTO;
-import com.nepflow.UserManagement.Model.Country;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Service.AuthenticationService;
 import com.nepflow.UserManagement.Service.UserManagementService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 

@@ -8,7 +8,6 @@ import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICNepenthesClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVNepenthesClone;
-import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.Node;
 
 @Node

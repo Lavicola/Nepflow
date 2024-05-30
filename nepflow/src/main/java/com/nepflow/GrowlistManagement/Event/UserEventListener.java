@@ -1,6 +1,5 @@
 package com.nepflow.GrowlistManagement.Event;
 
-import com.nepflow.GrowlistManagement.Repository.GrowListRepository;
 import com.nepflow.GrowlistManagement.Service.Growlistservice;
 import com.nepflow.UserManagement.Event.UserCreatedEvent;
 import com.nepflow.UserManagement.Model.User;

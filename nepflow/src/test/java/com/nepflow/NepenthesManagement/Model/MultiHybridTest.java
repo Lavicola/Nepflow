@@ -2,7 +2,6 @@ package com.nepflow.NepenthesManagement.Model;
 
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

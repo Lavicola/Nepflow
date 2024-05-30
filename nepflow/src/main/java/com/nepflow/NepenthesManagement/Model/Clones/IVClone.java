@@ -4,11 +4,8 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
-import lombok.Getter;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
-
-import java.util.List;
 
 @Node
 public abstract class IVClone<L extends Label> extends ICClone<L> {

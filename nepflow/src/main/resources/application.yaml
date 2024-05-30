@@ -4,6 +4,8 @@ jasypt:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
 spring:
+  profiles:
+    active: default
   server:
     port: 8080
   neo4j:

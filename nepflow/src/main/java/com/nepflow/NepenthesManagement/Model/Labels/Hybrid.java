@@ -5,7 +5,6 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICHybrid;
-import com.nepflow.NepenthesManagement.Model.Clones.ICNepenthesClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import org.springframework.data.neo4j.core.schema.Node;
 

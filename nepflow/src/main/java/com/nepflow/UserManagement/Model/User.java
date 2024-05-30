@@ -3,7 +3,10 @@ package com.nepflow.UserManagement.Model;
 import lombok.Data;
 import lombok.Setter;
 import org.springframework.data.annotation.Version;
-import org.springframework.data.neo4j.core.schema.*;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Property;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Data
 @Node("User")

@@ -1,13 +1,11 @@
 package com.nepflow.NepenthesManagement.Model.Clones;
 
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
-import lombok.Setter;
+import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
 public class IVNepenthesClone extends IVClone<Nepenthes> {

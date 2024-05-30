@@ -1,15 +1,5 @@
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.UserManagement.Model.User;
-import com.nepflow.UserManagement.Service.AuthenticationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class GrowlistManagementApiControllerImpl {
 
     /*
