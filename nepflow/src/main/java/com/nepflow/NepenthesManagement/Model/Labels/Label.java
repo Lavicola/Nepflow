@@ -3,6 +3,7 @@ package com.nepflow.NepenthesManagement.Model.Labels;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
+import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import lombok.Getter;
@@ -35,7 +36,7 @@ public abstract class Label {
 
 
     @Relationship(value = "SPECIES_OF",direction = Relationship.Direction.INCOMING)
-    List<ICClone> cloneList;
+    List<Clone> cloneList;
 
     public void setPrefixIfEmpty(int labelCount) {
         if(prefix == null){
@@ -90,7 +91,7 @@ public abstract class Label {
 
     // Different Label Classes must have an ID
     protected abstract String getLabelIdentifier();
-    public List<ICClone> getCloneList() {
+    public List<Clone> getCloneList() {
         return new ArrayList<>(cloneList);
     }
 

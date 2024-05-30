@@ -2,7 +2,7 @@ package com.nepflow.NepenthesManagement.Model;
 
 import com.nepflow.NepenthesManagement.LabelFormats;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
-import com.nepflow.NepenthesManagement.Model.Labels.Hybrid;
+import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,7 @@ import java.util.HashSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class HybridTest {
+public class PrimaryHybridTest {
 
     String nep1 = "villosa";
     String nep2 = "lowii";
@@ -36,26 +36,26 @@ public class HybridTest {
         String invalidFormat4 = String.format("%s x %s".formatted(nep1, nep2));
         String invalidFormat5 = String.format("%s X %s".formatted(nep1, nep2));
 
-        new Hybrid(validFormat,0);
+        new PrimaryHybrid(validFormat,0);
 
         assertThrows(AssertionError.class, () -> {
-            new Hybrid(invalidFormat,0);
-
-        });
-        assertThrows(AssertionError.class, () -> {
-            new Hybrid(invalidFormat2,0);
+            new PrimaryHybrid(invalidFormat,0);
 
         });
         assertThrows(AssertionError.class, () -> {
-            new Hybrid(invalidFormat3,0);
+            new PrimaryHybrid(invalidFormat2,0);
 
         });
         assertThrows(AssertionError.class, () -> {
-            new Hybrid(invalidFormat4,0);
+            new PrimaryHybrid(invalidFormat3,0);
 
         });
         assertThrows(AssertionError.class, () -> {
-            new Hybrid(invalidFormat5,0);
+            new PrimaryHybrid(invalidFormat4,0);
+
+        });
+        assertThrows(AssertionError.class, () -> {
+            new PrimaryHybrid(invalidFormat5,0);
         });
     }
 
@@ -63,23 +63,23 @@ public class HybridTest {
     public void hybridNotExistingSpeciesTest() {
         Label.validPlants= new HashSet<>();
         assertThrows(AssertionError.class, () -> {
-            new Hybrid(validFormat,0);
+            new PrimaryHybrid(validFormat,0);
         });
     }
 
     @Test
     public void setParentsTest() {
-        Hybrid hybrid = new Hybrid(validFormat,0);
-        assertEquals("Mother Name is false",hybrid.getMotherName(),nep1);
-        assertEquals("Father Name is false",hybrid.getFatherName(),nep2);
+        PrimaryHybrid primaryHybrid = new PrimaryHybrid(validFormat,0);
+        assertEquals("Mother Name is false", primaryHybrid.getMotherName(),nep1);
+        assertEquals("Father Name is false", primaryHybrid.getFatherName(),nep2);
     }
 
     @Test
     void labelICCloneIdGenerationTest(){
         Label.addValidPlant(LabelFormats.nep1);
         Label.addValidPlant(LabelFormats.nep2);
-        Label label1 =  new Hybrid(LabelFormats.hybridFormat1,0);
-        Label label2 = new Hybrid(LabelFormats.hybridFormat2,1);
+        Label label1 =  new PrimaryHybrid(LabelFormats.hybridFormat1,0);
+        Label label2 = new PrimaryHybrid(LabelFormats.hybridFormat2,1);
 
         ICClone icNepenthesClone10 = label1.addICClone(null,null);
         ICClone icNepenthesClone11 = label1.addICClone(null,null);

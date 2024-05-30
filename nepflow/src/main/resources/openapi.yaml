@@ -20,7 +20,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/NepenthesDTO'
+                  $ref: '#/components/schemas/LabelDTO'
                 type: array
           description: OK
         "404":
@@ -36,14 +36,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NepenthesDTO'
+              $ref: '#/components/schemas/LabelDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NepenthesDTO'
+                $ref: '#/components/schemas/LabelDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -69,7 +69,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NepenthesClonesDTO'
+                $ref: '#/components/schemas/LabelClonesDTO'
           description: OK
         "404":
           description: nepenthes not found
@@ -102,7 +102,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/SpeciesCloneDTO'
+                - $ref: '#/components/schemas/CloneDTO'
           description: OK
         "404":
           description: Clone does not exist
@@ -171,7 +171,7 @@ paths:
               schema:
                 items:
                   allOf:
-                  - $ref: '#/components/schemas/SpeciesCloneDTO'
+                  - $ref: '#/components/schemas/CloneDTO'
                 type: array
           description: OK
       summary: get all Species Clones
@@ -186,7 +186,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SpeciesCloneDTO'
+              $ref: '#/components/schemas/CloneDTO'
         description: Clone DTO with new values
         required: true
       responses:
@@ -194,7 +194,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpeciesCloneDTO'
+                $ref: '#/components/schemas/CloneDTO'
           description: OK
       summary: add a new iv clone of a nepenthes
       tags:
@@ -208,14 +208,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SpeciesCloneDTO'
+              $ref: '#/components/schemas/CloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpeciesCloneDTO'
+                $ref: '#/components/schemas/CloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -231,7 +231,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SpeciesCloneDTO'
+              $ref: '#/components/schemas/CloneDTO'
         description: Clone DTO with new values
         required: true
       responses:
@@ -239,7 +239,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpeciesCloneDTO'
+                $ref: '#/components/schemas/CloneDTO'
           description: OK
       summary: add a new iv clone of a nepenthes
       tags:
@@ -253,14 +253,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SpeciesCloneDTO'
+              $ref: '#/components/schemas/CloneDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpeciesCloneDTO'
+                $ref: '#/components/schemas/CloneDTO'
           description: OK
         "404":
           description: No nepenthes found
@@ -552,17 +552,30 @@ paths:
       - tag: NepenthesManagement
 components:
   schemas:
-    NepenthesDTO:
-      type: string
     LocationDTO:
       type: string
     ProducerDTO:
       type: string
-    Clone:
+    LabelDTO:
+      type: string
+    CloneDTO:
+      example:
+        InternalcloneId: InternalcloneId
+        sex: sex
+        producer: producer
+        label: label
+        cloneId: cloneId
+        grex:
+          mother: null
+          father: null
+          cloneId: cloneId
+        Location: Location
       properties:
+        label:
+          type: string
         cloneId:
           type: string
-        name:
+        InternalcloneId:
           type: string
         sex:
           type: string
@@ -570,26 +583,14 @@ components:
           $ref: '#/components/schemas/CloneGrexDTO'
         producer:
           type: string
+        Location:
+          type: string
       required:
-      - name
-      - sex
+      - label
       type: object
-    SpeciesCloneDTO:
-      allOf:
-      - $ref: '#/components/schemas/Clone'
-      - properties:
-          nepenthes:
-            $ref: '#/components/schemas/NepenthesDTO'
-          Location:
-            $ref: '#/components/schemas/LocationDTO'
-          grex:
-            $ref: '#/components/schemas/CloneGrexDTO'
-        required:
-        - nepenthes
-        type: object
     HybridCloneDTO:
       allOf:
-      - $ref: '#/components/schemas/Clone'
+      - $ref: '#/components/schemas/CloneDTO'
       - properties:
           fatherName:
             type: string
@@ -597,6 +598,10 @@ components:
             type: string
         type: object
     CloneGrexDTO:
+      example:
+        mother: null
+        father: null
+        cloneId: cloneId
       properties:
         cloneId:
           type: string
@@ -605,23 +610,26 @@ components:
         mother:
           $ref: '#/components/schemas/CloneGrexDTO_father'
       type: object
-    NepenthesClonesDTO:
+    LabelClonesDTO:
       example:
-        nepenthes: nepenthes
         clones:
-        - ""
-        - ""
+        - null
+        - null
+        label: label
       properties:
-        nepenthes:
+        label:
           type: string
         clones:
           items:
-            allOf:
-            - $ref: '#/components/schemas/SpeciesCloneDTO'
+            $ref: '#/components/schemas/LabelClonesDTO_clones_inner'
           type: array
       type: object
     CloneGrexDTO_father:
       oneOf:
-      - $ref: '#/components/schemas/Clone'
-      - $ref: '#/components/schemas/SpeciesCloneDTO'
+      - $ref: '#/components/schemas/CloneDTO'
+      - $ref: '#/components/schemas/HybridCloneDTO'
       x-one-of-name: CloneGrexDTOFather
+    LabelClonesDTO_clones_inner:
+      anyOf:
+      - $ref: '#/components/schemas/CloneDTO'
+      - $ref: '#/components/schemas/HybridCloneDTO'

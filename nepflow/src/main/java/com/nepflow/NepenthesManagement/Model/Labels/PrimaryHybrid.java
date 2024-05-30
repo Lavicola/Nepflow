@@ -11,12 +11,12 @@ import org.springframework.data.neo4j.core.schema.Node;
 import java.util.regex.Pattern;
 
 @Node
-public class Hybrid extends HybridLabel {
-    public Hybrid(String name,int labelCount) {
+public class PrimaryHybrid extends HybridLabel {
+    public PrimaryHybrid(String name, int labelCount) {
         super(name,labelCount);
     }
 
-    public Hybrid(String name) {
+    public PrimaryHybrid(String name) {
         super(name);
         this.setParents();
     }

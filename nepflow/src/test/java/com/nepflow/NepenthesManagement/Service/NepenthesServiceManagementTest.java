@@ -6,7 +6,7 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
-import com.nepflow.NepenthesManagement.Model.Labels.Hybrid;
+import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
@@ -75,8 +75,8 @@ public class NepenthesServiceManagementTest {
 
         Label nepenthes1 = nepenthesManagementService.createLabel(new Nepenthes(LabelFormats.nep1));
         Label nepenthes2 = nepenthesManagementService.createLabel(new Nepenthes(LabelFormats.nep2));
-        Label hybrid = nepenthesManagementService.createLabel(new Hybrid(LabelFormats.hybridFormat1));
-        Label hybrid2 = nepenthesManagementService.createLabel(new Hybrid(LabelFormats.hybridFormat2));
+        Label hybrid = nepenthesManagementService.createLabel(new PrimaryHybrid(LabelFormats.hybridFormat1));
+        Label hybrid2 = nepenthesManagementService.createLabel(new PrimaryHybrid(LabelFormats.hybridFormat2));
 
         assertEquals("N-0",nepenthes1.getPrefix());
         assertEquals("N-1",nepenthes2.getPrefix());

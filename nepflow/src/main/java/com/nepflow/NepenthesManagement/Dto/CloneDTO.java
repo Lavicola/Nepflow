@@ -17,11 +17,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * HybridCloneDTO
+ * CloneDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-30T23:43:49.712163500+02:00[Europe/Berlin]")
-public class HybridCloneDTO implements CloneGrexDTOFather {
+public class CloneDTO implements CloneGrexDTOFather {
 
   private String label;
 
@@ -37,22 +37,18 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
 
   private String location;
 
-  private String fatherName;
-
-  private String motherName;
-
-  public HybridCloneDTO() {
+  public CloneDTO() {
     super();
   }
 
   /**
    * Constructor with only required parameters
    */
-  public HybridCloneDTO(String label) {
+  public CloneDTO(String label) {
     this.label = label;
   }
 
-  public HybridCloneDTO label(String label) {
+  public CloneDTO label(String label) {
     this.label = label;
     return this;
   }
@@ -72,7 +68,7 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     this.label = label;
   }
 
-  public HybridCloneDTO cloneId(String cloneId) {
+  public CloneDTO cloneId(String cloneId) {
     this.cloneId = cloneId;
     return this;
   }
@@ -92,7 +88,7 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     this.cloneId = cloneId;
   }
 
-  public HybridCloneDTO internalcloneId(String internalcloneId) {
+  public CloneDTO internalcloneId(String internalcloneId) {
     this.internalcloneId = internalcloneId;
     return this;
   }
@@ -112,7 +108,7 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     this.internalcloneId = internalcloneId;
   }
 
-  public HybridCloneDTO sex(String sex) {
+  public CloneDTO sex(String sex) {
     this.sex = sex;
     return this;
   }
@@ -132,7 +128,7 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     this.sex = sex;
   }
 
-  public HybridCloneDTO grex(CloneGrexDTO grex) {
+  public CloneDTO grex(CloneGrexDTO grex) {
     this.grex = grex;
     return this;
   }
@@ -152,7 +148,7 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     this.grex = grex;
   }
 
-  public HybridCloneDTO producer(String producer) {
+  public CloneDTO producer(String producer) {
     this.producer = producer;
     return this;
   }
@@ -172,7 +168,7 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     this.producer = producer;
   }
 
-  public HybridCloneDTO location(String location) {
+  public CloneDTO location(String location) {
     this.location = location;
     return this;
   }
@@ -192,46 +188,6 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     this.location = location;
   }
 
-  public HybridCloneDTO fatherName(String fatherName) {
-    this.fatherName = fatherName;
-    return this;
-  }
-
-  /**
-   * Get fatherName
-   * @return fatherName
-  */
-  
-  @Schema(name = "fatherName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("fatherName")
-  public String getFatherName() {
-    return fatherName;
-  }
-
-  public void setFatherName(String fatherName) {
-    this.fatherName = fatherName;
-  }
-
-  public HybridCloneDTO motherName(String motherName) {
-    this.motherName = motherName;
-    return this;
-  }
-
-  /**
-   * Get motherName
-   * @return motherName
-  */
-  
-  @Schema(name = "motherName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("motherName")
-  public String getMotherName() {
-    return motherName;
-  }
-
-  public void setMotherName(String motherName) {
-    this.motherName = motherName;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -240,27 +196,25 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    HybridCloneDTO hybridCloneDTO = (HybridCloneDTO) o;
-    return Objects.equals(this.label, hybridCloneDTO.label) &&
-        Objects.equals(this.cloneId, hybridCloneDTO.cloneId) &&
-        Objects.equals(this.internalcloneId, hybridCloneDTO.internalcloneId) &&
-        Objects.equals(this.sex, hybridCloneDTO.sex) &&
-        Objects.equals(this.grex, hybridCloneDTO.grex) &&
-        Objects.equals(this.producer, hybridCloneDTO.producer) &&
-        Objects.equals(this.location, hybridCloneDTO.location) &&
-        Objects.equals(this.fatherName, hybridCloneDTO.fatherName) &&
-        Objects.equals(this.motherName, hybridCloneDTO.motherName);
+    CloneDTO cloneDTO = (CloneDTO) o;
+    return Objects.equals(this.label, cloneDTO.label) &&
+        Objects.equals(this.cloneId, cloneDTO.cloneId) &&
+        Objects.equals(this.internalcloneId, cloneDTO.internalcloneId) &&
+        Objects.equals(this.sex, cloneDTO.sex) &&
+        Objects.equals(this.grex, cloneDTO.grex) &&
+        Objects.equals(this.producer, cloneDTO.producer) &&
+        Objects.equals(this.location, cloneDTO.location);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(label, cloneId, internalcloneId, sex, grex, producer, location, fatherName, motherName);
+    return Objects.hash(label, cloneId, internalcloneId, sex, grex, producer, location);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class HybridCloneDTO {\n");
+    sb.append("class CloneDTO {\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    internalcloneId: ").append(toIndentedString(internalcloneId)).append("\n");
@@ -268,8 +222,6 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
     sb.append("    grex: ").append(toIndentedString(grex)).append("\n");
     sb.append("    producer: ").append(toIndentedString(producer)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
-    sb.append("    fatherName: ").append(toIndentedString(fatherName)).append("\n");
-    sb.append("    motherName: ").append(toIndentedString(motherName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

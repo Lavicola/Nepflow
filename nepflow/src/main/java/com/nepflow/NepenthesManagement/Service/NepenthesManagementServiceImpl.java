@@ -22,9 +22,6 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
     CloneRepository cloneRepository;
 
     @Autowired
-    IVCloneRepository ivCloneRepository;
-
-    @Autowired
     LocationRepository locationRepository;
 
     @Autowired

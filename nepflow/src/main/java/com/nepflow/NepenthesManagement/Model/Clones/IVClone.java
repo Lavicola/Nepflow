@@ -8,8 +8,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
-public abstract class IVClone<L extends Label> extends ICClone<L> {
-
+public abstract class IVClone<L extends Label> extends Clone<L> {
 
     @Relationship("PROPAGATED_BY")
     Producer producer;
