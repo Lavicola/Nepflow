@@ -26,14 +26,14 @@ export class UserOverviewComponent implements OnInit {
     this.userForm = new FormGroup({
       username: new FormControl(""),
       contactInformation: new FormControl(""),
-      country: new FormControl(["a", "b"]),
+      country: new FormControl(),
 
     });
 
 
   }
 
-  public createUserRequest(user: UserDto) {
+  public createUserPostRequest(user: UserDto) {
     this.userService.userPost({body: user}).subscribe({
       next: (user: UserDto) => {
         this.user = user
@@ -43,20 +43,28 @@ export class UserOverviewComponent implements OnInit {
 
 
   }
+  public createUserPutRequest(user: UserDto) {
+    this.userService.userPut({body: user}).subscribe({
+      next: (user: UserDto) => this.user = user,
+      error: (error) => console.log("No Post" + error)
+    })
 
+
+  }
 
   ngOnInit(): void {
     this.userService.userGet().subscribe({
       next: (user: UserDto) => {
+        console.log(user)
         this.user = user
         this.userForm.patchValue({
           username:this.user.username,
           contactInformation: this.user.contactInformation,
+          country: this.user.country,
         })
       },
       error: () => console.log("User does not exist (yet)")
     });
-    return
   }
 
 
@@ -65,10 +73,16 @@ export class UserOverviewComponent implements OnInit {
   }
 
   onSubmit(userForm: FormGroup) {
-    console.log(combinedList)
-    console.log(userForm.value)
-    Object.assign(this.user, userForm.value);
-    this.createUserRequest(this.user);
+    let userDto:UserDto = {};
+    Object.assign(userDto, userForm.value);
+    // TODO maybe a better solution one day
+    if(this.user.username){
+      console.log("put")
+      this.createUserPutRequest(userDto);
+    }else{
+      console.log("post")
+      this.createUserPostRequest(userDto);
+    }
 
   }
 
@@ -85,12 +99,9 @@ export class UserOverviewComponent implements OnInit {
 
   }
 
-  protected readonly combinedList = combinedList;
+  protected readonly countries = supported_countries;
 }
 
 // Instead of additional API for Countries, store supported Countries in global Variable
-var supported_countries = ['Belgium', 'Bulgaria', 'Denmark', 'Germany', 'Estonia', 'Finland', 'France', 'Greece', 'Ireland', 'Italy', 'Croatia', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'Austria', 'Poland', 'Portugal', 'Romania', 'Sweden', 'Slovakia', 'Slovenia', 'Spain', 'Czech Republic', 'Hungary', 'Cyprus', 'USA'];
-var supported_countries_code = ['BE', 'BG', 'DK', 'DE', 'EE', 'FI', 'FR', 'GR', 'IE', 'IT', 'HR', 'LV', 'LT', 'LU', 'MT', 'NL', 'AT', 'PL', 'PT', 'RO', 'SE', 'SK', 'SI', 'ES', 'CZ', 'HU', 'CY', 'EU', 'BE', 'BG', 'DK', 'DE', 'EE', 'FI', 'FR', 'GR', 'IE', 'IT', 'HR', 'LV', 'LT', 'LU', 'MT', 'NL', 'AT', 'PL', 'PT', 'RO', 'SE', 'SK', 'SI', 'ES', 'CZ', 'HU', 'CY'];
-var combinedList = supported_countries.map((country, index) => {
-  return {name: country, code: supported_countries_code[index]};
-});
+var supported_countries = ['USA', 'Europe', 'Asia'];
+

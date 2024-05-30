@@ -116,7 +116,7 @@ public interface UsermanagementApi {
         value = "/user",
         consumes = { "application/json" }
     )
-    default ResponseEntity<Void> userPut(
+    default ResponseEntity<UserDTO> userPut(
         @Parameter(name = "UserDTO", description = "User DTO with all changeable values", required = true) @Valid @RequestBody UserDTO userDTO
     ) {
         return getDelegate().userPut(userDTO);

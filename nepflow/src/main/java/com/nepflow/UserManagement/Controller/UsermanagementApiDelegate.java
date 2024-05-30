@@ -73,7 +73,7 @@ public interface UsermanagementApiDelegate {
      *         or Error (status code 204)
      * @see UsermanagementApi#userPut
      */
-    default ResponseEntity<Void> userPut(UserDTO userDTO) {
+    default ResponseEntity<UserDTO> userPut(UserDTO userDTO) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

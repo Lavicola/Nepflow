@@ -10,8 +10,7 @@ import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
 import { UserDto } from '../models/user-dto';
-import { userGet } from '../fn/usermanagement/user-get';
-import { UserGet$Params } from '../fn/usermanagement/user-get';
+import {userGet, UserGet$Params} from '../fn/usermanagement/user-get';
 import { userPost } from '../fn/usermanagement/user-post';
 import { UserPost$Params } from '../fn/usermanagement/user-post';
 import { UserPrivacyDto } from '../models/user-privacy-dto';
@@ -78,7 +77,7 @@ export class UsermanagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  userPut$Response(params: UserPut$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+  userPut$Response(params: UserPut$Params, context?: HttpContext): Observable<StrictHttpResponse<UserDto>> {
     return userPut(this.http, this.rootUrl, params, context);
   }
 
@@ -92,9 +91,9 @@ export class UsermanagementService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  userPut(params: UserPut$Params, context?: HttpContext): Observable<void> {
+  userPut(params: UserPut$Params, context?: HttpContext): Observable<UserDto> {
     return this.userPut$Response(params, context).pipe(
-      map((r: StrictHttpResponse<void>): void => r.body)
+      map((r: StrictHttpResponse<UserDto>): UserDto => r.body)
     );
   }
 

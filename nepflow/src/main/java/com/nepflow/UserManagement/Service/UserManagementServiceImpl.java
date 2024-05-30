@@ -46,32 +46,55 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public User createMinimalUser(User user, String countryName) {
+    public User createMinimalUser(String userId,String username,String contactInformation, String countryName) {
         // user_Id (provide|unique id) is unique https://auth0.com/docs/manage-users/user-accounts/identify-users
-        if (this.userRepository.existsUserByOAuthId(user.getOAuthId())) {
-            return user;
+        User user;
+        User rUser;
+        Country country;
+        if(!this.isUsernameFree(username)){
+            return null;
         }
-        Country country = this.countryRepository.findCountryByName(countryName);
+        country = this.getCountry(countryName);
+        if(country == null){
+            return null;
+        }
+        if(this.getUserByOAuthId(userId) !=  null){
+            return null;
+        }
+
+        user = new User(username,userId);
         user.setCountry(country);
+        user.setContactInformation(contactInformation);
         this.userRepository.save(user);
-        applicationEventPublisher.publishEvent(new UserCreatedEvent(this,user));
+        applicationEventPublisher.publishEvent(new UserCreatedEvent(this, user));
         return user;
     }
 
     @Override
     @Transactional("transactionManager")
-    public User updateUser(User user) {
-        User toUpdateUser = this.userRepository.findUserByOAuthId(user.getOAuthId());
+    public User updateUser(String oauthId, String contactInformation) {
+        User toUpdateUser = this.userRepository.findUserByOAuthId(oauthId);
         if (toUpdateUser == null) {
             return null;
         }
-        // only allow username change if no Username exists
-        if (toUpdateUser.getUsername() == null && this.isUsernameFree(user.getUsername())) {
-            toUpdateUser.setUsername(user.getUsername());
+
+        toUpdateUser.setContactInformation(contactInformation);
+        return this.userRepository.save(toUpdateUser);
+    }
+
+    @Override
+    public Country saveCountry(String countryAsString) {
+        Country country = this.countryRepository.findCountryByName(countryAsString);
+        if(country != null){
+            return country;
+        }else{
+            return this.countryRepository.save(new Country(countryAsString));
         }
-        //toUpdateUser.setContactInformation(user.getContactInformation());
-        this.userRepository.save(toUpdateUser);
-        return toUpdateUser;
+    }
+    @Override
+    public Country getCountry(String countryAsString) {
+        return this.countryRepository.findCountryByName(countryAsString);
+
     }
 
 

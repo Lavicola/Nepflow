@@ -24,12 +24,10 @@ public class UsermanagementControllerImpl implements UsermanagementApiDelegate {
 
     public ResponseEntity<UserDTO> userPost(UserDTO userDTO) {
         String id = this.authenticationService.getOauthId();
-        // for now manual mapping
-        User user = new User(userDTO.getUsername(),id);
-        if(id == null){
+        if (id == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        if(this.userManagementService.createMinimalUser(user,userDTO.getCountry()) == null){
+        if (this.userManagementService.createMinimalUser(id,userDTO.getUsername(),userDTO.getContactInformation(), userDTO.getCountry()) == null) {
             return ResponseEntity.internalServerError().body(null);
         }
         return ResponseEntity.ok(userDTO);
@@ -38,12 +36,23 @@ public class UsermanagementControllerImpl implements UsermanagementApiDelegate {
     public ResponseEntity<UserDTO> userGet() {
         String id = this.authenticationService.getOauthId();
         User user = this.userManagementService.getUserByOAuthId(id);
-        if(user == null){
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.ok(this.modelMapper.map(user,UserDTO.class));
+        return ResponseEntity.ok(this.modelMapper.map(user, UserDTO.class));
+
+    }
+
+    public ResponseEntity<UserDTO> userPut(UserDTO userDTO) {
+        String id = this.authenticationService.getOauthId();
+        if (id != null) {
+            return ResponseEntity.ok().body(this.modelMapper.map(this.userManagementService.updateUser(id, userDTO.getContactInformation()),UserDTO.class));
+        } else {
+            return ResponseEntity.internalServerError().body(null);
+
+        }
 
     }
 
 
-    }
+}

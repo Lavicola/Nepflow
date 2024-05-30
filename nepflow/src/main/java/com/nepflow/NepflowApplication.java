@@ -18,21 +18,6 @@ public class NepflowApplication {
 
 
 
-	@Configuration
-	public class ModelMapperConfig {
-
-
-
-		@Bean
-		public ModelMapper modelMapper() {
-			ModelMapper modelMapper = new ModelMapper();
-
-
-			return modelMapper;
-		}
-	}
-
-
 
 	@Bean
 	org.neo4j.cypherdsl.core.renderer.Configuration cypherDslConfiguration() {

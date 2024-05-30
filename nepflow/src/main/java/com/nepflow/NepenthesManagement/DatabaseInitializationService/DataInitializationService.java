@@ -7,6 +7,7 @@ import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
+import com.nepflow.UserManagement.Service.UserManagementService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,9 @@ public class DataInitializationService {
     private Resource SexSQL;
     @Value("classpath:sql/producer.sql")
     private Resource ProducerSQL;
+    @Value("classpath:sql/country.txt")
+    private Resource CountryTXT;
+
 
     @Autowired
     LabelRepository labelRepository;
@@ -42,12 +46,20 @@ public class DataInitializationService {
     @Autowired
     NepenthesManagementMetaDataService nepenthesManagementMetaDataService;
 
+    @Autowired
+    UserManagementService userManagementService;
+
     @Transactional("transactionManager")
     @PostConstruct
     public void initializeModel() throws IOException {
 
         if(false) {
 
+
+            // store supported countries
+            for (String countryAsString : this.getLines(CountryTXT)) {
+                this.userManagementService.saveCountry(countryAsString);
+            }
 
             // store sex
             for (String sex : this.getLines(SexSQL)) {
@@ -77,11 +89,8 @@ public class DataInitializationService {
                         lineParts[CLONE_INDEX].trim(), lineParts[SEX_INDEX], grex,
                         lineParts[LOCATION_INDEX].trim(), lineParts[PRODUCER_INDEX]);
             }
-
         }
-
-
-        }
+    }
 
 
     public List<String> getLines(Resource resource) {
