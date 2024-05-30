@@ -4,8 +4,6 @@ jasypt:
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
 spring:
-  profiles:
-    active: default
   server:
     port: 8080
   neo4j:
@@ -20,8 +18,6 @@ okta:
     issuer: https://dev-562zgyhcw56114ld.eu.auth0.com/
     client-id: ENC(sLHQm64Ck7kTs8OegMumLlvmxlYj+5PUy1HaaZZKYuPdsIMMncChHm4Q8mh/0CXu)
     client-secret: ENC(2z2m0f3lLcvTTAz/4wFvUYOLzelI5ybeksRBLCSx0c0/h022DqQ8fjvrzKVkJajuiQNx7FTCg8xTyVqXL7WH/FCCqhrEHTXkcHYLjd+Dq88=)
-
-
 
 jackson:
   date-format: org.openapitools.RFC3339DateFormat
