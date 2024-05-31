@@ -6,8 +6,8 @@ import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
 import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
-public class ICMultiHybrid extends ICClone<MultiHybrid> {
-    public ICMultiHybrid(MultiHybrid label, Sex sex, Grex grex,String cloneId) {
-        super(label, sex, grex,cloneId );
+public class ICMultiHybrid extends ICClone {
+    public ICMultiHybrid(Sex sex, Grex grex,String cloneId) {
+        super( sex, grex,cloneId );
     }
 }

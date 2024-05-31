@@ -14,10 +14,10 @@ import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
-public abstract class ICClone<L extends Label> extends Clone {
+public abstract class ICClone extends Clone {
 
-    public ICClone(L label, Sex sex, Grex grex, String cloneId){
-        super(label,sex,grex,cloneId);
+    public ICClone(Sex sex, Grex grex, String cloneId){
+        super(sex,grex,cloneId);
     }
 
 }

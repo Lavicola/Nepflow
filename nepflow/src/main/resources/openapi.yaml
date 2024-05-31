@@ -181,6 +181,23 @@ paths:
       x-tags:
       - tag: NepenthesManagement
   /clone/species/iv:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/CloneDTO'
+                type: array
+          description: OK
+      summary: get all IV Species Clones
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
     post:
       requestBody:
         content:
@@ -226,6 +243,23 @@ paths:
       x-tags:
       - tag: NepenthesManagement
   /clone/species/ic:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/CloneDTO'
+                type: array
+          description: OK
+      summary: get all IV Species Clones
+      tags:
+      - NepenthesManagement
+      x-accepts: application/json
+      x-tags:
+      - tag: NepenthesManagement
     post:
       requestBody:
         content:
@@ -270,7 +304,7 @@ paths:
       x-accepts: application/json
       x-tags:
       - tag: NepenthesManagement
-  /clone/hybrids/:
+  /clone/primary-hybrids/:
     get:
       responses:
         "200":
@@ -288,7 +322,7 @@ paths:
       x-accepts: application/json
       x-tags:
       - tag: NepenthesManagement
-  /clone/hybrids/iv:
+  /clone/primary-hybrids/iv:
     get:
       responses:
         "200":
@@ -349,7 +383,7 @@ paths:
       x-accepts: application/json
       x-tags:
       - tag: NepenthesManagement
-  /clone/hybrids/ic:
+  /clone/primary-hybrids/ic:
     get:
       responses:
         "200":
@@ -557,13 +591,23 @@ components:
     ProducerDTO:
       type: string
     LabelDTO:
-      type: string
+      example:
+        prefix: prefix
+        name: name
+      properties:
+        name:
+          type: string
+        prefix:
+          type: string
+      type: object
     CloneDTO:
       example:
         InternalcloneId: InternalcloneId
         sex: sex
         producer: producer
-        label: label
+        label:
+          prefix: prefix
+          name: name
         cloneId: cloneId
         grex:
           mother: null
@@ -572,7 +616,7 @@ components:
         Location: Location
       properties:
         label:
-          type: string
+          $ref: '#/components/schemas/LabelDTO'
         cloneId:
           type: string
         InternalcloneId:
@@ -615,10 +659,12 @@ components:
         clones:
         - null
         - null
-        label: label
+        label:
+          prefix: prefix
+          name: name
       properties:
         label:
-          type: string
+          $ref: '#/components/schemas/LabelDTO'
         clones:
           items:
             $ref: '#/components/schemas/LabelClonesDTO_clones_inner'

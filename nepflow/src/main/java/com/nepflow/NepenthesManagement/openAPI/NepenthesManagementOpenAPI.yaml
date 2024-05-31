@@ -158,6 +158,20 @@ paths:
                     - $ref: '#/components/schemas/CloneDTO'
 
   /clone/species/iv:
+    get:
+      summary: get all IV Species Clones
+      tags:
+        - NepenthesManagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/CloneDTO'
     post:
       summary: add a new iv clone of a nepenthes
       tags:
@@ -196,6 +210,23 @@ paths:
         '404':
           description: No nepenthes found
   /clone/species/ic:
+    get:
+      summary: get all IV Species Clones
+      tags:
+        - NepenthesManagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/CloneDTO'
+
+
+
     post:
       summary: add a new iv clone of a nepenthes
       tags:
@@ -234,7 +265,7 @@ paths:
         '404':
           description: No nepenthes found
 
-  /clone/hybrids/:
+  /clone/primary-hybrids/:
     get:
       summary: get all hybrid Clones
       tags:
@@ -249,7 +280,7 @@ paths:
                 items:
                   allOf:
                     - $ref: '#/components/schemas/HybridCloneDTO'
-  /clone/hybrids/iv:
+  /clone/primary-hybrids/iv:
     get:
       summary: get all IV Hybrids
       tags:
@@ -300,7 +331,7 @@ paths:
                 $ref: '#/components/schemas/HybridCloneDTO'
         '404':
           description: No nepenthes found
-  /clone/hybrids/ic:
+  /clone/primary-hybrids/ic:
     get:
       summary: get all IC Hybrids
       tags:
@@ -484,7 +515,12 @@ components:
 
     # abstraction of Hybrid/Nepenthes etc.
     LabelDTO:
-      type: string
+      type: object
+      properties:
+        name:
+          type: string
+        prefix:
+          type: string
 
     CloneDTO:
       type: object

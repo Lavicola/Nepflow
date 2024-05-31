@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.nepflow.NepenthesManagement.Dto.LabelClonesDTOClonesInner;
+import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,15 +23,15 @@ import jakarta.annotation.Generated;
  * LabelClonesDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-30T23:43:49.712163500+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-31T22:42:44.669728600+02:00[Europe/Berlin]")
 public class LabelClonesDTO {
 
-  private String label;
+  private LabelDTO label;
 
   @Valid
   private List<@Valid LabelClonesDTOClonesInner> clones;
 
-  public LabelClonesDTO label(String label) {
+  public LabelClonesDTO label(LabelDTO label) {
     this.label = label;
     return this;
   }
@@ -39,14 +40,14 @@ public class LabelClonesDTO {
    * Get label
    * @return label
   */
-  
+  @Valid 
   @Schema(name = "label", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("label")
-  public String getLabel() {
+  public LabelDTO getLabel() {
     return label;
   }
 
-  public void setLabel(String label) {
+  public void setLabel(LabelDTO label) {
     this.label = label;
   }
 

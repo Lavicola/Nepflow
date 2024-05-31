@@ -10,6 +10,7 @@ src/main/java/com/nepflow/NepenthesManagement/Dto/CloneGrexDTOFather.java
 src/main/java/com/nepflow/NepenthesManagement/Dto/HybridCloneDTO.java
 src/main/java/com/nepflow/NepenthesManagement/Dto/LabelClonesDTO.java
 src/main/java/com/nepflow/NepenthesManagement/Dto/LabelClonesDTOClonesInner.java
+src/main/java/com/nepflow/NepenthesManagement/Dto/LabelDTO.java
 src/main/java/org/openapitools/OpenApiGeneratorApplication.java
 src/main/java/org/openapitools/RFC3339DateFormat.java
 src/main/java/org/openapitools/configuration/HomeController.java

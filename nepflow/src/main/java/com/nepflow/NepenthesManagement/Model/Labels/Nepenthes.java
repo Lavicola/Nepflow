@@ -37,16 +37,16 @@ public class Nepenthes extends Label {
         return true;//name.matches("^[a-zA-Z]+$");
     }
 
-    public IVClone<Nepenthes> addIVClone(String cloneId, Sex sex, Grex grex, Producer producer, Location location) {
-        IVNepenthesClone ivNepenthesClone = new IVNepenthesClone(this, cloneId, sex, grex, producer, location);
-        this.cloneList.add(ivNepenthesClone);
+    public IVClone addIVClone(String cloneId, Sex sex, Grex grex, Producer producer, Location location) {
+        IVNepenthesClone ivNepenthesClone = new IVNepenthesClone(cloneId, sex, grex, producer, location);
+        this.cloneIvList.add(ivNepenthesClone);
         return ivNepenthesClone;
     }
 
     @Override
-    public IVClone<Nepenthes> addIVClone(String cloneId, Sex sex, Grex grex, Producer producer) {
-        IVNepenthesClone ivNepenthesClone = new IVNepenthesClone(this, cloneId, sex, grex, producer, null);
-        this.cloneList.add(ivNepenthesClone);
+    public IVClone addIVClone(String cloneId, Sex sex, Grex grex, Producer producer) {
+        IVNepenthesClone ivNepenthesClone = new IVNepenthesClone(cloneId, sex, grex, producer, null);
+        this.cloneIvList.add(ivNepenthesClone);
         return ivNepenthesClone;
     }
 
@@ -58,9 +58,9 @@ public class Nepenthes extends Label {
 
     @Override
     public ICClone addICClone(Sex sex, Grex grex) {
-        String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneList.size());
-        ICNepenthesClone icNepenthesClone = new ICNepenthesClone(this, sex, grex, cloneId);
-        this.cloneList.add(icNepenthesClone);
+        String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneIcList.size());
+        ICNepenthesClone icNepenthesClone = new ICNepenthesClone(sex, grex, cloneId);
+        this.cloneIcList.add(icNepenthesClone);
         return icNepenthesClone;
     }
 

@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.nepflow.NepenthesManagement.Dto.CloneGrexDTO;
+import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -20,10 +21,10 @@ import jakarta.annotation.Generated;
  * HybridCloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-30T23:43:49.712163500+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-31T22:42:44.669728600+02:00[Europe/Berlin]")
 public class HybridCloneDTO implements CloneGrexDTOFather {
 
-  private String label;
+  private LabelDTO label;
 
   private String cloneId;
 
@@ -48,11 +49,11 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
   /**
    * Constructor with only required parameters
    */
-  public HybridCloneDTO(String label) {
+  public HybridCloneDTO(LabelDTO label) {
     this.label = label;
   }
 
-  public HybridCloneDTO label(String label) {
+  public HybridCloneDTO label(LabelDTO label) {
     this.label = label;
     return this;
   }
@@ -61,14 +62,14 @@ public class HybridCloneDTO implements CloneGrexDTOFather {
    * Get label
    * @return label
   */
-  @NotNull 
+  @NotNull @Valid 
   @Schema(name = "label", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("label")
-  public String getLabel() {
+  public LabelDTO getLabel() {
     return label;
   }
 
-  public void setLabel(String label) {
+  public void setLabel(LabelDTO label) {
     this.label = label;
   }
 

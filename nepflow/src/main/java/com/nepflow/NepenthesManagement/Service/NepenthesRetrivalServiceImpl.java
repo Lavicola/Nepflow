@@ -1,8 +1,9 @@
 package com.nepflow.NepenthesManagement.Service;
 
-import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
+import com.nepflow.NepenthesManagement.Model.Clones.Clone;
+import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Repository.CloneRepository;
+import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +12,31 @@ import java.util.List;
 @Service
 public class NepenthesRetrivalServiceImpl implements NepenthesRetrivalService {
 
+    @Autowired
+    CloneRepository cloneRepository;
 
+    @Autowired
+    LabelRepository labelRepository;
 
     @Override
-    public List<ICClone> getSpeciesICClones() {
-        return null;
+    public List<Label> getClonesByLabelClass(String labelClass) {
+        return this.labelRepository.getClonesByLabelClass(labelClass);
     }
 
     @Override
-    public List<IVClone> getSpeciesIVlones() {
-        return null;
+    public List<Label> getClonesByLabelClassAndCloneClass(String labelClass, String cloneClass) {
+        return this.labelRepository.getClonesByLabelClassAndCloneClass(labelClass,cloneClass);
     }
 
     @Override
-    public List<ICClone> getAllSpeciesClones() {
-        return null;
+    public List<Clone> getClonesByLabelAndCloneTypeAndStartsWith(String labelName, String cloneTypeClass, String startsWith) {
+        return this.cloneRepository.findClonesByLabelAndCloneTypeAndStartsWith(labelName,cloneTypeClass,startsWith);
     }
+
+    @Override
+    public List<Label> getLabelsByLabelname(String labelName) {
+        return this.labelRepository.getLabelsByLabelName(labelName);
+    }
+
+
 }

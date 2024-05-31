@@ -2,11 +2,16 @@ package com.nepflow.NepenthesManagement.DatabaseInitializationService;
 
 
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
+import com.nepflow.NepenthesManagement.Model.Clones.Clone;
+import com.nepflow.NepenthesManagement.Model.Clones.IVNepenthesClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
+import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
+import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
 import com.nepflow.UserManagement.Service.UserManagementService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +54,16 @@ public class DataInitializationService {
     @Autowired
     UserManagementService userManagementService;
 
+
+     @Autowired
+    NepenthesRetrivalService nepenthesRetrivalService;
+
     @Transactional("transactionManager")
     @PostConstruct
     public void initializeModel() throws IOException {
 
-        if(false) {
 
+        if(false) {
 
             // store supported countries
             for (String countryAsString : this.getLines(CountryTXT)) {
@@ -84,11 +93,11 @@ public class DataInitializationService {
             for (String line : this.getLines(ClonesCSV)) {
                 String[] lineParts = line.split(",");
                 Label nepenthes = this.nepenthesManagementService.createLabel(new Nepenthes(lineParts[NEPENTHES_INDEX].trim()));
-                System.out.println(nepenthes.getName());
                 this.nepenthesManagementService.saveIVNepenthesClone((Nepenthes) nepenthes,
                         lineParts[CLONE_INDEX].trim(), lineParts[SEX_INDEX], grex,
                         lineParts[LOCATION_INDEX].trim(), lineParts[PRODUCER_INDEX]);
             }
+
         }
     }
 

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.nepflow.NepenthesManagement.Dto.CloneDTO;
 import com.nepflow.NepenthesManagement.Dto.CloneGrexDTO;
 import com.nepflow.NepenthesManagement.Dto.HybridCloneDTO;
+import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -23,10 +24,10 @@ import jakarta.annotation.Generated;
  */
 
 @JsonTypeName("LabelClonesDTO_clones_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-30T23:43:49.712163500+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-31T22:42:44.669728600+02:00[Europe/Berlin]")
 public class LabelClonesDTOClonesInner {
 
-  private String label;
+  private LabelDTO label;
 
   private String cloneId;
 
@@ -51,11 +52,11 @@ public class LabelClonesDTOClonesInner {
   /**
    * Constructor with only required parameters
    */
-  public LabelClonesDTOClonesInner(String label) {
+  public LabelClonesDTOClonesInner(LabelDTO label) {
     this.label = label;
   }
 
-  public LabelClonesDTOClonesInner label(String label) {
+  public LabelClonesDTOClonesInner label(LabelDTO label) {
     this.label = label;
     return this;
   }
@@ -64,14 +65,14 @@ public class LabelClonesDTOClonesInner {
    * Get label
    * @return label
   */
-  @NotNull 
+  @NotNull @Valid 
   @Schema(name = "label", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("label")
-  public String getLabel() {
+  public LabelDTO getLabel() {
     return label;
   }
 
-  public void setLabel(String label) {
+  public void setLabel(LabelDTO label) {
     this.label = label;
   }
 

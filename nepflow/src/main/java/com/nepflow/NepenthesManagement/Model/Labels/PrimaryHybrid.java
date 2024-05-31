@@ -4,7 +4,7 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
-import com.nepflow.NepenthesManagement.Model.Clones.ICHybrid;
+import com.nepflow.NepenthesManagement.Model.Clones.ICPrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import org.springframework.data.neo4j.core.schema.Node;
 
@@ -46,10 +46,10 @@ public class PrimaryHybrid extends HybridLabel {
 
     @Override
     public ICClone addICClone(Sex sex, Grex grex) {
-        String cloneId = String.format("%s-%s",this.getPrefix(),this.cloneList.size());
-        ICHybrid icHybrid = new ICHybrid(this,sex,grex,cloneId);
-        this.cloneList.add(icHybrid);
-        return icHybrid;
+        String cloneId = String.format("%s-%s",this.getPrefix(),this.cloneIcList.size());
+        ICPrimaryHybrid icPrimaryHybrid = new ICPrimaryHybrid(sex,grex,cloneId);
+        this.cloneIcList.add(icPrimaryHybrid);
+        return icPrimaryHybrid;
     }
 
     @Override

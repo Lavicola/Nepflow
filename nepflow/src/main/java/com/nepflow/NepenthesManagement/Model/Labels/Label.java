@@ -36,7 +36,11 @@ public abstract class Label {
 
 
     @Relationship(value = "SPECIES_OF",direction = Relationship.Direction.INCOMING)
-    List<Clone> cloneList;
+    List<ICClone> cloneIcList;
+
+    @Relationship(value = "SPECIES_OF",direction = Relationship.Direction.INCOMING)
+    List<IVClone> cloneIvList;
+
 
     public void setPrefixIfEmpty(int labelCount) {
         if(prefix == null){
@@ -66,7 +70,9 @@ public abstract class Label {
         assert checkLabelFormat(name);
         assert isValidLabelName(name);
         this.name = name;
-        this.cloneList = new ArrayList<>();
+        this.cloneIcList = new ArrayList<>();
+        this.cloneIvList = new ArrayList<>();
+
     }
 
     public Label(){
@@ -91,8 +97,10 @@ public abstract class Label {
 
     // Different Label Classes must have an ID
     protected abstract String getLabelIdentifier();
-    public List<Clone> getCloneList() {
-        return new ArrayList<>(cloneList);
+    public List<ICClone> getCloneIcList() {
+        return new ArrayList<>(cloneIcList);
     }
-
+    public List<IVClone> getCloneIVList() {
+        return new ArrayList<>(cloneIvList);
+    }
 }

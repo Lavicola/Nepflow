@@ -73,9 +73,7 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
             // clone already exists
             return null;
         }
-        if(cloneId.equals("FV-014")){
-            int a = 5;
-        }
+
         newIvClone = label.addIVClone(cloneId,sex,grex,producer);
         this.labelRepository.save(label);
         return newIvClone;
