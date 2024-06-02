@@ -1,9 +1,6 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICMultiHybrid;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
@@ -53,18 +50,18 @@ public class MultiHybrid extends HybridLabel{
     }
 
     @Override
-    public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex) {
-        return new ICMultiHybrid(sex,grex,cloneId);
+    public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller) {
+        return new ICMultiHybrid(sex,grex,cloneId,location,seller);
     }
 
     @Override
     public IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
-        return new IVMultiHybrid(cloneId,sex,grex,producer);
+        return new IVMultiHybrid(cloneId,sex,grex,location,producer);
     }
 
     @Override
     protected String getLabelIdentifier() {
-        return "MH";
+        return "Nepflow-MH";
     }
 
 

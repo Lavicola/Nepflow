@@ -1,12 +1,9 @@
 package com.nepflow.NepenthesManagement.Service;
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Repository.LocationRepository;
-import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
+import com.nepflow.NepenthesManagement.Repository.SellerRepository;
 import com.nepflow.NepenthesManagement.Repository.SexRepository;
-import com.nepflow.UserManagement.Model.Country;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +14,7 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
     LocationRepository locationRepository;
 
     @Autowired
-    ProducerRepository producerRepository;
+    SellerRepository sellerRepository;
 
     @Autowired
     SexRepository sexRepository;
@@ -37,14 +34,32 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
     }
 
     @Override
-    public Producer saveProducer(String producerAsString) {
-        Producer producer = new Producer(producerAsString);
-        Producer Rpro = this.producerRepository.findProducerByName(producer.getName());
-        if (Rpro != null) {
-            return Rpro;
+    public Producer saveProducer(String producerAsString, String contact) {
+        Producer producer = new Producer(producerAsString, contact);
+        Seller rseller = this.sellerRepository.findSellerByName(producer.getName());
+        if (rseller instanceof Producer) {
+            return (Producer) rseller;
+        } else if (rseller != null) {
+            // would throw exception since name of seller is id
+            return null;
         } else {
-            return this.producerRepository.save(producer);
+            return this.sellerRepository.save(producer);
         }
+    }
+
+    @Override
+    public PrivateSeller savePrivateSeller(String sellerAsString, String contact) {
+        PrivateSeller seller = new PrivateSeller(sellerAsString, contact);
+        Seller rseller = this.sellerRepository.findSellerByName(seller.getName());
+        if (rseller instanceof PrivateSeller) {
+            return (PrivateSeller) rseller;
+        } else if (rseller != null) {
+            // would throw exception since name of seller is id
+            return null;
+        } else {
+            return this.sellerRepository.save(seller);
+        }
+
     }
 
     @Override
@@ -53,9 +68,21 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
     }
 
     @Override
-    public Producer getProducer(String producerAsString) {
-        return this.producerRepository.findProducerByName(producerAsString);
+    public Seller getSeller(String sellerAsString) {
+
+        return this.sellerRepository.findSellerByName(sellerAsString);
     }
+
+    @Override
+    public Producer getProducer(String producerAsString) {
+        Seller seller = this.sellerRepository.findSellerByName(producerAsString);
+        if (seller instanceof Producer) {
+            return (Producer) seller;
+        } else {
+            return null;
+        }
+    }
+
 
     @Override
     public Sex getSex(String sexAsString) {

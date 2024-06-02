@@ -2,12 +2,8 @@ package com.nepflow.NepenthesManagement.DatabaseInitializationService;
 
 
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.Clones.Clone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVNepenthesClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
-import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
@@ -74,8 +70,9 @@ public class DataInitializationService {
             for (String sex : this.getLines(SexSQL)) {
                 this.nepenthesManagementMetaDataService.saveSex(sex);
             }
-            for (String producer : this.getLines(ProducerSQL)) {
-                this.nepenthesManagementMetaDataService.saveProducer(producer);
+            for (String producerLine : this.getLines(ProducerSQL)) {
+                String[] lineParts = producerLine.split(",");
+                this.nepenthesManagementMetaDataService.saveProducer(lineParts[0],lineParts[1]);
             }
             for (String nepenthes : this.getLines(LabelSQL)) {
                 this.nepenthesManagementService.createLabel(new Nepenthes(nepenthes));

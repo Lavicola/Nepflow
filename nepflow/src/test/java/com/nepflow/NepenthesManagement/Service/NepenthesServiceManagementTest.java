@@ -6,9 +6,9 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
-import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
+import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
 import com.nepflow.NepenthesManagement.Repository.SexRepository;
 import jakarta.transaction.Transactional;
@@ -78,10 +78,10 @@ public class NepenthesServiceManagementTest {
         Label hybrid = nepenthesManagementService.createLabel(new PrimaryHybrid(LabelFormats.hybridFormat1));
         Label hybrid2 = nepenthesManagementService.createLabel(new PrimaryHybrid(LabelFormats.hybridFormat2));
 
-        assertEquals("N-0",nepenthes1.getPrefix());
-        assertEquals("N-1",nepenthes2.getPrefix());
-        assertEquals("H-0",hybrid.getPrefix());
-        assertEquals("H-1",hybrid2.getPrefix());
+        assertEquals("Nepflow-N-0",nepenthes1.getPrefix());
+        assertEquals("Nepflow-N-1",nepenthes2.getPrefix());
+        assertEquals("Nepflow-H-0",hybrid.getPrefix());
+        assertEquals("Nepflow-H-1",hybrid2.getPrefix());
 
     }
 
@@ -94,7 +94,7 @@ public class NepenthesServiceManagementTest {
         Sex male = new Sex("Male");
         Sex female = new Sex("Female");
         Location location = new Location("Borneo");
-        Producer producer = new Producer("AW");
+        Producer producer = new Producer("AW","wwww");
 
         String maleCloneID = IVClone.generateInternalCloneId(cloneID,male);
         String femaleCloneID = IVClone.generateInternalCloneId(cloneID,female);

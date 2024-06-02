@@ -1,9 +1,6 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICPrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
@@ -41,19 +38,19 @@ public class PrimaryHybrid extends HybridLabel {
     }
 
     @Override
-    public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex) {
-        return new ICPrimaryHybrid(sex,grex,cloneId);
+    public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller) {
+        return new ICPrimaryHybrid(sex,grex,cloneId,location,seller);
     }
 
     @Override
     public IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
-        return new IVPrimaryHybrid(cloneId,sex,grex,producer);
+        return new IVPrimaryHybrid(cloneId,sex,grex,location,producer);
     }
 
 
     @Override
     protected String getLabelIdentifier() {
-        return "H";
+        return "Nepflow-H";
     }
 
 

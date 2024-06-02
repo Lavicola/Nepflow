@@ -1,12 +1,7 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
-import com.nepflow.NepenthesManagement.Model.Clones.Clone;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
-import com.nepflow.NepenthesManagement.Model.Clones.ICNepenthesClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import lombok.Getter;
 import org.springframework.data.annotation.Transient;
@@ -60,7 +55,7 @@ public abstract class Label {
 
     /**
      *
-     * @param name
+     * @param name Name of the Nepenthes/Hybrid etc.
      * @param labelCount The current amount of Labels of the specific Subclass
      */
     public Label(String name,int labelCount) {
@@ -94,9 +89,9 @@ public abstract class Label {
         validPlants.add(name);
     }
 
-    public ICClone addICClone(Sex sex,Location location, Grex grex){
+    public ICClone addICClone(Sex sex,Location location, Grex grex,Seller seller){
         String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneIcList.size());
-        ICClone icClone = createICClone(cloneId, sex, location, grex);
+        ICClone icClone = createICClone(cloneId, sex, location, grex,seller);
         this.cloneIcList.add(icClone);
         return icClone;
     }
@@ -107,7 +102,7 @@ public abstract class Label {
         return icClone;
     }
 
-    public abstract ICClone createICClone(String cloneId,Sex sex,Location location, Grex grex);
+    public abstract ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller);
     public abstract IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer);
 
     // Different Label Classes must have an ID

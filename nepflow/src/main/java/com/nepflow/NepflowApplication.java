@@ -1,12 +1,10 @@
 package com.nepflow;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.modelmapper.ModelMapper;
 import org.neo4j.cypherdsl.core.renderer.Dialect;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @SpringBootApplication
 @EnableEncryptableProperties

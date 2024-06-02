@@ -37,13 +37,15 @@ public abstract class Clone {
     private Long version;
 
     @Setter
+    @Getter
     @Relationship("ORIGIN")
     Location location;
-    public Clone(Sex sex, Grex grex, String cloneId){
+    public Clone(Sex sex, Grex grex, String cloneId,Location location){
         this.sex = sex;
         this.grex = grex;
         this.cloneId = cloneId;
         this.internalCloneId = cloneId;
+        this.location = location;
     }
 
     public  String getCloneId() {
