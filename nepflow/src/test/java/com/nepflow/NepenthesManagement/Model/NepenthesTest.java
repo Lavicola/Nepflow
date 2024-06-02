@@ -14,16 +14,16 @@ public class NepenthesTest {
 
 
     @Test
-    void labelICCloneIdGenerationTest(){
+    void NepenthesICCloneIdGenerationTest(){
         Label.addValidPlant(LabelFormats.nep1);
         Label.addValidPlant(LabelFormats.nep2);
         Nepenthes label1 =  new Nepenthes(LabelFormats.nep1,0);
         Label label2 = new Nepenthes(LabelFormats.nep2,1);
 
-        ICClone icNepenthesClone10 = label1.addICClone(null,null,new Location("Borneo"));
-        ICClone icNepenthesClone11 = label1.addICClone(null,null);
-        ICClone icNepenthesClone20 = label2.addICClone(null,null);
-        ICClone icNepenthesClone21 = label2.addICClone(null,null);
+        ICClone icNepenthesClone10 = label1.addICClone(null,new Location("Borneo"),null);
+        ICClone icNepenthesClone11 = label1.addICClone(null,null,null);
+        ICClone icNepenthesClone20 = label2.addICClone(null,null,null);
+        ICClone icNepenthesClone21 = label2.addICClone(null,null,null);
 
         assertEquals("N-0-0",icNepenthesClone10.getCloneId(),"Clone Id is wrong");
         assertEquals("N-0-1",icNepenthesClone11.getCloneId(),"Clone Id is wrong");

@@ -1,11 +1,13 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICPrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
+import com.nepflow.NepenthesManagement.Model.Clones.IVPrimaryHybrid;
 import org.springframework.data.neo4j.core.schema.Node;
 
 import java.util.regex.Pattern;
@@ -39,18 +41,15 @@ public class PrimaryHybrid extends HybridLabel {
     }
 
     @Override
-    public IVClone addIVClone(String cloneId, Sex sex, Grex grex, Producer producer) {
-        return null;
+    public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex) {
+        return new ICPrimaryHybrid(sex,grex,cloneId);
     }
-
 
     @Override
-    public ICClone addICClone(Sex sex, Grex grex) {
-        String cloneId = String.format("%s-%s",this.getPrefix(),this.cloneIcList.size());
-        ICPrimaryHybrid icPrimaryHybrid = new ICPrimaryHybrid(sex,grex,cloneId);
-        this.cloneIcList.add(icPrimaryHybrid);
-        return icPrimaryHybrid;
+    public IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
+        return new IVPrimaryHybrid(cloneId,sex,grex,producer);
     }
+
 
     @Override
     protected String getLabelIdentifier() {

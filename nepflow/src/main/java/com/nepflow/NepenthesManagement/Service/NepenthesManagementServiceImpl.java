@@ -7,6 +7,7 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
+import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import com.nepflow.NepenthesManagement.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,9 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
     @Autowired
     NepenthesManagementMetaDataService managementMetaDataService;
 
+
     @Override
-    public IVClone saveIVNepenthesClone(Nepenthes label, String cloneId,
-                                        String sexAsString, Grex grex,
-                                        String locationAsString, String producerAsString) {
-        label = (Nepenthes) this.createLabel(label);
+    public IVClone saveIVClone(Label label, String cloneId, String sexAsString, Grex grex, String locationAsString, String producerAsString) {
         IVClone newIvClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
         Producer producer = this.managementMetaDataService.getProducer(producerAsString);
@@ -45,48 +44,26 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
             // clone already exists
             return null;
         }
-        newIvClone = label.addIVClone(cloneId,sex,grex,producer,location);
-        this.labelRepository.save(label);
-       return newIvClone;
-    }
-
-    @Override
-    public ICClone saveICNepenthesClone(Nepenthes label, String sexAsString,
-                                        Grex grex, String locationAsString) {
-        label = (Nepenthes) this.createLabel(label);
-        ICClone newICClone;
-        Sex sex = this.managementMetaDataService.getSex(sexAsString);
-        Location location = this.managementMetaDataService.saveLocation(locationAsString);
-        newICClone = label.addICClone(sex,grex,location);
-        this.labelRepository.save(label);
-        return newICClone;
-    }
-
-    @Override
-    public IVClone saveIVHybridLabelClone(Label label, String cloneId, String sexAsString, Grex grex, String producerAsString) {
-        label = this.createLabel(label);
-        IVClone newIvClone;
-        Sex sex = this.managementMetaDataService.getSex(sexAsString);
-        Producer producer = this.managementMetaDataService.getProducer(producerAsString);
-        // only Location is allowed to be freely inserted
-        if(this.cloneRepository.existsByInternalCloneId(IVClone.generateInternalCloneId(cloneId,sex))){
-            // clone already exists
-            return null;
-        }
-
-        newIvClone = label.addIVClone(cloneId,sex,grex,producer);
+        newIvClone = label.addIVClone(cloneId,sex,grex,location,producer);
         this.labelRepository.save(label);
         return newIvClone;
     }
 
     @Override
-    public ICClone saveICHybridLabelClone(Label label, String sexAsString, Grex grex) {
-        label = this.createLabel(label);
-        ICClone newICClone;
+    public ICClone saveICClone(Label label, String sexAsString, Grex grex, String locationAsString) {
+        Location location;
+        ICClone newIcClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
-        newICClone = label.addICClone(sex,grex);
+        // only Location is allowed to be freely inserted, but for now we dont allow Location for Multihybrids
+        if(label instanceof MultiHybrid){
+            location = null;
+        }else{
+            location = this.managementMetaDataService.saveLocation(locationAsString);
+
+        }
+        newIcClone = label.addICClone(sex,location,grex);
         this.labelRepository.save(label);
-        return newICClone;
+        return newIcClone;
     }
 
     @Override

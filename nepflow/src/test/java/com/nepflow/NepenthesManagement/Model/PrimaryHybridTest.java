@@ -81,16 +81,15 @@ public class PrimaryHybridTest {
         Label label1 =  new PrimaryHybrid(LabelFormats.hybridFormat1,0);
         Label label2 = new PrimaryHybrid(LabelFormats.hybridFormat2,1);
 
-        ICClone icNepenthesClone10 = label1.addICClone(null,null);
-        ICClone icNepenthesClone11 = label1.addICClone(null,null);
-        ICClone icNepenthesClone20 = label2.addICClone(null,null);
-        ICClone icNepenthesClone21 = label2.addICClone(null,null);
+        ICClone icNepenthesClone10 = label1.addICClone(null,null,null);
+        ICClone icNepenthesClone11 = label1.addICClone(null,null,null);
+        ICClone icNepenthesClone20 = label2.addICClone(null,null,null);
+        ICClone icNepenthesClone21 = label2.addICClone(null,null,null);
 
         Assertions.assertEquals("H-0-0",icNepenthesClone10.getCloneId(),"Clone Id is wrong");
         Assertions.assertEquals("H-0-1",icNepenthesClone11.getCloneId(),"Clone Id is wrong");
         Assertions.assertEquals("H-1-0",icNepenthesClone20.getCloneId(),"Clone Id is wrong");
         Assertions.assertEquals("H-1-1",icNepenthesClone21.getCloneId(),"Clone Id is wrong");
-
 
     }
 

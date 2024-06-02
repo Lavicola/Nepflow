@@ -37,32 +37,16 @@ public class Nepenthes extends Label {
         return true;//name.matches("^[a-zA-Z]+$");
     }
 
-    public IVClone addIVClone(String cloneId, Sex sex, Grex grex, Producer producer, Location location) {
-        IVNepenthesClone ivNepenthesClone = new IVNepenthesClone(cloneId, sex, grex, producer, location);
-        this.cloneIvList.add(ivNepenthesClone);
-        return ivNepenthesClone;
+    @Override
+    public ICClone createICClone(String cloneId,Sex sex, Location location, Grex grex) {
+        return new ICNepenthesClone(sex,grex,cloneId);
     }
 
     @Override
-    public IVClone addIVClone(String cloneId, Sex sex, Grex grex, Producer producer) {
-        IVNepenthesClone ivNepenthesClone = new IVNepenthesClone(cloneId, sex, grex, producer, null);
-        this.cloneIvList.add(ivNepenthesClone);
-        return ivNepenthesClone;
+    public IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
+        return new IVNepenthesClone(cloneId,sex,grex,producer,location);
     }
 
-    public ICClone addICClone(Sex sex, Grex grex, Location location) {
-        ICNepenthesClone icNepenthesClone = (ICNepenthesClone) this.addICClone(sex, grex);
-        icNepenthesClone.setLocation(location);
-        return icNepenthesClone;
-    }
-
-    @Override
-    public ICClone addICClone(Sex sex, Grex grex) {
-        String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneIcList.size());
-        ICNepenthesClone icNepenthesClone = new ICNepenthesClone(sex, grex, cloneId);
-        this.cloneIcList.add(icNepenthesClone);
-        return icNepenthesClone;
-    }
 
     @Override
     protected String getLabelIdentifier() {

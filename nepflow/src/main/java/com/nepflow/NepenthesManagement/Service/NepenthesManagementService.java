@@ -8,16 +8,13 @@ import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 
 public interface NepenthesManagementService {
     // Species, since seeds are taken from the wild, can have a location
-    IVClone saveIVNepenthesClone(Nepenthes label, String cloneId,
+    IVClone saveIVClone(Label label, String cloneId,
                                  String sexAsString, Grex grex,
                                  String locationAsString, String producerAsString);
-    ICClone saveICNepenthesClone(Nepenthes label, String sexAsString,
+    ICClone saveICClone(Label label, String sexAsString,
                                  Grex grex, String locationAsString);
 
-    IVClone saveIVHybridLabelClone(Label label, String cloneId,
-                                   String sexAsString, Grex grex, String producerAsString);
-    ICClone saveICHybridLabelClone(Label label, String sexAsString,
-                                 Grex grex);
+
 
 
     Label createLabel(Label label);

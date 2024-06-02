@@ -1,10 +1,12 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
+import com.nepflow.NepenthesManagement.Model.Clones.ICNepenthesClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import lombok.Getter;
 import org.springframework.data.annotation.Transient;
@@ -92,8 +94,21 @@ public abstract class Label {
         validPlants.add(name);
     }
 
-    public abstract IVClone addIVClone(String cloneId, Sex sex, Grex grex, Producer producer);
-    public abstract ICClone addICClone(Sex sex, Grex grex);
+    public ICClone addICClone(Sex sex,Location location, Grex grex){
+        String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneIcList.size());
+        ICClone icClone = createICClone(cloneId, sex, location, grex);
+        this.cloneIcList.add(icClone);
+        return icClone;
+    }
+
+    public IVClone addIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer){
+        IVClone icClone = createIVClone(cloneId,sex,grex,location,producer);
+        this.cloneIvList.add(icClone);
+        return icClone;
+    }
+
+    public abstract ICClone createICClone(String cloneId,Sex sex,Location location, Grex grex);
+    public abstract IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer);
 
     // Different Label Classes must have an ID
     protected abstract String getLabelIdentifier();

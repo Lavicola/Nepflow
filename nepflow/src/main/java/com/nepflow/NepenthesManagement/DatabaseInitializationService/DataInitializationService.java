@@ -93,7 +93,7 @@ public class DataInitializationService {
             for (String line : this.getLines(ClonesCSV)) {
                 String[] lineParts = line.split(",");
                 Label nepenthes = this.nepenthesManagementService.createLabel(new Nepenthes(lineParts[NEPENTHES_INDEX].trim()));
-                this.nepenthesManagementService.saveIVNepenthesClone((Nepenthes) nepenthes,
+                this.nepenthesManagementService.saveIVClone( nepenthes,
                         lineParts[CLONE_INDEX].trim(), lineParts[SEX_INDEX], grex,
                         lineParts[LOCATION_INDEX].trim(), lineParts[PRODUCER_INDEX]);
             }
