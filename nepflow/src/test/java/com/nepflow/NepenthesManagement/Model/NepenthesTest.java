@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @DataNeo4jTest
 public class NepenthesTest {
 
@@ -16,8 +17,6 @@ public class NepenthesTest {
 
     @Test
     void NepenthesICCloneIdGenerationTest(){
-        Label.addValidPlant(LabelFormats.nep1);
-        Label.addValidPlant(LabelFormats.nep2);
         Nepenthes label1 =  new Nepenthes(LabelFormats.nep1,0);
         Label label2 = new Nepenthes(LabelFormats.nep2,1);
 

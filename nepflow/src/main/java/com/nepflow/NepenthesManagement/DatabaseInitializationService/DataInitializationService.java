@@ -5,6 +5,7 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
+import com.nepflow.NepenthesManagement.Service.LabelRecognizerService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
@@ -37,6 +38,8 @@ public class DataInitializationService {
     @Value("classpath:sql/country.txt")
     private Resource CountryTXT;
 
+    @Value("classpath:sql/hybrids.csv")
+    private Resource HybridsTXT;
 
     @Autowired
     LabelRepository labelRepository;
@@ -54,6 +57,9 @@ public class DataInitializationService {
      @Autowired
     NepenthesRetrivalService nepenthesRetrivalService;
 
+     @Autowired
+    LabelRecognizerService labelRecognizerService;
+
     @Transactional("transactionManager")
     @PostConstruct
     public void initializeModel() throws IOException {
@@ -70,13 +76,14 @@ public class DataInitializationService {
             for (String sex : this.getLines(SexSQL)) {
                 this.nepenthesManagementMetaDataService.saveSex(sex);
             }
+            // store valid Producers
             for (String producerLine : this.getLines(ProducerSQL)) {
                 String[] lineParts = producerLine.split(",");
                 this.nepenthesManagementMetaDataService.saveProducer(lineParts[0],lineParts[1]);
             }
+            // Store known Nepenthes
             for (String nepenthes : this.getLines(LabelSQL)) {
                 this.nepenthesManagementService.createLabel(new Nepenthes(nepenthes));
-                Label.addValidPlant(nepenthes);
             }
 
 
@@ -96,6 +103,20 @@ public class DataInitializationService {
             }
 
         }
+
+        Label label;
+        for (String line : this.getLines(HybridsTXT)) {
+            Nepenthes nepenthes = new Nepenthes("hamata x villosa");
+
+            String lineParts[] = line.split(",");
+            label = labelRecognizerService.returnRightLabelClass(lineParts[2]);
+            System.out.println(label);
+
+        }
+
+
+
+
     }
 
 

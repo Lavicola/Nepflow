@@ -211,3 +211,7 @@ xiphioides
 zakriana
 zygon
 sp. Papua
+viking
+ampullaria Red
+ampullaria Black Miracle
+truncata Highland Red

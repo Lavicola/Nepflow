@@ -1,27 +1,35 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
+import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICMultiHybrid;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVMultiHybrid;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.core.schema.Node;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Node
 public class MultiHybrid extends HybridLabel{
 
+    // Certain MultiHybrids are known under a specific name and not under the actual MultiHybrids name
+    @Transient
+    public static Set<String> knownMultiHybrids = new HashSet<>();
+
+    public MultiHybrid(String name) {
+        super(name);
+    }
 
     public MultiHybrid(String name,int labelCount) {
         super(name,labelCount);
     }
 
-    @Override
-    boolean isValidLabelName(String name) {
-        return true;
-    }
 
     @Override
-    boolean checkLabelFormat(String name) {
+    boolean checkLabelFormat(String name) throws InvalidLabelFormatException {
         String temp = "";
         // substitutionCount must be increased at least 4 times (3 iterations are always guranteed9
         int substitionCount = -4;
@@ -46,8 +54,12 @@ public class MultiHybrid extends HybridLabel{
             name = name.replaceAll("\\w+ x \\w+", "");
             substitionCount++;
         }
-        return name.equals("") && substitionCount > 0;
+        if(name.equals("") && substitionCount > 0){
+            return true;
+        }
+        throw new InvalidLabelFormatException(String.format("The MultiHybrid Format '%s' is not known",name));
     }
+
 
     @Override
     public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller) {

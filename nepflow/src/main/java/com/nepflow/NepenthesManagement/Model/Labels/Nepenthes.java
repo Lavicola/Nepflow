@@ -10,6 +10,8 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node
 public class Nepenthes extends Label {
 
+
+
     public Nepenthes(String name, int labelCount) {
         super(name, labelCount);
     }
@@ -22,16 +24,11 @@ public class Nepenthes extends Label {
         super();
     }
 
-    @Override
-    boolean isValidLabelName(String name) {
-        // only one word allowed
-        return this.speciesExists(name);
-    }
 
     @Override
     boolean checkLabelFormat(String name) {
         // no real way to verify since nepenthes are sometimes very badly named
-        return true;//name.matches("^[a-zA-Z]+$");
+        return true;
     }
 
     @Override

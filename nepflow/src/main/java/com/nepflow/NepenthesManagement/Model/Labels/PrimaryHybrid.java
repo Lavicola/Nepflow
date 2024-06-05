@@ -1,5 +1,6 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
+import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICPrimaryHybrid;
@@ -11,6 +12,8 @@ import java.util.regex.Pattern;
 
 @Node
 public class PrimaryHybrid extends HybridLabel {
+
+
     public PrimaryHybrid(String name, int labelCount) {
         super(name,labelCount);
     }
@@ -20,22 +23,17 @@ public class PrimaryHybrid extends HybridLabel {
         this.setParents();
     }
 
-    @Override
-    boolean isValidLabelName(String name) {
-        for (String nepenthes : name.substring(1, name.length() - 1).split(HYBRID_SEPARATOR)) {
-            if (!this.speciesExists(nepenthes)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     @Override
-    boolean checkLabelFormat(String name) {
+    boolean checkLabelFormat(String name) throws InvalidLabelFormatException {
         // must be (NAME x NAME)
-        return Pattern.compile("^\\(\\w+ x \\w+\\)$").matcher(name).find();
+        if(Pattern.compile("^\\(\\w+ x \\w+\\)$").matcher(name).find()){
+            return true;
+        }
+        throw new InvalidLabelFormatException(String.format("The PrimaryHybrid Format '%s' is not known",name));
     }
+
+
 
     @Override
     public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller) {

@@ -9,8 +9,12 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node
 public class IVMultiHybrid extends IVClone {
 
+
     public IVMultiHybrid( String cloneId, Sex sex, Grex grex,Location location, Producer producer) {
         super( cloneId, sex, grex,location,producer);
     }
+
+
+
 
 }

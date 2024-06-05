@@ -1,10 +1,10 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
+import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import lombok.Getter;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -12,9 +12,7 @@ import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This Abstract Class represents the abstraction needed for the different types of subclasses of
@@ -25,8 +23,6 @@ import java.util.Set;
 @Node
 public abstract class Label {
 
-    @Transient
-    public static Set<String> validPlants = new HashSet<>();
 
     @Id
     @Getter String name;
@@ -58,14 +54,13 @@ public abstract class Label {
      * @param name Name of the Nepenthes/Hybrid etc.
      * @param labelCount The current amount of Labels of the specific Subclass
      */
-    public Label(String name,int labelCount) {
+    public Label(String name,int labelCount) throws InvalidLabelFormatException{
         this(name);
         this.prefix = String.format("%s-%d",this.getLabelIdentifier(),labelCount);
     }
-    public Label(String name) {
+    public Label(String name) throws InvalidLabelFormatException {
         name = name.toLowerCase();
-        assert checkLabelFormat(name);
-        assert isValidLabelName(name);
+        checkLabelFormat(name);
         this.name = name;
         this.cloneIcList = new ArrayList<>();
         this.cloneIvList = new ArrayList<>();
@@ -77,17 +72,8 @@ public abstract class Label {
     }
 
 
-    abstract boolean isValidLabelName(String name);
+    abstract boolean checkLabelFormat(String name) throws InvalidLabelFormatException;
 
-    abstract boolean checkLabelFormat(String name);
-
-    boolean speciesExists(String name) {
-        return Label.validPlants.contains(name);
-    }
-
-    public static void addValidPlant(String name){
-        validPlants.add(name);
-    }
 
     public ICClone addICClone(Sex sex,Location location, Grex grex,Seller seller){
         String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneIcList.size());

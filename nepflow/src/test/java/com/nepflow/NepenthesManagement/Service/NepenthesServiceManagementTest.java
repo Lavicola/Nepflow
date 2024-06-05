@@ -70,9 +70,6 @@ public class NepenthesServiceManagementTest {
     @Test
     @Transactional
     public void createLabelPrefixTest(){
-        Label.addValidPlant(LabelFormats.nep1);
-        Label.addValidPlant(LabelFormats.nep2);
-
         Label nepenthes1 = nepenthesManagementService.createLabel(new Nepenthes(LabelFormats.nep1));
         Label nepenthes2 = nepenthesManagementService.createLabel(new Nepenthes(LabelFormats.nep2));
         Label hybrid = nepenthesManagementService.createLabel(new PrimaryHybrid(LabelFormats.hybridFormat1));
@@ -88,8 +85,6 @@ public class NepenthesServiceManagementTest {
     @Test
     @Transactional
     public void addIVCloneWithSexTest(){
-        Label.addValidPlant(LabelFormats.nep1);
-        Label.addValidPlant(LabelFormats.nep2);
         String cloneID = "BE-3225";
         Sex male = new Sex("Male");
         Sex female = new Sex("Female");
