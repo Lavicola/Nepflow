@@ -52,22 +52,22 @@ public class MultiHybridTest {
 
     @Test
     public void multihybridSetParentTest() {
-        String hybridValid = "(NAME x NAME) x (NAME x NAME)";
-        String hybrid1Valid = "(((NAME x NAME) x NAME) x NAME) x NAME";
-        String hybrid2Valid = "(((NAME x NAME) x NAME) x NAME) x (NAME x NAME)";
+        String hybridValid = "(name x name) x (name x name)";
+        String hybrid1Valid = "(((name x name) x name) x name) x name";
+        String hybrid2Valid = "(((name x name) x name) x name) x (name x name)";
 
         MultiHybrid multiHybrid = new MultiHybrid(hybridValid,0);
         MultiHybrid multiHybrid2 =new MultiHybrid(hybrid1Valid,0);
         MultiHybrid multiHybrid3 =new MultiHybrid(hybrid2Valid,0);
 
-        assertEquals("((NAME x NAME) x NAME) x NAME".toLowerCase(),multiHybrid2.getMotherName());
-        assertEquals("NAME".toLowerCase(),multiHybrid2.getFatherName());
+        assertEquals("((name x name) x name) x name",multiHybrid2.getMotherName());
+        assertEquals("name",multiHybrid2.getFatherName());
 
-        assertEquals("((NAME x NAME) x NAME) x NAME".toLowerCase(),multiHybrid3.getMotherName());
-        assertEquals("NAME x NAME".toLowerCase(),multiHybrid3.getFatherName());
+        assertEquals("((name x name) x name) x name",multiHybrid3.getMotherName());
+        assertEquals("name x name",multiHybrid3.getFatherName());
 
-        assertEquals("NAME x NAME".toLowerCase(),multiHybrid.getMotherName());
-        assertEquals("NAME x NAME".toLowerCase(),multiHybrid.getFatherName());
+        assertEquals("name x name",multiHybrid.getMotherName());
+        assertEquals("name x name",multiHybrid.getFatherName());
 
 
 

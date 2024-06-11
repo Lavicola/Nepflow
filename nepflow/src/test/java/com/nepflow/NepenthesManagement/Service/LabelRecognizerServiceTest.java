@@ -4,7 +4,7 @@ package com.nepflow.NepenthesManagement.Service;
 import com.nepflow.NepenthesManagement.LabelFormats;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
-import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
+import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +26,7 @@ public class LabelRecognizerServiceTest {
         primaryHybrid = service.returnRightLabelClass(LabelFormats.hybridFormat1);
         multiHybrid = service.returnRightLabelClass(LabelFormats.multiHybridFormat2);
 
-        assertTrue(nepenthes instanceof Nepenthes);
+        assertTrue(nepenthes instanceof Species);
         assertTrue(primaryHybrid instanceof PrimaryHybrid);
         assertTrue(multiHybrid instanceof MultiHybrid);
 

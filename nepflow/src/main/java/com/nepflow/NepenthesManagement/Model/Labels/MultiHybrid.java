@@ -27,6 +27,9 @@ public class MultiHybrid extends HybridLabel{
         super(name,labelCount);
     }
 
+    public MultiHybrid() {
+        super();
+    }
 
     @Override
     boolean checkLabelFormat(String name) throws InvalidLabelFormatException {
@@ -43,7 +46,7 @@ public class MultiHybrid extends HybridLabel{
         while (!temp.equals(name)) {
             temp = name;
             // (NAME x NAME) = NAME
-            name = name.replaceAll("\\(\\w+ x \\w+\\)", "N");
+            name = name.replaceAll("\\(([^()]*\\s+x\\s+[^()]*)\\)", "N");
             substitionCount++;
 
         }

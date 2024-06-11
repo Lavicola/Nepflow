@@ -70,6 +70,25 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
     }
 
     @Override
+    //TODO at some point remove Code duplication --> helper method for common logic
+    public ICClone saveICCloneCultivar(Label label, String cloneId, String sexAsString, Grex grex, String locationAsString, String sellerAsString) {
+        Location location;
+        ICClone newIcClone;
+        Sex sex = this.managementMetaDataService.getSex(sexAsString);
+        Seller seller = this.managementMetaDataService.getSeller(sellerAsString);
+        // only Location is allowed to be freely inserted, but for now we dont allow Location for Multihybrids
+        if (label instanceof MultiHybrid) {
+            location = null;
+        } else {
+            location = this.managementMetaDataService.saveLocation(locationAsString);
+
+        }
+        newIcClone = label.addICCloneCultivar(sex,cloneId, location, grex,seller);
+        this.labelRepository.save(label);
+        return newIcClone;
+    }
+
+    @Override
     public Label createLabel(Label label) {
         Label rLabel = this.labelRepository.findLabelByName(label.getName());
         if (rLabel != null) {
@@ -84,6 +103,11 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
     @Override
     public int getLabelCount(String className) {
         return this.labelRepository.countLabelByLabelClass(className);
+    }
+
+    @Override
+    public ICClone saveICCloneInternalLabel(Label label, String cloneId, String sexAsString, Grex grex, String locationAsString, String sellerAsString) {
+        return null;
     }
 
 

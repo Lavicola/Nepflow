@@ -30,6 +30,10 @@ public abstract class HybridLabel extends Label {
         this.setParents();
     }
 
+    public HybridLabel() {
+
+    }
+
     abstract void setParents();
 
 

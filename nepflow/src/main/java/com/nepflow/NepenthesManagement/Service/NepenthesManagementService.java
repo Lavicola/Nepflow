@@ -15,12 +15,19 @@ public interface NepenthesManagementService {
                         String sellerAsString
                         );
 
-
+    ICClone saveICCloneCultivar(Label label,String cloneId, String sexAsString,
+                        Grex grex, String locationAsString,
+                        String sellerAsString
+    );
 
 
     Label createLabel(Label label);
     int getLabelCount(String className);
 
+    ICClone saveICCloneInternalLabel (Label label,String cloneId, String sexAsString,
+    Grex grex, String locationAsString,
+    String sellerAsString
+    );
 
 
 }

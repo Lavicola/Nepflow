@@ -3,7 +3,7 @@ package com.nepflow.NepenthesManagement.DatabaseInitializationService;
 
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
-import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
+import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Service.LabelRecognizerService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
@@ -29,6 +29,10 @@ public class DataInitializationService {
 
     @Value("classpath:sql/nepenthes.sql")
     private Resource LabelSQL;
+    @Value("classpath:sql/cultivars.csv")
+    private Resource NepenthesCultivars;
+    @Value("classpath:sql/hybridCultivars.csv")
+    private Resource HybridCultivars;
     @Value("classpath:sql/clones.csv")
     private Resource ClonesCSV;
     @Value("classpath:sql/sex.sql")
@@ -40,6 +44,10 @@ public class DataInitializationService {
 
     @Value("classpath:sql/hybrids.csv")
     private Resource HybridsTXT;
+
+    @Value("classpath:sql/cultivars.csv")
+    private Resource CultivarsCSV;
+
 
     @Autowired
     LabelRepository labelRepository;
@@ -54,18 +62,17 @@ public class DataInitializationService {
     UserManagementService userManagementService;
 
 
-     @Autowired
+    @Autowired
     NepenthesRetrivalService nepenthesRetrivalService;
 
-     @Autowired
+    @Autowired
     LabelRecognizerService labelRecognizerService;
 
     @Transactional("transactionManager")
     @PostConstruct
     public void initializeModel() throws IOException {
 
-
-        if(false) {
+        if (false) {
 
             // store supported countries
             for (String countryAsString : this.getLines(CountryTXT)) {
@@ -79,13 +86,31 @@ public class DataInitializationService {
             // store valid Producers
             for (String producerLine : this.getLines(ProducerSQL)) {
                 String[] lineParts = producerLine.split(",");
-                this.nepenthesManagementMetaDataService.saveProducer(lineParts[0],lineParts[1]);
+                this.nepenthesManagementMetaDataService.saveProducer(lineParts[0], lineParts[1]);
             }
             // Store known Nepenthes
             for (String nepenthes : this.getLines(LabelSQL)) {
-                this.nepenthesManagementService.createLabel(new Nepenthes(nepenthes));
+                this.nepenthesManagementService.createLabel(new Species(nepenthes));
             }
+            // Store known cultivars
+            Label runtime;
+            for (String cultivarLine : this.getLines(CultivarsCSV)) {
+                String[] lineParts = cultivarLine.split(",");
+                runtime = labelRecognizerService.returnRightLabelClass(lineParts[2]);
+                if (runtime != null) {
+                    runtime = this.nepenthesManagementService.createLabel(runtime);
+                    if (lineParts[0].equals("IV")) {
+                        this.nepenthesManagementService.saveIVClone(runtime,
+                                lineParts[1], null, null,
+                                "", "");
+                    } else {
+                        this.nepenthesManagementService.saveICCloneCultivar(runtime,
+                                lineParts[1], null, null,
+                                "", "");
+                    }
+                }
 
+            }
 
             Grex grex = null;
             int PRODUCER_INDEX = 0;
@@ -96,25 +121,30 @@ public class DataInitializationService {
 
             for (String line : this.getLines(ClonesCSV)) {
                 String[] lineParts = line.split(",");
-                Label nepenthes = this.nepenthesManagementService.createLabel(new Nepenthes(lineParts[NEPENTHES_INDEX].trim()));
-                this.nepenthesManagementService.saveIVClone( nepenthes,
+                Label nepenthes = this.nepenthesManagementService.createLabel(new Species(lineParts[NEPENTHES_INDEX].trim()));
+                this.nepenthesManagementService.saveIVClone(nepenthes,
                         lineParts[CLONE_INDEX].trim(), lineParts[SEX_INDEX], grex,
                         lineParts[LOCATION_INDEX].trim(), lineParts[PRODUCER_INDEX]);
             }
 
         }
-
-        Label label;
+        // store hybrids/multi hybrids
+        Label runtime;
         for (String line : this.getLines(HybridsTXT)) {
-            Nepenthes nepenthes = new Nepenthes("hamata x villosa");
-
             String lineParts[] = line.split(",");
-            label = labelRecognizerService.returnRightLabelClass(lineParts[2]);
-            System.out.println(label);
+            String location = null;
+            if (lineParts.length > 3) {
+                location = lineParts[3];
+            }
+            runtime = labelRecognizerService.returnRightLabelClass(lineParts[2]);
+            if (runtime != null) {
+                runtime = this.nepenthesManagementService.createLabel(runtime);
+                this.nepenthesManagementService.saveIVClone(runtime,
+                        lineParts[1], null, null,
+                        location, lineParts[0]);
+            }
 
         }
-
-
 
 
     }

@@ -1,23 +1,30 @@
 package com.nepflow.NepenthesManagement.Dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-
+import java.net.URI;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.nepflow.NepenthesManagement.Dto.CloneDTO;
+import com.nepflow.NepenthesManagement.Dto.CloneGrexDTO;
+import com.nepflow.NepenthesManagement.Dto.HybridCloneDTO;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * LabelClonesDTOClonesInner
  */
 
 @JsonTypeName("LabelClonesDTO_clones_inner")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-31T22:42:44.669728600+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-11T01:56:15.806697200+02:00[Europe/Berlin]")
 public class LabelClonesDTOClonesInner {
-
-  private LabelDTO label;
 
   private String cloneId;
 
@@ -34,37 +41,6 @@ public class LabelClonesDTOClonesInner {
   private String fatherName;
 
   private String motherName;
-
-  public LabelClonesDTOClonesInner() {
-    super();
-  }
-
-  /**
-   * Constructor with only required parameters
-   */
-  public LabelClonesDTOClonesInner(LabelDTO label) {
-    this.label = label;
-  }
-
-  public LabelClonesDTOClonesInner label(LabelDTO label) {
-    this.label = label;
-    return this;
-  }
-
-  /**
-   * Get label
-   * @return label
-  */
-  @NotNull @Valid 
-  @Schema(name = "label", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("label")
-  public LabelDTO getLabel() {
-    return label;
-  }
-
-  public void setLabel(LabelDTO label) {
-    this.label = label;
-  }
 
   public LabelClonesDTOClonesInner cloneId(String cloneId) {
     this.cloneId = cloneId;
@@ -96,8 +72,8 @@ public class LabelClonesDTOClonesInner {
    * @return internalcloneId
   */
   
-  @Schema(name = "InternalcloneId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("InternalcloneId")
+  @Schema(name = "internalcloneId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("internalcloneId")
   public String getInternalcloneId() {
     return internalcloneId;
   }
@@ -235,8 +211,7 @@ public class LabelClonesDTOClonesInner {
       return false;
     }
     LabelClonesDTOClonesInner labelClonesDTOClonesInner = (LabelClonesDTOClonesInner) o;
-    return Objects.equals(this.label, labelClonesDTOClonesInner.label) &&
-        Objects.equals(this.cloneId, labelClonesDTOClonesInner.cloneId) &&
+    return Objects.equals(this.cloneId, labelClonesDTOClonesInner.cloneId) &&
         Objects.equals(this.internalcloneId, labelClonesDTOClonesInner.internalcloneId) &&
         Objects.equals(this.sex, labelClonesDTOClonesInner.sex) &&
         Objects.equals(this.grex, labelClonesDTOClonesInner.grex) &&
@@ -248,14 +223,13 @@ public class LabelClonesDTOClonesInner {
 
   @Override
   public int hashCode() {
-    return Objects.hash(label, cloneId, internalcloneId, sex, grex, producer, location, fatherName, motherName);
+    return Objects.hash(cloneId, internalcloneId, sex, grex, producer, location, fatherName, motherName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class LabelClonesDTOClonesInner {\n");
-    sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    internalcloneId: ").append(toIndentedString(internalcloneId)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");

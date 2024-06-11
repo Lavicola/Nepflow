@@ -1,21 +1,27 @@
 package com.nepflow.NepenthesManagement.Dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-
+import java.net.URI;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nepflow.NepenthesManagement.Dto.CloneGrexDTO;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * CloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-05-31T22:42:44.669728600+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-11T01:56:15.806697200+02:00[Europe/Berlin]")
 public class CloneDTO implements CloneGrexDTOFather {
-
-  private LabelDTO label;
 
   private String cloneId;
 
@@ -28,37 +34,6 @@ public class CloneDTO implements CloneGrexDTOFather {
   private String producer;
 
   private String location;
-
-  public CloneDTO() {
-    super();
-  }
-
-  /**
-   * Constructor with only required parameters
-   */
-  public CloneDTO(LabelDTO label) {
-    this.label = label;
-  }
-
-  public CloneDTO label(LabelDTO label) {
-    this.label = label;
-    return this;
-  }
-
-  /**
-   * Get label
-   * @return label
-  */
-  @NotNull @Valid 
-  @Schema(name = "label", requiredMode = Schema.RequiredMode.REQUIRED)
-  @JsonProperty("label")
-  public LabelDTO getLabel() {
-    return label;
-  }
-
-  public void setLabel(LabelDTO label) {
-    this.label = label;
-  }
 
   public CloneDTO cloneId(String cloneId) {
     this.cloneId = cloneId;
@@ -90,8 +65,8 @@ public class CloneDTO implements CloneGrexDTOFather {
    * @return internalcloneId
   */
   
-  @Schema(name = "InternalcloneId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("InternalcloneId")
+  @Schema(name = "internalcloneId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("internalcloneId")
   public String getInternalcloneId() {
     return internalcloneId;
   }
@@ -189,8 +164,7 @@ public class CloneDTO implements CloneGrexDTOFather {
       return false;
     }
     CloneDTO cloneDTO = (CloneDTO) o;
-    return Objects.equals(this.label, cloneDTO.label) &&
-        Objects.equals(this.cloneId, cloneDTO.cloneId) &&
+    return Objects.equals(this.cloneId, cloneDTO.cloneId) &&
         Objects.equals(this.internalcloneId, cloneDTO.internalcloneId) &&
         Objects.equals(this.sex, cloneDTO.sex) &&
         Objects.equals(this.grex, cloneDTO.grex) &&
@@ -200,14 +174,13 @@ public class CloneDTO implements CloneGrexDTOFather {
 
   @Override
   public int hashCode() {
-    return Objects.hash(label, cloneId, internalcloneId, sex, grex, producer, location);
+    return Objects.hash(cloneId, internalcloneId, sex, grex, producer, location);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class CloneDTO {\n");
-    sb.append("    label: ").append(toIndentedString(label)).append("\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    internalcloneId: ").append(toIndentedString(internalcloneId)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");

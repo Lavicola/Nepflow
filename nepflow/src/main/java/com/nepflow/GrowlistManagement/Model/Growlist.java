@@ -1,6 +1,5 @@
 package com.nepflow.GrowlistManagement.Model;
 
-import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.UserManagement.Model.User;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -20,19 +19,19 @@ public class Growlist {
     @Relationship(value = "CONTAINS_COLLECTION",direction = Relationship.Direction.INCOMING)
     User user;
     @Relationship(value = "CONTAINS_SPECIMEN")
-    List<ICClone> cloneList;
+    List<Specimen> spezimenList;
 
 
     public Growlist(User user) {
         this.user = user;
-        this.cloneList = new ArrayList<>();
+        this.spezimenList = new ArrayList<>();
     }
 
-    public void addClone(ICClone icClone){
-        this.cloneList.add(icClone);
+    public void addSpecimen(Specimen specimen){
+        this.spezimenList.add(specimen);
     }
 
-    public List<ICClone> getCloneList() {
-        return new ArrayList<>(cloneList);
+    public List<Specimen> getSpezimens() {
+        return new ArrayList<>(spezimenList);
     }
 }

@@ -7,12 +7,13 @@ import java.util.List;
 
 public interface NepenthesRetrivalService {
 
-    List<Label> getClonesByLabelClass(String labelClass);
-    List<Label> getClonesByLabelClassAndCloneClass(String labelClass,String cloneClass);
+
+    Clone getCloneByInternalId(String internalCloneId);
 
     List<Clone> getClonesByLabelAndCloneTypeAndStartsWith(String labelName,String cloneTypeClass,String startsWith);
 
 
-    List<Label> getLabelsByLabelname(String labelName);
+    Label getLabelWithClonesByLabelClassAndNepenthesNameAndCloneType(String labelClass,String nepenthesName,String cloneType);
+    List<Label> getNepenthesByNepenthesType(String labelClass);
 
 }

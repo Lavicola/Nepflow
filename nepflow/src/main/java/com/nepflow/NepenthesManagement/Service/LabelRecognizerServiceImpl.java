@@ -3,7 +3,7 @@ package com.nepflow.NepenthesManagement.Service;
 import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
-import com.nepflow.NepenthesManagement.Model.Labels.Nepenthes;
+import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +28,7 @@ public class LabelRecognizerServiceImpl implements LabelRecognizerService {
         }
 
         // Try to instantiate MultiHybrid
-        label = tryCreateLabel(Nepenthes.class, name);
+        label = tryCreateLabel(Species.class, name);
 
         return label; // This may be null if all attempts fail
     }

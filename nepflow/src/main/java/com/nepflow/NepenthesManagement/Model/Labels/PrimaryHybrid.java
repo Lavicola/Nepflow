@@ -23,11 +23,14 @@ public class PrimaryHybrid extends HybridLabel {
         this.setParents();
     }
 
+    public PrimaryHybrid() {
+        super();
+    }
 
     @Override
     boolean checkLabelFormat(String name) throws InvalidLabelFormatException {
         // must be (NAME x NAME)
-        if(Pattern.compile("^\\(\\w+ x \\w+\\)$").matcher(name).find()){
+        if(Pattern.compile("^\\(\\w+ x (\\w+| )+\\)$").matcher(name).find()){
             return true;
         }
         throw new InvalidLabelFormatException(String.format("The PrimaryHybrid Format '%s' is not known",name));

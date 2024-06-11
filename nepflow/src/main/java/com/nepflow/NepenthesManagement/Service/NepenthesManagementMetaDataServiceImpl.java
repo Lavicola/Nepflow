@@ -21,7 +21,7 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
 
     @Override
     public Location saveLocation(String locationAsString) {
-        if (locationAsString.trim().isEmpty()) {
+        if (locationAsString == null || locationAsString.trim().isEmpty()) {
             return null;
         }
         Location location = new Location(locationAsString);

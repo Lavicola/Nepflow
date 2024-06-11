@@ -2,6 +2,7 @@ package com.nepflow.NepenthesManagement.Model.Labels;
 
 import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
+import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -59,13 +61,12 @@ public abstract class Label {
         this.prefix = String.format("%s-%d",this.getLabelIdentifier(),labelCount);
     }
     public Label(String name) throws InvalidLabelFormatException {
-        name = name.toLowerCase();
         checkLabelFormat(name);
         this.name = name;
         this.cloneIcList = new ArrayList<>();
         this.cloneIvList = new ArrayList<>();
-
     }
+
 
     public Label(){
 
@@ -77,6 +78,12 @@ public abstract class Label {
 
     public ICClone addICClone(Sex sex,Location location, Grex grex,Seller seller){
         String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneIcList.size());
+        ICClone icClone = createICClone(cloneId, sex, location, grex,seller);
+        this.cloneIcList.add(icClone);
+        return icClone;
+    }
+
+    public ICClone addICCloneCultivar(Sex sex,String cloneId,Location location, Grex grex,Seller seller){
         ICClone icClone = createICClone(cloneId, sex, location, grex,seller);
         this.cloneIcList.add(icClone);
         return icClone;
@@ -99,4 +106,12 @@ public abstract class Label {
     public List<IVClone> getCloneIVList() {
         return new ArrayList<>(cloneIvList);
     }
+
+    public List<Clone> getAllClones(){
+        ArrayList<Clone> clones = new ArrayList<>(cloneIvList);
+        clones.addAll(cloneIcList);
+
+        return new ArrayList<>(cloneIvList);
+    }
+
 }

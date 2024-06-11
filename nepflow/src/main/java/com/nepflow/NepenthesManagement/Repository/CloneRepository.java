@@ -15,11 +15,15 @@ public interface CloneRepository extends Neo4jRepository<Clone,String> {
             "WHERE n.name STARTS WITH $text "+
             "RETURN c")
     List<Clone> findClonesByLabelAndCloneTypeAndStartsWith(String label,String cloneType,String text);
+    @Query("match(n:`:#{literal(#labelClass)}`{name: $nepenthesName})<-[r:SPECIES_OF]-(c:`:#{literal(#cloneType)}`) -[s:SOLD_BY]->(p)" +
+            "RETURN c,s,p")
+    List<Clone> findClonesByLabelAndNepenthesNameAndCloneType(String labelClass,String nepenthesName,String cloneType);
 
 
     Clone findClonesByCloneId(String cloneId);
 
     Clone findICCloneByInternalCloneId(String internalCloneId);
+
 
     boolean existsByInternalCloneId(String cloneId);
 

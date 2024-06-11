@@ -13,6 +13,12 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 @Node
 public abstract class Clone {
 
+    // usually a species or hybrid can be registered as a cultivar. For some reason, special in this Hobby, people really like to give their nepenthes nicknames instead of registering them.
+    // in order to allow both a nickname can be set.
+    @Property
+    @Getter
+    String nickname;
+
 
     @Id
     @Getter
@@ -40,6 +46,7 @@ public abstract class Clone {
     @Getter
     @Relationship("ORIGIN")
     Location location;
+
     public Clone(Sex sex, Grex grex, String cloneId,Location location){
         this.sex = sex;
         this.grex = grex;
@@ -47,6 +54,9 @@ public abstract class Clone {
         this.internalCloneId = cloneId;
         this.location = location;
     }
+
+
+
 
     public  String getCloneId() {
         return cloneId;
