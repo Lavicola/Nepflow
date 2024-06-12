@@ -3,9 +3,9 @@ package com.nepflow.NepenthesManagement.Model.Labels;
 import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
-import com.nepflow.NepenthesManagement.Model.Clones.ICNepenthesClone;
+import com.nepflow.NepenthesManagement.Model.Clones.ICSpeciesClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVNepenthesClone;
+import com.nepflow.NepenthesManagement.Model.Clones.IVSpeciesClone;
 import org.springframework.data.neo4j.core.schema.Node;
 
 import java.util.regex.Pattern;
@@ -39,12 +39,12 @@ public class Species extends Label {
 
     @Override
     public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller) {
-        return new ICNepenthesClone(sex,grex,cloneId,location,seller);
+        return new ICSpeciesClone(sex,grex,cloneId,location,seller);
     }
 
     @Override
     public IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
-        return new IVNepenthesClone(cloneId,sex,grex,location,producer);
+        return new IVSpeciesClone(cloneId,sex,grex,location,producer);
     }
 
 

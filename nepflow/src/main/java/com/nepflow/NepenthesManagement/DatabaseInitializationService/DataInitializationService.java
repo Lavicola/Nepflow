@@ -127,25 +127,24 @@ public class DataInitializationService {
                         lineParts[LOCATION_INDEX].trim(), lineParts[PRODUCER_INDEX]);
             }
 
-        }
-        // store hybrids/multi hybrids
-        Label runtime;
-        for (String line : this.getLines(HybridsTXT)) {
-            String lineParts[] = line.split(",");
-            String location = null;
-            if (lineParts.length > 3) {
-                location = lineParts[3];
-            }
-            runtime = labelRecognizerService.returnRightLabelClass(lineParts[2]);
-            if (runtime != null) {
-                runtime = this.nepenthesManagementService.createLabel(runtime);
-                this.nepenthesManagementService.saveIVClone(runtime,
-                        lineParts[1], null, null,
-                        location, lineParts[0]);
-            }
 
-        }
+            // store hybrids/multi hybrids
+            for (String line : this.getLines(HybridsTXT)) {
+                String lineParts[] = line.split(",");
+                String location = null;
+                if (lineParts.length > 3) {
+                    location = lineParts[3];
+                }
+                runtime = labelRecognizerService.returnRightLabelClass(lineParts[2]);
+                if (runtime != null) {
+                    runtime = this.nepenthesManagementService.createLabel(runtime);
+                    this.nepenthesManagementService.saveIVClone(runtime,
+                            lineParts[1], null, null,
+                            location, lineParts[0]);
+                }
 
+            }
+        }
 
     }
 

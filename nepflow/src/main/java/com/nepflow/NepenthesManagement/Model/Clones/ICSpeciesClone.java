@@ -10,14 +10,14 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
-public class ICNepenthesClone extends ICClone {
+public class ICSpeciesClone extends ICClone {
 
     @Setter
     @Relationship("ORIGIN")
     @Getter
     Location location;
 
-    public ICNepenthesClone(Sex sex, Grex grex, String cloneId, Location location,Seller seller) {
+    public ICSpeciesClone(Sex sex, Grex grex, String cloneId, Location location, Seller seller) {
         super( sex, grex,cloneId,location,seller );
     }
 

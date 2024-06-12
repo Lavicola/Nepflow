@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nepflow.NepenthesManagement.Dto.CloneGrexDTOFather;
+import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -15,54 +17,54 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * LabelDTO
+ * LabelCloneDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-12T02:26:28.390187200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class LabelDTO {
+public class LabelCloneDTO {
 
-  private String name;
+  private LabelDTO label;
 
-  private String prefix;
+  private CloneGrexDTOFather clone;
 
-  public LabelDTO name(String name) {
-    this.name = name;
+  public LabelCloneDTO label(LabelDTO label) {
+    this.label = label;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get label
+   * @return label
   */
-  
-  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("name")
-  public String getName() {
-    return name;
+  @Valid 
+  @Schema(name = "label", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("label")
+  public LabelDTO getLabel() {
+    return label;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLabel(LabelDTO label) {
+    this.label = label;
   }
 
-  public LabelDTO prefix(String prefix) {
-    this.prefix = prefix;
+  public LabelCloneDTO clone(CloneGrexDTOFather clone) {
+    this.clone = clone;
     return this;
   }
 
   /**
-   * Get prefix
-   * @return prefix
+   * Get clone
+   * @return clone
   */
-  
-  @Schema(name = "prefix", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("prefix")
-  public String getPrefix() {
-    return prefix;
+  @Valid 
+  @Schema(name = "clone", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("clone")
+  public CloneGrexDTOFather getClone() {
+    return clone;
   }
 
-  public void setPrefix(String prefix) {
-    this.prefix = prefix;
+  public void setClone(CloneGrexDTOFather clone) {
+    this.clone = clone;
   }
 
   @Override
@@ -73,22 +75,22 @@ public class LabelDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LabelDTO labelDTO = (LabelDTO) o;
-    return Objects.equals(this.name, labelDTO.name) &&
-        Objects.equals(this.prefix, labelDTO.prefix);
+    LabelCloneDTO labelCloneDTO = (LabelCloneDTO) o;
+    return Objects.equals(this.label, labelCloneDTO.label) &&
+        Objects.equals(this.clone, labelCloneDTO.clone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, prefix);
+    return Objects.hash(label, clone);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LabelDTO {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    prefix: ").append(toIndentedString(prefix)).append("\n");
+    sb.append("class LabelCloneDTO {\n");
+    sb.append("    label: ").append(toIndentedString(label)).append("\n");
+    sb.append("    clone: ").append(toIndentedString(clone)).append("\n");
     sb.append("}");
     return sb.toString();
   }

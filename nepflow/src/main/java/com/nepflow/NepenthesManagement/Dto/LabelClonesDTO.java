@@ -23,13 +23,13 @@ import jakarta.annotation.Generated;
  * LabelClonesDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-11T01:56:15.806697200+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-12T02:26:28.390187200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class LabelClonesDTO {
 
   private LabelDTO label;
 
   @Valid
-  private List<@Valid LabelClonesDTOClonesInner> clones;
+  private List<LabelClonesDTOClonesInner> clones = new ArrayList<>();
 
   public LabelClonesDTO label(LabelDTO label) {
     this.label = label;
@@ -51,7 +51,7 @@ public class LabelClonesDTO {
     this.label = label;
   }
 
-  public LabelClonesDTO clones(List<@Valid LabelClonesDTOClonesInner> clones) {
+  public LabelClonesDTO clones(List<LabelClonesDTOClonesInner> clones) {
     this.clones = clones;
     return this;
   }
@@ -71,11 +71,11 @@ public class LabelClonesDTO {
   @Valid 
   @Schema(name = "clones", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clones")
-  public List<@Valid LabelClonesDTOClonesInner> getClones() {
+  public List<LabelClonesDTOClonesInner> getClones() {
     return clones;
   }
 
-  public void setClones(List<@Valid LabelClonesDTOClonesInner> clones) {
+  public void setClones(List<LabelClonesDTOClonesInner> clones) {
     this.clones = clones;
   }
 

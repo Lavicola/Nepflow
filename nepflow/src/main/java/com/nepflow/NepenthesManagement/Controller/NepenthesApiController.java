@@ -1,7 +1,10 @@
 package com.nepflow.NepenthesManagement.Controller;
 
+import com.nepflow.NepenthesManagement.Dto.CloneType;
+import com.nepflow.NepenthesManagement.Dto.LabelCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.LabelClonesDTO;
 import com.nepflow.NepenthesManagement.Dto.LabelDTO;
+import com.nepflow.NepenthesManagement.Dto.NepenthesType;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +29,19 @@ import java.util.Map;
 import java.util.Optional;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-11T01:56:15.806697200+02:00[Europe/Berlin]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-12T02:15:56.817365600+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Controller
 @RequestMapping("${openapi.nepflowNepenthes.base-path:/api}")
-public class PrimaryHybridApiController implements PrimaryHybridApi {
+public class NepenthesApiController implements NepenthesApi {
 
-    private final PrimaryHybridApiDelegate delegate;
+    private final NepenthesApiDelegate delegate;
 
-    public PrimaryHybridApiController(@Autowired(required = false) PrimaryHybridApiDelegate delegate) {
-        this.delegate = Optional.ofNullable(delegate).orElse(new PrimaryHybridApiDelegate() {});
+    public NepenthesApiController(@Autowired(required = false) NepenthesApiDelegate delegate) {
+        this.delegate = Optional.ofNullable(delegate).orElse(new NepenthesApiDelegate() {});
     }
 
     @Override
-    public PrimaryHybridApiDelegate getDelegate() {
+    public NepenthesApiDelegate getDelegate() {
         return delegate;
     }
 

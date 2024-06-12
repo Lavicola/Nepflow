@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.4'
-	id "org.openapi.generator" version "7.0.1"
+	id "org.openapi.generator" version "7.6.0"
 
 }
 
@@ -58,6 +58,8 @@ task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.
 	generatorName.set("spring")
 	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
 	def openapi_spec = openapiSpecFile.absolutePath
+
+
 	configOptions.set([
 			delegatePattern           : "true",
 			useJakartaEe			  : "true",
@@ -70,6 +72,7 @@ task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.
 			generateModels            : "false",
 			useTags					  : "true",
 			modelPackage              : "com.nepflow.NepenthesManagement.Dto",
+
 	])
 	typeMappings = ['string+date-time': 'LocalDateTime']
 	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',

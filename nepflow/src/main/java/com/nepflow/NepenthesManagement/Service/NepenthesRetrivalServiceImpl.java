@@ -31,6 +31,8 @@ public class NepenthesRetrivalServiceImpl implements NepenthesRetrivalService {
         return this.cloneRepository.findClonesByLabelAndCloneTypeAndStartsWith(labelName,cloneTypeClass,startsWith);
     }
 
+
+
     @Override
     public Label getLabelWithClonesByLabelClassAndNepenthesNameAndCloneType(String labelClass, String nepenthesName, String cloneType) {
         return this.labelRepository.findLabelClonesByLabelAndNepenthesNameAndCloneType(labelClass,nepenthesName,cloneType);

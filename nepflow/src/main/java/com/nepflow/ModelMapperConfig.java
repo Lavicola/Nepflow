@@ -1,7 +1,7 @@
 package com.nepflow;
 
 import com.nepflow.NepenthesManagement.Dto.CloneDTO;
-import com.nepflow.NepenthesManagement.Model.Clones.IVNepenthesClone;
+import com.nepflow.NepenthesManagement.Model.Clones.IVSpeciesClone;
 import com.nepflow.UserManagement.Dto.UserDTO;
 import com.nepflow.UserManagement.Model.User;
 import org.modelmapper.ModelMapper;
@@ -19,7 +19,7 @@ public class ModelMapperConfig {
         ModelMapper modelMapper = new ModelMapper();
 
 
-        modelMapper.addMappings(new PropertyMap<IVNepenthesClone, CloneDTO>() {
+        modelMapper.addMappings(new PropertyMap<IVSpeciesClone, CloneDTO>() {
             @Override
             protected void configure() {
                 map().setProducer(source.getProducer().getName());

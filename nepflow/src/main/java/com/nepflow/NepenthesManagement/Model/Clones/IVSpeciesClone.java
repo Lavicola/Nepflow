@@ -7,9 +7,9 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
-public class IVNepenthesClone extends IVClone {
+public class IVSpeciesClone extends IVClone {
 
-    public IVNepenthesClone( String cloneId, Sex sex, Grex grex,Location location, Producer producer) {
+    public IVSpeciesClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
         super( cloneId, sex, grex,location,producer);
     }
 
