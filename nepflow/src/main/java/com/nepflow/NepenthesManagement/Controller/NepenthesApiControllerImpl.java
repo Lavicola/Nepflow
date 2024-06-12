@@ -107,9 +107,11 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate{
 
 
     public LabelClonesDTO labelToLabelClonesDTO(Label label) {
+        if(label == null){
+            return new LabelClonesDTO();
+        }
 
         LabelClonesDTO labelClonesDTO = new LabelClonesDTO();
-
         labelClonesDTO.setLabel(this.modelMapper.map(label, LabelDTO.class));
         List<CloneDTO> cloneDTOS = this.convertToCloneDTO(label);
         List<LabelClonesDTOClonesInner> inners = cloneDTOS.stream()
@@ -122,9 +124,9 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate{
 
     }
     public List<CloneDTO> convertToCloneDTO(Label label) {
+
+
         List<CloneDTO> cloneDTOS = new ArrayList<>();
-
-
         label.getCloneIcList().forEach(clone -> {
             CloneDTO cloneDTO = this.modelMapper.map(clone, CloneDTO.class);
             cloneDTOS.add(cloneDTO);

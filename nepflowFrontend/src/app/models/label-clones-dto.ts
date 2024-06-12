@@ -2,8 +2,8 @@
 /* eslint-disable */
 import { CloneDto } from '../models/clone-dto';
 import { HybridCloneDto } from '../models/hybrid-clone-dto';
-export interface CloneGrexDto {
-  cloneId?: string;
-  father?: (CloneDto | HybridCloneDto);
-  mother?: (CloneDto | HybridCloneDto);
+import { LabelDto } from '../models/label-dto';
+export interface LabelClonesDto {
+  clones?: Array<(CloneDto | HybridCloneDto)>;
+  label?: LabelDto;
 }

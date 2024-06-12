@@ -1,0 +1,23 @@
+<app-nepenthes-dropdown></app-nepenthes-dropdown>
+<mat-button-toggle-group
+  name="fontStyle"
+  aria-label="Font Style"
+  appearance="standard">
+  <mat-button-toggle (change)="nepenthesService.switchToIv();resetDropdownContentAndFetch()">IV</mat-button-toggle>
+  <mat-button-toggle (change)="nepenthesService.switchToIc();resetDropdownContentAndFetch()">IC</mat-button-toggle>
+</mat-button-toggle-group>
+
+<mat-form-field class="example-full-width">
+  <mat-label>Clone</mat-label>
+  <input matInput
+         type="text"
+         [formControl]="cloneControl"
+         [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let clone of filteredOptions | async"
+                [value]="clone.internalcloneId"
+                (click)="setInternalCloneId($event, clone.internalcloneId)">
+      {{ clone.internalcloneId }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
