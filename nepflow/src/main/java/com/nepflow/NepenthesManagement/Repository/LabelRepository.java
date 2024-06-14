@@ -16,13 +16,18 @@ public interface LabelRepository extends Neo4jRepository<Label,String> {
     @Query("MATCH (n:`:#{literal(#label)}`) RETURN count(n)")
     int countLabelByLabelClass(String label);
 
-    @Query("match(n:`:#{literal(#labelClass)}`{name: $nepenthesName})<-[r:SPECIES_OF]-(c:`:#{literal(#cloneType)}`) -[s:SOLD_BY]->(p)" +
+    @Query("match(n:`:#{literal(#labelClass)}`{name: $nepenthesName})" +
+            "<-[r:SPECIES_OF]-(c:`:#{literal(#cloneType)}`) " +
+            "-[s:SOLD_BY]->(p)" +
+            "Optional Match( (clone)-[sexRel:HAS_SEX]->(sex))"+
             "RETURN n, " +
             "COLLECT(r) as relationships, " +
             "COLLECT(c) as clones," +
             "Collect(s) as sold," +
-            "COLLECT(p) as producer\n")
-   Label findLabelClonesByLabelAndNepenthesNameAndCloneType(String labelClass,String nepenthesName,String cloneType);
+            "COLLECT(p) as producer," +
+            "COLLECT(sexRel) as sexRel," +
+            "COLLECT(sex) as sex")
+    Label findLabelClonesByLabelAndNepenthesNameAndCloneType(String labelClass,String nepenthesName,String cloneType,String sellerType);
 
     @Query("MATCH (n:`:#{literal(#labelClass)}`) RETURN n")
     List<Label> getNepenthesByNepenthesType(String labelClass);

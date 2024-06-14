@@ -1,5 +1,7 @@
 package com.nepflow.NepenthesManagement.Service;
 
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.PrivateSeller;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
@@ -35,7 +37,11 @@ public class NepenthesRetrivalServiceImpl implements NepenthesRetrivalService {
 
     @Override
     public Label getLabelWithClonesByLabelClassAndNepenthesNameAndCloneType(String labelClass, String nepenthesName, String cloneType) {
-        return this.labelRepository.findLabelClonesByLabelAndNepenthesNameAndCloneType(labelClass,nepenthesName,cloneType);
+        if(cloneType.contains("IV")){
+            return this.labelRepository.findLabelClonesByLabelAndNepenthesNameAndCloneType(labelClass,nepenthesName,cloneType, Producer.class.getSimpleName());
+        }else{
+            return this.labelRepository.findLabelClonesByLabelAndNepenthesNameAndCloneType(labelClass,nepenthesName,cloneType, PrivateSeller.class.getSimpleName());
+        }
     }
 
     @Override

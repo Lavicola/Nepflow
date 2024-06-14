@@ -35,9 +35,13 @@ public class UsermanagementControllerImpl implements UsermanagementApiDelegate {
 
     public ResponseEntity<UserDTO> userGet() {
         String id = this.authenticationService.getOauthId();
-        User user = this.userManagementService.getUserByOAuthId(id);
-        if (user == null) {
+        if (id == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        User user = this.userManagementService.getUserByOAuthId(id);
+        if(user == null){
+            return ResponseEntity.ok(new UserDTO());
+
         }
         return ResponseEntity.ok(this.modelMapper.map(user, UserDTO.class));
 
