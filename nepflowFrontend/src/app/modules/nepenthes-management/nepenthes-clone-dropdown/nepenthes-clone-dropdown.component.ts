@@ -1,15 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {CloneDto} from "../../../models/clone-dto";
-import {HybridCloneDto} from "../../../models/hybrid-clone-dto";
+import {CloneDto} from "../models/clone-dto";
+import {HybridCloneDto} from "../models/hybrid-clone-dto";
 import {defer, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {NepenthesDropdownSharedLabelService} from "../Services/NepenthesDropdownSharedLabelService";
 import {NepenthesRequestWrapper} from "../Services/NepenthesRequestWrapper";
 import {SharedNepenthesRequestWrapper} from "../Services/SharedNepenthesRequestWrapper";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
-import {LabelClonesDto} from "../../../models/label-clones-dto";
 import {map} from "rxjs/operators";
-import { LabelDto } from '../../../models/label-dto';
+import { LabelDto } from '../models/label-dto';
+import { LabelClonesDto } from '../models/label-clones-dto';
+import {ProducerDto} from "../models/producer-dto";
+import {LabelCloneDto} from "../models/label-clone-dto";
 
 @Component({
   selector: 'app-nepenthes-clone-dropdown',
@@ -19,20 +21,21 @@ import { LabelDto } from '../../../models/label-dto';
 export class NepenthesCloneDropdownComponent implements OnInit {
 
 
+  readonly sexes:string[] = ["","Female","Male"]
   nepenthesService!: NepenthesRequestWrapper;
   selectedLabel: LabelDto = {};
-  selectedClone: string = "";
 
   existingClonesList: Array<CloneDto | HybridCloneDto> = []
   filteredOptions!: Observable<CloneDto[]>;
 
-  cloneControl: FormControl = new FormControl("");
+  cloneId: FormControl = new FormControl("");
+  sexControl: FormControl = new FormControl("");
+  producerControl: FormControl = new FormControl("");
 
 
   constructor(private sharedLabelService: NepenthesDropdownSharedLabelService,
               private nepenthesSharedService: SharedNepenthesRequestWrapper,
   ) {
-
 
   }
 
@@ -55,7 +58,7 @@ export class NepenthesCloneDropdownComponent implements OnInit {
         }
       }
     )
-    this.filteredOptions = this.cloneControl.valueChanges.pipe(
+    this.filteredOptions = this.cloneId.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
@@ -64,11 +67,12 @@ export class NepenthesCloneDropdownComponent implements OnInit {
   }
 
   fetchClones(nepenthesName: string): void {
-    this.cloneControl.setValue("")
+    this.cloneId.setValue("")
     this.nepenthesService.cloneNepenthesTypeCloneTypeNameGet(nepenthesName).subscribe({
       next: (labelClonesDto: LabelClonesDto) => {
         if (labelClonesDto && labelClonesDto.clones) {
           this.existingClonesList = labelClonesDto.clones;
+
         }
       },
       error: (error) => console.log(error)
@@ -88,22 +92,38 @@ export class NepenthesCloneDropdownComponent implements OnInit {
   }
 
 
-  protected setInternalCloneId($event: MouseEvent, internalCloneId: string | undefined) {
-    if (internalCloneId == undefined) {
+  protected setInternalCloneId($event: MouseEvent, clone: CloneDto | undefined) {
+    if (clone == undefined) {
       return
     }
-    this.selectedClone = internalCloneId;
+    this.sexControl.setValue(clone?.sex)
+    this.producerControl.setValue(clone.producer)
 
   }
 
-
   protected resetDropdownContentAndFetch() {
+    this.createClone()
     this.existingClonesList = []
-    this.cloneControl.setValue("")
+    this.cloneId.setValue("")
     if(this.selectedLabel && this.selectedLabel.name){
       this.fetchClones(this.selectedLabel.name)
     }
   }
 
+  public createClone(){{
+    let clone:LabelCloneDto = {
+      label: this.selectedLabel,
+      clone: {
+        cloneId: this.cloneId.value,
+        sex: this.sexControl.value,
+        producer: this.producerControl.value
+      }
+    }
+    console.log(clone)
+    }
+  }
 
+  test() {
+    this.createClone()
+  }
 }

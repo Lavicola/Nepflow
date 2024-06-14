@@ -5,7 +5,7 @@ import {Observable, startWith} from "rxjs";
 import {map} from "rxjs/operators";
 import {NepenthesDropdownSharedLabelService} from "../Services/NepenthesDropdownSharedLabelService";
 import {SharedNepenthesRequestWrapper} from "../Services/SharedNepenthesRequestWrapper";
-import { LabelDto } from '../../../models/label-dto';
+import { LabelDto } from '../models/label-dto';
 
 @Component({
   selector: 'app-nepenthes-dropdown',
@@ -21,6 +21,7 @@ export class NepenthesDropdownComponent implements OnInit {
 
   nepenthesControl: FormControl = new FormControl("");
   selectedButton: any;
+  plantSelected: boolean = false;
 
   constructor(nepenthesService: NepenthesRequestWrapper,
               private injector: Injector,
@@ -63,9 +64,13 @@ export class NepenthesDropdownComponent implements OnInit {
 
 
   selectedNepenthes($event: MouseEvent, selectedLabel: LabelDto | undefined) {
+    console.log("call")
     if (selectedLabel != undefined) {
       this.selectedLabel = selectedLabel
+      this.plantSelected = true
       this.sharedLabelService.setSelectedValue(this.selectedLabel)
+    }else{
+      this.plantSelected=false;
     }
   }
 
@@ -75,4 +80,12 @@ export class NepenthesDropdownComponent implements OnInit {
 
   }
 
+  test() {
+
+  }
+
+  clearSelection() {
+    this.plantSelected = false;
+    this.nepenthesControl.setValue("")
+  }
 }

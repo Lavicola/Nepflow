@@ -9,10 +9,10 @@
     <mat-button-toggle (change)="nepenthesService.switchToPrimaryHybrid();resetDropdownContent()">Primary Hybrid</mat-button-toggle>
     <mat-button-toggle (change)="nepenthesService.switchToMultiHybrid();resetDropdownContent()">MultiHybride</mat-button-toggle>
   </mat-button-toggle-group>
-
+<br>
   <mat-form-field class="example-full-width">
     <mat-label>Nepenthes</mat-label>
-    <input matInput
+    <input matInput [readonly]="plantSelected"
            type="text"
            [formControl]="nepenthesControl"
            [matAutocomplete]="auto">
@@ -24,4 +24,7 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
+  <button *ngIf=plantSelected mat-icon-button matSuffix aria-label="Clear" (click)="clearSelection()">
+    <mat-icon>clear</mat-icon>
+  </button>
 </div>

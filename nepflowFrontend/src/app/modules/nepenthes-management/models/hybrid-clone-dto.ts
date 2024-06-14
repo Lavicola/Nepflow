@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { CloneDto } from '../models/clone-dto';
+import { CloneDto } from './clone-dto';
 export type HybridCloneDto = CloneDto & {
 'fatherName'?: string;
 'motherName'?: string;

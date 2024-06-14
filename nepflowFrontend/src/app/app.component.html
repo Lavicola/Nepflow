@@ -8,10 +8,19 @@
   <a mat-button [routerLink]="nepenthesAdd">Add Plant</a>
   <a mat-button [routerLink]="hybridAdd">Add Hybrid</a>
 
+  <div *ngIf="isLoggedIn; else loggedOut">
+    Welcome back, friend.
+  </div>
+
+  <ng-template #loggedOut>
+    <button mat-raised-button color="primary" (click)="authService.login()" id="login">Login</button>
+  </ng-template>
+
+
 </mat-toolbar>
 
 
-
 <div class="container">
+
   <router-outlet></router-outlet>
 </div>

@@ -1,0 +1,8 @@
+<app-nepenthes-clone-dropdown></app-nepenthes-clone-dropdown>
+<br>
+<mat-form-field [formGroup]="formGroup">
+  <mat-label>localName</mat-label>
+  <input matInput formControlName="localName"
+         type="text">
+</mat-form-field>
+<input type="file" #filePicker (change)="onFilePicked($event)">

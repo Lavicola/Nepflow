@@ -3,8 +3,8 @@
 import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
+import { NepenthesService } from './modules/nepenthes-management/services/nepenthes.service';
 
-import { NepenthesService } from './services/nepenthes.service';
 
 /**
  * Module that provides all services and configuration.

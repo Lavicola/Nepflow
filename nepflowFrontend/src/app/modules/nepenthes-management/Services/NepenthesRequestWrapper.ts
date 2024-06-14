@@ -1,13 +1,13 @@
 import {Observable} from "rxjs";
-import {LabelClonesDto} from "../../../models/label-clones-dto";
-import {LabelCloneDto} from "../../../models/label-clone-dto";
-import {CloneDto} from "../../../models/clone-dto";
-import {HybridCloneDto} from "../../../models/hybrid-clone-dto";
+import {LabelClonesDto} from "../models/label-clones-dto";
+import {LabelCloneDto} from "../models/label-clone-dto";
+import {CloneDto} from "../models/clone-dto";
+import {HybridCloneDto} from "../models/hybrid-clone-dto";
 import {Injectable} from "@angular/core";
-import {NepenthesType} from "../../../models/nepenthes-type";
-import {CloneType} from "../../../models/clone-type";
-import {NepenthesService} from "../../../services/nepenthes.service";
-import { LabelDto } from "../../../models/label-dto";
+import {NepenthesType} from "../models/nepenthes-type";
+import {CloneType} from "../models/clone-type";
+import {NepenthesService} from "../services/nepenthes.service";
+import { LabelDto } from "../models/label-dto";
 
 
 /**

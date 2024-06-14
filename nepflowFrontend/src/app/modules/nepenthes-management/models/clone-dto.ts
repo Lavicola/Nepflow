@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
-import { CloneGrexDto } from '../models/clone-grex-dto';
-import { LocationDto } from '../models/location-dto';
-import { ProducerDto } from '../models/producer-dto';
+import { CloneGrexDto } from './clone-grex-dto';
+import { LocationDto } from './location-dto';
+import { ProducerDto } from './producer-dto';
 export interface CloneDto {
   Location?: LocationDto;
   cloneId?: string;

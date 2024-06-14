@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
+import { BaseService } from '../../../base-service';
+import { ApiConfiguration } from '../../../api-configuration';
+import { StrictHttpResponse } from '../../../strict-http-response';
 
 import { cloneNepenthesTypeCloneTypeNameGet } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';
 import { CloneNepenthesTypeCloneTypeNameGet$Params } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';

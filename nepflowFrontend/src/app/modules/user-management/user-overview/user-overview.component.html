@@ -1,0 +1,26 @@
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)">
+  <div>
+    <mat-form-field>
+      <mat-label>Username:</mat-label>
+      <input matInput formControlName="username">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field>
+      <mat-label>Contact Information:</mat-label>
+      <input matInput formControlName="contactInformation">
+    </mat-form-field>
+  </div>
+
+
+  <mat-form-field>
+    <mat-select placeholder="Select Country" formControlName="country">
+      <mat-option *ngFor="let country of countries" [value]="country">
+        {{ country }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="primary">Submit</button>
+</form>

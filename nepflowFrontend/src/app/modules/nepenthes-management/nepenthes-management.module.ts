@@ -9,6 +9,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import { NepenthesDropdownComponent } from './nepenthes-dropdown/nepenthes-dropdown.component';
 import { NepenthesCloneDropdownComponent } from './nepenthes-clone-dropdown/nepenthes-clone-dropdown.component';
+import {MatSelect} from "@angular/material/select";
+import {MatIcon} from "@angular/material/icon";
 
 
 @NgModule({
@@ -17,22 +19,25 @@ import { NepenthesCloneDropdownComponent } from './nepenthes-clone-dropdown/nepe
          NepenthesDropdownComponent,
          NepenthesCloneDropdownComponent
   ],
-    exports: [
-    ],
-    imports: [
-        CommonModule,
-        NepenthesManagementRoutingModule,
-        MatAutocompleteTrigger,
-        ReactiveFormsModule,
-        MatAutocomplete,
-        MatOption,
-        MatLabel,
-        MatFormField,
-        MatInputModule,
-        MatButtonToggleGroup,
-        MatButtonToggle,
-        FormsModule
+  exports: [
+    NepenthesCloneDropdownComponent
+  ],
+  imports: [
+    CommonModule,
+    NepenthesManagementRoutingModule,
+    MatAutocompleteTrigger,
+    ReactiveFormsModule,
+    MatAutocomplete,
+    MatOption,
+    MatLabel,
+    MatFormField,
+    MatInputModule,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    FormsModule,
+    MatSelect,
+    MatIcon
 
-    ]
+  ]
 })
 export class NepenthesManagementModule { }

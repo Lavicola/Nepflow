@@ -13,7 +13,7 @@ info:
 servers:
   - url: http://localhost:4200/api
 paths:
-  /user/nepenthes:
+  /growlist/nepenthes:
     get:
       summary: get all nepenthes of currently logged in User
       tags:
@@ -24,9 +24,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserCloneDTO'
+                $ref: '#/components/schemas/GrowlistDTO'
         '404':
           description: User not found
     post:
@@ -37,18 +35,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCloneDTO'
+              $ref: '#/components/schemas/CloneDTO'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserCloneDTO'
+                $ref: '#/components/schemas/CloneDTO'
         '500':
           description: Error, could not add Specimen to user
 
-  /user/nepenthes/{specimenId}:
+  /growlist/nepenthes/{specimenId}:
     delete:
       parameters:
         - in: path
@@ -79,18 +77,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserCloneDTO'
+              $ref: '#/components/schemas/CloneDTO'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserCloneDTO'
+                $ref: '#/components/schemas/CloneDTO'
         '500':
           description: Could not update Specimen
 
-  /{user}/nepenthes:
+  /growlist/{user}/nepenthes:
     get:
       summary: get Nepenthes of a specific User
       tags:
@@ -107,9 +105,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserCloneDTO'
+                $ref: '#/components/schemas/GrowlistDTO'
 
         '404':
           description: Error, User not found
@@ -117,19 +113,75 @@ paths:
 
 
 components:
+
+
+
   schemas:
-    UserCloneDTO:
+
+    LocationDTO:
+      type: string
+
+    ProducerDTO:
+      type: string
+
+    LabelDTO:
       type: object
       properties:
-        specimenId:
+        name:
           type: string
-          format: uuid
-        labelName:
+        prefix:
           type: string
-        internalCloneId:
-          type: string
+
+
+    CloneDTO:
+      type: object
+      properties:
         cloneId:
           type: string
+        internalcloneId:
+          type: string
+        sex:
+          type: string
+        localName:
+          description: localName allows user to set a name, to distinguish easier same clones
+          type: string
+        imageURL:
+          type: string
+        grex:
+          $ref: '#/components/schemas/CloneGrexDTO'
+        producer:
+          $ref: '#/components/schemas/ProducerDTO'
+        Location:
+          $ref: '#/components/schemas/LocationDTO'
+
+
+
+    CloneGrexDTO:
+      type: object
+      properties:
+        cloneId:
+          type: string
+        father:
+          $ref: '#/components/schemas/CloneDTO'
+        mother:
+          $ref: '#/components/schemas/CloneDTO'
+
+
+
+    GrowlistDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        specimens:
+          type: array
+          items:
+            $ref: '#/components/schemas/CloneDTO'
+
+
+
 
 
 

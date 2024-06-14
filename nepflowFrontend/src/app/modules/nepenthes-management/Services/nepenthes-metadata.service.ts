@@ -5,16 +5,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { BaseService } from '../base-service';
-import { ApiConfiguration } from '../api-configuration';
-import { StrictHttpResponse } from '../strict-http-response';
+import { BaseService } from '../../../base-service';
+import { ApiConfiguration } from '../../../api-configuration';
+import { StrictHttpResponse } from '../../../strict-http-response';
 
 import { LocationDto } from '../models/location-dto';
-import { locationPost } from '../fn/nepenthes-metadata/location-post';
-import { LocationPost$Params } from '../fn/nepenthes-metadata/location-post';
+import { locationPost } from '../../../fn/nepenthes-metadata/location-post';
+import { LocationPost$Params } from '../../../fn/nepenthes-metadata/location-post';
 import { ProducerDto } from '../models/producer-dto';
-import { producerPost } from '../fn/nepenthes-metadata/producer-post';
-import { ProducerPost$Params } from '../fn/nepenthes-metadata/producer-post';
+import { producerPost } from '../../../fn/nepenthes-metadata/producer-post';
+import { ProducerPost$Params } from '../../../fn/nepenthes-metadata/producer-post';
 
 @Injectable({ providedIn: 'root' })
 export class NepenthesMetadataService extends BaseService {

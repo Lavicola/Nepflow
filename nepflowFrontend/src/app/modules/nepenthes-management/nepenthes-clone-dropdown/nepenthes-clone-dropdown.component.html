@@ -6,18 +6,31 @@
   <mat-button-toggle (change)="nepenthesService.switchToIv();resetDropdownContentAndFetch()">IV</mat-button-toggle>
   <mat-button-toggle (change)="nepenthesService.switchToIc();resetDropdownContentAndFetch()">IC</mat-button-toggle>
 </mat-button-toggle-group>
-
+<br>
 <mat-form-field class="example-full-width">
   <mat-label>Clone</mat-label>
   <input matInput
          type="text"
-         [formControl]="cloneControl"
+         [formControl]="cloneId"
          [matAutocomplete]="auto">
   <mat-autocomplete #auto="matAutocomplete">
     <mat-option *ngFor="let clone of filteredOptions | async"
                 [value]="clone.internalcloneId"
-                (click)="setInternalCloneId($event, clone.internalcloneId)">
+                (click)="setInternalCloneId($event, clone)">
       {{ clone.internalcloneId }}
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
+  <mat-form-field>
+    <mat-label>Sex</mat-label>
+    <mat-select  [formControl]="sexControl" placeholder="Sex">
+      <mat-option *ngFor="let sex of sexes" [value]="sex">{{ sex }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<mat-form-field>
+  <mat-label>Producer</mat-label>
+  <input matInput  [formControl]="producerControl" type="text">
+</mat-form-field>
+
+<mat-button-toggle (change)="test()">MultiHybride</mat-button-toggle>

@@ -1,9 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {authGuardAuthenticated} from "./guards/authGuardAuthenticated";
+import {firstStepGuard} from "./guards/first-step.guard";
 
 const routes: Routes = [
-  { path: 'nepenthes', loadChildren: () => import('./modules/nepenthes-management/nepenthes-management.module').then(m => m.NepenthesManagementModule) },
-  //{ path: 'growlist', loadChildren: () => import('./modules/growlist-management/growlist-management.module').then(m => m.GrowlistManagementModule) },
+
+
+  { path: '',
+    redirectTo: '/user/first-steps',
+    pathMatch: 'full' }, // Redirect empty path to /user
+  { path: 'nepenthes',
+    loadChildren: () => import('./modules/nepenthes-management/nepenthes-management.module').then(m => m.NepenthesManagementModule) ,
+  //  canActivate: [authGuardAuthenticated,firstStepGuard]
+
+  },
+  { path: 'growlist', loadChildren: () => import('./modules/growlist-management/growlist-management.module').then(m => m.GrowlistManagementModule) },
+  { path: 'user', loadChildren: () => import('./modules/user-management/user-management.module').then(m => m.UserManagementModule) },
 
 
 
