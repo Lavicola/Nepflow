@@ -1,5 +1,9 @@
 package com.nepflow.NepenthesManagement;
 
+/**
+ * This Class provides well named static Members with valid formats
+ */
+
 public class LabelFormats {
 
     public static String nep1 = "villosa";

@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
 public class ICMultiHybrid extends ICClone {
-    public ICMultiHybrid(Sex sex, Grex grex, String cloneId, Location location, Seller seller) {
-        super(sex, grex, cloneId,location,seller);
+    public ICMultiHybrid(Sex sex, String cloneId, Location location, Seller seller) {
+        super(sex, cloneId,location,seller);
     }
 }

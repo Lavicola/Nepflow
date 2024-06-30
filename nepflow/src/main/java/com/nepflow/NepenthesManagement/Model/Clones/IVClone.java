@@ -1,10 +1,14 @@
 package com.nepflow.NepenthesManagement.Model.Clones;
 
+import com.nepflow.NepenthesManagement.Exception.ProducerIsNullException;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
@@ -15,13 +19,16 @@ public abstract class IVClone extends Clone {
     @Getter
     Producer producer;
 
-    public IVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
-        super(sex, grex,cloneId,location );
-        assert producer != null : "IV Clone where Producer is null makes no sense";
-        assert !cloneId.equals(""): "iV Clone must have an ID";
-        if(sex != null){
-            this.internalCloneId = IVClone.generateInternalCloneId(cloneId,sex);
+
+    public IVClone(String cloneId, Sex sex, Location location, Producer producer) {
+        super(sex,cloneId,location );
+        if(producer == null){
+            throw new ProducerIsNullException(cloneId);
         }
+        if(cloneId.equals("") || cloneId == null){
+            throw new ProducerIsNullException(cloneId);
+        }
+        this.internalCloneId = IVClone.generateInternalCloneId(cloneId,sex);
         this.producer = producer;
 
     }

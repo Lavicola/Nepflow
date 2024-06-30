@@ -1,6 +1,7 @@
 package com.nepflow.GrowlistManagement.Model;
 
 import com.nepflow.UserManagement.Model.User;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
@@ -20,6 +21,9 @@ public class Growlist {
     User user;
     @Relationship(value = "CONTAINS_SPECIMEN")
     List<Specimen> spezimenList;
+
+    @Version
+    private Long version;
 
 
     public Growlist(User user) {

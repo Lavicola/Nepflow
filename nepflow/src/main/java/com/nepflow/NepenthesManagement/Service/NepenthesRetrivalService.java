@@ -10,6 +10,7 @@ public interface NepenthesRetrivalService {
 
     Clone getCloneByInternalId(String internalCloneId);
 
+
     List<Clone> getClonesByLabelAndCloneTypeAndStartsWith(String labelName,String cloneTypeClass,String startsWith);
 
 

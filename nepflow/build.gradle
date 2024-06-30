@@ -27,7 +27,8 @@ repositories {
 dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+	implementation group: 'org.springframework.data', name: 'spring-data-neo4j', version: '7.3.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'com.okta.spring', name: 'okta-spring-boot-starter', version: '3.0.6'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: '2.2.0'
@@ -74,14 +75,22 @@ task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.
 			modelPackage              : "com.nepflow.NepenthesManagement.Dto",
 
 	])
-	typeMappings = ['string+date-time': 'LocalDateTime']
-	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
-					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
-	]
 	inputSpec.set(openapi_spec)
 	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
 	apiPackage.set("com.nepflow.NepenthesManagement.Controller")
 	invokerPackage.set("")
+
+
+	doLast {
+		println "OpenAPI Generation Completed, Deleting not needed Controller Classes"
+		def directory = file("${projectDir}/src/main/java/com/nepflow/NepenthesManagement/Controller")
+		def pattern = '*Growlist*' // Adjust this pattern as needed to match your controller classes
+		def filesToDelete = fileTree(dir: directory, include: pattern)
+		filesToDelete.each { File file ->
+			delete file
+		}
+
+	}
 
 }
 
@@ -115,8 +124,10 @@ task generateOpenAPIUserManagement(type: org.openapitools.generator.gradle.plugi
 }
 
 task generateOpenAPIGrowlistManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	doNotTrackState("")
+
 	generatorName.set("spring")
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/GrowlistManagement/openAPI/GrowlistManagementOpenAPI.yaml")
+	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
 	def openapi_spec = openapiSpecFile.absolutePath
 	configOptions.set([
 			delegatePattern           : "true",
@@ -131,16 +142,34 @@ task generateOpenAPIGrowlistManagement(type: org.openapitools.generator.gradle.p
 			useTags					  : "true",
 			modelPackage              : "com.nepflow.GrowlistManagement.Dto",
 	])
-	typeMappings = ['string+date-time': 'LocalDateTime']
-	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
-					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
-	]
+
 	inputSpec.set(openapi_spec)
 	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
 	apiPackage.set("com.nepflow.GrowlistManagement.Controller")
 	invokerPackage.set("")
 
+	//importMappings.set([
+	//		'LabelCloneDTO': 'com.nepflow.NepenthesManagement.Dto.LabelCloneDTO',
+	//		'CloneType': 'com.nepflow.NepenthesManagement.Dto.CloneType',
+	//		'NepenthesType': 'com.nepflow.NepenthesManagement.Dto.NepenthesType',
+	//])
+
+
+	doLast {
+		println "OpenAPI Generation Completed, Deleting not needed Controller Classes"
+		def directory = file("${projectDir}/src/main/java/com/nepflow/GrowlistManagement/Controller")
+		def pattern = '*Nepenthes*' // Adjust this pattern as needed to match your controller classes
+		def filesToDelete = fileTree(dir: directory, include: pattern)
+		filesToDelete.each { File file ->
+			delete file
+		}
+
+	}
+
 }
+
+
+
 
 
 tasks.named('test') {

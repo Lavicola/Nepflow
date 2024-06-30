@@ -147,8 +147,93 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LabelCloneDTO'
+  /growlist/clone/add/{internalCloneId}:
+    parameters:
+      - $ref: "#/components/parameters/internalCloneId"
+    post:
+      summary: Add an existing Clone of a Nepenthes to the Growlist.
+      tags:
+        - Growlistmanagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecimenCloneDTO'
+        '500':
+          description: Error, could not add Specimen to user
+  /growlist/clone/create/{cloneType}:
+    parameters:
+      - $ref: "#/components/parameters/cloneType"
+    post:
+      summary: Create a new IV or IC Clone and Add it to the Growlist
+      tags:
+        - Growlistmanagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelCloneDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecimenCloneDTO'
+        '500':
+          description: Error, could not add Specimen to user
 
+  /growlist/clones/{specimenId}:
+    parameters:
+      - $ref: "#/components/parameters/specimenId"
+    delete:
+      summary: remove a clone from the growlisti If the removed plant was already used for a trade it will be a soft delete in the relation part
+      tags:
+        - Growlistmanagement
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Error, could not add Nepenthes Clone to user
+    put:
+      summary: update values
+      tags:
+        - Growlistmanagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelSpecimenDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LabelSpecimenDTO'
+        '500':
+          description: Could not update Specimen
 
+  /growlist/{username}/clones:
+    parameters:
+      - $ref: "#/components/parameters/username"
+
+    get:
+      summary: get Nepenthes of a specific User
+      tags:
+        - Growlistmanagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrowlistDTO'
+
+        '404':
+          description: Error, User not found
 
 
 
@@ -182,6 +267,20 @@ components:
       schema:
         type: string
 
+    username:
+      name: username
+      in: path
+      required: true
+      schema:
+        type: string
+
+    specimenId:
+      name: specimenId
+      in: path
+      required: true
+      schema:
+        type: string
+
 
 
   schemas:
@@ -207,42 +306,18 @@ components:
       properties:
         cloneId:
           type: string
-        internalcloneId:
+        internalCloneId:
           type: string
         sex:
           type: string
-        grex:
-          $ref: '#/components/schemas/CloneGrexDTO'
+        description:
+          type: string
+        nickname:
+          type: string
         producer:
           $ref: '#/components/schemas/ProducerDTO'
         Location:
           $ref: '#/components/schemas/LocationDTO'
-
-
-    HybridCloneDTO:
-      allOf:
-        - $ref: '#/components/schemas/CloneDTO'
-        - type: object
-          properties:
-            fatherName:
-              type: string
-            motherName:
-              type: string
-
-
-    CloneGrexDTO:
-      type: object
-      properties:
-        cloneId:
-          type: string
-        father:
-          oneOf:
-            - $ref: '#/components/schemas/CloneDTO'
-            - $ref: '#/components/schemas/HybridCloneDTO'
-        mother:
-          oneOf:
-            - $ref: '#/components/schemas/CloneDTO'
-            - $ref: '#/components/schemas/HybridCloneDTO'
 
     LabelCloneDTO:
       type: object
@@ -250,9 +325,7 @@ components:
         label:
           $ref: '#/components/schemas/LabelDTO'
         clone:
-          oneOf:
-            - $ref: '#/components/schemas/CloneDTO'
-            - $ref: '#/components/schemas/HybridCloneDTO'
+          $ref: '#/components/schemas/CloneDTO'
 
 
     LabelClonesDTO:
@@ -263,11 +336,37 @@ components:
         clones:
           type: array
           items:
-            anyOf:
-              - $ref: '#/components/schemas/CloneDTO'
-              - $ref: '#/components/schemas/HybridCloneDTO'
-    # since Spring boot open api generator does not generate allowed Values
+            $ref: '#/components/schemas/CloneDTO'
 
+    SpecimenCloneDTO:
+      allOf:
+        - $ref: '#/components/schemas/CloneDTO'
+        - type: object
+          properties:
+            specimenId:
+              type: string
+
+    LabelSpecimenDTO:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LabelDTO'
+        clone:
+          $ref: '#/components/schemas/SpecimenCloneDTO'
+
+    GrowlistDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        specimens:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelSpecimenDTO'
+
+    # since Spring boot open api generator does not generate allowed Values
     NepenthesType:
       type: string
       enum:
@@ -278,6 +377,12 @@ components:
         - species
         - multihybrid
         - primaryhybrid
+      x-enumNames:
+        - species
+        - multihybrid
+        - primaryhybrid
+
+
 
     CloneType:
       type: string
@@ -285,7 +390,9 @@ components:
         - iv
         - ic
       x-enum-varnames: *CloneType
-
+      x-enumNames:
+        - iv
+        - ic
 
 
 

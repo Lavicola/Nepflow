@@ -8,37 +8,41 @@ import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class LabelRecognizerServiceImpl implements LabelRecognizerService {
+
+    private final List<Class<? extends Label>> labelClasses = Arrays.asList(
+            MultiHybrid.class,
+            PrimaryHybrid.class,
+            Species.class
+    );
+
+
     @Override
     public Label returnRightLabelClass(String name) {
-        Label label;
-
-        // Try to instantiate Nepenthes
-        label = tryCreateLabel(MultiHybrid.class, name);
-        if (label != null) {
-            return label;
+        for (Class<? extends Label> clazz : labelClasses) {
+            Label label = tryCreateLabel(clazz, name);
+            if (label != null) {
+                return label;
+            }
         }
 
-        // Try to instantiate PrimaryHybrid
-        label = tryCreateLabel(PrimaryHybrid.class, name);
-        if (label != null) {
-            return label;
-        }
-
-        // Try to instantiate MultiHybrid
-        label = tryCreateLabel(Species.class, name);
-
-        return label; // This may be null if all attempts fail
+        // Throw an exception if no valid label class could be instantiated
+        throw new InvalidLabelFormatException("No valid label found for name: " + name);
     }
 
     private Label tryCreateLabel(Class<? extends Label> clazz, String name) {
         try {
             return clazz.getDeclaredConstructor(String.class).newInstance(name);
         } catch (InvalidLabelFormatException | NoSuchMethodException | InvocationTargetException |
-                 IllegalAccessException | InstantiationException e) {
-            return null;
+                 IllegalAccessException | InstantiationException ignored) {
+
         }
+        return null;
     }
+
+
 }

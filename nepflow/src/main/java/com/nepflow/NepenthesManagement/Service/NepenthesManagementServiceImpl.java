@@ -11,6 +11,7 @@ import com.nepflow.NepenthesManagement.Repository.LocationRepository;
 import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class NepenthesManagementServiceImpl implements NepenthesManagementService {
@@ -27,6 +28,9 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
     @Autowired
     ProducerRepository producerRepository;
 
+    @Autowired
+    LabelRecognizerService labelRecognizerService;
+
 
     @Autowired
     NepenthesManagementMetaDataService managementMetaDataService;
@@ -34,58 +38,60 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
 
     @Override
     public IVClone saveIVClone(Label label, String cloneId,
-                               String sexAsString, Grex grex,
+                               String sexAsString,
                                String locationAsString, String producerAsString) {
         IVClone newIvClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
         Producer producer = this.managementMetaDataService.getProducer(producerAsString);
+
         // only Location is allowed to be freely inserted
         Location location = this.managementMetaDataService.saveLocation(locationAsString);
         if (this.cloneRepository.existsByInternalCloneId(IVClone.generateInternalCloneId(cloneId, sex))) {
             // clone already exists
             return null;
         }
-        newIvClone = label.addIVClone(cloneId, sex, grex, location, producer);
+        newIvClone = label.addIVClone(cloneId, sex, location, producer);
         this.labelRepository.save(label);
         return newIvClone;
+
+
+
     }
 
+
+
     @Override
-    public ICClone saveICClone(Label label, String sexAsString, Grex grex,
+    //TODO at some point remove Code duplication --> helper method for common logic
+    public ICClone saveICClone(Label label, String cloneId, String sexAsString,
                                String locationAsString, String sellerAsString) {
         Location location;
         ICClone newIcClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
         Seller seller = this.managementMetaDataService.getSeller(sellerAsString);
-        // only Location is allowed to be freely inserted, but for now we dont allow Location for Multihybrids
-        if (label instanceof MultiHybrid) {
-            location = null;
-        } else {
-            location = this.managementMetaDataService.saveLocation(locationAsString);
-
-        }
-        newIcClone = label.addICClone(sex, location, grex,seller);
+        location = this.managementMetaDataService.saveLocation(locationAsString);
+        newIcClone = label.addICCloneCultivar(sex,cloneId, location,seller);
         this.labelRepository.save(label);
         return newIcClone;
     }
 
     @Override
-    //TODO at some point remove Code duplication --> helper method for common logic
-    public ICClone saveICCloneCultivar(Label label, String cloneId, String sexAsString, Grex grex, String locationAsString, String sellerAsString) {
-        Location location;
-        ICClone newIcClone;
-        Sex sex = this.managementMetaDataService.getSex(sexAsString);
-        Seller seller = this.managementMetaDataService.getSeller(sellerAsString);
-        // only Location is allowed to be freely inserted, but for now we dont allow Location for Multihybrids
-        if (label instanceof MultiHybrid) {
-            location = null;
-        } else {
-            location = this.managementMetaDataService.saveLocation(locationAsString);
-
+    public IVClone saveIVClone(String labelName, String cloneId, String sexAsString, String locationAsString, String producerAsString) {
+        Label label = this.labelRecognizerService.returnRightLabelClass(labelName);
+        if(label != null){
+            label = this.createLabel(label);
+            return this.saveIVClone(label,cloneId,sexAsString,locationAsString,producerAsString);
         }
-        newIcClone = label.addICCloneCultivar(sex,cloneId, location, grex,seller);
-        this.labelRepository.save(label);
-        return newIcClone;
+        return null;
+    }
+
+    @Override
+    public ICClone saveICClone(String labelName, String cloneId, String sexAsString, String locationAsString, String sellerAsString) {
+        Label label = this.labelRecognizerService.returnRightLabelClass(labelName);
+        if(label != null){
+            label = this.createLabel(label);
+            return this.saveICClone(label,cloneId,sexAsString,locationAsString,sellerAsString);
+        }
+        return null;
     }
 
     @Override
@@ -105,10 +111,6 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         return this.labelRepository.countLabelByLabelClass(className);
     }
 
-    @Override
-    public ICClone saveICCloneInternalLabel(Label label, String cloneId, String sexAsString, Grex grex, String locationAsString, String sellerAsString) {
-        return null;
-    }
 
 
 }

@@ -114,10 +114,10 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate{
         LabelClonesDTO labelClonesDTO = new LabelClonesDTO();
         labelClonesDTO.setLabel(this.modelMapper.map(label, LabelDTO.class));
         List<CloneDTO> cloneDTOS = this.convertToCloneDTO(label);
-        List<LabelClonesDTOClonesInner> inners = cloneDTOS.stream()
-                .map(cloneDTO -> this.modelMapper.map(cloneDTO, LabelClonesDTOClonesInner.class))
+        List<CloneDTO> clones = cloneDTOS.stream()
+                .map(cloneDTO -> this.modelMapper.map(cloneDTO, CloneDTO.class))
                 .collect(Collectors.toList());
-        labelClonesDTO.setClones(inners);
+        labelClonesDTO.setClones(clones);
 
         return labelClonesDTO;
 

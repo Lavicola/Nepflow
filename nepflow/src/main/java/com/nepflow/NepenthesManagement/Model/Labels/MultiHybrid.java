@@ -65,13 +65,13 @@ public class MultiHybrid extends HybridLabel{
 
 
     @Override
-    public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller) {
-        return new ICMultiHybrid(sex,grex,cloneId,location,seller);
+    public ICClone createICClone(String cloneId, Sex sex, Location location, Seller seller) {
+        return new ICMultiHybrid(sex,cloneId,location,seller);
     }
 
     @Override
-    public IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
-        return new IVMultiHybrid(cloneId,sex,grex,location,producer);
+    public IVClone createIVClone(String cloneId, Sex sex, Location location, Producer producer) {
+        return new IVMultiHybrid(cloneId,sex,location,producer);
     }
 
     @Override

@@ -250,6 +250,144 @@ paths:
       - application/json
       x-tags:
       - tag: nepenthes
+  /growlist/clone/add/{internalCloneId}:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: internalCloneId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenCloneDTO"
+          description: OK
+        "500":
+          description: "Error, could not add Specimen to user"
+      summary: Add an existing Clone of a Nepenthes to the Growlist.
+      tags:
+      - Growlistmanagement
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/clone/create/{cloneType}:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: cloneType
+        required: true
+        schema:
+          $ref: "#/components/schemas/CloneType"
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelCloneDTO"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenCloneDTO"
+          description: OK
+        "500":
+          description: "Error, could not add Specimen to user"
+      summary: Create a new IV or IC Clone and Add it to the Growlist
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/clones/{specimenId}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: "Error, could not add Nepenthes Clone to user"
+      summary: remove a clone from the growlisti If the removed plant was already
+        used for a trade it will be a soft delete in the relation part
+      tags:
+      - Growlistmanagement
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelSpecimenDTO"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabelSpecimenDTO"
+          description: OK
+        "500":
+          description: Could not update Specimen
+      summary: update values
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/{username}/clones:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrowlistDTO"
+          description: OK
+        "404":
+          description: "Error, User not found"
+      summary: get Nepenthes of a specific User
+      tags:
+      - Growlistmanagement
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
 components:
   parameters:
     nepenthesType:
@@ -284,6 +422,22 @@ components:
       schema:
         type: string
       style: simple
+    username:
+      explode: false
+      in: path
+      name: username
+      required: true
+      schema:
+        type: string
+      style: simple
+    specimenId:
+      explode: false
+      in: path
+      name: specimenId
+      required: true
+      schema:
+        type: string
+      style: simple
   schemas:
     LocationDTO:
       type: string
@@ -302,61 +456,37 @@ components:
     CloneDTO:
       example:
         sex: sex
+        nickname: nickname
+        description: description
         producer: producer
+        internalCloneId: internalCloneId
         cloneId: cloneId
-        internalcloneId: internalcloneId
-        grex:
-          mother: null
-          father: null
-          cloneId: cloneId
         Location: Location
       properties:
         cloneId:
           type: string
-        internalcloneId:
+        internalCloneId:
           type: string
         sex:
           type: string
-        grex:
-          $ref: "#/components/schemas/CloneGrexDTO"
+        description:
+          type: string
+        nickname:
+          type: string
         producer:
           type: string
         Location:
           type: string
       type: object
-    HybridCloneDTO:
-      allOf:
-      - $ref: "#/components/schemas/CloneDTO"
-      - properties:
-          fatherName:
-            type: string
-          motherName:
-            type: string
-        type: object
-    CloneGrexDTO:
-      example:
-        mother: null
-        father: null
-        cloneId: cloneId
-      properties:
-        cloneId:
-          type: string
-        father:
-          $ref: "#/components/schemas/CloneGrexDTO_father"
-        mother:
-          $ref: "#/components/schemas/CloneGrexDTO_father"
-      type: object
     LabelCloneDTO:
       example:
         clone:
           sex: sex
+          nickname: nickname
+          description: description
           producer: producer
+          internalCloneId: internalCloneId
           cloneId: cloneId
-          internalcloneId: internalcloneId
-          grex:
-            mother: null
-            father: null
-            cloneId: cloneId
           Location: Location
         label:
           prefix: prefix
@@ -365,28 +495,24 @@ components:
         label:
           $ref: "#/components/schemas/LabelDTO"
         clone:
-          $ref: "#/components/schemas/CloneGrexDTO_father"
+          $ref: "#/components/schemas/CloneDTO"
       type: object
     LabelClonesDTO:
       example:
         clones:
         - sex: sex
+          nickname: nickname
+          description: description
           producer: producer
+          internalCloneId: internalCloneId
           cloneId: cloneId
-          internalcloneId: internalcloneId
-          grex:
-            mother: null
-            father: null
-            cloneId: cloneId
           Location: Location
         - sex: sex
+          nickname: nickname
+          description: description
           producer: producer
+          internalCloneId: internalCloneId
           cloneId: cloneId
-          internalcloneId: internalcloneId
-          grex:
-            mother: null
-            father: null
-            cloneId: cloneId
           Location: Location
         label:
           prefix: prefix
@@ -396,7 +522,82 @@ components:
           $ref: "#/components/schemas/LabelDTO"
         clones:
           items:
-            $ref: "#/components/schemas/LabelClonesDTO_clones_inner"
+            $ref: "#/components/schemas/CloneDTO"
+          type: array
+      type: object
+    SpecimenCloneDTO:
+      allOf:
+      - $ref: "#/components/schemas/CloneDTO"
+      - properties:
+          specimenId:
+            type: string
+        type: object
+      example:
+        sex: sex
+        nickname: nickname
+        description: description
+        producer: producer
+        specimenId: specimenId
+        internalCloneId: internalCloneId
+        cloneId: cloneId
+        Location: Location
+    LabelSpecimenDTO:
+      example:
+        clone:
+          sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          specimenId: specimenId
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        label:
+          prefix: prefix
+          name: name
+      properties:
+        label:
+          $ref: "#/components/schemas/LabelDTO"
+        clone:
+          $ref: "#/components/schemas/SpecimenCloneDTO"
+      type: object
+    GrowlistDTO:
+      example:
+        specimens:
+        - clone:
+            sex: sex
+            nickname: nickname
+            description: description
+            producer: producer
+            specimenId: specimenId
+            internalCloneId: internalCloneId
+            cloneId: cloneId
+            Location: Location
+          label:
+            prefix: prefix
+            name: name
+        - clone:
+            sex: sex
+            nickname: nickname
+            description: description
+            producer: producer
+            specimenId: specimenId
+            internalCloneId: internalCloneId
+            cloneId: cloneId
+            Location: Location
+          label:
+            prefix: prefix
+            name: name
+        id: id
+        username: username
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        specimens:
+          items:
+            $ref: "#/components/schemas/LabelSpecimenDTO"
           type: array
       type: object
     NepenthesType:
@@ -409,6 +610,10 @@ components:
       - species
       - multihybrid
       - primaryhybrid
+      x-enumNames:
+      - species
+      - multihybrid
+      - primaryhybrid
     CloneType:
       enum:
       - iv
@@ -417,12 +622,6 @@ components:
       x-enum-varnames:
       - iv
       - ic
-    CloneGrexDTO_father:
-      oneOf:
-      - $ref: "#/components/schemas/CloneDTO"
-      - $ref: "#/components/schemas/HybridCloneDTO"
-      x-one-of-name: CloneGrexDTOFather
-    LabelClonesDTO_clones_inner:
-      anyOf:
-      - $ref: "#/components/schemas/CloneDTO"
-      - $ref: "#/components/schemas/HybridCloneDTO"
+      x-enumNames:
+      - iv
+      - ic

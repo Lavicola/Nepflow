@@ -9,8 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+/**
+ * These Tests, test the logic to prevent the creation of invalid Species
+ *
+ */
 
-@DataNeo4jTest
 public class SpeciesTest {
 
 
@@ -20,10 +23,10 @@ public class SpeciesTest {
         Species label1 =  new Species(LabelFormats.nep1,0);
         Label label2 = new Species(LabelFormats.nep2,1);
 
-        ICClone icNepenthesClone10 = label1.addICClone(null,new Location("Borneo"),null,null);
-        ICClone icNepenthesClone11 = label1.addICClone(null,null,null,null);
-        ICClone icNepenthesClone20 = label2.addICClone(null,null,null,null);
-        ICClone icNepenthesClone21 = label2.addICClone(null,null,null,null);
+        ICClone icNepenthesClone10 = label1.addICClone(null,new Location("Borneo"),null);
+        ICClone icNepenthesClone11 = label1.addICClone(null,null,null);
+        ICClone icNepenthesClone20 = label2.addICClone(null,null,null);
+        ICClone icNepenthesClone21 = label2.addICClone(null,null,null);
 
         assertEquals("Nepflow-N-0-0",icNepenthesClone10.getCloneId(),"Clone Id is wrong");
         assertEquals("Nepflow-N-0-1",icNepenthesClone11.getCloneId(),"Clone Id is wrong");

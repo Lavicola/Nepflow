@@ -1,14 +1,11 @@
-package com.nepflow.NepenthesManagement.Dto;
+package com.nepflow.GrowlistManagement.Dto;
 
 import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nepflow.NepenthesManagement.Dto.LabelClonesDTOClonesInner;
-import com.nepflow.NepenthesManagement.Dto.LabelDTO;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.nepflow.GrowlistManagement.Dto.LabelDTO;
+import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,18 +17,17 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * LabelClonesDTO
+ * LabelSpecimenDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-12T02:26:28.390187200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class LabelClonesDTO {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-26T22:21:12.014973900+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+public class LabelSpecimenDTO {
 
   private LabelDTO label;
 
-  @Valid
-  private List<LabelClonesDTOClonesInner> clones = new ArrayList<>();
+  private SpecimenCloneDTO clone;
 
-  public LabelClonesDTO label(LabelDTO label) {
+  public LabelSpecimenDTO label(LabelDTO label) {
     this.label = label;
     return this;
   }
@@ -51,32 +47,24 @@ public class LabelClonesDTO {
     this.label = label;
   }
 
-  public LabelClonesDTO clones(List<LabelClonesDTOClonesInner> clones) {
-    this.clones = clones;
-    return this;
-  }
-
-  public LabelClonesDTO addClonesItem(LabelClonesDTOClonesInner clonesItem) {
-    if (this.clones == null) {
-      this.clones = new ArrayList<>();
-    }
-    this.clones.add(clonesItem);
+  public LabelSpecimenDTO clone(SpecimenCloneDTO clone) {
+    this.clone = clone;
     return this;
   }
 
   /**
-   * Get clones
-   * @return clones
+   * Get clone
+   * @return clone
   */
   @Valid 
-  @Schema(name = "clones", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("clones")
-  public List<LabelClonesDTOClonesInner> getClones() {
-    return clones;
+  @Schema(name = "clone", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("clone")
+  public SpecimenCloneDTO getClone() {
+    return clone;
   }
 
-  public void setClones(List<LabelClonesDTOClonesInner> clones) {
-    this.clones = clones;
+  public void setClone(SpecimenCloneDTO clone) {
+    this.clone = clone;
   }
 
   @Override
@@ -87,22 +75,22 @@ public class LabelClonesDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LabelClonesDTO labelClonesDTO = (LabelClonesDTO) o;
-    return Objects.equals(this.label, labelClonesDTO.label) &&
-        Objects.equals(this.clones, labelClonesDTO.clones);
+    LabelSpecimenDTO labelSpecimenDTO = (LabelSpecimenDTO) o;
+    return Objects.equals(this.label, labelSpecimenDTO.label) &&
+        Objects.equals(this.clone, labelSpecimenDTO.clone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(label, clones);
+    return Objects.hash(label, clone);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LabelClonesDTO {\n");
+    sb.append("class LabelSpecimenDTO {\n");
     sb.append("    label: ").append(toIndentedString(label)).append("\n");
-    sb.append("    clones: ").append(toIndentedString(clones)).append("\n");
+    sb.append("    clone: ").append(toIndentedString(clone)).append("\n");
     sb.append("}");
     return sb.toString();
   }

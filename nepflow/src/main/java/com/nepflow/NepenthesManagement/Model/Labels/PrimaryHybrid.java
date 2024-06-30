@@ -39,13 +39,13 @@ public class PrimaryHybrid extends HybridLabel {
 
 
     @Override
-    public ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller) {
-        return new ICPrimaryHybrid(sex,grex,cloneId,location,seller);
+    public ICClone createICClone(String cloneId, Sex sex, Location location, Seller seller) {
+        return new ICPrimaryHybrid(sex,cloneId,location,seller);
     }
 
     @Override
-    public IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer) {
-        return new IVPrimaryHybrid(cloneId,sex,grex,location,producer);
+    public IVClone createIVClone(String cloneId, Sex sex, Location location, Producer producer) {
+        return new IVPrimaryHybrid(cloneId,sex,location,producer);
     }
 
 

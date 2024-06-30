@@ -10,6 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertTrue;
 
+/**
+ * This Test checks, if the LabelRecognizerService returns the right Subclass of the Label
+ *
+ */
+
+
 public class LabelRecognizerServiceTest {
 
 

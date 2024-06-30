@@ -6,6 +6,7 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Seller;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import lombok.Getter;
+import org.springframework.data.annotation.PersistenceConstructor;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
@@ -16,11 +17,9 @@ public abstract class ICClone extends Clone {
     @Getter
     Seller seller;
 
-
-    public ICClone(Sex sex, Grex grex, String cloneId,Location location,Seller seller) {
-        super(sex, grex, cloneId,location);
+    public ICClone(Sex sex, String cloneId,Location location, Seller seller) {
+        super(sex, cloneId,location);
         this.seller = seller;
-
     }
 
 }

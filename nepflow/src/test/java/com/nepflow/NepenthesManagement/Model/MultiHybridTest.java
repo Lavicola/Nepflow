@@ -11,6 +11,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+/**
+ * These Tests, test the logic to prevent the creation of invalid Multi Hybrids
+ *
+ */
+
 public class MultiHybridTest {
 
 
@@ -79,10 +84,10 @@ public class MultiHybridTest {
         Label label1 =  new MultiHybrid(LabelFormats.multiHybridFormat1,0);
         Label label2 =  new MultiHybrid(LabelFormats.multiHybridFormat2,1);
 
-        ICClone icNepenthesClone10 = label1.addICClone(null,null,null,null);
-        ICClone icNepenthesClone11 = label1.addICClone(null,null,null,null);
-        ICClone icNepenthesClone20 = label2.addICClone(null,null,null,null);
-        ICClone icNepenthesClone21 = label2.addICClone(null,null,null,null);
+        ICClone icNepenthesClone10 = label1.addICClone(null,null,null);
+        ICClone icNepenthesClone11 = label1.addICClone(null,null,null);
+        ICClone icNepenthesClone20 = label2.addICClone(null,null,null);
+        ICClone icNepenthesClone21 = label2.addICClone(null,null,null);
 
         Assertions.assertEquals("Nepflow-MH-0-0",icNepenthesClone10.getCloneId(),"Clone Id is wrong");
         Assertions.assertEquals("Nepflow-MH-0-1",icNepenthesClone11.getCloneId(),"Clone Id is wrong");

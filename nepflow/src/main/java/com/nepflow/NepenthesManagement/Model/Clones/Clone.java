@@ -19,13 +19,14 @@ public abstract class Clone {
     @Getter
     String nickname;
 
-
     @Id
     @Getter
-    // for now internal ID is only used for IV Clones where an IV Clone consists of a pool of Clones
-    // The first Letter of the Sex is added in order to different between them
+    // Internal Id is:
+    // for Seedgrown always the same as cloneId
+    // for IV: combination of cloneId and first letter of Sex since IV clones are sometimes a Pool of plants
     protected String internalCloneId;
 
+    protected String cultivarName;
 
     @Property
     protected String cloneId;
@@ -47,16 +48,23 @@ public abstract class Clone {
     @Relationship("ORIGIN")
     Location location;
 
-    public Clone(Sex sex, Grex grex, String cloneId,Location location){
+    public Clone(Sex sex, String cloneId,Location location){
         this.sex = sex;
-        this.grex = grex;
         this.cloneId = cloneId;
         this.internalCloneId = cloneId;
         this.location = location;
     }
 
+    // usually a cultivar is named later and not right after registering it, therefore a setter makes more sense
+    public void setCultivarName(String cultivarName){
+        this.cultivarName = cultivarName;
+    }
 
+    public void setVersion(long version){this.version = version;}
 
+    public void setGrex(Grex grex){
+        this.grex =grex;
+    }
 
     public  String getCloneId() {
         return cloneId;

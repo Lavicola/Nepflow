@@ -76,27 +76,27 @@ public abstract class Label {
     abstract boolean checkLabelFormat(String name) throws InvalidLabelFormatException;
 
 
-    public ICClone addICClone(Sex sex,Location location, Grex grex,Seller seller){
+    public ICClone addICClone(Sex sex,Location location, Seller seller){
         String cloneId = String.format("%s-%s", this.getPrefix(), this.cloneIcList.size());
-        ICClone icClone = createICClone(cloneId, sex, location, grex,seller);
+        ICClone icClone = createICClone(cloneId, sex, location,seller);
         this.cloneIcList.add(icClone);
         return icClone;
     }
 
-    public ICClone addICCloneCultivar(Sex sex,String cloneId,Location location, Grex grex,Seller seller){
-        ICClone icClone = createICClone(cloneId, sex, location, grex,seller);
+    public ICClone addICCloneCultivar(Sex sex,String cloneId,Location location,Seller seller){
+        ICClone icClone = createICClone(cloneId, sex, location,seller);
         this.cloneIcList.add(icClone);
         return icClone;
     }
 
-    public IVClone addIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer){
-        IVClone icClone = createIVClone(cloneId,sex,grex,location,producer);
+    public IVClone addIVClone(String cloneId, Sex sex, Location location, Producer producer){
+        IVClone icClone = createIVClone(cloneId,sex,location,producer);
         this.cloneIvList.add(icClone);
         return icClone;
     }
 
-    public abstract ICClone createICClone(String cloneId, Sex sex, Location location, Grex grex, Seller seller);
-    public abstract IVClone createIVClone(String cloneId, Sex sex, Grex grex, Location location, Producer producer);
+    public abstract ICClone createICClone(String cloneId, Sex sex, Location location, Seller seller);
+    public abstract IVClone createIVClone(String cloneId, Sex sex, Location location, Producer producer);
 
     // Different Label Classes must have an ID
     protected abstract String getLabelIdentifier();
@@ -113,5 +113,6 @@ public abstract class Label {
 
         return new ArrayList<>(cloneIvList);
     }
+
 
 }

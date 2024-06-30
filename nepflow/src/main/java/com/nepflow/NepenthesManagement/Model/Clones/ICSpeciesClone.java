@@ -12,13 +12,9 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 @Node
 public class ICSpeciesClone extends ICClone {
 
-    @Setter
-    @Relationship("ORIGIN")
-    @Getter
-    Location location;
 
-    public ICSpeciesClone(Sex sex, Grex grex, String cloneId, Location location, Seller seller) {
-        super( sex, grex,cloneId,location,seller );
+    public ICSpeciesClone(Sex sex, String cloneId, Location location, Seller seller) {
+        super( sex,cloneId,location,seller );
     }
 
 }

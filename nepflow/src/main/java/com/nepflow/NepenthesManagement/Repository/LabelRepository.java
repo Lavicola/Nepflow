@@ -33,4 +33,6 @@ public interface LabelRepository extends Neo4jRepository<Label,String> {
     List<Label> getNepenthesByNepenthesType(String labelClass);
 
 
+
+
 }

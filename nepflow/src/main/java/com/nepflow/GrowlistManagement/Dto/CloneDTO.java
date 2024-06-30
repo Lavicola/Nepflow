@@ -1,11 +1,9 @@
-package com.nepflow.NepenthesManagement.Dto;
+package com.nepflow.GrowlistManagement.Dto;
 
 import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nepflow.NepenthesManagement.Dto.CloneGrexDTO;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -20,16 +18,18 @@ import jakarta.annotation.Generated;
  * CloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-12T02:26:28.390187200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class CloneDTO implements CloneGrexDTOFather {
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-26T22:21:12.014973900+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+public class CloneDTO {
 
   private String cloneId;
 
-  private String internalcloneId;
+  private String internalCloneId;
 
   private String sex;
 
-  private CloneGrexDTO grex;
+  private String description;
+
+  private String nickname;
 
   private String producer;
 
@@ -55,24 +55,24 @@ public class CloneDTO implements CloneGrexDTOFather {
     this.cloneId = cloneId;
   }
 
-  public CloneDTO internalcloneId(String internalcloneId) {
-    this.internalcloneId = internalcloneId;
+  public CloneDTO internalCloneId(String internalCloneId) {
+    this.internalCloneId = internalCloneId;
     return this;
   }
 
   /**
-   * Get internalcloneId
-   * @return internalcloneId
+   * Get internalCloneId
+   * @return internalCloneId
   */
   
-  @Schema(name = "internalcloneId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("internalcloneId")
-  public String getInternalcloneId() {
-    return internalcloneId;
+  @Schema(name = "internalCloneId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("internalCloneId")
+  public String getInternalCloneId() {
+    return internalCloneId;
   }
 
-  public void setInternalcloneId(String internalcloneId) {
-    this.internalcloneId = internalcloneId;
+  public void setInternalCloneId(String internalCloneId) {
+    this.internalCloneId = internalCloneId;
   }
 
   public CloneDTO sex(String sex) {
@@ -95,24 +95,44 @@ public class CloneDTO implements CloneGrexDTOFather {
     this.sex = sex;
   }
 
-  public CloneDTO grex(CloneGrexDTO grex) {
-    this.grex = grex;
+  public CloneDTO description(String description) {
+    this.description = description;
     return this;
   }
 
   /**
-   * Get grex
-   * @return grex
+   * Get description
+   * @return description
   */
-  @Valid 
-  @Schema(name = "grex", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("grex")
-  public CloneGrexDTO getGrex() {
-    return grex;
+  
+  @Schema(name = "description", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("description")
+  public String getDescription() {
+    return description;
   }
 
-  public void setGrex(CloneGrexDTO grex) {
-    this.grex = grex;
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public CloneDTO nickname(String nickname) {
+    this.nickname = nickname;
+    return this;
+  }
+
+  /**
+   * Get nickname
+   * @return nickname
+  */
+  
+  @Schema(name = "nickname", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("nickname")
+  public String getNickname() {
+    return nickname;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
   }
 
   public CloneDTO producer(String producer) {
@@ -165,16 +185,17 @@ public class CloneDTO implements CloneGrexDTOFather {
     }
     CloneDTO cloneDTO = (CloneDTO) o;
     return Objects.equals(this.cloneId, cloneDTO.cloneId) &&
-        Objects.equals(this.internalcloneId, cloneDTO.internalcloneId) &&
+        Objects.equals(this.internalCloneId, cloneDTO.internalCloneId) &&
         Objects.equals(this.sex, cloneDTO.sex) &&
-        Objects.equals(this.grex, cloneDTO.grex) &&
+        Objects.equals(this.description, cloneDTO.description) &&
+        Objects.equals(this.nickname, cloneDTO.nickname) &&
         Objects.equals(this.producer, cloneDTO.producer) &&
         Objects.equals(this.location, cloneDTO.location);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cloneId, internalcloneId, sex, grex, producer, location);
+    return Objects.hash(cloneId, internalCloneId, sex, description, nickname, producer, location);
   }
 
   @Override
@@ -182,9 +203,10 @@ public class CloneDTO implements CloneGrexDTOFather {
     StringBuilder sb = new StringBuilder();
     sb.append("class CloneDTO {\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
-    sb.append("    internalcloneId: ").append(toIndentedString(internalcloneId)).append("\n");
+    sb.append("    internalCloneId: ").append(toIndentedString(internalCloneId)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");
-    sb.append("    grex: ").append(toIndentedString(grex)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    nickname: ").append(toIndentedString(nickname)).append("\n");
     sb.append("    producer: ").append(toIndentedString(producer)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("}");

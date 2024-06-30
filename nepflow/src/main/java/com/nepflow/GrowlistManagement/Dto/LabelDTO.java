@@ -1,4 +1,4 @@
-package com.nepflow.NepenthesManagement.Dto;
+package com.nepflow.GrowlistManagement.Dto;
 
 import java.net.URI;
 import java.util.Objects;
@@ -18,7 +18,7 @@ import jakarta.annotation.Generated;
  * LabelDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-12T02:26:28.390187200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-26T22:21:12.014973900+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class LabelDTO {
 
   private String name;

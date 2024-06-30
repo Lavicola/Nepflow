@@ -23,7 +23,7 @@ public class NepenthesRetrivalServiceImpl implements NepenthesRetrivalService {
 
     @Override
     public Clone getCloneByInternalId(String internalCloneId) {
-        return this.cloneRepository.findICCloneByInternalCloneId(internalCloneId);
+        return this.cloneRepository.findCloneByInternalCloneId(internalCloneId);
     }
 
 

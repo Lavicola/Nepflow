@@ -49,7 +49,6 @@ public class UserManagementServiceImpl implements UserManagementService {
     public User createMinimalUser(String userId,String username,String contactInformation, String countryName) {
         // user_Id (provide|unique id) is unique https://auth0.com/docs/manage-users/user-accounts/identify-users
         User user;
-        User rUser;
         Country country;
         if(!this.isUsernameFree(username)){
             return null;

@@ -22,6 +22,9 @@ public interface CloneRepository extends Neo4jRepository<Clone,String> {
 
     Clone findICCloneByInternalCloneId(String internalCloneId);
 
+    Clone findCloneByInternalCloneId(String internalCloneId);
+
+
 
     boolean existsByInternalCloneId(String cloneId);
 

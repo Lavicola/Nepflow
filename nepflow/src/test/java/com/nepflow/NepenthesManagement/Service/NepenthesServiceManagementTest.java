@@ -100,11 +100,11 @@ public class NepenthesServiceManagementTest {
 
         Species species1 = (Species) nepenthesManagementService.createLabel(new Species(LabelFormats.nep1));
 
-        IVClone cloneFemale = this.nepenthesManagementService.saveIVClone(species1,cloneID, female.getSexAsString(), null,location.getName(), producer.getName());
-        IVClone cloneFemaleDuplicate = this.nepenthesManagementService.saveIVClone(species1,cloneID, female.getSexAsString(), null,location.getName(),producer.getName());
-        IVClone cloneMale = this.nepenthesManagementService.saveIVClone(species1,cloneID, male.getSexAsString(), null,location.getName(),producer.getName());
-        IVClone cloneDefault = this.nepenthesManagementService.saveIVClone(species1,cloneID, null, null,location.getName(),producer.getName());
-        IVClone cloneDefaultDuplicate = this.nepenthesManagementService.saveIVClone(species1,cloneID, null, null,location.getName(),producer.getName());
+        IVClone cloneFemale = this.nepenthesManagementService.saveIVClone(species1,cloneID, female.getSexAsString(),location.getName(), producer.getName());
+        IVClone cloneFemaleDuplicate = this.nepenthesManagementService.saveIVClone(species1,cloneID, female.getSexAsString(),location.getName(),producer.getName());
+        IVClone cloneMale = this.nepenthesManagementService.saveIVClone(species1,cloneID, male.getSexAsString(),location.getName(),producer.getName());
+        IVClone cloneDefault = this.nepenthesManagementService.saveIVClone(species1,cloneID, null,location.getName(),producer.getName());
+        IVClone cloneDefaultDuplicate = this.nepenthesManagementService.saveIVClone(species1,cloneID, null,location.getName(),producer.getName());
 
         assertEquals(cloneMale.getInternalCloneId(),maleCloneID);
         assertEquals(cloneFemale.getInternalCloneId(),femaleCloneID);

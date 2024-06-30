@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link NepenthesApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-12T02:26:28.390187200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-20T00:23:06.948612500+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface NepenthesApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -44,7 +44,7 @@ public interface NepenthesApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"clones\" : [ { \"sex\" : \"sex\", \"producer\" : \"producer\", \"cloneId\" : \"cloneId\", \"internalcloneId\" : \"internalcloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }, { \"sex\" : \"sex\", \"producer\" : \"producer\", \"cloneId\" : \"cloneId\", \"internalcloneId\" : \"internalcloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" } ], \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
+                    String exampleString = "{ \"clones\" : [ { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" } ], \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -71,7 +71,7 @@ public interface NepenthesApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"clone\" : { \"sex\" : \"sex\", \"producer\" : \"producer\", \"cloneId\" : \"cloneId\", \"internalcloneId\" : \"internalcloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }, \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
+                    String exampleString = "{ \"clone\" : { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -98,7 +98,7 @@ public interface NepenthesApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"clone\" : { \"sex\" : \"sex\", \"producer\" : \"producer\", \"cloneId\" : \"cloneId\", \"internalcloneId\" : \"internalcloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }, \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
+                    String exampleString = "{ \"clone\" : { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -142,7 +142,7 @@ public interface NepenthesApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"clones\" : [ { \"sex\" : \"sex\", \"producer\" : \"producer\", \"cloneId\" : \"cloneId\", \"internalcloneId\" : \"internalcloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" }, { \"sex\" : \"sex\", \"producer\" : \"producer\", \"cloneId\" : \"cloneId\", \"internalcloneId\" : \"internalcloneId\", \"grex\" : { \"cloneId\" : \"cloneId\" }, \"Location\" : \"Location\" } ], \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
+                    String exampleString = "{ \"clones\" : [ { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" } ], \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
