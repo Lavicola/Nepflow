@@ -14,7 +14,6 @@ const routes: Routes = [
   //  canActivate: [authGuardAuthenticated,firstStepGuard]
 
   },
-  { path: 'growlist', loadChildren: () => import('./modules/growlist-management/growlist-management.module').then(m => m.GrowlistManagementModule) },
   { path: 'user', loadChildren: () => import('./modules/user-management/user-management.module').then(m => m.UserManagementModule) },
 
 

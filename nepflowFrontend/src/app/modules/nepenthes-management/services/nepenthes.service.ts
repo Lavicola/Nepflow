@@ -172,7 +172,7 @@ export class NepenthesService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `cloneNepenthesTypeCloneTypeNameInternalCloneIdPut()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   cloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Response(params: CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params, context?: HttpContext): Observable<StrictHttpResponse<LabelCloneDto>> {
     return cloneNepenthesTypeCloneTypeNameInternalCloneIdPut(this.http, this.rootUrl, params, context);
@@ -186,7 +186,7 @@ export class NepenthesService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `cloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method doesn't expect any request body.
    */
   cloneNepenthesTypeCloneTypeNameInternalCloneIdPut(params: CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params, context?: HttpContext): Observable<LabelCloneDto> {
     return this.cloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Response(params, context).pipe(

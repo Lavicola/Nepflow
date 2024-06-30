@@ -4,20 +4,27 @@ import { CommonModule } from '@angular/common';
 import { NepenthesManagementRoutingModule } from './nepenthes-management-routing.module';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from "@angular/material/autocomplete";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import { NepenthesDropdownComponent } from './nepenthes-dropdown/nepenthes-dropdown.component';
 import { NepenthesCloneDropdownComponent } from './nepenthes-clone-dropdown/nepenthes-clone-dropdown.component';
 import {MatSelect} from "@angular/material/select";
 import {MatIcon} from "@angular/material/icon";
+import { NepenthesCloneComponent } from './nepenthes-clone/nepenthes-clone.component';
+import { NepenthesCloneTableComponent } from './nepenthes-clone-table/nepenthes-clone-table.component';
+import {MatTableModule} from "@angular/material/table";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
 
 
 @NgModule({
-    declarations: [
+  declarations: [
 
-         NepenthesDropdownComponent,
-         NepenthesCloneDropdownComponent
+    NepenthesDropdownComponent,
+    NepenthesCloneDropdownComponent,
+    NepenthesCloneComponent,
+    NepenthesCloneTableComponent,
   ],
   exports: [
     NepenthesCloneDropdownComponent
@@ -36,8 +43,13 @@ import {MatIcon} from "@angular/material/icon";
     MatButtonToggle,
     FormsModule,
     MatSelect,
-    MatIcon
-
+    MatIcon,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckbox,
+    MatMenu,
+    MatMenuTrigger,
   ]
 })
 export class NepenthesManagementModule { }

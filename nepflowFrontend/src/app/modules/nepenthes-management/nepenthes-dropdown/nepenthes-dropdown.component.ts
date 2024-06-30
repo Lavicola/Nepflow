@@ -1,10 +1,10 @@
 import {Component, Injector, OnInit} from '@angular/core';
-import {NepenthesRequestWrapper} from "../Services/NepenthesRequestWrapper";
+import {NepenthesRequestWrapper} from "../services/NepenthesRequestWrapper";
 import {FormControl} from "@angular/forms";
 import {Observable, startWith} from "rxjs";
 import {map} from "rxjs/operators";
-import {NepenthesDropdownSharedLabelService} from "../Services/NepenthesDropdownSharedLabelService";
-import {SharedNepenthesRequestWrapper} from "../Services/SharedNepenthesRequestWrapper";
+import {NepenthesDropdownSharedLabelService} from "../services/NepenthesDropdownSharedLabelService";
+import {SharedNepenthesRequestWrapper} from "../services/SharedNepenthesRequestWrapper";
 import { LabelDto } from '../models/label-dto';
 
 @Component({

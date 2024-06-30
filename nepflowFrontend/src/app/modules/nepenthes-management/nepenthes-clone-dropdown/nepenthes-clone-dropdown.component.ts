@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CloneDto} from "../models/clone-dto";
-import {HybridCloneDto} from "../models/hybrid-clone-dto";
 import {defer, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
-import {NepenthesDropdownSharedLabelService} from "../Services/NepenthesDropdownSharedLabelService";
-import {NepenthesRequestWrapper} from "../Services/NepenthesRequestWrapper";
-import {SharedNepenthesRequestWrapper} from "../Services/SharedNepenthesRequestWrapper";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {map} from "rxjs/operators";
 import { LabelDto } from '../models/label-dto';
 import { LabelClonesDto } from '../models/label-clones-dto';
 import {ProducerDto} from "../models/producer-dto";
 import {LabelCloneDto} from "../models/label-clone-dto";
+import {NepenthesRequestWrapper} from "../services/NepenthesRequestWrapper";
+import {NepenthesDropdownSharedLabelService} from "../services/NepenthesDropdownSharedLabelService";
+import {SharedNepenthesRequestWrapper} from "../services/SharedNepenthesRequestWrapper";
 
 @Component({
   selector: 'app-nepenthes-clone-dropdown',
@@ -22,108 +21,39 @@ export class NepenthesCloneDropdownComponent implements OnInit {
 
 
   readonly sexes:string[] = ["","Female","Male"]
-  nepenthesService!: NepenthesRequestWrapper;
-  selectedLabel: LabelDto = {};
-
-  existingClonesList: Array<CloneDto | HybridCloneDto> = []
+  @Input() existingClones: Observable<CloneDto[]> = new Observable<CloneDto[]>();
+  clonelist: CloneDto[] = []
   filteredOptions!: Observable<CloneDto[]>;
-
   cloneId: FormControl = new FormControl("");
-  sexControl: FormControl = new FormControl("");
   producerControl: FormControl = new FormControl("");
+  descriptionControl: FormControl = new FormControl("");
+  locationControl: FormControl = new FormControl("");
+  selectedGender: string = "";
 
 
-  constructor(private sharedLabelService: NepenthesDropdownSharedLabelService,
-              private nepenthesSharedService: SharedNepenthesRequestWrapper,
+  constructor(
   ) {
 
   }
 
   ngOnInit(): void {
-    this.sharedLabelService.getSelectedValue().subscribe(
-      {
-        next: (label) => {
-          if (label && label.name) {
-            this.selectedLabel = label;
-          }
-        }
-      }
-    )
-    this.nepenthesSharedService.getSelectedValue().subscribe(
-      {
-        next: (nepenthesService: NepenthesRequestWrapper) => {
-          if (nepenthesService) {
-            this.nepenthesService = nepenthesService;
-          }
-        }
-      }
-    )
+    this.existingClones.subscribe(clones => {
+      this.clonelist = clones
+    });
     this.filteredOptions = this.cloneId.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
-
-
-  }
-
-  fetchClones(nepenthesName: string): void {
-    this.cloneId.setValue("")
-    this.nepenthesService.cloneNepenthesTypeCloneTypeNameGet(nepenthesName).subscribe({
-      next: (labelClonesDto: LabelClonesDto) => {
-        if (labelClonesDto && labelClonesDto.clones) {
-          this.existingClonesList = labelClonesDto.clones;
-
-        }
-      },
-      error: (error) => console.log(error)
-    })
-
-
-    if (this.selectedLabel && this.selectedLabel.name) {
-      this.nepenthesService.cloneNepenthesTypeCloneTypeNameGet(this.selectedLabel.name);
-    }
-
-
   }
 
   private _filter(value: string): CloneDto[] {
     const filterValue = value.toLowerCase();
-    return this.existingClonesList.filter(option => option.cloneId?.toLowerCase().includes(filterValue));
+    return this.clonelist.filter(option => option.cloneId?.toLowerCase().includes(filterValue));
   }
 
-
-  protected setInternalCloneId($event: MouseEvent, clone: CloneDto | undefined) {
-    if (clone == undefined) {
-      return
-    }
-    this.sexControl.setValue(clone?.sex)
-    this.producerControl.setValue(clone.producer)
-
-  }
-
-  protected resetDropdownContentAndFetch() {
-    this.createClone()
-    this.existingClonesList = []
-    this.cloneId.setValue("")
-    if(this.selectedLabel && this.selectedLabel.name){
-      this.fetchClones(this.selectedLabel.name)
-    }
-  }
-
-  public createClone(){{
-    let clone:LabelCloneDto = {
-      label: this.selectedLabel,
-      clone: {
-        cloneId: this.cloneId.value,
-        sex: this.sexControl.value,
-        producer: this.producerControl.value
-      }
-    }
-    console.log(clone)
-    }
-  }
-
-  test() {
-    this.createClone()
+  setCloneValues() {
+    console.log(this.existingClones.forEach(
+    (clone) => console.log(clone)
+    ))
   }
 }

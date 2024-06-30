@@ -3,7 +3,7 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../../../../strict-http-response';
+import {StrictHttpResponse} from "../../../../strict-http-response";
 import { RequestBuilder } from '../../../../request-builder';
 
 import { CloneType } from '../../models/clone-type';
@@ -14,7 +14,7 @@ export interface CloneNepenthesTypeCloneTypeNamePost$Params {
   nepenthesType: NepenthesType;
   cloneType: CloneType;
   name: string;
-  
+
     /**
      * Clone DTO with new values
      */

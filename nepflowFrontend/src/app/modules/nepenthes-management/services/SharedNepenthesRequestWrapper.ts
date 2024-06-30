@@ -10,7 +10,6 @@ export class SharedNepenthesRequestWrapper {
   selectedStrategy$: Observable<NepenthesRequestWrapper>;
 
   constructor(private nepenthesStrategy:NepenthesRequestWrapper) {
-    // Initialize the BehaviorSubject with an initial value or null
     this.selectedStrategySubject = new BehaviorSubject<NepenthesRequestWrapper>(nepenthesStrategy);
     this.selectedStrategy$ = this.selectedStrategySubject.asObservable();
   }

@@ -2,7 +2,6 @@ import {Observable} from "rxjs";
 import {LabelClonesDto} from "../models/label-clones-dto";
 import {LabelCloneDto} from "../models/label-clone-dto";
 import {CloneDto} from "../models/clone-dto";
-import {HybridCloneDto} from "../models/hybrid-clone-dto";
 import {Injectable} from "@angular/core";
 import {NepenthesType} from "../models/nepenthes-type";
 import {CloneType} from "../models/clone-type";
@@ -16,7 +15,6 @@ import { LabelDto } from "../models/label-dto";
  * values. This way the method itself can be added to the corresponding Button
  */
 @Injectable({ providedIn: 'root' })
-
 export class NepenthesRequestWrapper{
 
   cloneType!:CloneType;
@@ -33,7 +31,7 @@ export class NepenthesRequestWrapper{
         nepenthesType:this.nepenthesType
       }
     )
-}
+  }
 
   cloneNepenthesTypeNameGet(nepenthesName:string):Observable<LabelClonesDto>{
 
@@ -59,7 +57,7 @@ export class NepenthesRequestWrapper{
   }
 
 
-  cloneNepenthesTypeCloneTypeNamePost( nepenthesName:string,clone:CloneDto|HybridCloneDto):Observable<LabelCloneDto>{
+  cloneNepenthesTypeCloneTypeNamePost( nepenthesName:string,clone:CloneDto):Observable<LabelCloneDto>{
 
     return this.nepenthesService.cloneNepenthesTypeCloneTypeNamePost(
 
@@ -75,7 +73,7 @@ export class NepenthesRequestWrapper{
 
 
 
-  )
+    )
 
 
   }
@@ -88,8 +86,8 @@ export class NepenthesRequestWrapper{
         internalCloneId: internalCloneid,
         cloneType:this.cloneType,
         nepenthesType:this.nepenthesType,
-        body:clone
       }
+
 
 
 
@@ -101,21 +99,23 @@ export class NepenthesRequestWrapper{
 
   }
 
-  switchToIv(){
+  switchToIv():CloneType{
     this.cloneType= CloneType.Iv;
+    return this.cloneType
   }
 
-  switchToIc(){
+  switchToIc():CloneType{
     this.cloneType=CloneType.Ic
+    return this.cloneType
   }
   switchToSpecies(){
-    this.nepenthesType=NepenthesType.Species
+    this.nepenthesType=NepenthesType.species
   }
   switchToPrimaryHybrid(){
-    this.nepenthesType=NepenthesType.Primaryhybrid
+    this.nepenthesType=NepenthesType.primaryhybrid
   }
   switchToMultiHybrid(){
-    this.nepenthesType=NepenthesType.Multihybrid
+    this.nepenthesType=NepenthesType.multihybrid
   }
 
   getCurrentCloneType():string{

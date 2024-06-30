@@ -3,7 +3,7 @@
 import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { StrictHttpResponse } from '../../../../strict-http-response';
+import {StrictHttpResponse} from "../../../../strict-http-response";
 import { RequestBuilder } from '../../../../request-builder';
 
 import { CloneType } from '../../models/clone-type';
@@ -15,11 +15,6 @@ export interface CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params {
   cloneType: CloneType;
   name: string;
   internalCloneId: string;
-  
-    /**
-     * Clone DTO with new values
-     */
-    body: LabelCloneDto
 }
 
 export function cloneNepenthesTypeCloneTypeNameInternalCloneIdPut(http: HttpClient, rootUrl: string, params: CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params, context?: HttpContext): Observable<StrictHttpResponse<LabelCloneDto>> {
@@ -29,7 +24,6 @@ export function cloneNepenthesTypeCloneTypeNameInternalCloneIdPut(http: HttpClie
     rb.path('cloneType', params.cloneType, {});
     rb.path('name', params.name, {});
     rb.path('internalCloneId', params.internalCloneId, {});
-    rb.body(params.body, 'application/json');
   }
 
   return http.request(
