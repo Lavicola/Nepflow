@@ -15,11 +15,11 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * SpecimenCloneDTO
+ * CloneDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T00:49:12.097251100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class SpecimenCloneDTO {
+public class CloneDTO {
 
   private String cloneId;
 
@@ -35,9 +35,7 @@ public class SpecimenCloneDTO {
 
   private String location;
 
-  private String specimenId;
-
-  public SpecimenCloneDTO cloneId(String cloneId) {
+  public CloneDTO cloneId(String cloneId) {
     this.cloneId = cloneId;
     return this;
   }
@@ -57,7 +55,7 @@ public class SpecimenCloneDTO {
     this.cloneId = cloneId;
   }
 
-  public SpecimenCloneDTO internalCloneId(String internalCloneId) {
+  public CloneDTO internalCloneId(String internalCloneId) {
     this.internalCloneId = internalCloneId;
     return this;
   }
@@ -77,7 +75,7 @@ public class SpecimenCloneDTO {
     this.internalCloneId = internalCloneId;
   }
 
-  public SpecimenCloneDTO sex(String sex) {
+  public CloneDTO sex(String sex) {
     this.sex = sex;
     return this;
   }
@@ -97,7 +95,7 @@ public class SpecimenCloneDTO {
     this.sex = sex;
   }
 
-  public SpecimenCloneDTO description(String description) {
+  public CloneDTO description(String description) {
     this.description = description;
     return this;
   }
@@ -117,7 +115,7 @@ public class SpecimenCloneDTO {
     this.description = description;
   }
 
-  public SpecimenCloneDTO nickname(String nickname) {
+  public CloneDTO nickname(String nickname) {
     this.nickname = nickname;
     return this;
   }
@@ -137,7 +135,7 @@ public class SpecimenCloneDTO {
     this.nickname = nickname;
   }
 
-  public SpecimenCloneDTO producer(String producer) {
+  public CloneDTO producer(String producer) {
     this.producer = producer;
     return this;
   }
@@ -157,7 +155,7 @@ public class SpecimenCloneDTO {
     this.producer = producer;
   }
 
-  public SpecimenCloneDTO location(String location) {
+  public CloneDTO location(String location) {
     this.location = location;
     return this;
   }
@@ -177,26 +175,6 @@ public class SpecimenCloneDTO {
     this.location = location;
   }
 
-  public SpecimenCloneDTO specimenId(String specimenId) {
-    this.specimenId = specimenId;
-    return this;
-  }
-
-  /**
-   * Get specimenId
-   * @return specimenId
-  */
-  
-  @Schema(name = "specimenId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("specimenId")
-  public String getSpecimenId() {
-    return specimenId;
-  }
-
-  public void setSpecimenId(String specimenId) {
-    this.specimenId = specimenId;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -205,26 +183,25 @@ public class SpecimenCloneDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SpecimenCloneDTO specimenCloneDTO = (SpecimenCloneDTO) o;
-    return Objects.equals(this.cloneId, specimenCloneDTO.cloneId) &&
-        Objects.equals(this.internalCloneId, specimenCloneDTO.internalCloneId) &&
-        Objects.equals(this.sex, specimenCloneDTO.sex) &&
-        Objects.equals(this.description, specimenCloneDTO.description) &&
-        Objects.equals(this.nickname, specimenCloneDTO.nickname) &&
-        Objects.equals(this.producer, specimenCloneDTO.producer) &&
-        Objects.equals(this.location, specimenCloneDTO.location) &&
-        Objects.equals(this.specimenId, specimenCloneDTO.specimenId);
+    CloneDTO cloneDTO = (CloneDTO) o;
+    return Objects.equals(this.cloneId, cloneDTO.cloneId) &&
+        Objects.equals(this.internalCloneId, cloneDTO.internalCloneId) &&
+        Objects.equals(this.sex, cloneDTO.sex) &&
+        Objects.equals(this.description, cloneDTO.description) &&
+        Objects.equals(this.nickname, cloneDTO.nickname) &&
+        Objects.equals(this.producer, cloneDTO.producer) &&
+        Objects.equals(this.location, cloneDTO.location);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId);
+    return Objects.hash(cloneId, internalCloneId, sex, description, nickname, producer, location);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SpecimenCloneDTO {\n");
+    sb.append("class CloneDTO {\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    internalCloneId: ").append(toIndentedString(internalCloneId)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");
@@ -232,7 +209,6 @@ public class SpecimenCloneDTO {
     sb.append("    nickname: ").append(toIndentedString(nickname)).append("\n");
     sb.append("    producer: ").append(toIndentedString(producer)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
-    sb.append("    specimenId: ").append(toIndentedString(specimenId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

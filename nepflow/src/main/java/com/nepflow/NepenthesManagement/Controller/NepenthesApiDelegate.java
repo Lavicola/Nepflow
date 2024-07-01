@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link NepenthesApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-20T00:23:06.948612500+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T00:49:12.097251100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface NepenthesApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
