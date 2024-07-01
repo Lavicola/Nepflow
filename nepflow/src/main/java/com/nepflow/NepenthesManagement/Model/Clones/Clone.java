@@ -2,7 +2,9 @@ package com.nepflow.NepenthesManagement.Model.Clones;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
+import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -11,6 +13,7 @@ import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
+@NoArgsConstructor
 public abstract class Clone {
 
     // usually a species or hybrid can be registered as a cultivar. For some reason, special in this Hobby, people really like to give their nepenthes nicknames instead of registering them.
@@ -18,6 +21,11 @@ public abstract class Clone {
     @Property
     @Getter
     String nickname;
+
+    @Relationship(value = "CLONE_OF_SPECIES",direction = Relationship.Direction.OUTGOING)
+    @Getter
+    Label label;
+
 
     @Id
     @Getter
@@ -46,7 +54,8 @@ public abstract class Clone {
     @Relationship("ORIGIN")
     Location location;
 
-    public Clone(Sex sex, String cloneId,Location location){
+    public Clone(Label label, Sex sex, String cloneId, Location location){
+        this.label = label;
         this.sex = sex;
         this.cloneId = cloneId;
         this.internalCloneId = cloneId;

@@ -13,7 +13,6 @@ import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -30,10 +29,10 @@ public abstract class Label {
     @Getter String name;
 
 
-    @Relationship(value = "SPECIES_OF",direction = Relationship.Direction.INCOMING)
+    @Relationship(value = "HAS_CLONE",direction = Relationship.Direction.OUTGOING)
     List<ICClone> cloneIcList;
 
-    @Relationship(value = "SPECIES_OF",direction = Relationship.Direction.INCOMING)
+    @Relationship(value = "HAS_CLONE",direction = Relationship.Direction.OUTGOING)
     List<IVClone> cloneIvList;
 
 
@@ -83,14 +82,9 @@ public abstract class Label {
         return icClone;
     }
 
-    public ICClone addICCloneCultivar(Sex sex,String cloneId,Location location,Seller seller){
-        ICClone icClone = createICClone(cloneId, sex, location,seller);
-        this.cloneIcList.add(icClone);
-        return icClone;
-    }
 
     public IVClone addIVClone(String cloneId, Sex sex, Location location, Producer producer){
-        IVClone icClone = createIVClone(cloneId,sex,location,producer);
+        IVClone icClone = createIVClone( cloneId, sex, location, producer);
         this.cloneIvList.add(icClone);
         return icClone;
     }

@@ -80,7 +80,7 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Override
     @Transactional("transactionManager")
     public Specimen addNewICCloneToGrowList(User user, String labelName, String cloneId, String sexAsString, String locationAsString, String sellerAsString) {
-        Clone clone = this.nepenthesManagementService.saveICClone(labelName, cloneId, sexAsString, locationAsString, sellerAsString);
+        Clone clone = this.nepenthesManagementService.saveICClone(labelName, sexAsString, locationAsString, sellerAsString);
         Growlist growlist = this.growListRepository.findGrowlistByUser(user);
         Specimen specimen = null;
         specimen = new Specimen(clone);

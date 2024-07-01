@@ -6,18 +6,11 @@ import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICMultiHybrid;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVMultiHybrid;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.core.schema.Node;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Node
 public class MultiHybrid extends HybridLabel{
 
-    // Certain MultiHybrids are known under a specific name and not under the actual MultiHybrids name
-    @Transient
-    public static Set<String> knownMultiHybrids = new HashSet<>();
 
     public MultiHybrid(String name) {
         super(name);
@@ -66,12 +59,12 @@ public class MultiHybrid extends HybridLabel{
 
     @Override
     public ICClone createICClone(String cloneId, Sex sex, Location location, Seller seller) {
-        return new ICMultiHybrid(sex,cloneId,location,seller);
+        return new ICMultiHybrid(this,sex,cloneId,location,seller);
     }
 
     @Override
     public IVClone createIVClone(String cloneId, Sex sex, Location location, Producer producer) {
-        return new IVMultiHybrid(cloneId,sex,location,producer);
+        return new IVMultiHybrid(this,cloneId,sex,location,producer);
     }
 
     @Override
@@ -81,7 +74,6 @@ public class MultiHybrid extends HybridLabel{
 
 
     @Override
-
     void setParents() {
         String mother = "";
         String father = "";

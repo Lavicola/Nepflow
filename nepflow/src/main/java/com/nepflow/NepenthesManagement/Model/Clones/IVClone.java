@@ -1,18 +1,17 @@
 package com.nepflow.NepenthesManagement.Model.Clones;
 
 import com.nepflow.NepenthesManagement.Exception.ProducerIsNullException;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
+import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
+@NoArgsConstructor
 public abstract class IVClone extends Clone {
 
     @Relationship("SOLD_BY")
@@ -20,8 +19,8 @@ public abstract class IVClone extends Clone {
     Producer producer;
 
 
-    public IVClone(String cloneId, Sex sex, Location location, Producer producer) {
-        super(sex,cloneId,location );
+    public IVClone(Label label, String cloneId, Sex sex, Location location, Producer producer) {
+        super(label,sex, cloneId,location);
         if(producer == null){
             throw new ProducerIsNullException(cloneId);
         }

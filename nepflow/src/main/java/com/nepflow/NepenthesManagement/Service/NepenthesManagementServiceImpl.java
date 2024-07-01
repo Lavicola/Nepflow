@@ -62,14 +62,14 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
 
     @Override
     //TODO at some point remove Code duplication --> helper method for common logic
-    public ICClone saveICClone(Label label, String cloneId, String sexAsString,
+    public ICClone saveICClone(Label label, String sexAsString,
                                String locationAsString, String sellerAsString) {
         Location location;
         ICClone newIcClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
         Seller seller = this.managementMetaDataService.getSeller(sellerAsString);
         location = this.managementMetaDataService.saveLocation(locationAsString);
-        newIcClone = label.addICCloneCultivar(sex,cloneId, location,seller);
+        newIcClone = label.addICClone(sex, location,seller);
         this.labelRepository.save(label);
         return newIcClone;
     }
@@ -85,11 +85,11 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
     }
 
     @Override
-    public ICClone saveICClone(String labelName, String cloneId, String sexAsString, String locationAsString, String sellerAsString) {
+    public ICClone saveICClone(String labelName, String sexAsString, String locationAsString, String sellerAsString) {
         Label label = this.labelRecognizerService.returnRightLabelClass(labelName);
         if(label != null){
             label = this.createLabel(label);
-            return this.saveICClone(label,cloneId,sexAsString,locationAsString,sellerAsString);
+            return this.saveICClone(label,sexAsString,locationAsString,sellerAsString);
         }
         return null;
     }

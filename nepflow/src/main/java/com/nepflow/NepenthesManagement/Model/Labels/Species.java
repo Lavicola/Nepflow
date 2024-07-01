@@ -39,12 +39,12 @@ public class Species extends Label {
 
     @Override
     public ICClone createICClone(String cloneId, Sex sex, Location location, Seller seller) {
-        return new ICSpeciesClone(sex,cloneId,location,seller);
+        return new ICSpeciesClone(this,sex,cloneId,location,seller);
     }
 
     @Override
     public IVClone createIVClone(String cloneId, Sex sex, Location location, Producer producer) {
-        return new IVSpeciesClone(cloneId,sex,location,producer);
+        return new IVSpeciesClone(this,cloneId,sex,location,producer);
     }
 
 

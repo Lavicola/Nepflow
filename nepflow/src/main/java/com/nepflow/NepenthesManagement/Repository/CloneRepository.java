@@ -12,7 +12,7 @@ import java.util.List;
 public interface CloneRepository extends Neo4jRepository<Clone,String> {
 
 
-    @Query("MATCH (n:`:#{literal(#label)}`)<-[r:SPECIES_OF]-(c:`:#{literal(#cloneType)}`)" +
+    @Query("MATCH (n:`:#{literal(#label)}`)<-[r:CLONE_OF_SPECIES]-(c:`:#{literal(#cloneType)}`)" +
             "WHERE n.name STARTS WITH $text "+
             "RETURN c")
     List<Clone> findClonesByLabelAndCloneTypeAndStartsWith(String label,String cloneType,String text);

@@ -67,7 +67,7 @@ public class DataInitializationService {
     @PostConstruct
     public void initializeModel() throws IOException {
 
-        if (true) {
+        if (false) {
             String SPLIT = ",";
             // Store known cultivars
             Label labelAtRuntime;
@@ -119,8 +119,7 @@ public class DataInitializationService {
                             cloneId, sexAsString,
                             locationAsString, producerAsString);
                 }else{
-                    this.nepenthesManagementService.saveICClone(nepenthes,
-                            cloneId, sexAsString,
+                    this.nepenthesManagementService.saveICClone(nepenthes, sexAsString,
                             locationAsString, producerAsString);
 
                 }

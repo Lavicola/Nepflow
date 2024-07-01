@@ -4,14 +4,17 @@ import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
+import com.nepflow.NepenthesManagement.Model.Labels.Label;
+import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
+@NoArgsConstructor
 public class IVMultiHybrid extends IVClone {
 
 
-    public IVMultiHybrid( String cloneId, Sex sex,Location location, Producer producer) {
-        super( cloneId, sex,location,producer);
+    public IVMultiHybrid(Label label, String cloneId, Sex sex, Location location, Producer producer) {
+        super(label,cloneId, sex,location,producer);
     }
 
 

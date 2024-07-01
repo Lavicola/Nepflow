@@ -10,16 +10,13 @@ public interface NepenthesManagementService {
                                  String sexAsString,
                                  String locationAsString, String producerAsString);
 
-    ICClone saveICClone(Label label, String cloneId, String sexAsString, String locationAsString,
-                        String sellerAsString
-    );
+    ICClone saveICClone(Label label, String sexAsString, String locationAsString, String sellerAsString);
 
     IVClone saveIVClone(String labelName, String cloneId,
                         String sexAsString,
                         String locationAsString, String producerAsString);
 
-    ICClone saveICClone(String labelName, String cloneId, String sexAsString, String locationAsString,
-                        String sellerAsString
+    ICClone saveICClone(String labelName, String sexAsString, String locationAsString, String sellerAsString
     );
 
 
