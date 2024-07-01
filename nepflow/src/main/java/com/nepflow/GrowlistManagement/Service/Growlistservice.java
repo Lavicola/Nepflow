@@ -12,6 +12,7 @@ public interface Growlistservice {
 
     public void createGrowlist(User user);
 
+    public Growlist getGrowlist(String username);
 
     // If Clone already exists, only nepenthesRetrivalService is necessary to add a Clone to a Growlist
     public Specimen addExistingCloneToGrowList(User user, String internalCloneId);

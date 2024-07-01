@@ -33,7 +33,6 @@ public abstract class Clone {
 
     @Setter
     @Relationship("HAS_SEX")
-    @Getter
     protected Sex sex;
 
     @Relationship(value = "OFFSPRING_FROM", direction = Relationship.Direction.OUTGOING)
@@ -44,7 +43,6 @@ public abstract class Clone {
     private Long version;
 
     @Setter
-    @Getter
     @Relationship("ORIGIN")
     Location location;
 
@@ -69,6 +67,17 @@ public abstract class Clone {
     public  String getCloneId() {
         return cloneId;
     }
+
+    public String getLocationAsString(){
+        return this.location != null ? this.location.getName():"";
+    }
+
+    public String getSexAsString(){
+        return this.sex != null ? this.sex.getSexAsString():"";
+    }
+
+    abstract public String getSellerAsString();
+
 
 
 }

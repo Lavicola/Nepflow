@@ -1,22 +1,16 @@
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.GrowlistManagement.Dto.CloneDTO;
-import com.nepflow.GrowlistManagement.Dto.LabelSpecimenDTO;
-import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
+import com.nepflow.GrowlistManagement.Dto.*;
+import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Service.Growlistservice;
-import com.nepflow.GrowlistManagement.Dto.CloneType;
-import com.nepflow.GrowlistManagement.Dto.LabelCloneDTO;
-import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Service.AuthenticationService;
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 @Controller
 public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementApiDelegate {
@@ -31,6 +25,21 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
     ModelMapper modelMapper;
 
 
+    public ResponseEntity<GrowlistDTO> growlistUsernameClonesGet(String username) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GrowlistDTO());
+        }
+        Growlist growlist = this.growlistservice.getGrowlist(username);
+        if (growlist != null &&(growlist.isPublic() || user.getUsername().equals(username))) {
+            return ResponseEntity.status(HttpStatus.OK).body(this.convertGrowlistToDTO(growlist));
+        }
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GrowlistDTO());
+
+
+    }
+
     public ResponseEntity<SpecimenCloneDTO> growlistCloneAddInternalCloneIdPost(String internalCloneId) {
         User user = this.authenticationService.getAuthenticatedUser();
         SpecimenCloneDTO specimenCloneDTO;
@@ -44,7 +53,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
     }
 
     public ResponseEntity<SpecimenCloneDTO> growlistCloneCreateCloneTypePost(CloneType cloneType,
-                                                                  LabelCloneDTO labelCloneDTO) {
+                                                                             LabelCloneDTO labelCloneDTO) {
         User user = this.authenticationService.getAuthenticatedUser();
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new SpecimenCloneDTO());
@@ -67,5 +76,26 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
             return ResponseEntity.internalServerError().body(null);
         }
     }
+
+    private GrowlistDTO convertGrowlistToDTO(Growlist growlist) {
+        GrowlistDTO growlistDTO = new GrowlistDTO();
+        SpecimenCloneDTO specimenCloneDTO;
+        if (growlist == null) {
+            return growlistDTO;
+        }
+        for (Specimen specimen : growlist.getSpezimens()) {
+            specimenCloneDTO = new SpecimenCloneDTO();
+            specimenCloneDTO.setCloneId(specimen.getClone().getCloneId());
+            specimenCloneDTO.setSpecimenId(specimen.getUuid());
+            specimenCloneDTO.setLocation(specimen.getClone().getLocationAsString());
+            specimenCloneDTO.setSex(specimen.getClone().getSexAsString());
+            specimenCloneDTO.setProducer(specimen.getClone().getSellerAsString());
+            growlistDTO.addSpecimensItem(specimenCloneDTO);
+        }
+
+
+        return growlistDTO;
+    }
+
 
 }

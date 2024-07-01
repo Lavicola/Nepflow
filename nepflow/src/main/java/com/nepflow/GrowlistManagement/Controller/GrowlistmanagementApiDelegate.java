@@ -3,7 +3,6 @@ package com.nepflow.GrowlistManagement.Controller;
 import com.nepflow.GrowlistManagement.Dto.CloneType;
 import com.nepflow.GrowlistManagement.Dto.GrowlistDTO;
 import com.nepflow.GrowlistManagement.Dto.LabelCloneDTO;
-import com.nepflow.GrowlistManagement.Dto.LabelSpecimenDTO;
 import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +21,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link GrowlistmanagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-06-26T22:21:12.014973900+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-01T18:41:42.843846800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface GrowlistmanagementApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -92,17 +91,17 @@ public interface GrowlistmanagementApiDelegate {
      * PUT /growlist/clones/{specimenId} : update values
      *
      * @param specimenId  (required)
-     * @param labelSpecimenDTO  (optional)
+     * @param specimenCloneDTO  (optional)
      * @return OK (status code 200)
      *         or Could not update Specimen (status code 500)
      * @see GrowlistmanagementApi#growlistClonesSpecimenIdPut
      */
-    default ResponseEntity<LabelSpecimenDTO> growlistClonesSpecimenIdPut(String specimenId,
-        LabelSpecimenDTO labelSpecimenDTO) {
+    default ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdPut(String specimenId,
+        SpecimenCloneDTO specimenCloneDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"clone\" : { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }";
+                    String exampleString = "{ \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -124,7 +123,7 @@ public interface GrowlistmanagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"specimens\" : [ { \"clone\" : { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } }, { \"clone\" : { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, \"label\" : { \"prefix\" : \"prefix\", \"name\" : \"name\" } } ], \"id\" : \"id\", \"username\" : \"username\" }";
+                    String exampleString = "{ \"specimens\" : [ { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, { \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" } ], \"id\" : \"id\", \"username\" : \"username\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -205,14 +205,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LabelSpecimenDTO'
+              $ref: '#/components/schemas/SpecimenCloneDTO'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LabelSpecimenDTO'
+                $ref: '#/components/schemas/SpecimenCloneDTO'
         '500':
           description: Could not update Specimen
 
@@ -346,14 +346,6 @@ components:
             specimenId:
               type: string
 
-    LabelSpecimenDTO:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/LabelDTO'
-        clone:
-          $ref: '#/components/schemas/SpecimenCloneDTO'
-
     GrowlistDTO:
       type: object
       properties:
@@ -364,7 +356,7 @@ components:
         specimens:
           type: array
           items:
-            $ref: '#/components/schemas/LabelSpecimenDTO'
+            $ref: '#/components/schemas/SpecimenCloneDTO'
 
     # since Spring boot open api generator does not generate allowed Values
     NepenthesType:

@@ -17,6 +17,7 @@ public class Specimen {
 
 
     @Id
+    @Getter
     @GeneratedValue
     protected String uuid;
 

@@ -41,6 +41,10 @@ public abstract class IVClone extends Clone {
         }
     }
 
+    public String getSellerAsString(){
+        return this.producer.getName();
+    }
+
 
 }
 

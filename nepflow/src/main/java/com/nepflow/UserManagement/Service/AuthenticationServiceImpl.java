@@ -14,9 +14,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     UserRepository userRepository;
 
 
-    public User getAuthenticatedUser(){
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null){
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
             return null;
         }
         return this.userRepository.findUserByOAuthId(authentication.getName());
@@ -24,8 +24,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public String getOauthId() {
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
             return null;
         }
         return authentication.getName();

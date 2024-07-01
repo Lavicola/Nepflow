@@ -23,7 +23,7 @@ public class ModelMapperConfig {
             @Override
             protected void configure() {
                 map().setProducer(source.getProducer().getName());
-                map().setLocation(source.getLocation().getName());
+                map().setLocation(source.getLocationAsString());
             }
         });
 

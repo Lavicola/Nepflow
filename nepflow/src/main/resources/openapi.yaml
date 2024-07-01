@@ -344,13 +344,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LabelSpecimenDTO"
+              $ref: "#/components/schemas/SpecimenCloneDTO"
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LabelSpecimenDTO"
+                $ref: "#/components/schemas/SpecimenCloneDTO"
           description: OK
         "500":
           description: Could not update Specimen
@@ -541,10 +541,10 @@ components:
         internalCloneId: internalCloneId
         cloneId: cloneId
         Location: Location
-    LabelSpecimenDTO:
+    GrowlistDTO:
       example:
-        clone:
-          sex: sex
+        specimens:
+        - sex: sex
           nickname: nickname
           description: description
           producer: producer
@@ -552,42 +552,14 @@ components:
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location
-        label:
-          prefix: prefix
-          name: name
-      properties:
-        label:
-          $ref: "#/components/schemas/LabelDTO"
-        clone:
-          $ref: "#/components/schemas/SpecimenCloneDTO"
-      type: object
-    GrowlistDTO:
-      example:
-        specimens:
-        - clone:
-            sex: sex
-            nickname: nickname
-            description: description
-            producer: producer
-            specimenId: specimenId
-            internalCloneId: internalCloneId
-            cloneId: cloneId
-            Location: Location
-          label:
-            prefix: prefix
-            name: name
-        - clone:
-            sex: sex
-            nickname: nickname
-            description: description
-            producer: producer
-            specimenId: specimenId
-            internalCloneId: internalCloneId
-            cloneId: cloneId
-            Location: Location
-          label:
-            prefix: prefix
-            name: name
+        - sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          specimenId: specimenId
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
         id: id
         username: username
       properties:
@@ -597,7 +569,7 @@ components:
           type: string
         specimens:
           items:
-            $ref: "#/components/schemas/LabelSpecimenDTO"
+            $ref: "#/components/schemas/SpecimenCloneDTO"
           type: array
       type: object
     NepenthesType:

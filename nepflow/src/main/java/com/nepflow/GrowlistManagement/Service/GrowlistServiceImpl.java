@@ -2,13 +2,9 @@ package com.nepflow.GrowlistManagement.Service;
 
 import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
-import com.nepflow.GrowlistManagement.Repository.GrowListRepository;
+import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
 import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
-import com.nepflow.NepenthesManagement.Model.Labels.Label;
-import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
 import com.nepflow.UserManagement.Model.User;
@@ -16,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class GrowlistServiceImpl implements Growlistservice {
 
     @Autowired
-    GrowListRepository growListRepository;
+    GrowlistRepository growListRepository;
 
     @Autowired
     SpecimenRepository specimenRepository;
@@ -37,6 +31,11 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Override
     public void createGrowlist(User user) {
         this.growListRepository.save(new Growlist(user));
+    }
+
+    @Override
+    public Growlist getGrowlist(String username) {
+        return this.growListRepository.findGrowlistById("auth0|664e59263f6781e0974157da");
     }
 
     @Override

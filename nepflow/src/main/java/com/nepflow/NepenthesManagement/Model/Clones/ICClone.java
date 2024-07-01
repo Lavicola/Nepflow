@@ -22,4 +22,9 @@ public abstract class ICClone extends Clone {
         this.seller = seller;
     }
 
+    public String getSellerAsString(){
+        return this.seller != null ? this.seller.getName():"";
+    }
+
+
 }

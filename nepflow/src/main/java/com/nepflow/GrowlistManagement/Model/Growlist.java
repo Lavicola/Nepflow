@@ -1,6 +1,7 @@
 package com.nepflow.GrowlistManagement.Model;
 
 import com.nepflow.UserManagement.Model.User;
+import lombok.Getter;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -25,17 +26,22 @@ public class Growlist {
     @Version
     private Long version;
 
+    @Getter
+    protected boolean isPublic;
 
     public Growlist(User user) {
         this.user = user;
         this.spezimenList = new ArrayList<>();
+        this.isPublic = true;
     }
 
     public void addSpecimen(Specimen specimen){
         this.spezimenList.add(specimen);
     }
-
     public List<Specimen> getSpezimens() {
         return new ArrayList<>(spezimenList);
     }
+
+
+
 }
