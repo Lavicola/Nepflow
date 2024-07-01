@@ -67,7 +67,7 @@ public class DataInitializationService {
     @PostConstruct
     public void initializeModel() throws IOException {
 
-        if (false) {
+        if (true) {
             String SPLIT = ",";
             // Store known cultivars
             Label labelAtRuntime;
