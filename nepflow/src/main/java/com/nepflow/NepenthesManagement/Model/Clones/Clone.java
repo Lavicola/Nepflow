@@ -17,7 +17,6 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 public abstract class Clone {
 
     @Relationship(value = "CLONE_OF_SPECIES",direction = Relationship.Direction.OUTGOING)
-    @Getter
     Label label;
 
 
@@ -78,6 +77,8 @@ public abstract class Clone {
     public String getSexAsString(){
         return this.sex != null ? this.sex.getSexAsString():"";
     }
+
+    public String getLabelName(){return this.label != null ? this.label.getName():"";}
 
     abstract public String getSellerAsString();
 

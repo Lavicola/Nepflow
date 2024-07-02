@@ -124,17 +124,19 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate{
 
     }
     public List<CloneDTO> convertToCloneDTO(Label label) {
-
+        String nepenthesName = label.getName();
 
         List<CloneDTO> cloneDTOS = new ArrayList<>();
         label.getCloneIcList().forEach(clone -> {
             CloneDTO cloneDTO = this.modelMapper.map(clone, CloneDTO.class);
+            cloneDTO.setNepenthesName(nepenthesName);
             cloneDTOS.add(cloneDTO);
         });
 
 
         label.getCloneIVList().forEach(clone -> {
             CloneDTO cloneDTO = this.modelMapper.map(clone, CloneDTO.class);
+            cloneDTO.setNepenthesName(nepenthesName);
             cloneDTOS.add(cloneDTO);
         });
 

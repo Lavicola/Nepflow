@@ -35,7 +35,7 @@ public class GrowlistServiceImpl implements Growlistservice {
 
     @Override
     public Growlist getGrowlist(String username) {
-        return this.growListRepository.findGrowlistById("auth0|664e59263f6781e0974157da");
+        return this.growListRepository.findGrowlistByUsername(username);
     }
 
     @Override

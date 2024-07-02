@@ -26,6 +26,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
 
 
     public ResponseEntity<GrowlistDTO> growlistUsernameClonesGet(String username) {
+
         User user = this.authenticationService.getAuthenticatedUser();
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GrowlistDTO());
@@ -90,6 +91,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
             specimenCloneDTO.setLocation(specimen.getClone().getLocationAsString());
             specimenCloneDTO.setSex(specimen.getClone().getSexAsString());
             specimenCloneDTO.setProducer(specimen.getClone().getSellerAsString());
+            specimenCloneDTO.setNepenthesName(specimen.getClone().getLabelName());
             growlistDTO.addSpecimensItem(specimenCloneDTO);
         }
 
