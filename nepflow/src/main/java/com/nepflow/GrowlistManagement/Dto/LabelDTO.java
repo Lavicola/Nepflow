@@ -18,31 +18,31 @@ import jakarta.annotation.Generated;
  * LabelDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-01T18:41:42.843846800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:49.343508100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class LabelDTO {
 
-  private String name;
+  private String nepenthesName;
 
   private String prefix;
 
-  public LabelDTO name(String name) {
-    this.name = name;
+  public LabelDTO nepenthesName(String nepenthesName) {
+    this.nepenthesName = nepenthesName;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get nepenthesName
+   * @return nepenthesName
   */
   
-  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("name")
-  public String getName() {
-    return name;
+  @Schema(name = "nepenthesName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("nepenthesName")
+  public String getNepenthesName() {
+    return nepenthesName;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setNepenthesName(String nepenthesName) {
+    this.nepenthesName = nepenthesName;
   }
 
   public LabelDTO prefix(String prefix) {
@@ -74,20 +74,20 @@ public class LabelDTO {
       return false;
     }
     LabelDTO labelDTO = (LabelDTO) o;
-    return Objects.equals(this.name, labelDTO.name) &&
+    return Objects.equals(this.nepenthesName, labelDTO.nepenthesName) &&
         Objects.equals(this.prefix, labelDTO.prefix);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, prefix);
+    return Objects.hash(nepenthesName, prefix);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class LabelDTO {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    nepenthesName: ").append(toIndentedString(nepenthesName)).append("\n");
     sb.append("    prefix: ").append(toIndentedString(prefix)).append("\n");
     sb.append("}");
     return sb.toString();

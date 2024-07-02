@@ -15,54 +15,54 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * LabelDTO
+ * ProducerDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:29.653523300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class LabelDTO {
+public class ProducerDTO {
 
-  private String nepenthesName;
+  private String name;
 
-  private String prefix;
+  private String contact;
 
-  public LabelDTO nepenthesName(String nepenthesName) {
-    this.nepenthesName = nepenthesName;
+  public ProducerDTO name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get nepenthesName
-   * @return nepenthesName
+   * Get name
+   * @return name
   */
   
-  @Schema(name = "nepenthesName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("nepenthesName")
-  public String getNepenthesName() {
-    return nepenthesName;
+  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("name")
+  public String getName() {
+    return name;
   }
 
-  public void setNepenthesName(String nepenthesName) {
-    this.nepenthesName = nepenthesName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public LabelDTO prefix(String prefix) {
-    this.prefix = prefix;
+  public ProducerDTO contact(String contact) {
+    this.contact = contact;
     return this;
   }
 
   /**
-   * Get prefix
-   * @return prefix
+   * Get contact
+   * @return contact
   */
   
-  @Schema(name = "prefix", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("prefix")
-  public String getPrefix() {
-    return prefix;
+  @Schema(name = "contact", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("contact")
+  public String getContact() {
+    return contact;
   }
 
-  public void setPrefix(String prefix) {
-    this.prefix = prefix;
+  public void setContact(String contact) {
+    this.contact = contact;
   }
 
   @Override
@@ -73,22 +73,22 @@ public class LabelDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LabelDTO labelDTO = (LabelDTO) o;
-    return Objects.equals(this.nepenthesName, labelDTO.nepenthesName) &&
-        Objects.equals(this.prefix, labelDTO.prefix);
+    ProducerDTO producerDTO = (ProducerDTO) o;
+    return Objects.equals(this.name, producerDTO.name) &&
+        Objects.equals(this.contact, producerDTO.contact);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nepenthesName, prefix);
+    return Objects.hash(name, contact);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LabelDTO {\n");
-    sb.append("    nepenthesName: ").append(toIndentedString(nepenthesName)).append("\n");
-    sb.append("    prefix: ").append(toIndentedString(prefix)).append("\n");
+    sb.append("class ProducerDTO {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    contact: ").append(toIndentedString(contact)).append("\n");
     sb.append("}");
     return sb.toString();
   }

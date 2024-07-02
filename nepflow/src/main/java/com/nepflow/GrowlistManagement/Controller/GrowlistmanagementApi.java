@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-01T18:41:42.843846800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:49.343508100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Growlistmanagement", description = "the Growlistmanagement API")
 public interface GrowlistmanagementApi {
@@ -164,6 +164,40 @@ public interface GrowlistmanagementApi {
         @Parameter(name = "SpecimenCloneDTO", description = "") @Valid @RequestBody(required = false) SpecimenCloneDTO specimenCloneDTO
     ) {
         return getDelegate().growlistClonesSpecimenIdPut(specimenId, specimenCloneDTO);
+    }
+
+
+    /**
+     * POST /growlist/create/nepenthes/{cloneType} : Create a new Nepenthes and an additional IV or IC Clone and Add it to the Growlist
+     *
+     * @param cloneType  (required)
+     * @param labelCloneDTO  (optional)
+     * @return OK (status code 200)
+     *         or Error, could not add Specimen to user (status code 500)
+     */
+    @Operation(
+        operationId = "growlistCreateNepenthesCloneTypePost",
+        summary = "Create a new Nepenthes and an additional IV or IC Clone and Add it to the Growlist",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenCloneDTO.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error, could not add Specimen to user")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/growlist/create/nepenthes/{cloneType}",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    default ResponseEntity<SpecimenCloneDTO> growlistCreateNepenthesCloneTypePost(
+        @Parameter(name = "cloneType", description = "", required = true, in = ParameterIn.PATH) @PathVariable("cloneType") CloneType cloneType,
+        @Parameter(name = "LabelCloneDTO", description = "") @Valid @RequestBody(required = false) LabelCloneDTO labelCloneDTO
+    ) {
+        return getDelegate().growlistCreateNepenthesCloneTypePost(cloneType, labelCloneDTO);
     }
 
 

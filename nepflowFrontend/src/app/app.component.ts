@@ -12,12 +12,9 @@ import {from} from "rxjs";
 export class AppComponent implements OnInit{
   title = 'nepflowFrontend';
   newNepenthesRoute: string = "nepenthes/add";
-  newCloneRoute: string = "nepenthes/clone/add";
-  userAddCloneToProfile: string = "user/nepenthes/add";
+  growlistRoute: string = "nepenthes/growlist"
+
   profileRoute: string = "user/overview";
-  myPlantsRoute: string = "user/profile/nepenthes";
-  nepenthesAdd: string = "user/nepenthes/add";
-  hybridAdd: string = "hybrid/add";
   isLoggedIn:boolean = false;
 
 

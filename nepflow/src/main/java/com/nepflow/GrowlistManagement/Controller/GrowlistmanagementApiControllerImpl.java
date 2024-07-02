@@ -62,10 +62,10 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         CloneDTO cloneDTO = labelCloneDTO.getClone();
 
         if (cloneType.equals(CloneType.ic)) {
-            specimen = this.growlistservice.addNewICCloneToGrowList(user, labelCloneDTO.getLabel().getName(), cloneDTO.getCloneId(),
+            specimen = this.growlistservice.addNewICCloneToGrowList(user, labelCloneDTO.getLabel().getNepenthesName(), cloneDTO.getCloneId(),
                     cloneDTO.getSex(), cloneDTO.getLocation(), cloneDTO.getProducer());
         } else {
-            specimen = this.growlistservice.addNewIVCloneToGrowList(user, labelCloneDTO.getLabel().getName(), cloneDTO.getCloneId(),
+            specimen = this.growlistservice.addNewIVCloneToGrowList(user, labelCloneDTO.getLabel().getNepenthesName(), cloneDTO.getCloneId(),
                     cloneDTO.getSex(), cloneDTO.getLocation(), cloneDTO.getProducer());
         }
 

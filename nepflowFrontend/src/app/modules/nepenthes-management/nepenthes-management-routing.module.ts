@@ -4,15 +4,17 @@ import {NepenthesCloneDropdownComponent} from "./nepenthes-clone-dropdown/nepent
 import {NepenthesDropdownComponent} from "./nepenthes-dropdown/nepenthes-dropdown.component";
 import {authGuardAuthenticated} from "../../guards/authGuardAuthenticated";
 import {NepenthesCloneComponent} from "./nepenthes-clone/nepenthes-clone.component";
+import {UserGrowlistComponent} from "./user-growlist/user-growlist.component";
 
 const routes: Routes = [
 
   {path: "add",
-    component: NepenthesCloneDropdownComponent,
+    component: NepenthesCloneComponent,
     // canActivate: [authGuardAuthenticated]
   },
-  {path: "test",
-    component: NepenthesCloneComponent,
+
+  {path: "growlist",
+    component: UserGrowlistComponent,
     // canActivate: [authGuardAuthenticated]
   },
 

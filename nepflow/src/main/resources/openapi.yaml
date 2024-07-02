@@ -12,32 +12,6 @@ tags:
 - description: Operations to manage Nepenthes
   name: NepenthesManagement
 paths:
-  /location:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LocationDTO"
-        description: LocationdTo with all necessary Attributes
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LocationDTO"
-          description: OK
-        "500":
-          description: Internal Error
-      summary: add a new Location
-      tags:
-      - NepenthesMetadata
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: NepenthesMetadata
   /producer:
     post:
       requestBody:
@@ -308,6 +282,39 @@ paths:
       - application/json
       x-tags:
       - tag: Growlistmanagement
+  /growlist/create/nepenthes/{cloneType}:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: cloneType
+        required: true
+        schema:
+          $ref: "#/components/schemas/CloneType"
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelCloneDTO"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenCloneDTO"
+          description: OK
+        "500":
+          description: "Error, could not add Specimen to user"
+      summary: Create a new Nepenthes and an additional IV or IC Clone and Add it
+        to the Growlist
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
   /growlist/clones/{specimenId}:
     delete:
       parameters:
@@ -439,16 +446,22 @@ components:
         type: string
       style: simple
   schemas:
-    LocationDTO:
-      type: string
     ProducerDTO:
-      type: string
-    LabelDTO:
       example:
-        prefix: prefix
+        contact: contact
         name: name
       properties:
         name:
+          type: string
+        contact:
+          type: string
+      type: object
+    LabelDTO:
+      example:
+        prefix: prefix
+        nepenthesName: nepenthesName
+      properties:
+        nepenthesName:
           type: string
         prefix:
           type: string
@@ -459,10 +472,13 @@ components:
         nickname: nickname
         description: description
         producer: producer
+        nepenthesName: nepenthesName
         internalCloneId: internalCloneId
         cloneId: cloneId
         Location: Location
       properties:
+        nepenthesName:
+          type: string
         cloneId:
           type: string
         internalCloneId:
@@ -485,12 +501,13 @@ components:
           nickname: nickname
           description: description
           producer: producer
+          nepenthesName: nepenthesName
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location
         label:
           prefix: prefix
-          name: name
+          nepenthesName: nepenthesName
       properties:
         label:
           $ref: "#/components/schemas/LabelDTO"
@@ -504,6 +521,7 @@ components:
           nickname: nickname
           description: description
           producer: producer
+          nepenthesName: nepenthesName
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location
@@ -511,12 +529,13 @@ components:
           nickname: nickname
           description: description
           producer: producer
+          nepenthesName: nepenthesName
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location
         label:
           prefix: prefix
-          name: name
+          nepenthesName: nepenthesName
       properties:
         label:
           $ref: "#/components/schemas/LabelDTO"
@@ -538,6 +557,7 @@ components:
         description: description
         producer: producer
         specimenId: specimenId
+        nepenthesName: nepenthesName
         internalCloneId: internalCloneId
         cloneId: cloneId
         Location: Location
@@ -549,6 +569,7 @@ components:
           description: description
           producer: producer
           specimenId: specimenId
+          nepenthesName: nepenthesName
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location
@@ -557,6 +578,7 @@ components:
           description: description
           producer: producer
           specimenId: specimenId
+          nepenthesName: nepenthesName
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location

@@ -18,8 +18,10 @@ import jakarta.annotation.Generated;
  * SpecimenCloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-01T18:41:42.843846800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:49.343508100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class SpecimenCloneDTO {
+
+  private String nepenthesName;
 
   private String cloneId;
 
@@ -36,6 +38,26 @@ public class SpecimenCloneDTO {
   private String location;
 
   private String specimenId;
+
+  public SpecimenCloneDTO nepenthesName(String nepenthesName) {
+    this.nepenthesName = nepenthesName;
+    return this;
+  }
+
+  /**
+   * Get nepenthesName
+   * @return nepenthesName
+  */
+  
+  @Schema(name = "nepenthesName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("nepenthesName")
+  public String getNepenthesName() {
+    return nepenthesName;
+  }
+
+  public void setNepenthesName(String nepenthesName) {
+    this.nepenthesName = nepenthesName;
+  }
 
   public SpecimenCloneDTO cloneId(String cloneId) {
     this.cloneId = cloneId;
@@ -206,7 +228,8 @@ public class SpecimenCloneDTO {
       return false;
     }
     SpecimenCloneDTO specimenCloneDTO = (SpecimenCloneDTO) o;
-    return Objects.equals(this.cloneId, specimenCloneDTO.cloneId) &&
+    return Objects.equals(this.nepenthesName, specimenCloneDTO.nepenthesName) &&
+        Objects.equals(this.cloneId, specimenCloneDTO.cloneId) &&
         Objects.equals(this.internalCloneId, specimenCloneDTO.internalCloneId) &&
         Objects.equals(this.sex, specimenCloneDTO.sex) &&
         Objects.equals(this.description, specimenCloneDTO.description) &&
@@ -218,13 +241,14 @@ public class SpecimenCloneDTO {
 
   @Override
   public int hashCode() {
-    return Objects.hash(cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId);
+    return Objects.hash(nepenthesName, cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SpecimenCloneDTO {\n");
+    sb.append("    nepenthesName: ").append(toIndentedString(nepenthesName)).append("\n");
     sb.append("    cloneId: ").append(toIndentedString(cloneId)).append("\n");
     sb.append("    internalCloneId: ").append(toIndentedString(internalCloneId)).append("\n");
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");

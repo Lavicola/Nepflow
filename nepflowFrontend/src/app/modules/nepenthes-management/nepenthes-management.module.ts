@@ -16,6 +16,7 @@ import { NepenthesCloneTableComponent } from './nepenthes-clone-table/nepenthes-
 import {MatTableModule} from "@angular/material/table";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
+import { UserGrowlistComponent } from './user-growlist/user-growlist.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
     NepenthesCloneDropdownComponent,
     NepenthesCloneComponent,
     NepenthesCloneTableComponent,
+    UserGrowlistComponent,
   ],
   exports: [
     NepenthesCloneDropdownComponent

@@ -5,6 +5,7 @@
  */
 package com.nepflow.NepenthesManagement.Controller;
 
+import com.nepflow.NepenthesManagement.Dto.ProducerDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T00:49:12.097251100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:29.653523300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "NepenthesMetadata", description = "the NepenthesMetadata API")
 public interface NepenthesMetadataApi {
@@ -37,41 +38,9 @@ public interface NepenthesMetadataApi {
     }
 
     /**
-     * POST /location : add a new Location
-     *
-     * @param body LocationdTo with all necessary Attributes (required)
-     * @return OK (status code 200)
-     *         or Internal Error (status code 500)
-     */
-    @Operation(
-        operationId = "locationPost",
-        summary = "add a new Location",
-        tags = { "NepenthesMetadata" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
-            }),
-            @ApiResponse(responseCode = "500", description = "Internal Error")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/location",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    
-    default ResponseEntity<String> locationPost(
-        @Parameter(name = "body", description = "LocationdTo with all necessary Attributes", required = true) @Valid @RequestBody String body
-    ) {
-        return getDelegate().locationPost(body);
-    }
-
-
-    /**
      * POST /producer : add a new Producer
      *
-     * @param body DTO with all necessary Attributes (required)
+     * @param producerDTO DTO with all necessary Attributes (required)
      * @return OK (status code 200)
      *         or Internal Error (status code 500)
      */
@@ -81,7 +50,7 @@ public interface NepenthesMetadataApi {
         tags = { "NepenthesMetadata" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = String.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ProducerDTO.class))
             }),
             @ApiResponse(responseCode = "500", description = "Internal Error")
         }
@@ -93,10 +62,10 @@ public interface NepenthesMetadataApi {
         consumes = { "application/json" }
     )
     
-    default ResponseEntity<String> producerPost(
-        @Parameter(name = "body", description = "DTO with all necessary Attributes", required = true) @Valid @RequestBody String body
+    default ResponseEntity<ProducerDTO> producerPost(
+        @Parameter(name = "ProducerDTO", description = "DTO with all necessary Attributes", required = true) @Valid @RequestBody ProducerDTO producerDTO
     ) {
-        return getDelegate().producerPost(body);
+        return getDelegate().producerPost(producerDTO);
     }
 
 }

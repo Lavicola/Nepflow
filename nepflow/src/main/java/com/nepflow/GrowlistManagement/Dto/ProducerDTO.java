@@ -4,8 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.nepflow.GrowlistManagement.Dto.CloneDTO;
-import com.nepflow.GrowlistManagement.Dto.LabelDTO;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import jakarta.validation.Valid;
@@ -17,54 +15,54 @@ import java.util.*;
 import jakarta.annotation.Generated;
 
 /**
- * LabelCloneDTO
+ * ProducerDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:49.343508100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class LabelCloneDTO {
+public class ProducerDTO {
 
-  private LabelDTO label;
+  private String name;
 
-  private CloneDTO clone;
+  private String contact;
 
-  public LabelCloneDTO label(LabelDTO label) {
-    this.label = label;
+  public ProducerDTO name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * Get label
-   * @return label
+   * Get name
+   * @return name
   */
-  @Valid 
-  @Schema(name = "label", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("label")
-  public LabelDTO getLabel() {
-    return label;
+  
+  @Schema(name = "name", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("name")
+  public String getName() {
+    return name;
   }
 
-  public void setLabel(LabelDTO label) {
-    this.label = label;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public LabelCloneDTO clone(CloneDTO clone) {
-    this.clone = clone;
+  public ProducerDTO contact(String contact) {
+    this.contact = contact;
     return this;
   }
 
   /**
-   * Get clone
-   * @return clone
+   * Get contact
+   * @return contact
   */
-  @Valid 
-  @Schema(name = "clone", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("clone")
-  public CloneDTO getClone() {
-    return clone;
+  
+  @Schema(name = "contact", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("contact")
+  public String getContact() {
+    return contact;
   }
 
-  public void setClone(CloneDTO clone) {
-    this.clone = clone;
+  public void setContact(String contact) {
+    this.contact = contact;
   }
 
   @Override
@@ -75,22 +73,22 @@ public class LabelCloneDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LabelCloneDTO labelCloneDTO = (LabelCloneDTO) o;
-    return Objects.equals(this.label, labelCloneDTO.label) &&
-        Objects.equals(this.clone, labelCloneDTO.clone);
+    ProducerDTO producerDTO = (ProducerDTO) o;
+    return Objects.equals(this.name, producerDTO.name) &&
+        Objects.equals(this.contact, producerDTO.contact);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(label, clone);
+    return Objects.hash(name, contact);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LabelCloneDTO {\n");
-    sb.append("    label: ").append(toIndentedString(label)).append("\n");
-    sb.append("    clone: ").append(toIndentedString(clone)).append("\n");
+    sb.append("class ProducerDTO {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    contact: ").append(toIndentedString(contact)).append("\n");
     sb.append("}");
     return sb.toString();
   }

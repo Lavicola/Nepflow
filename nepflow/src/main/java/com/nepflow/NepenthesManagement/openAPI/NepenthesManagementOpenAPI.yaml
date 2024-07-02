@@ -14,28 +14,6 @@ servers:
   - url: http://localhost:8080/api
 
 paths:
-  /location:
-    post:
-      summary: add a new Location
-      tags:
-        - NepenthesMetadata
-      requestBody:
-        description: LocationdTo with all necessary Attributes
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LocationDTO'
-
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LocationDTO'
-        '500':
-          description: Internal Error
   /producer:
     post:
       summary: add a new Producer
@@ -184,7 +162,27 @@ paths:
                 $ref: '#/components/schemas/SpecimenCloneDTO'
         '500':
           description: Error, could not add Specimen to user
-
+  /growlist/create/nepenthes/{cloneType}:
+    parameters:
+      - $ref: "#/components/parameters/cloneType"
+    post:
+      summary: Create a new Nepenthes and an additional IV or IC Clone and Add it to the Growlist
+      tags:
+        - Growlistmanagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LabelCloneDTO'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecimenCloneDTO'
+        '500':
+          description: Error, could not add Specimen to user
   /growlist/clones/{specimenId}:
     parameters:
       - $ref: "#/components/parameters/specimenId"
@@ -285,17 +283,19 @@ components:
 
   schemas:
 
-    LocationDTO:
-      type: string
-
     ProducerDTO:
-      type: string
+      type: object
+      properties:
+        name:
+          type: string
+        contact:
+          type: string
 
     # abstraction of Hybrid/Nepenthes etc.
     LabelDTO:
       type: object
       properties:
-        name:
+        nepenthesName:
           type: string
         prefix:
           type: string
@@ -304,6 +304,8 @@ components:
     CloneDTO:
       type: object
       properties:
+        nepenthesName:
+          type: string
         cloneId:
           type: string
         internalCloneId:
@@ -315,9 +317,9 @@ components:
         nickname:
           type: string
         producer:
-          $ref: '#/components/schemas/ProducerDTO'
+          type: string
         Location:
-          $ref: '#/components/schemas/LocationDTO'
+          type: string
 
     LabelCloneDTO:
       type: object

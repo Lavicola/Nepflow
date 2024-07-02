@@ -23,7 +23,7 @@ import jakarta.annotation.Generated;
  * LabelClonesDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-01T18:41:42.843846800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:49.343508100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class LabelClonesDTO {
 
   private LabelDTO label;

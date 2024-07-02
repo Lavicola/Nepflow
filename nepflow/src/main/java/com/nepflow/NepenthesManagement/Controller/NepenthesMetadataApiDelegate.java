@@ -1,5 +1,6 @@
 package com.nepflow.NepenthesManagement.Controller;
 
+import com.nepflow.NepenthesManagement.Dto.ProducerDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link NepenthesMetadataApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T00:49:12.097251100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:29.653523300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface NepenthesMetadataApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -25,27 +26,23 @@ public interface NepenthesMetadataApiDelegate {
     }
 
     /**
-     * POST /location : add a new Location
-     *
-     * @param body LocationdTo with all necessary Attributes (required)
-     * @return OK (status code 200)
-     *         or Internal Error (status code 500)
-     * @see NepenthesMetadataApi#locationPost
-     */
-    default ResponseEntity<String> locationPost(String body) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
      * POST /producer : add a new Producer
      *
-     * @param body DTO with all necessary Attributes (required)
+     * @param producerDTO DTO with all necessary Attributes (required)
      * @return OK (status code 200)
      *         or Internal Error (status code 500)
      * @see NepenthesMetadataApi#producerPost
      */
-    default ResponseEntity<String> producerPost(String body) {
+    default ResponseEntity<ProducerDTO> producerPost(ProducerDTO producerDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"contact\" : \"contact\", \"name\" : \"name\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

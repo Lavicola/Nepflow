@@ -22,7 +22,7 @@ import jakarta.annotation.Generated;
  * GrowlistDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T00:49:12.097251100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:29.653523300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class GrowlistDTO {
 
   private String id;
