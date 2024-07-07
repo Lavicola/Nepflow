@@ -18,9 +18,9 @@
            [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let label of filteredOptions | async"
-                  [value]="label.name"
+                  [value]="label.nepenthesName"
                   (click)="selectedNepenthes($event, label)">
-        {{ label.name }}
+        {{ label.nepenthesName }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

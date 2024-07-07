@@ -1,1 +1,24 @@
-<p>user-growlist works!</p>
+<!-- plant-grid.component.html -->
+<mat-grid-list cols="3" gutterSize="16px">
+  <mat-grid-tile *ngFor="let specimen of specimens;let i = index">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ specimen.nepenthesName }}</mat-card-title>
+      </mat-card-header>
+      <img
+        mat-card-image
+        [src]="specimen.file || 'assets/placeholder.jpg'"
+        alt="{{ specimen.nepenthesName }}"
+        (click)="onImageClick(i)">
+      <input
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event, i)"
+        #fileInput
+        style="display: none;">      <mat-card-content>
+        <p><strong>Clone ID:</strong> {{ specimen.cloneId }}</p>
+        <p><strong>Sex:</strong> {{ specimen.sex }}</p>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

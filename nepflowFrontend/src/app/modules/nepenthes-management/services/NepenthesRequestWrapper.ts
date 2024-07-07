@@ -100,12 +100,12 @@ export class NepenthesRequestWrapper{
   }
 
   switchToIv():CloneType{
-    this.cloneType= CloneType.Iv;
+    this.cloneType= CloneType.iv;
     return this.cloneType
   }
 
   switchToIc():CloneType{
-    this.cloneType=CloneType.Ic
+    this.cloneType=CloneType.ic
     return this.cloneType
   }
   switchToSpecies(){

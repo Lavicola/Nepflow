@@ -45,7 +45,7 @@ export class NepenthesDropdownComponent implements OnInit {
   private _filter(value: string): LabelDto[] {
     const filterValue = value.toLowerCase();
 
-    return this.existingNepenthesList.filter(option => option.name?.toLowerCase().includes(filterValue));
+    return this.existingNepenthesList.filter(option => option.nepenthesName?.toLowerCase().includes(filterValue));
   }
 
 
