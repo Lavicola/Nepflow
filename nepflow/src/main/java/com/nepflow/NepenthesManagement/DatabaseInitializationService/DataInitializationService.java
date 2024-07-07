@@ -76,7 +76,7 @@ public class DataInitializationService {
 
        // https://community.neo4j.com/t/super-frustrated-sdn-deleting-existing-relationships/35245/15
 
-        if (false) {
+        if (true) {
             String SPLIT = ",";
             // Store known cultivars
             Label labelAtRuntime;
