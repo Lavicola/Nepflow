@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**
- * These Tests tests the integration with NepenthesManagement and UserManagement
+ * These Test, tests the integration with NepenthesManagement and UserManagement
  *
  */
 
@@ -45,6 +45,9 @@ public class GrowlistManagementServiceTest {
 
 
     private static Neo4j embeddedDatabaseServer;
+
+    @MockBean
+    DataInitializationService dataInitializationService;
 
     @Autowired
     CountryRepository countryRepository;
@@ -59,16 +62,10 @@ public class GrowlistManagementServiceTest {
     Growlistservice growlistservice;
 
     @Autowired
-    DataInitializationService dataInitializationService;
-
-    @Autowired
     UserManagementService userManagementService;
 
     @MockBean
     AuthenticationService authenticationService;
-
-    @Autowired
-    CloneRepository cloneRepository;
 
     @Autowired
     GrowlistRepository growlistRepository;
