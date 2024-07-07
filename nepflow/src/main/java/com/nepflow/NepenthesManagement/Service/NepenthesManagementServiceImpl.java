@@ -1,17 +1,18 @@
 package com.nepflow.NepenthesManagement.Service;
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Seller;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
-import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
 import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Repository.LocationRepository;
 import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class NepenthesManagementServiceImpl implements NepenthesManagementService {
@@ -47,7 +48,6 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         // only Location is allowed to be freely inserted
         Location location = this.managementMetaDataService.saveLocation(locationAsString);
         if (this.cloneRepository.existsByInternalCloneId(IVClone.generateInternalCloneId(cloneId, sex))) {
-            // clone already exists
             return null;
         }
         newIvClone = label.addIVClone(cloneId, sex, location, producer);
@@ -72,6 +72,23 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         newIcClone = label.addICClone(sex, location,seller);
         this.labelRepository.save(label);
         return newIcClone;
+    }
+
+    @Override
+    public ICClone saveICCloneWithCloneId(Label label,String cloneId, String sexAsString, String locationAsString, String sellerAsString){
+        Location location;
+        ICClone newIcClone;
+        Sex sex = this.managementMetaDataService.getSex(sexAsString);
+        Seller seller = this.managementMetaDataService.getSeller(sellerAsString);
+        location = this.managementMetaDataService.saveLocation(locationAsString);
+        if (this.cloneRepository.existsByInternalCloneId(ICClone.generateInternalCloneId(cloneId, sex))) {
+            return null;
+        }
+
+        newIcClone = label.addICClone(sex,cloneId, location,seller);
+        this.labelRepository.save(label);
+
+        return  newIcClone;
     }
 
     @Override

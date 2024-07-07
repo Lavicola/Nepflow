@@ -9,29 +9,21 @@ import com.nepflow.GrowlistManagement.Dto.CloneType;
 import com.nepflow.GrowlistManagement.Dto.GrowlistDTO;
 import com.nepflow.GrowlistManagement.Dto.LabelCloneDTO;
 import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
-import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
-import java.util.List;
-import java.util.Map;
-import jakarta.annotation.Generated;
-
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:49.343508100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-06T21:22:32.607237200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Growlistmanagement", description = "the Growlistmanagement API")
 public interface GrowlistmanagementApi {
@@ -134,10 +126,39 @@ public interface GrowlistmanagementApi {
 
 
     /**
+     * GET /growlist/clones/{specimenId}
+     *
+     * @param specimenId  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "growlistClonesSpecimenIdGet",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenCloneDTO.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/growlist/clones/{specimenId}",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(
+        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId
+    ) {
+        return getDelegate().growlistClonesSpecimenIdGet(specimenId);
+    }
+
+
+    /**
      * PUT /growlist/clones/{specimenId} : update values
      *
      * @param specimenId  (required)
-     * @param specimenCloneDTO  (optional)
+     * @param sex  (optional)
+     * @param file  (optional)
      * @return OK (status code 200)
      *         or Could not update Specimen (status code 500)
      */
@@ -156,14 +177,15 @@ public interface GrowlistmanagementApi {
         method = RequestMethod.PUT,
         value = "/growlist/clones/{specimenId}",
         produces = { "application/json" },
-        consumes = { "application/json" }
+        consumes = { "multipart/form-data" }
     )
     
     default ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdPut(
         @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
-        @Parameter(name = "SpecimenCloneDTO", description = "") @Valid @RequestBody(required = false) SpecimenCloneDTO specimenCloneDTO
+        @Parameter(name = "sex", description = "") @Valid @RequestParam(value = "sex", required = false) String sex,
+        @Parameter(name = "file", description = "") @RequestPart(value = "file", required = false) MultipartFile file
     ) {
-        return getDelegate().growlistClonesSpecimenIdPut(specimenId, specimenCloneDTO);
+        return getDelegate().growlistClonesSpecimenIdPut(specimenId, sex, file);
     }
 
 
@@ -202,7 +224,7 @@ public interface GrowlistmanagementApi {
 
 
     /**
-     * GET /growlist/{username}/clones : get Nepenthes of a specific User
+     * GET /growlist/{username}/clones : get all Specimens of a specific User, if Growlist is public
      *
      * @param username  (required)
      * @return OK (status code 200)
@@ -210,7 +232,7 @@ public interface GrowlistmanagementApi {
      */
     @Operation(
         operationId = "growlistUsernameClonesGet",
-        summary = "get Nepenthes of a specific User",
+        summary = "get all Specimens of a specific User, if Growlist is public",
         tags = { "Growlistmanagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {

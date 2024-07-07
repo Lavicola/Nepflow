@@ -67,7 +67,16 @@ public class DataInitializationService {
     @PostConstruct
     public void initializeModel() throws IOException {
 
-        if (true) {
+        String nepenthesAsString ;
+        String producerAsString;
+        String cloneTypeAsString;
+        String cloneId;
+        String sexAsString;
+        String locationAsString;
+
+       // https://community.neo4j.com/t/super-frustrated-sdn-deleting-existing-relationships/35245/15
+
+        if (false) {
             String SPLIT = ",";
             // Store known cultivars
             Label labelAtRuntime;
@@ -79,12 +88,12 @@ public class DataInitializationService {
             int SEX_INDEX = CLONEID_INDEX + 1;
             int LOCATION_INDEX = SEX_INDEX + 1;
 
-            String nepenthesAsString;
-            String producerAsString;
-            String cloneTypeAsString;
-            String cloneId;
-            String sexAsString;
-            String locationAsString;
+
+
+
+
+
+
 
             // store supported countries
             for (String countyLine : this.getLines(CountryTXT)) {
@@ -119,7 +128,7 @@ public class DataInitializationService {
                             cloneId, sexAsString,
                             locationAsString, producerAsString);
                 }else{
-                    this.nepenthesManagementService.saveICClone(nepenthes, sexAsString,
+                    this.nepenthesManagementService.saveICCloneWithCloneId(nepenthes,cloneId, sexAsString,
                             locationAsString, producerAsString);
 
                 }

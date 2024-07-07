@@ -6,7 +6,6 @@ import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.data.neo4j.DataNeo4jTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 /**

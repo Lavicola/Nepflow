@@ -338,6 +338,28 @@ paths:
       - application/json
       x-tags:
       - tag: Growlistmanagement
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenCloneDTO"
+          description: OK
+      tags:
+      - Growlistmanagement
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
     put:
       parameters:
       - explode: false
@@ -349,9 +371,10 @@ paths:
         style: simple
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/SpecimenCloneDTO"
+              $ref: "#/components/schemas/SpecimenUpdateCloneDTO"
+        required: false
       responses:
         "200":
           content:
@@ -364,7 +387,7 @@ paths:
       summary: update values
       tags:
       - Growlistmanagement
-      x-content-type: application/json
+      x-content-type: multipart/form-data
       x-accepts:
       - application/json
       x-tags:
@@ -388,7 +411,7 @@ paths:
           description: OK
         "404":
           description: "Error, User not found"
-      summary: get Nepenthes of a specific User
+      summary: "get all Specimens of a specific User, if Growlist is public"
       tags:
       - Growlistmanagement
       x-accepts:
@@ -550,8 +573,12 @@ components:
       - properties:
           specimenId:
             type: string
+          file:
+            format: binary
+            type: string
         type: object
       example:
+        file: ""
         sex: sex
         nickname: nickname
         description: description
@@ -561,10 +588,19 @@ components:
         internalCloneId: internalCloneId
         cloneId: cloneId
         Location: Location
+    SpecimenUpdateCloneDTO:
+      properties:
+        sex:
+          type: string
+        file:
+          format: binary
+          type: string
+      type: object
     GrowlistDTO:
       example:
         specimens:
-        - sex: sex
+        - file: ""
+          sex: sex
           nickname: nickname
           description: description
           producer: producer
@@ -573,7 +609,8 @@ components:
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location
-        - sex: sex
+        - file: ""
+          sex: sex
           nickname: nickname
           description: description
           producer: producer

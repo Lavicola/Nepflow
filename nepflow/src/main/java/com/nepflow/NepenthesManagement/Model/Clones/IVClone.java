@@ -1,5 +1,6 @@
 package com.nepflow.NepenthesManagement.Model.Clones;
 
+import com.nepflow.NepenthesManagement.Exception.CloneIdNotProvidedException;
 import com.nepflow.NepenthesManagement.Exception.ProducerIsNullException;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
@@ -25,24 +26,18 @@ public abstract class IVClone extends Clone {
             throw new ProducerIsNullException(cloneId);
         }
         if(cloneId.equals("") || cloneId == null){
-            throw new ProducerIsNullException(cloneId);
+            throw new CloneIdNotProvidedException();
         }
-        this.internalCloneId = IVClone.generateInternalCloneId(cloneId,sex);
         this.producer = producer;
 
     }
 
-    public static String generateInternalCloneId(String cloneId,Sex sex){
-        if(sex != null){
-            return String.format("%s-%s",cloneId,sex.getSexAsString().substring(0,1));
-        }else{
-            return cloneId;
-        }
-    }
+
 
     public String getSellerAsString(){
-        return this.producer.getName();
+        return this.producer != null ? this.producer.getName():"";
     }
+
 
 
 }

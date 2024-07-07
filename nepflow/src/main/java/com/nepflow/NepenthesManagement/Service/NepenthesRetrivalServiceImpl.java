@@ -3,7 +3,6 @@ package com.nepflow.NepenthesManagement.Service;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.PrivateSeller;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;

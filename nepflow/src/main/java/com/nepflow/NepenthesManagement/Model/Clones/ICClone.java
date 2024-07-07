@@ -19,13 +19,13 @@ public abstract class ICClone extends Clone {
     @Getter
     Seller seller;
 
-    public ICClone(Label label,Sex sex, String cloneId, Location location, Seller seller) {
+    public ICClone(Label label, Sex sex, String cloneId, Location location, Seller seller) {
         super(label, sex, cloneId, location);
         this.seller = seller;
     }
 
-    public String getSellerAsString(){
-        return this.seller != null ? this.seller.getName():"";
+    public String getSellerAsString() {
+        return this.seller != null ? this.seller.getName() : "";
     }
 
 

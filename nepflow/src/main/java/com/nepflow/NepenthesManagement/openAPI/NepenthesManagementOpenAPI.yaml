@@ -141,6 +141,7 @@ paths:
                 $ref: '#/components/schemas/SpecimenCloneDTO'
         '500':
           description: Error, could not add Specimen to user
+
   /growlist/clone/create/{cloneType}:
     parameters:
       - $ref: "#/components/parameters/cloneType"
@@ -200,10 +201,11 @@ paths:
       tags:
         - Growlistmanagement
       requestBody:
+        required: false
         content:
-          application/json:
+          multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SpecimenCloneDTO'
+              $ref: '#/components/schemas/SpecimenUpdateCloneDTO'
       responses:
         '200':
           description: OK
@@ -213,13 +215,23 @@ paths:
                 $ref: '#/components/schemas/SpecimenCloneDTO'
         '500':
           description: Could not update Specimen
+    get:
+      tags:
+        - Growlistmanagement
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecimenCloneDTO'
 
   /growlist/{username}/clones:
     parameters:
       - $ref: "#/components/parameters/username"
 
     get:
-      summary: get Nepenthes of a specific User
+      summary: get all Specimens of a specific User, if Growlist is public
       tags:
         - Growlistmanagement
       responses:
@@ -329,7 +341,6 @@ components:
         clone:
           $ref: '#/components/schemas/CloneDTO'
 
-
     LabelClonesDTO:
       type: object
       properties:
@@ -347,6 +358,24 @@ components:
           properties:
             specimenId:
               type: string
+            file:
+              type: string
+              format: binary
+
+
+    SpecimenUpdateCloneDTO:
+      type: object
+      properties:
+        sex:
+          type: string
+        file:
+          type: string
+          format: binary
+
+
+
+
+
 
     GrowlistDTO:
       type: object

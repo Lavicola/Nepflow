@@ -1,7 +1,10 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
 import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Seller;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
@@ -82,7 +85,11 @@ public abstract class Label {
         return icClone;
     }
 
-
+    public ICClone addICClone(Sex sex,String cloneId, Location location, Seller seller){
+        ICClone icClone = createICClone(cloneId, sex, location,seller);
+        this.cloneIcList.add(icClone);
+        return icClone;
+    }
     public IVClone addIVClone(String cloneId, Sex sex, Location location, Producer producer){
         IVClone icClone = createIVClone( cloneId, sex, location, producer);
         this.cloneIvList.add(icClone);

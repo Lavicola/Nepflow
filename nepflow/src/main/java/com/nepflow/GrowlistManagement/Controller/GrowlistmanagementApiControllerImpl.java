@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementApiDelegate {
@@ -32,7 +33,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GrowlistDTO());
         }
         Growlist growlist = this.growlistservice.getGrowlist(username);
-        if (growlist != null &&(growlist.isPublic() || user.getUsername().equals(username))) {
+       if (growlist != null &&(growlist.isPublic() || user.getUsername().equals(username))) {
             return ResponseEntity.status(HttpStatus.OK).body(this.convertGrowlistToDTO(growlist));
         }
 
@@ -84,7 +85,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         if (growlist == null) {
             return growlistDTO;
         }
-        for (Specimen specimen : growlist.getSpezimens()) {
+        for (Specimen specimen : growlist.getSpecimens()) {
             specimenCloneDTO = new SpecimenCloneDTO();
             specimenCloneDTO.setCloneId(specimen.getClone().getCloneId());
             specimenCloneDTO.setSpecimenId(specimen.getUuid());
@@ -99,5 +100,19 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         return growlistDTO;
     }
 
+
+    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdPut(String specimenId,String sex,MultipartFile file){
+
+
+
+        return null;
+
+}
+
+    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId){
+
+        return null;
+
+    }
 
 }

@@ -3,8 +3,8 @@ package com.nepflow.NepenthesManagement.Service;
 import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
-import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
+import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;

@@ -4,8 +4,8 @@ package com.nepflow.NepenthesManagement.Service;
 import com.nepflow.NepenthesManagement.LabelFormats;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.MultiHybrid;
-import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
+import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertTrue;

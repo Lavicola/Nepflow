@@ -8,6 +8,12 @@ spring:
     active: default
   server:
     port: 8080
+  servlet:
+    multipart.max-file-size: 10MB
+    multipart.max-request-size: 10MB
+
+
+
   neo4j:
     uri: bolt://localhost:7687
     authentication:

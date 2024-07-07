@@ -1,24 +1,17 @@
 package com.nepflow.GrowlistManagement.Dto;
 
-import java.net.URI;
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import org.openapitools.jackson.nullable.JsonNullable;
-import java.time.OffsetDateTime;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
-
-
-import java.util.*;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
+
+import java.util.Objects;
 
 /**
  * SpecimenCloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:49.343508100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-06T21:22:32.607237200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class SpecimenCloneDTO {
 
   private String nepenthesName;
@@ -38,6 +31,8 @@ public class SpecimenCloneDTO {
   private String location;
 
   private String specimenId;
+
+  private org.springframework.core.io.Resource file;
 
   public SpecimenCloneDTO nepenthesName(String nepenthesName) {
     this.nepenthesName = nepenthesName;
@@ -219,6 +214,26 @@ public class SpecimenCloneDTO {
     this.specimenId = specimenId;
   }
 
+  public SpecimenCloneDTO file(org.springframework.core.io.Resource file) {
+    this.file = file;
+    return this;
+  }
+
+  /**
+   * Get file
+   * @return file
+  */
+  @Valid 
+  @Schema(name = "file", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("file")
+  public org.springframework.core.io.Resource getFile() {
+    return file;
+  }
+
+  public void setFile(org.springframework.core.io.Resource file) {
+    this.file = file;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -236,12 +251,13 @@ public class SpecimenCloneDTO {
         Objects.equals(this.nickname, specimenCloneDTO.nickname) &&
         Objects.equals(this.producer, specimenCloneDTO.producer) &&
         Objects.equals(this.location, specimenCloneDTO.location) &&
-        Objects.equals(this.specimenId, specimenCloneDTO.specimenId);
+        Objects.equals(this.specimenId, specimenCloneDTO.specimenId) &&
+        Objects.equals(this.file, specimenCloneDTO.file);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nepenthesName, cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId);
+    return Objects.hash(nepenthesName, cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId, file);
   }
 
   @Override
@@ -257,6 +273,7 @@ public class SpecimenCloneDTO {
     sb.append("    producer: ").append(toIndentedString(producer)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    specimenId: ").append(toIndentedString(specimenId)).append("\n");
+    sb.append("    file: ").append(toIndentedString(file)).append("\n");
     sb.append("}");
     return sb.toString();
   }

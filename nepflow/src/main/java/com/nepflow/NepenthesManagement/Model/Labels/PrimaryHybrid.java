@@ -1,7 +1,10 @@
 package com.nepflow.NepenthesManagement.Model.Labels;
 
 import com.nepflow.NepenthesManagement.Exception.InvalidLabelFormatException;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Seller;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.ICClone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICPrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Clones.IVClone;

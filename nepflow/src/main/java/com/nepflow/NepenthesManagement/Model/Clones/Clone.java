@@ -51,7 +51,7 @@ public abstract class Clone {
         this.label = label;
         this.sex = sex;
         this.cloneId = cloneId;
-        this.internalCloneId = cloneId;
+        this.internalCloneId = Clone.generateInternalCloneId(cloneId,sex);
         this.location = location;
     }
 
@@ -59,8 +59,6 @@ public abstract class Clone {
     public void setCultivarName(String cultivarName){
         this.cultivarName = cultivarName;
     }
-
-    public void setVersion(long version){this.version = version;}
 
     public void setGrex(Grex grex){
         this.grex =grex;
@@ -81,6 +79,32 @@ public abstract class Clone {
     public String getLabelName(){return this.label != null ? this.label.getName():"";}
 
     abstract public String getSellerAsString();
+
+    public static String generateInternalCloneId(String cloneId,Sex sex){
+        if(sex != null){
+            return String.format("%s-%s",cloneId,sex.getSexAsString().substring(0,1));
+        }else{
+            return cloneId;
+        }
+    }
+
+
+    @Override
+    public int hashCode() {
+        return 5;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        return ((Clone) obj).internalCloneId.equals(this.internalCloneId);
+
+    }
 
 
 

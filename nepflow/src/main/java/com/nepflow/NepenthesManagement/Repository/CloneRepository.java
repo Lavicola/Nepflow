@@ -1,7 +1,6 @@
 package com.nepflow.NepenthesManagement.Repository;
 
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
-import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
@@ -18,9 +17,6 @@ public interface CloneRepository extends Neo4jRepository<Clone,String> {
     List<Clone> findClonesByLabelAndCloneTypeAndStartsWith(String label,String cloneType,String text);
 
 
-    Clone findClonesByCloneId(String cloneId);
-
-    Clone findICCloneByInternalCloneId(String internalCloneId);
 
     Clone findCloneByInternalCloneId(String internalCloneId);
 

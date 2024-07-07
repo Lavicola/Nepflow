@@ -1,7 +1,6 @@
 package com.nepflow;
 
 import com.nepflow.NepenthesManagement.Dto.CloneDTO;
-import com.nepflow.NepenthesManagement.Dto.LabelCloneDTO;
 import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import com.nepflow.NepenthesManagement.Model.Clones.*;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
