@@ -44,30 +44,24 @@ export class UserGrowlistComponent implements OnInit {
     }
   }
 
-  onFileSelected($event: Event, i: any) {
-
-    //TODO
+  onFileSelected($event: Event, index: number,specimenId:string|undefined) {
     // @ts-ignore
     const input = event.target as HTMLInputElement;
-    if(input.files?.length == 1 && input.files.item(0) instanceof Blob){
+    if( !(input.files?.length == 1 && input.files.item(0) instanceof Blob)) {
+      return
+    }
+    let file = input.files.item(0)
+
       let tmp: SpecimenUpdateCloneDto = {
-        file:input.files.item(0) as Blob,
+        file:file as Blob,
       }
 
-      this.growmanagementService.growlistClonesSpecimenIdPut({specimenId:"sss",body: tmp}).subscribe({
-        next: (specimen) => console.log("nice")
-
-
+      // @ts-ignore
+      this.growmanagementService.growlistClonesSpecimenIdPut({specimenId:specimenId,body: tmp}).subscribe({
+        // @ts-ignore
+        next: () => this.specimens[index].file = URL.createObjectURL(file)
       })
 
-
-      console.log(input.files.item(0))
     }
 
-
-
-
-
-
-  }
 }

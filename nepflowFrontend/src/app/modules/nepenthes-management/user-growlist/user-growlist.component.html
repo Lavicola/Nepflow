@@ -13,7 +13,7 @@
       <input
         type="file"
         accept="image/*"
-        (change)="onFileSelected($event, i)"
+        (change)="onFileSelected($event, i,specimen.specimenId)"
         #fileInput
         style="display: none;">      <mat-card-content>
         <p><strong>Clone ID:</strong> {{ specimen.cloneId }}</p>

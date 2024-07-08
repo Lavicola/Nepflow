@@ -33,7 +33,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GrowlistDTO());
         }
         Growlist growlist = this.growlistservice.getGrowlist(username);
-       if (growlist != null &&(growlist.isPublic() || user.getUsername().equals(username))) {
+        if (growlist != null && (growlist.isPublic() || user.getUsername().equals(username))) {
             return ResponseEntity.status(HttpStatus.OK).body(this.convertGrowlistToDTO(growlist));
         }
 
@@ -101,15 +101,22 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
     }
 
 
-    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdPut(String specimenId,String sex,MultipartFile file){
+    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdPut(String specimenId, String sex, MultipartFile file) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        boolean isSuccess = false;
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new SpecimenCloneDTO());
+        }
+        isSuccess = this.growlistservice.updateSpecimenImage(user.getOAuthId(), specimenId, file);
+        if (isSuccess) {
+            return ResponseEntity.ok(null);
+        } else {
+            return ResponseEntity.internalServerError().body(null);
+        }
 
+    }
 
-
-        return null;
-
-}
-
-    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId){
+    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId) {
 
         return null;
 

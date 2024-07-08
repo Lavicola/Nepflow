@@ -19,10 +19,11 @@ public class ImageServiceFileStorageImpl implements ImageService {
 
 
     @Override
-    public boolean saveImageToStorageWebp(String uploadDirectory, String uniqueFileName, MultipartFile imageFile) {
+    public String saveImageToStorageWebp(String uploadDirectory, String uniqueFileName, MultipartFile imageFile) {
         Path uploadPath = Path.of(uploadDirectory);
         Path filePath = uploadPath.resolve(uniqueFileName);
-        File outputfile = new File(filePath.toString());
+        String filepath = filePath.toString().contains(".webp")?filePath.toString():filePath.toString()+".webp";
+        File outputfile = new File(filepath);
         BufferedImage image = null;
 
         try {
@@ -30,13 +31,13 @@ public class ImageServiceFileStorageImpl implements ImageService {
             image = ImageIO.read(imageFile.getInputStream());
             ImageIO.write(image, "webp", outputfile);
         } catch (IOException e) {
-            return false;
+            return null;
         }
-        return true;
+        return outputfile.toString();
     }
 
     @Override
-    public boolean saveImageToStorageWebp(String uploadDirectory, MultipartFile imageFile) {
+    public String saveImageToStorageWebp(String uploadDirectory, MultipartFile imageFile) {
         String uniqueFileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
         return this.saveImageToStorageWebp(uploadDirectory, uniqueFileName, imageFile);
     }

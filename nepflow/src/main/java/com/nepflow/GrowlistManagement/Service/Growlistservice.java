@@ -25,7 +25,9 @@ public interface Growlistservice {
                                             String sexAsString,
                                             String locationAsString, String sellerAsString);
 
-     boolean updateSpecimenImage(String OAuthId, String specimenId, MultipartFile multipartFile,String sexAsString);
+     boolean updateSpecimenImage(String OAuthId, String specimenId, MultipartFile multipartFile);
+
+
 
 
 }

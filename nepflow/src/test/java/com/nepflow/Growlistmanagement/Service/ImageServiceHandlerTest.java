@@ -75,8 +75,8 @@ public class ImageServiceHandlerTest {
         multipartFileJPG = new MockMultipartFile("fileItem",
                 testImageJPGOutput, "image/jpg", IOUtils.toByteArray(inputJPG));
 
-        assertTrue(this.imageService.saveImageToStorageWebp(outputdirectory.toString(), testImageJPGOutput, multipartFileJPG));
-        assertTrue(this.imageService.saveImageToStorageWebp(outputdirectory.toString(), testImagePNGOutput, multipartFilePNG));
+        assertNotNull(this.imageService.saveImageToStorageWebp(outputdirectory.toString(), testImageJPGOutput, multipartFileJPG));
+        assertNotNull(this.imageService.saveImageToStorageWebp(outputdirectory.toString(), testImagePNGOutput, multipartFilePNG));
         assertTrue(absOutputJPGpath.toFile().exists());
         assertTrue(absOutputPNGpath.toFile().exists());
         // Save Image Test ends

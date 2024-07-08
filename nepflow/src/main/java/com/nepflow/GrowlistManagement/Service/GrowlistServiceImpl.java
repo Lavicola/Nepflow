@@ -9,6 +9,7 @@ import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
 import com.nepflow.UserManagement.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,8 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Autowired
     NepenthesManagementService nepenthesManagementService;
 
+    @Value("${growlist.specimen.uploadFolder}")
+    private String fileStorageLocation;
 
     @Override
     public void createGrowlist(User user) {
@@ -45,7 +48,7 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Override
     public Specimen addExistingCloneToGrowList(User user, String internalId) {
         Clone clone = this.nepenthesRetrivalService.getCloneByInternalId(internalId);
-        Specimen specimen = this.specimenRepository.addSpecimenToGrowlist(user.getOAuthId(),clone.getInternalCloneId());
+        Specimen specimen = this.specimenRepository.addSpecimenToGrowlist(user.getOAuthId(), clone.getInternalCloneId());
         return specimen;
     }
 
@@ -53,45 +56,36 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Transactional("transactionManager")
     public Specimen addNewIVCloneToGrowList(User user, String labelName, String cloneId, String sexAsString, String locationAsString, String producerAsString) {
         Clone clone = this.nepenthesManagementService.saveIVClone(labelName, cloneId, sexAsString, locationAsString, producerAsString);
-        return this.addExistingCloneToGrowList(user,clone.getInternalCloneId());
+        return this.addExistingCloneToGrowList(user, clone.getInternalCloneId());
     }
 
     @Override
     @Transactional("transactionManager")
     public Specimen addNewICCloneToGrowList(User user, String labelName, String cloneId, String sexAsString, String locationAsString, String sellerAsString) {
         Clone clone = this.nepenthesManagementService.saveICClone(labelName, sexAsString, locationAsString, sellerAsString);
-        return this.addExistingCloneToGrowList(user,clone.getInternalCloneId());
+        return this.addExistingCloneToGrowList(user, clone.getInternalCloneId());
     }
 
-    /**
-     * This Method is used to update the only values which are allowed to update on a species. This is the Image and also the Sex, but only if Sex is empty
-     * @param oAuthId
-     * @param specimenId
-     * @param multipartFile
-     * @param sexAsString
-     * @return
-     */
     @Override
-    public boolean updateSpecimenImage(String oAuthId, String specimenId, MultipartFile multipartFile, String sexAsString){
-        if(!this.specimenRepository.isSpeciesOfUser(oAuthId,specimenId)){
-            return false;
-        }
-
+    public boolean updateSpecimenImage(String oAuthId, String specimenId, MultipartFile multipartFile) {
         Specimen specimen = this.specimenRepository.findSpecimenByUuid(specimenId);
-
-        String imageLocation = null;
-        if(specimen == null){
+        String imagePath;
+        if (specimen == null || !this.specimenRepository.isSpeciesOfUser(oAuthId, specimenId)) {
             return false;
         }
-        imageLocation = specimen.getImageLocation();
-        if(imageLocation == null || imageLocation.equals("")){
-            return this.imageService.saveImageToStorageWebp(imageLocation,specimen.getUuid(),null);
-        }else{
 
+        imagePath = this.imageService.saveImageToStorageWebp(this.fileStorageLocation, String.valueOf(specimen.getUuid().hashCode()), multipartFile);
+        if (imagePath == null) {
+            return false;
+        } else {
+            specimen.setImageLocation(imagePath);
+            this.specimenRepository.save(specimen);
+            return true;
         }
 
-        return false;
     }
+
+
 
 
 }

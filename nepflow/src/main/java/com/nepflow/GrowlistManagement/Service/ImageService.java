@@ -6,9 +6,9 @@ import java.io.IOException;
 
 public interface ImageService {
 
-     boolean saveImageToStorageWebp(String uploadDirectory,String uniqueFileName, MultipartFile imageFile);
+     String saveImageToStorageWebp(String uploadDirectory,String uniqueFileName, MultipartFile imageFile);
 
-     boolean saveImageToStorageWebp(String uploadDirectory, MultipartFile imageFile);
+     String saveImageToStorageWebp(String uploadDirectory, MultipartFile imageFile);
 
      boolean deleteImage(String imageDirectory, String imageName) throws IOException;
 

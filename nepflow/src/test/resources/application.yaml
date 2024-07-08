@@ -9,3 +9,6 @@ spring:
       username: neo4j
       password: password
 
+growlist:
+  specimen:
+    uploadFolder: "upload-specimens"

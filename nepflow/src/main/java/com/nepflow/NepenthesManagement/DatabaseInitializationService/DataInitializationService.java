@@ -74,9 +74,7 @@ public class DataInitializationService {
         String sexAsString;
         String locationAsString;
 
-       // https://community.neo4j.com/t/super-frustrated-sdn-deleting-existing-relationships/35245/15
-
-        if (true) {
+        if (false) {
             String SPLIT = ",";
             // Store known cultivars
             Label labelAtRuntime;
