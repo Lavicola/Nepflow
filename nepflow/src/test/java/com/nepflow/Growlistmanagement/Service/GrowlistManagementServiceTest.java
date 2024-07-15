@@ -1,5 +1,6 @@
 package com.nepflow.Growlistmanagement.Service;
 
+import com.nepflow.BaseModules.ImageModule.Service.ImageService;
 import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
@@ -11,7 +12,6 @@ import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Model.Clones.ICSpeciesClone;
 import com.nepflow.NepenthesManagement.Model.Clones.IVSpeciesClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
-import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import com.nepflow.UserManagement.Model.Country;

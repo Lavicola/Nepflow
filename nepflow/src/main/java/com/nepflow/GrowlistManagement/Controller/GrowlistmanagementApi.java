@@ -5,10 +5,7 @@
  */
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.GrowlistManagement.Dto.CloneType;
-import com.nepflow.GrowlistManagement.Dto.GrowlistDTO;
-import com.nepflow.GrowlistManagement.Dto.LabelCloneDTO;
-import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
+import com.nepflow.GrowlistManagement.Dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -23,7 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-06T21:22:32.607237200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-13T22:57:38.084130600+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Growlistmanagement", description = "the Growlistmanagement API")
 public interface GrowlistmanagementApi {
@@ -126,6 +123,40 @@ public interface GrowlistmanagementApi {
 
 
     /**
+     * PATCH /growlist/clones/{specimenId}/flowering : Update the flowering status of a clone
+     *
+     * @param specimenId  (required)
+     * @param specimenUpdateFlowerStatus  (required)
+     * @return OK (status code 200)
+     *         or Error, could not update flowering status (status code 500)
+     */
+    @Operation(
+        operationId = "growlistClonesSpecimenIdFloweringPatch",
+        summary = "Update the flowering status of a clone",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenUpdateFlowerStatus.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error, could not update flowering status")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/growlist/clones/{specimenId}/flowering",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    default ResponseEntity<SpecimenUpdateFlowerStatus> growlistClonesSpecimenIdFloweringPatch(
+        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
+        @Parameter(name = "SpecimenUpdateFlowerStatus", description = "", required = true) @Valid @RequestBody SpecimenUpdateFlowerStatus specimenUpdateFlowerStatus
+    ) {
+        return getDelegate().growlistClonesSpecimenIdFloweringPatch(specimenId, specimenUpdateFlowerStatus);
+    }
+
+
+    /**
      * GET /growlist/clones/{specimenId}
      *
      * @param specimenId  (required)
@@ -167,20 +198,17 @@ public interface GrowlistmanagementApi {
         summary = "update values",
         tags = { "Growlistmanagement" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenCloneDTO.class))
-            }),
+            @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "500", description = "Could not update Specimen")
         }
     )
     @RequestMapping(
         method = RequestMethod.PUT,
         value = "/growlist/clones/{specimenId}",
-        produces = { "application/json" },
         consumes = { "multipart/form-data" }
     )
     
-    default ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdPut(
+    default ResponseEntity<Void> growlistClonesSpecimenIdPut(
         @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
         @Parameter(name = "sex", description = "") @Valid @RequestParam(value = "sex", required = false) String sex,
         @Parameter(name = "file", description = "") @RequestPart(value = "file", required = false) MultipartFile file

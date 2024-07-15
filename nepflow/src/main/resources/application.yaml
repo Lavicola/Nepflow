@@ -3,22 +3,34 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
+server:
+  port: 8080
+  address: localhost
+
+
 spring:
   profiles:
     active: default
-  server:
-    port: 8080
   servlet:
     multipart.max-file-size: 10MB
     multipart.max-request-size: 10MB
-
-
-
   neo4j:
     uri: bolt://localhost:7687
     authentication:
       username: neo4j
       password: ENC(EbVOfPGZAJfCi+fhWvvAG0sJNLRwTgcn)
+
+
+
+minio:
+  url: http://192.168.188.44
+  port: 9000
+  secure: false
+  access:
+    name: minioadmin
+    secret: minioadmin
+
+
 
 logging:
   level:
@@ -39,6 +51,8 @@ jackson:
     WRITE_DATES_AS_TIMESTAMPS: false
 
 
+
 growlist:
-  specimen:
-    uploadFolder: "upload-specimens"
+  bucketname: nepflow
+  path: upload-specimens
+

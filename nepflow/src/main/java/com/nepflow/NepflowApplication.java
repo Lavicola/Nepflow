@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 public class NepflowApplication {
 
 	public static void main(String[] args) {
+
+
 		SpringApplication.run(NepflowApplication.class, args);
 	}
 

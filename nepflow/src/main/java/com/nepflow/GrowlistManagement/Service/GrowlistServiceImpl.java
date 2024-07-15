@@ -1,5 +1,8 @@
 package com.nepflow.GrowlistManagement.Service;
 
+import com.nepflow.BaseModules.ImageModule.Service.ImageService;
+import com.nepflow.GrowlistManagement.Event.SpecimenFloweringEvent;
+import com.nepflow.GrowlistManagement.Event.SpecimenStoppedFloweringEvent;
 import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
@@ -10,12 +13,20 @@ import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
 import com.nepflow.UserManagement.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
 @Service
 public class GrowlistServiceImpl implements Growlistservice {
+
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
+
 
     @Autowired
     GrowlistRepository growListRepository;
@@ -32,8 +43,12 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Autowired
     NepenthesManagementService nepenthesManagementService;
 
-    @Value("${growlist.specimen.uploadFolder}")
-    private String fileStorageLocation;
+    @Value("${growlist.bucketname}")
+    private String bucketname;
+
+    @Value("${growlist.path}")
+    private String path;
+
 
     @Override
     public void createGrowlist(User user) {
@@ -69,23 +84,45 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Override
     public boolean updateSpecimenImage(String oAuthId, String specimenId, MultipartFile multipartFile) {
         Specimen specimen = this.specimenRepository.findSpecimenByUuid(specimenId);
-        String imagePath;
+        String location;
         if (specimen == null || !this.specimenRepository.isSpeciesOfUser(oAuthId, specimenId)) {
             return false;
         }
 
-        imagePath = this.imageService.saveImageToStorageWebp(this.fileStorageLocation, String.valueOf(specimen.getUuid().hashCode()), multipartFile);
-        if (imagePath == null) {
+        try {
+            location = this.imageService.saveImageToStorageWebp(
+                    this.bucketname,
+                    this.path, multipartFile.getOriginalFilename(),
+                    multipartFile);
+        } catch (IOException | NoSuchAlgorithmException e) {
             return false;
-        } else {
-            specimen.setImageLocation(imagePath);
-            this.specimenRepository.save(specimen);
-            return true;
         }
-
+        specimen.setImagePath(location);
+        this.specimenRepository.save(specimen);
+        return true;
     }
 
+    public boolean updateFlowerStatus(String OAuthId, String specimenId, boolean isFlowering) {
+        Specimen specimen = this.specimenRepository.findSpecimenByUuid(specimenId);
+        if (specimen == null || !this.specimenRepository.isSpeciesOfUser(OAuthId, specimenId)) {
+            return false;
+        }
+        if (specimen.getFlowerStatus() == isFlowering) {
+            return false;
+        } else {
+            specimen.setFlowerStatus(isFlowering);
+            this.specimenRepository.save(specimen);
+        }
 
+        if(isFlowering){
+            applicationEventPublisher.publishEvent(new SpecimenFloweringEvent(this,specimen));
+        }else{
+            applicationEventPublisher.publishEvent(new SpecimenStoppedFloweringEvent(this,specimen));
+        }
+
+
+        return true;
+    }
 
 
 }

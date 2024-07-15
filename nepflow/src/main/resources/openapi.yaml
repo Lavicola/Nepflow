@@ -377,10 +377,6 @@ paths:
         required: false
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimenCloneDTO"
           description: OK
         "500":
           description: Could not update Specimen
@@ -388,6 +384,39 @@ paths:
       tags:
       - Growlistmanagement
       x-content-type: multipart/form-data
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/clones/{specimenId}/flowering:
+    patch:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpecimenUpdateFlowerStatus"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenUpdateFlowerStatus"
+          description: OK
+        "500":
+          description: "Error, could not update flowering status"
+      summary: Update the flowering status of a clone
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
       x-accepts:
       - application/json
       x-tags:
@@ -573,12 +602,14 @@ components:
       - properties:
           specimenId:
             type: string
-          file:
-            format: binary
+          filelocation:
             type: string
+          isFlowering:
+            type: boolean
         type: object
       example:
-        file: ""
+        filelocation: filelocation
+        isFlowering: true
         sex: sex
         nickname: nickname
         description: description
@@ -596,10 +627,18 @@ components:
           format: binary
           type: string
       type: object
+    SpecimenUpdateFlowerStatus:
+      example:
+        isFlowering: true
+      properties:
+        isFlowering:
+          type: boolean
+      type: object
     GrowlistDTO:
       example:
         specimens:
-        - file: ""
+        - filelocation: filelocation
+          isFlowering: true
           sex: sex
           nickname: nickname
           description: description
@@ -609,7 +648,8 @@ components:
           internalCloneId: internalCloneId
           cloneId: cloneId
           Location: Location
-        - file: ""
+        - filelocation: filelocation
+          isFlowering: true
           sex: sex
           nickname: nickname
           description: description

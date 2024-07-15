@@ -209,10 +209,6 @@ paths:
       responses:
         '200':
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SpecimenCloneDTO'
         '500':
           description: Could not update Specimen
     get:
@@ -225,6 +221,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SpecimenCloneDTO'
+  /growlist/clones/{specimenId}/flowering:
+    parameters:
+      - $ref: "#/components/parameters/specimenId"
+
+    patch:
+      summary: Update the flowering status of a clone
+      tags:
+        - Growlistmanagement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecimenUpdateFlowerStatus'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecimenUpdateFlowerStatus'
+
+        '500':
+          description: Error, could not update flowering status
+
+
+
+
+
 
   /growlist/{username}/clones:
     parameters:
@@ -358,9 +383,11 @@ components:
           properties:
             specimenId:
               type: string
-            file:
+            filelocation:
               type: string
-              format: binary
+            isFlowering:
+              type: boolean
+
 
 
     SpecimenUpdateCloneDTO:
@@ -371,6 +398,13 @@ components:
         file:
           type: string
           format: binary
+
+    SpecimenUpdateFlowerStatus:
+      type: object
+      properties:
+        isFlowering:
+          type: boolean
+
 
 
 
@@ -405,8 +439,6 @@ components:
         - multihybrid
         - primaryhybrid
 
-
-
     CloneType:
       type: string
       enum: &CloneType
@@ -416,6 +448,8 @@ components:
       x-enumNames:
         - iv
         - ic
+
+
 
 
 

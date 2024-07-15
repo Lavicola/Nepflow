@@ -9,6 +9,17 @@ spring:
       username: neo4j
       password: password
 
+minio:
+  url: http://192.168.188.44
+  port: 9000
+  secure: false
+  access:
+    name: minioadmin
+    secret: minioadmin
+
+
+
+
 growlist:
-  specimen:
-    uploadFolder: "upload-specimens"
+  bucketname: nepflow
+  path: upload-specimens

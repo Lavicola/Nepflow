@@ -3,7 +3,6 @@ package com.nepflow.GrowlistManagement.Dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
 
 import java.util.Objects;
 
@@ -11,7 +10,7 @@ import java.util.Objects;
  * SpecimenCloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-06T21:22:32.607237200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-13T22:57:38.084130600+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class SpecimenCloneDTO {
 
   private String nepenthesName;
@@ -32,7 +31,9 @@ public class SpecimenCloneDTO {
 
   private String specimenId;
 
-  private org.springframework.core.io.Resource file;
+  private String filelocation;
+
+  private Boolean isFlowering;
 
   public SpecimenCloneDTO nepenthesName(String nepenthesName) {
     this.nepenthesName = nepenthesName;
@@ -214,24 +215,44 @@ public class SpecimenCloneDTO {
     this.specimenId = specimenId;
   }
 
-  public SpecimenCloneDTO file(org.springframework.core.io.Resource file) {
-    this.file = file;
+  public SpecimenCloneDTO filelocation(String filelocation) {
+    this.filelocation = filelocation;
     return this;
   }
 
   /**
-   * Get file
-   * @return file
+   * Get filelocation
+   * @return filelocation
   */
-  @Valid 
-  @Schema(name = "file", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("file")
-  public org.springframework.core.io.Resource getFile() {
-    return file;
+  
+  @Schema(name = "filelocation", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("filelocation")
+  public String getFilelocation() {
+    return filelocation;
   }
 
-  public void setFile(org.springframework.core.io.Resource file) {
-    this.file = file;
+  public void setFilelocation(String filelocation) {
+    this.filelocation = filelocation;
+  }
+
+  public SpecimenCloneDTO isFlowering(Boolean isFlowering) {
+    this.isFlowering = isFlowering;
+    return this;
+  }
+
+  /**
+   * Get isFlowering
+   * @return isFlowering
+  */
+  
+  @Schema(name = "isFlowering", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("isFlowering")
+  public Boolean getIsFlowering() {
+    return isFlowering;
+  }
+
+  public void setIsFlowering(Boolean isFlowering) {
+    this.isFlowering = isFlowering;
   }
 
   @Override
@@ -252,12 +273,13 @@ public class SpecimenCloneDTO {
         Objects.equals(this.producer, specimenCloneDTO.producer) &&
         Objects.equals(this.location, specimenCloneDTO.location) &&
         Objects.equals(this.specimenId, specimenCloneDTO.specimenId) &&
-        Objects.equals(this.file, specimenCloneDTO.file);
+        Objects.equals(this.filelocation, specimenCloneDTO.filelocation) &&
+        Objects.equals(this.isFlowering, specimenCloneDTO.isFlowering);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nepenthesName, cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId, file);
+    return Objects.hash(nepenthesName, cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId, filelocation, isFlowering);
   }
 
   @Override
@@ -273,7 +295,8 @@ public class SpecimenCloneDTO {
     sb.append("    producer: ").append(toIndentedString(producer)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    specimenId: ").append(toIndentedString(specimenId)).append("\n");
-    sb.append("    file: ").append(toIndentedString(file)).append("\n");
+    sb.append("    filelocation: ").append(toIndentedString(filelocation)).append("\n");
+    sb.append("    isFlowering: ").append(toIndentedString(isFlowering)).append("\n");
     sb.append("}");
     return sb.toString();
   }

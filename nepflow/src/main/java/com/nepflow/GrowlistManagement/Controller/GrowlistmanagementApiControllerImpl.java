@@ -1,5 +1,6 @@
 package com.nepflow.GrowlistManagement.Controller;
 
+import com.nepflow.BaseModules.ImageModule.Service.ImageService;
 import com.nepflow.GrowlistManagement.Dto.*;
 import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
@@ -10,10 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@Controller
+@RestController
 public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementApiDelegate {
 
     @Autowired
@@ -24,6 +25,9 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    ImageService imageService;
 
 
     public ResponseEntity<GrowlistDTO> growlistUsernameClonesGet(String username) {
@@ -93,7 +97,10 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
             specimenCloneDTO.setSex(specimen.getClone().getSexAsString());
             specimenCloneDTO.setProducer(specimen.getClone().getSellerAsString());
             specimenCloneDTO.setNepenthesName(specimen.getClone().getLabelName());
+            specimenCloneDTO.setFilelocation(specimen.getImagePath());
+            specimenCloneDTO.setIsFlowering(specimen.getFlowerStatus());
             growlistDTO.addSpecimensItem(specimenCloneDTO);
+
         }
 
 
@@ -101,11 +108,11 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
     }
 
 
-    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdPut(String specimenId, String sex, MultipartFile file) {
+    public ResponseEntity<Void> growlistClonesSpecimenIdPut(String specimenId, String sex, MultipartFile file) {
         User user = this.authenticationService.getAuthenticatedUser();
         boolean isSuccess = false;
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new SpecimenCloneDTO());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         isSuccess = this.growlistservice.updateSpecimenImage(user.getOAuthId(), specimenId, file);
         if (isSuccess) {
@@ -115,6 +122,25 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         }
 
     }
+
+    public ResponseEntity<SpecimenUpdateFlowerStatus> growlistClonesSpecimenIdFloweringPatch(String specimenId, SpecimenUpdateFlowerStatus SpecimenUpdateFlowerStatus) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        SpecimenUpdateFlowerStatus flowerStatus = new SpecimenUpdateFlowerStatus();
+        boolean isSuccess = false;
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        isSuccess = this.growlistservice.updateFlowerStatus(user.getOAuthId(), specimenId, SpecimenUpdateFlowerStatus.getIsFlowering());
+        if (isSuccess) {
+            flowerStatus.setIsFlowering(SpecimenUpdateFlowerStatus.getIsFlowering());
+            return ResponseEntity.ok(flowerStatus);
+        } else {
+            return ResponseEntity.internalServerError().body(null);
+        }
+
+
+    }
+
 
     public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId) {
 

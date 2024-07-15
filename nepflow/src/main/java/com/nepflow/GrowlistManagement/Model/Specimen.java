@@ -4,10 +4,7 @@ import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.neo4j.core.schema.*;
 
 @Node
 @NoArgsConstructor
@@ -19,21 +16,31 @@ public class Specimen {
     @GeneratedValue
     protected String uuid;
 
-    @GeneratedValue
-    protected String specimenId;
 
-
-    @Relationship(value = "INSTANCE_OF",direction = Relationship.Direction.OUTGOING)
+    @Relationship(value = "INSTANCE_OF", direction = Relationship.Direction.OUTGOING)
     @Getter
     Clone clone;
 
-    @Getter @Setter
-    String imageLocation;
+    @Getter
+    @Setter
+    String imagePath;
 
-    public Specimen(Clone clone){
+    @Property
+    boolean isFlowering = false;
+
+    public Specimen(Clone clone) {
         this.clone = clone;
+        this.isFlowering = false;
     }
 
+
+    public boolean getFlowerStatus(){
+        return this.isFlowering;
+    }
+
+    public void setFlowerStatus(boolean isFlowering){
+        this.isFlowering = isFlowering;
+    }
 
     @Override
     public int hashCode() {

@@ -36,8 +36,7 @@ dependencies {
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 	implementation 'commons-io:commons-io:2.6'
 	implementation group: 'org.sejda.imageio', name: 'webp-imageio', version: '0.1.6'
-
-
+	implementation 'io.minio:minio:8.5.10'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.0'
 	runtimeOnly group: 'com.h2database', name: 'h2', version: '2.2.220'
 
@@ -166,7 +165,7 @@ task generateOpenAPIGrowlistManagement(type: org.openapitools.generator.gradle.p
 	doLast {
 		println "OpenAPI Generation Completed, Deleting not needed Controller Classes"
 		def directory = file("${projectDir}/src/main/java/com/nepflow/GrowlistManagement/Controller")
-		def pattern = '*Nepenthes*' // Adjust this pattern as needed to match your controller classes
+		def pattern = '*Nepenthes*'
 		def filesToDelete = fileTree(dir: directory, include: pattern)
 		filesToDelete.each { File file ->
 			delete file
@@ -177,8 +176,33 @@ task generateOpenAPIGrowlistManagement(type: org.openapitools.generator.gradle.p
 }
 
 
+task generateOpenAPIFileManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	doNotTrackState("")
+	generatorName.set("spring")
+
+	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/BaseModules/ImageModule/openAPI/FileManagemenOpenAPI.yaml")
+	def openapi_spec = openapiSpecFile.absolutePath
+	configOptions.set([
+			delegatePattern           : "true",
+			useJakartaEe			  : "true",
+			globalProperty            : "apis",
+			generateApiDocumentation  : "true",
+			generateModelTests        : "false",
+			generateModelDocumentation: "false",
+			generateApiTests          : "false",
+			models                    : "false",
+			generateModels            : "false",
+			useTags					  : "true",
+			modelPackage              : "com.nepflow.BaseModules.ImageModule.Dto",
+	])
+
+	inputSpec.set(openapi_spec)
+	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+	apiPackage.set("com.nepflow.BaseModules.ImageModule.Controller")
+	invokerPackage.set("")
 
 
+}
 
 tasks.named('test') {
 	useJUnitPlatform()

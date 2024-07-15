@@ -11,7 +11,7 @@ public interface SpecimenRepository extends Neo4jRepository<Specimen,String> {
 
     @Query("MATCH (u:User {OAuthId: $id})-[r:CONTAINS_COLLECTION]->(g:Growlist)\n" +
             "MATCH (c:Clone {internalCloneId: $internalCloneId})-[:CLONE_OF_SPECIES]->(l)   \n" +
-            "CREATE (g)-[:CONTAINS_SPECIMEN]-> (s:Specimen) -[i:INSTANCE_OF]->(c)\n" +
+            "CREATE (g)-[:CONTAINS_SPECIMEN]-> (s:Specimen {isFlowering: false}) -[i:INSTANCE_OF]->(c)\n" +
             "return s,c,i")
     Specimen addSpecimenToGrowlist(String id, String internalCloneId);
 

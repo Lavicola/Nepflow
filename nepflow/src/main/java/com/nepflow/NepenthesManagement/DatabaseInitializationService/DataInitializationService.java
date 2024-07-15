@@ -63,6 +63,7 @@ public class DataInitializationService {
     @Autowired
     LabelRecognizerService labelRecognizerService;
 
+
     @Transactional("transactionManager")
     @PostConstruct
     public void initializeModel() throws IOException {
@@ -73,6 +74,7 @@ public class DataInitializationService {
         String cloneId;
         String sexAsString;
         String locationAsString;
+
 
         if (false) {
             String SPLIT = ",";

@@ -27,6 +27,7 @@ public interface Growlistservice {
 
      boolean updateSpecimenImage(String OAuthId, String specimenId, MultipartFile multipartFile);
 
+    boolean updateFlowerStatus(String OAuthId, String specimenId, boolean isFlowering);
 
 
 
