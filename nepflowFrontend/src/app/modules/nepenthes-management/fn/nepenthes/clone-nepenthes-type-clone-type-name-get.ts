@@ -1,14 +1,14 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {HttpClient, HttpContext, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 
-import { CloneType } from '../../models/clone-type';
-import { LabelClonesDto } from '../../models/label-clones-dto';
-import { NepenthesType } from '../../models/nepenthes-type';
-import {StrictHttpResponse} from "../../../../strict-http-response";
-import { RequestBuilder } from '../../../../request-builder';
+import {CloneType} from '../../models/clone-type';
+import {LabelClonesDto} from '../../models/label-clones-dto';
+import {NepenthesType} from '../../models/nepenthes-type';
+import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
+import {RequestBuilder} from '../../../core/openApiGeneratedFiles/request-builder';
 
 export interface CloneNepenthesTypeCloneTypeNameGet$Params {
   nepenthesType: NepenthesType;

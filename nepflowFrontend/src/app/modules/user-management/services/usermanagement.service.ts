@@ -1,26 +1,21 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {HttpClient, HttpContext} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 
-import { UserDto } from '../models/user-dto';
-import { userGet } from '../fn/usermanagement/user-get';
-import { UserGet$Params } from '../fn/usermanagement/user-get';
-import { userPost } from '../fn/usermanagement/user-post';
-import { UserPost$Params } from '../fn/usermanagement/user-post';
-import { UserPrivacyDto } from '../models/user-privacy-dto';
-import { userPut } from '../fn/usermanagement/user-put';
-import { UserPut$Params } from '../fn/usermanagement/user-put';
-import { usersGet } from '../fn/usermanagement/users-get';
-import { UsersGet$Params } from '../fn/usermanagement/users-get';
-import { usersUsernameGet } from '../fn/usermanagement/users-username-get';
-import { UsersUsernameGet$Params } from '../fn/usermanagement/users-username-get';
-import { BaseService } from '../../../base-service';
-import { ApiConfiguration } from '../../../api-configuration';
-import { StrictHttpResponse } from '../../../strict-http-response';
+import {UserDto} from '../models/user-dto';
+import {userGet, UserGet$Params} from '../fn/usermanagement/user-get';
+import {userPost, UserPost$Params} from '../fn/usermanagement/user-post';
+import {UserPrivacyDto} from '../models/user-privacy-dto';
+import {userPut, UserPut$Params} from '../fn/usermanagement/user-put';
+import {usersGet, UsersGet$Params} from '../fn/usermanagement/users-get';
+import {usersUsernameGet, UsersUsernameGet$Params} from '../fn/usermanagement/users-username-get';
+import {BaseService} from '../../core/openApiGeneratedFiles/base-service';
+import {ApiConfiguration} from '../../core/openApiGeneratedFiles/api-configuration';
+import {StrictHttpResponse} from '../../core/openApiGeneratedFiles/strict-http-response';
 
 
 /**

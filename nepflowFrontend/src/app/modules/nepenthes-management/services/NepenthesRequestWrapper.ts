@@ -6,7 +6,7 @@ import {Injectable} from "@angular/core";
 import {NepenthesType} from "../models/nepenthes-type";
 import {CloneType} from "../models/clone-type";
 import {NepenthesService} from "../services/nepenthes.service";
-import { LabelDto } from "../models/label-dto";
+import {LabelDto} from "../models/label-dto";
 
 
 /**

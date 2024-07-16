@@ -1,7 +1,7 @@
 import {BehaviorSubject, Observable} from "rxjs";
-import {NepenthesService} from "../services/nepenthes.service";
 import {Injectable} from "@angular/core";
 import {NepenthesRequestWrapper} from "./NepenthesRequestWrapper";
+
 @Injectable({
   providedIn: 'root'
 })

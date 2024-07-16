@@ -1,0 +1,14 @@
+mat-card img{
+  height: fit-content;
+  max-height: 450px !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+mat-card{
+  height: 500px;
+}
+
+.container{
+  padding: 7px;
+}

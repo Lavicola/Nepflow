@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserFirstStepComponent } from './user-first-step.component';
+import {UserFirstStepComponent} from './user-first-step.component';
 
 describe('UserFirstStepComponent', () => {
   let component: UserFirstStepComponent;
@@ -11,7 +11,7 @@ describe('UserFirstStepComponent', () => {
       declarations: [UserFirstStepComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(UserFirstStepComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

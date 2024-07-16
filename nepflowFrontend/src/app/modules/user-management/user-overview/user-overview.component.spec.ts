@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserOverviewComponent } from './user-overview.component';
+import {UserOverviewComponent} from './user-overview.component';
 
 describe('UserOverviewComponent', () => {
   let component: UserOverviewComponent;
@@ -11,7 +11,7 @@ describe('UserOverviewComponent', () => {
       declarations: [UserOverviewComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(UserOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

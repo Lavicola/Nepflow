@@ -5,7 +5,7 @@ import {Observable, startWith} from "rxjs";
 import {map} from "rxjs/operators";
 import {NepenthesDropdownSharedLabelService} from "../services/NepenthesDropdownSharedLabelService";
 import {SharedNepenthesRequestWrapper} from "../services/SharedNepenthesRequestWrapper";
-import { LabelDto } from '../models/label-dto';
+import {LabelDto} from '../models/label-dto';
 
 @Component({
   selector: 'app-nepenthes-dropdown',

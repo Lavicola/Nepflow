@@ -1,7 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {authGuardAuthenticated} from "./guards/authGuardAuthenticated";
-import {firstStepGuard} from "./guards/first-step.guard";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
 
@@ -9,7 +7,7 @@ const routes: Routes = [
   { path: '',
     redirectTo: '/user/first-steps',
     pathMatch: 'full' }, // Redirect empty path to /user
-  { path: 'nepenthes',
+  { path: '',
     loadChildren: () => import('./modules/nepenthes-management/nepenthes-management.module').then(m => m.NepenthesManagementModule) ,
   //  canActivate: [authGuardAuthenticated,firstStepGuard]
 

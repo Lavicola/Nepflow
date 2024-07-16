@@ -1,27 +1,34 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {HttpClient, HttpContext} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
-import { BaseService } from '../../../base-service';
-import { ApiConfiguration } from '../../../api-configuration';
-import { StrictHttpResponse } from '../../../strict-http-response';
+import {BaseService} from '../../core/openApiGeneratedFiles/base-service';
+import {ApiConfiguration} from '../../core/openApiGeneratedFiles/api-configuration';
+import {StrictHttpResponse} from '../../core/openApiGeneratedFiles/strict-http-response';
 
-import { cloneNepenthesTypeCloneTypeNameGet } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';
-import { CloneNepenthesTypeCloneTypeNameGet$Params } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';
-import { cloneNepenthesTypeCloneTypeNameInternalCloneIdPut } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-internal-clone-id-put';
-import { CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-internal-clone-id-put';
-import { cloneNepenthesTypeCloneTypeNamePost } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-post';
-import { CloneNepenthesTypeCloneTypeNamePost$Params } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-post';
-import { cloneNepenthesTypeGet } from '../fn/nepenthes/clone-nepenthes-type-get';
-import { CloneNepenthesTypeGet$Params } from '../fn/nepenthes/clone-nepenthes-type-get';
-import { cloneNepenthesTypeNameGet } from '../fn/nepenthes/clone-nepenthes-type-name-get';
-import { CloneNepenthesTypeNameGet$Params } from '../fn/nepenthes/clone-nepenthes-type-name-get';
-import { LabelCloneDto } from '../models/label-clone-dto';
-import { LabelClonesDto } from '../models/label-clones-dto';
-import { LabelDto } from '../models/label-dto';
+import {
+  cloneNepenthesTypeCloneTypeNameGet,
+  CloneNepenthesTypeCloneTypeNameGet$Params
+} from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';
+import {
+  cloneNepenthesTypeCloneTypeNameInternalCloneIdPut,
+  CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params
+} from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-internal-clone-id-put';
+import {
+  cloneNepenthesTypeCloneTypeNamePost,
+  CloneNepenthesTypeCloneTypeNamePost$Params
+} from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-post';
+import {cloneNepenthesTypeGet, CloneNepenthesTypeGet$Params} from '../fn/nepenthes/clone-nepenthes-type-get';
+import {
+  cloneNepenthesTypeNameGet,
+  CloneNepenthesTypeNameGet$Params
+} from '../fn/nepenthes/clone-nepenthes-type-name-get';
+import {LabelCloneDto} from '../models/label-clone-dto';
+import {LabelClonesDto} from '../models/label-clones-dto';
+import {LabelDto} from '../models/label-dto';
 
 @Injectable({ providedIn: 'root' })
 export class NepenthesService extends BaseService {

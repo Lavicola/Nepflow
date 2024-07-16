@@ -1,10 +1,10 @@
 /* tslint:disable */
 /* eslint-disable */
-import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
-import { NepenthesService } from './modules/nepenthes-management/services/nepenthes.service';
+import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {ApiConfiguration, ApiConfigurationParams} from './api-configuration';
 
+import {GrowlistmanagementService} from './services/growlistmanagement.service';
 
 /**
  * Module that provides all services and configuration.
@@ -14,7 +14,7 @@ import { NepenthesService } from './modules/nepenthes-management/services/nepent
   exports: [],
   declarations: [],
   providers: [
-    NepenthesService,
+    GrowlistmanagementService,
     ApiConfiguration
   ],
 })
@@ -31,7 +31,7 @@ export class ApiModule {
     }
   }
 
-  constructor( 
+  constructor(
     @Optional() @SkipSelf() parentModule: ApiModule,
     @Optional() http: HttpClient
   ) {

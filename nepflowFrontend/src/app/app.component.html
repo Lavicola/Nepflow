@@ -2,21 +2,26 @@
   <span>Nepflow</span>
   <a mat-button [routerLink]="profileRoute">Profile</a>
   <a mat-button [routerLink]="newNepenthesRoute">add Nepenthes</a>
-  <a mat-button [routerLink]="growlistRoute">My Growlist</a>
 
-  <div *ngIf="isLoggedIn; else loggedOut">
-    Welcome back, friend.
-  </div>
+  <!-- Growlist Submenu -->
+  <button mat-button [matMenuTriggerFor]="growlistMenu">Growlist</button>
+  <mat-menu #growlistMenu="matMenu">
+    <button mat-menu-item [routerLink]="myGrowlistRoute">My Growlist</button>
+    <button mat-menu-item [routerLink]="publicGrowlistsRoute">Public Growlists</button>
+ </mat-menu>
 
-  <ng-template #loggedOut>
-    <button mat-raised-button color="primary" (click)="authService.login()" id="login">Login</button>
-  </ng-template>
+ <div *ngIf="isLoggedIn; else loggedOut">
+   Welcome back, friend.
+ </div>
+
+ <ng-template #loggedOut>
+   <button mat-raised-button color="primary" (click)="authService.login()" id="login">Login</button>
+ </ng-template>
 
 
 </mat-toolbar>
 
-
 <div class="container">
 
-  <router-outlet></router-outlet>
+ <router-outlet></router-outlet>
 </div>

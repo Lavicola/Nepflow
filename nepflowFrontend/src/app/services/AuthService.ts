@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Location } from '@angular/common';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { UserDto } from '../modules/user-management/models/user-dto';
+import {Injectable} from '@angular/core';
+import {Location} from '@angular/common';
+import {BehaviorSubject, lastValueFrom, Observable} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {UserDto} from '../modules/user-management/models/user-dto';
 
 const headers = new HttpHeaders().set('Accept', 'application/json');
 
@@ -26,6 +26,7 @@ export class AuthService {
         })
       );
   }
+
 
   async isAuthenticated(): Promise<boolean> {
     const user = await lastValueFrom(this.getUser());

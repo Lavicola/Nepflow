@@ -1,8 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {RouterModule, RouterOutlet} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "./services/AuthService";
-import {from} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -12,7 +9,8 @@ import {from} from "rxjs";
 export class AppComponent implements OnInit{
   title = 'nepflowFrontend';
   newNepenthesRoute: string = "nepenthes/add";
-  growlistRoute: string = "nepenthes/growlist"
+  publicGrowlistsRoute: string = "users/growlist";
+  myGrowlistRoute: string = "growlist/"
 
   profileRoute: string = "user/overview";
   isLoggedIn:boolean = false;

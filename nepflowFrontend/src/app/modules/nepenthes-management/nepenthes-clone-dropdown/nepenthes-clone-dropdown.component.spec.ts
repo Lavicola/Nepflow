@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NepenthesCloneDropdownComponent } from './nepenthes-clone-dropdown.component';
+import {NepenthesCloneDropdownComponent} from './nepenthes-clone-dropdown.component';
 
 describe('NepenthesCloneDropdownComponent', () => {
   let component: NepenthesCloneDropdownComponent;
@@ -11,7 +11,7 @@ describe('NepenthesCloneDropdownComponent', () => {
       declarations: [NepenthesCloneDropdownComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(NepenthesCloneDropdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

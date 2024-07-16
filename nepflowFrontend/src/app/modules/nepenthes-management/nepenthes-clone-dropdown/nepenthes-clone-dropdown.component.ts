@@ -1,16 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CloneDto} from "../models/clone-dto";
-import {defer, Observable, startWith} from "rxjs";
+import {Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
-import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {map} from "rxjs/operators";
-import { LabelDto } from '../models/label-dto';
-import { LabelClonesDto } from '../models/label-clones-dto';
-import {ProducerDto} from "../models/producer-dto";
-import {LabelCloneDto} from "../models/label-clone-dto";
-import {NepenthesRequestWrapper} from "../services/NepenthesRequestWrapper";
-import {NepenthesDropdownSharedLabelService} from "../services/NepenthesDropdownSharedLabelService";
-import {SharedNepenthesRequestWrapper} from "../services/SharedNepenthesRequestWrapper";
 
 @Component({
   selector: 'app-nepenthes-clone-dropdown',

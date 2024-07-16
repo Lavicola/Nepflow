@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserGrowlistComponent } from './user-growlist.component';
+import {UserGrowlistComponent} from './user-growlist.component';
 
 describe('UserGrowlistComponent', () => {
   let component: UserGrowlistComponent;
@@ -11,7 +11,7 @@ describe('UserGrowlistComponent', () => {
       declarations: [UserGrowlistComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(UserGrowlistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
