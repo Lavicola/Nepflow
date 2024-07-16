@@ -33,6 +33,9 @@ public class Specimen {
         this.isFlowering = false;
     }
 
+    public void setClone(Clone clone){
+        this.clone = clone;
+    }
 
     public boolean getFlowerStatus(){
         return this.isFlowering;

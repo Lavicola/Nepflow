@@ -58,7 +58,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         return ResponseEntity.ok(specimenCloneDTO);
     }
 
-    public ResponseEntity<SpecimenCloneDTO> growlistCloneCreateCloneTypePost(CloneType cloneType,
+    public ResponseEntity<SpecimenCloneDTO> growlistCreateCloneCloneTypePost(CloneType cloneType,
                                                                              LabelCloneDTO labelCloneDTO) {
         User user = this.authenticationService.getAuthenticatedUser();
         if (user == null) {
@@ -82,6 +82,60 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
             return ResponseEntity.internalServerError().body(null);
         }
     }
+
+    public ResponseEntity<Void> specimensSpecimenIdImagePut(String specimenId, MultipartFile file) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        boolean isSuccess = false;
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        isSuccess = this.growlistservice.updateSpecimenImage(user.getOAuthId(), specimenId, file);
+        if (isSuccess) {
+            return ResponseEntity.ok(null);
+        } else {
+            return ResponseEntity.internalServerError().body(null);
+        }
+
+    }
+
+    public ResponseEntity<SpecimenUpdateSex> specimensSpecimenIdSexPatch(String specimenId,
+                                                                         SpecimenUpdateSex specimenUpdateSex) {
+        return ResponseEntity.internalServerError().body(null);
+
+    }
+
+    public ResponseEntity<SpecimenUpdateFlowerStatus> specimensSpecimenIdFloweringPatch(String specimenId, SpecimenUpdateFlowerStatus specimenUpdateSex) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        SpecimenUpdateFlowerStatus flowerStatus = new SpecimenUpdateFlowerStatus();
+        boolean isSuccess = false;
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        isSuccess = this.growlistservice.updateFlowerStatus(user.getOAuthId(), specimenId, specimenUpdateSex.getIsFlowering());
+        if (isSuccess) {
+            flowerStatus.setIsFlowering(specimenUpdateSex.getIsFlowering());
+            return ResponseEntity.ok(flowerStatus);
+        } else {
+            return ResponseEntity.internalServerError().body(null);
+        }
+
+
+    }
+
+    public ResponseEntity<Void> growlistGrowlistIdPublicPatch(String growlistId,
+                                                              GrowlistPublic growlistPublic) {
+
+        System.out.println("CALLL");
+
+        return ResponseEntity.ok(null);
+    }
+
+    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId) {
+
+        return null;
+
+    }
+
 
     private GrowlistDTO convertGrowlistToDTO(Growlist growlist) {
         GrowlistDTO growlistDTO = new GrowlistDTO();
@@ -107,45 +161,5 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         return growlistDTO;
     }
 
-
-    public ResponseEntity<Void> growlistClonesSpecimenIdPut(String specimenId, String sex, MultipartFile file) {
-        User user = this.authenticationService.getAuthenticatedUser();
-        boolean isSuccess = false;
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        isSuccess = this.growlistservice.updateSpecimenImage(user.getOAuthId(), specimenId, file);
-        if (isSuccess) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.internalServerError().body(null);
-        }
-
-    }
-
-    public ResponseEntity<SpecimenUpdateFlowerStatus> growlistClonesSpecimenIdFloweringPatch(String specimenId, SpecimenUpdateFlowerStatus SpecimenUpdateFlowerStatus) {
-        User user = this.authenticationService.getAuthenticatedUser();
-        SpecimenUpdateFlowerStatus flowerStatus = new SpecimenUpdateFlowerStatus();
-        boolean isSuccess = false;
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-        isSuccess = this.growlistservice.updateFlowerStatus(user.getOAuthId(), specimenId, SpecimenUpdateFlowerStatus.getIsFlowering());
-        if (isSuccess) {
-            flowerStatus.setIsFlowering(SpecimenUpdateFlowerStatus.getIsFlowering());
-            return ResponseEntity.ok(flowerStatus);
-        } else {
-            return ResponseEntity.internalServerError().body(null);
-        }
-
-
-    }
-
-
-    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId) {
-
-        return null;
-
-    }
 
 }

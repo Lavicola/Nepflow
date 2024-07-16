@@ -7,6 +7,7 @@ import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
 import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
+import com.nepflow.NepenthesManagement.Exception.CloneAlreadyHasASex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
@@ -114,14 +115,41 @@ public class GrowlistServiceImpl implements Growlistservice {
             this.specimenRepository.save(specimen);
         }
 
-        if(isFlowering){
-            applicationEventPublisher.publishEvent(new SpecimenFloweringEvent(this,specimen));
-        }else{
-            applicationEventPublisher.publishEvent(new SpecimenStoppedFloweringEvent(this,specimen));
+        if (isFlowering) {
+            applicationEventPublisher.publishEvent(new SpecimenFloweringEvent(this, specimen));
+        } else {
+            applicationEventPublisher.publishEvent(new SpecimenStoppedFloweringEvent(this, specimen));
         }
 
 
         return true;
+    }
+
+    @Override
+    public boolean updateSex(String OAuthId, String specimenId, String sexAsString) {
+        Specimen specimen = specimenRepository.findSpecimenByUuid(specimenId);
+
+        if (specimen == null || !specimenRepository.isSpeciesOfUser(OAuthId, specimenId)) {
+            return false;
+        }
+
+        try {
+            Clone clone = nepenthesManagementService.getOrCreateSexedClone(specimen.getClone(), sexAsString);
+            if (clone != null) {
+                specimen.setClone(clone);
+                specimenRepository.save(specimen);
+                return true;
+            }
+        } catch (CloneAlreadyHasASex e) {
+            return false;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean updateGrowlistVisibility(String OAuthId, String growlistId, boolean isPublic) {
+        return this.updateGrowlistVisibility(OAuthId, growlistId, isPublic);
     }
 
 

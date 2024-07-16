@@ -10,7 +10,11 @@ servers:
 - url: http://localhost:8080/api
 tags:
 - description: Operations to manage Nepenthes
-  name: NepenthesManagement
+  name: nepenthes
+- description: not sure if actually necessary for now
+  name: NepenthesMetadata
+- description: Operations for the GrowlistManagement of an user
+  name: Growlistmanagement
 paths:
   /producer:
     post:
@@ -224,6 +228,33 @@ paths:
       - application/json
       x-tags:
       - tag: nepenthes
+  /growlist/{growlistId}/public:
+    patch:
+      parameters:
+      - explode: false
+        in: path
+        name: growlistId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GrowlistPublic"
+        required: true
+      responses:
+        "200":
+          description: OK
+      summary: set Growlist to public or private
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
   /growlist/clone/add/{internalCloneId}:
     post:
       parameters:
@@ -250,7 +281,7 @@ paths:
       - application/json
       x-tags:
       - tag: Growlistmanagement
-  /growlist/clone/create/{cloneType}:
+  /growlist/create/clone/{cloneType}:
     post:
       parameters:
       - explode: false
@@ -315,7 +346,7 @@ paths:
       - application/json
       x-tags:
       - tag: Growlistmanagement
-  /growlist/clones/{specimenId}:
+  /specimens/{specimenId}:
     delete:
       parameters:
       - explode: false
@@ -330,8 +361,8 @@ paths:
           description: OK
         "500":
           description: "Error, could not add Nepenthes Clone to user"
-      summary: remove a clone from the growlisti If the removed plant was already
-        used for a trade it will be a soft delete in the relation part
+      summary: "remove a specimen from the growlistist. If the removed plant was already\
+        \ used for a trade, only a soft delete will happen"
       tags:
       - Growlistmanagement
       x-accepts:
@@ -360,7 +391,8 @@ paths:
       - application/json
       x-tags:
       - tag: Growlistmanagement
-    put:
+  /specimens/{specimenId}/sex:
+    patch:
       parameters:
       - explode: false
         in: path
@@ -371,24 +403,29 @@ paths:
         style: simple
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
-              $ref: "#/components/schemas/SpecimenUpdateCloneDTO"
-        required: false
+              $ref: "#/components/schemas/SpecimenUpdateSex"
+        required: true
       responses:
         "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenUpdateSex"
           description: OK
         "500":
-          description: Could not update Specimen
-      summary: update values
+          description: "Error, could not update Specimen Sex"
+      summary: "Update Sex of a specific Specimen, only works if Specimes current\
+        \ sex is unkown"
       tags:
       - Growlistmanagement
-      x-content-type: multipart/form-data
+      x-content-type: application/json
       x-accepts:
       - application/json
       x-tags:
       - tag: Growlistmanagement
-  /growlist/clones/{specimenId}/flowering:
+  /specimens/{specimenId}/flowering:
     patch:
       parameters:
       - explode: false
@@ -417,6 +454,35 @@ paths:
       tags:
       - Growlistmanagement
       x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /specimens/{specimenId}/image:
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/SpecimenUpdateImage"
+        required: false
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Could not update Specimen
+      summary: update Image
+      tags:
+      - Growlistmanagement
+      x-content-type: multipart/form-data
       x-accepts:
       - application/json
       x-tags:
@@ -493,6 +559,14 @@ components:
       explode: false
       in: path
       name: specimenId
+      required: true
+      schema:
+        type: string
+      style: simple
+    growlistId:
+      explode: false
+      in: path
+      name: growlistId
       required: true
       schema:
         type: string
@@ -619,15 +693,28 @@ components:
         internalCloneId: internalCloneId
         cloneId: cloneId
         Location: Location
-    SpecimenUpdateCloneDTO:
+    SpecimenUpdateImage:
       properties:
-        sex:
+        file:
+          format: binary
           type: string
+      type: object
+    SpecimenUpdateSex:
+      example:
+        file: ""
+      properties:
         file:
           format: binary
           type: string
       type: object
     SpecimenUpdateFlowerStatus:
+      example:
+        isFlowering: true
+      properties:
+        isFlowering:
+          type: boolean
+      type: object
+    GrowlistPublic:
       example:
         isFlowering: true
       properties:

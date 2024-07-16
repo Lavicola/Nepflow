@@ -29,6 +29,8 @@ public interface Growlistservice {
 
     boolean updateFlowerStatus(String OAuthId, String specimenId, boolean isFlowering);
 
+    boolean updateSex(String OAuthId, String specimenId,String sexAsString);
 
+    boolean updateGrowlistVisibility(String OAuthId, String growlistId,boolean isPublic);
 
 }

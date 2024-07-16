@@ -19,7 +19,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/", "/index.html", "*.ico", "*.css", "*.js","/api/user/nepenthes", "/api/user","/api/species","/api/growlist").permitAll()
+                .requestMatchers("/", "/index.html", "*.ico", "*.css", "*.js","/api/user/nepenthes", "/api/user","/api/species","/api/growlist/*").permitAll()
                 .anyRequest().permitAll())
                 .anonymous(anonym -> anonym.disable()) // add to remove authentication for anonymous User
             .oauth2Login(withDefaults())

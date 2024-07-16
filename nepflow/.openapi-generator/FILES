@@ -12,12 +12,15 @@ src/main/java/com/nepflow/GrowlistManagement/Controller/NepenthesMetadataApiDele
 src/main/java/com/nepflow/GrowlistManagement/Dto/CloneDTO.java
 src/main/java/com/nepflow/GrowlistManagement/Dto/CloneType.java
 src/main/java/com/nepflow/GrowlistManagement/Dto/GrowlistDTO.java
+src/main/java/com/nepflow/GrowlistManagement/Dto/GrowlistPublic.java
 src/main/java/com/nepflow/GrowlistManagement/Dto/LabelCloneDTO.java
 src/main/java/com/nepflow/GrowlistManagement/Dto/LabelClonesDTO.java
 src/main/java/com/nepflow/GrowlistManagement/Dto/LabelDTO.java
-src/main/java/com/nepflow/GrowlistManagement/Dto/LabelSpecimenDTO.java
 src/main/java/com/nepflow/GrowlistManagement/Dto/NepenthesType.java
+src/main/java/com/nepflow/GrowlistManagement/Dto/ProducerDTO.java
 src/main/java/com/nepflow/GrowlistManagement/Dto/SpecimenCloneDTO.java
+src/main/java/com/nepflow/GrowlistManagement/Dto/SpecimenUpdateFlowerStatus.java
+src/main/java/com/nepflow/GrowlistManagement/Dto/SpecimenUpdateSex.java
 src/main/java/org/openapitools/OpenApiGeneratorApplication.java
 src/main/java/org/openapitools/RFC3339DateFormat.java
 src/main/java/org/openapitools/configuration/EnumConverterConfiguration.java

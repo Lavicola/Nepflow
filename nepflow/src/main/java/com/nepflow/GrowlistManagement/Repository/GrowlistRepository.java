@@ -10,6 +10,14 @@ public interface GrowlistRepository extends Neo4jRepository<Growlist,String> {
 
 
 
+    @Query("match(g:Growlist)\n" +
+            "where elementId(g) = $growlistId\n" +
+            "match (g)<-[a]-(u:User {OAuthId: $oAuth})\n" +
+            "Set g.isPublic = $isPublic\n" +
+            "RETURN CASE WHEN g IS NOT NULL THEN true ELSE false END AS result\n")
+    boolean updateGrowlistVisibility(String oAuth,String growlistId, boolean isPublic);
+
+
     @Query(" MATCH (u:User {OAuthId: $id})-[r:CONTAINS_COLLECTION]->(g:Growlist)\n" +
             "OPTIONAL MATCH (g)-[sr:CONTAINS_SPECIMEN]->(s:Specimen)-[cr:INSTANCE_OF]->(c:Clone)\n" +
             "OPTIONAL MATCH (c)-[spr:SOLD_BY]->(p:Producer)\n" +

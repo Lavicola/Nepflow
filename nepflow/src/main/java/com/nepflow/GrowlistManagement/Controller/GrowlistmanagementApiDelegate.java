@@ -14,7 +14,7 @@ import java.util.Optional;
  * A delegate to be called by the {@link GrowlistmanagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-13T22:57:38.084130600+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-16T23:38:46.782047800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface GrowlistmanagementApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -44,15 +44,15 @@ public interface GrowlistmanagementApiDelegate {
     }
 
     /**
-     * POST /growlist/clone/create/{cloneType} : Create a new IV or IC Clone and Add it to the Growlist
+     * POST /growlist/create/clone/{cloneType} : Create a new IV or IC Clone and Add it to the Growlist
      *
      * @param cloneType  (required)
      * @param labelCloneDTO  (optional)
      * @return OK (status code 200)
      *         or Error, could not add Specimen to user (status code 500)
-     * @see GrowlistmanagementApi#growlistCloneCreateCloneTypePost
+     * @see GrowlistmanagementApi#growlistCreateCloneCloneTypePost
      */
-    default ResponseEntity<SpecimenCloneDTO> growlistCloneCreateCloneTypePost(CloneType cloneType,
+    default ResponseEntity<SpecimenCloneDTO> growlistCreateCloneCloneTypePost(CloneType cloneType,
         LabelCloneDTO labelCloneDTO) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
@@ -63,81 +63,6 @@ public interface GrowlistmanagementApiDelegate {
                 }
             }
         });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * DELETE /growlist/clones/{specimenId} : remove a clone from the growlisti If the removed plant was already used for a trade it will be a soft delete in the relation part
-     *
-     * @param specimenId  (required)
-     * @return OK (status code 200)
-     *         or Error, could not add Nepenthes Clone to user (status code 500)
-     * @see GrowlistmanagementApi#growlistClonesSpecimenIdDelete
-     */
-    default ResponseEntity<Void> growlistClonesSpecimenIdDelete(String specimenId) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * PATCH /growlist/clones/{specimenId}/flowering : Update the flowering status of a clone
-     *
-     * @param specimenId  (required)
-     * @param specimenUpdateFlowerStatus  (required)
-     * @return OK (status code 200)
-     *         or Error, could not update flowering status (status code 500)
-     * @see GrowlistmanagementApi#growlistClonesSpecimenIdFloweringPatch
-     */
-    default ResponseEntity<SpecimenUpdateFlowerStatus> growlistClonesSpecimenIdFloweringPatch(String specimenId,
-        SpecimenUpdateFlowerStatus specimenUpdateFlowerStatus) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"isFlowering\" : true }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /growlist/clones/{specimenId}
-     *
-     * @param specimenId  (required)
-     * @return OK (status code 200)
-     * @see GrowlistmanagementApi#growlistClonesSpecimenIdGet
-     */
-    default ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"filelocation\" : \"filelocation\", \"isFlowering\" : true, \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"nepenthesName\" : \"nepenthesName\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * PUT /growlist/clones/{specimenId} : update values
-     *
-     * @param specimenId  (required)
-     * @param sex  (optional)
-     * @param file  (optional)
-     * @return OK (status code 200)
-     *         or Could not update Specimen (status code 500)
-     * @see GrowlistmanagementApi#growlistClonesSpecimenIdPut
-     */
-    default ResponseEntity<Void> growlistClonesSpecimenIdPut(String specimenId,
-        String sex,
-        MultipartFile file) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -167,6 +92,20 @@ public interface GrowlistmanagementApiDelegate {
     }
 
     /**
+     * PATCH /growlist/{growlistId}/public : set Growlist to public or private
+     *
+     * @param growlistId  (required)
+     * @param growlistPublic  (required)
+     * @return OK (status code 200)
+     * @see GrowlistmanagementApi#growlistGrowlistIdPublicPatch
+     */
+    default ResponseEntity<Void> growlistGrowlistIdPublicPatch(String growlistId,
+        GrowlistPublic growlistPublic) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
      * GET /growlist/{username}/clones : get all Specimens of a specific User, if Growlist is public
      *
      * @param username  (required)
@@ -179,6 +118,103 @@ public interface GrowlistmanagementApiDelegate {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "{ \"specimens\" : [ { \"filelocation\" : \"filelocation\", \"isFlowering\" : true, \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"nepenthesName\" : \"nepenthesName\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }, { \"filelocation\" : \"filelocation\", \"isFlowering\" : true, \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"nepenthesName\" : \"nepenthesName\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" } ], \"id\" : \"id\", \"username\" : \"username\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * DELETE /specimens/{specimenId} : remove a specimen from the growlistist. If the removed plant was already used for a trade, only a soft delete will happen
+     *
+     * @param specimenId  (required)
+     * @return OK (status code 200)
+     *         or Error, could not add Nepenthes Clone to user (status code 500)
+     * @see GrowlistmanagementApi#specimensSpecimenIdDelete
+     */
+    default ResponseEntity<Void> specimensSpecimenIdDelete(String specimenId) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PATCH /specimens/{specimenId}/flowering : Update the flowering status of a clone
+     *
+     * @param specimenId  (required)
+     * @param specimenUpdateFlowerStatus  (required)
+     * @return OK (status code 200)
+     *         or Error, could not update flowering status (status code 500)
+     * @see GrowlistmanagementApi#specimensSpecimenIdFloweringPatch
+     */
+    default ResponseEntity<SpecimenUpdateFlowerStatus> specimensSpecimenIdFloweringPatch(String specimenId,
+        SpecimenUpdateFlowerStatus specimenUpdateFlowerStatus) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"isFlowering\" : true }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /specimens/{specimenId}
+     *
+     * @param specimenId  (required)
+     * @return OK (status code 200)
+     * @see GrowlistmanagementApi#specimensSpecimenIdGet
+     */
+    default ResponseEntity<SpecimenCloneDTO> specimensSpecimenIdGet(String specimenId) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"filelocation\" : \"filelocation\", \"isFlowering\" : true, \"sex\" : \"sex\", \"nickname\" : \"nickname\", \"description\" : \"description\", \"producer\" : \"producer\", \"specimenId\" : \"specimenId\", \"nepenthesName\" : \"nepenthesName\", \"internalCloneId\" : \"internalCloneId\", \"cloneId\" : \"cloneId\", \"Location\" : \"Location\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /specimens/{specimenId}/image : update Image
+     *
+     * @param specimenId  (required)
+     * @param file  (optional)
+     * @return OK (status code 200)
+     *         or Could not update Specimen (status code 500)
+     * @see GrowlistmanagementApi#specimensSpecimenIdImagePut
+     */
+    default ResponseEntity<Void> specimensSpecimenIdImagePut(String specimenId,
+        MultipartFile file) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PATCH /specimens/{specimenId}/sex : Update Sex of a specific Specimen, only works if Specimes current sex is unkown
+     *
+     * @param specimenId  (required)
+     * @param specimenUpdateSex  (required)
+     * @return OK (status code 200)
+     *         or Error, could not update Specimen Sex (status code 500)
+     * @see GrowlistmanagementApi#specimensSpecimenIdSexPatch
+     */
+    default ResponseEntity<SpecimenUpdateSex> specimensSpecimenIdSexPatch(String specimenId,
+        SpecimenUpdateSex specimenUpdateSex) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"file\" : \"\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

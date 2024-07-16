@@ -17,6 +17,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 public abstract class Clone {
 
     @Relationship(value = "CLONE_OF_SPECIES",direction = Relationship.Direction.OUTGOING)
+    @Getter
     Label label;
 
 
@@ -33,6 +34,7 @@ public abstract class Clone {
     protected String cloneId;
 
     @Setter
+    @Getter
     @Relationship("HAS_SEX")
     protected Sex sex;
 
@@ -44,6 +46,7 @@ public abstract class Clone {
     private Long version;
 
     @Setter
+    @Getter
     @Relationship("ORIGIN")
     Location location;
 

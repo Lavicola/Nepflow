@@ -20,9 +20,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-13T22:57:38.084130600+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-16T23:38:46.782047800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
-@Tag(name = "Growlistmanagement", description = "the Growlistmanagement API")
+@Tag(name = "Growlistmanagement", description = "Operations for the GrowlistManagement of an user")
 public interface GrowlistmanagementApi {
 
     default GrowlistmanagementApiDelegate getDelegate() {
@@ -61,7 +61,7 @@ public interface GrowlistmanagementApi {
 
 
     /**
-     * POST /growlist/clone/create/{cloneType} : Create a new IV or IC Clone and Add it to the Growlist
+     * POST /growlist/create/clone/{cloneType} : Create a new IV or IC Clone and Add it to the Growlist
      *
      * @param cloneType  (required)
      * @param labelCloneDTO  (optional)
@@ -69,7 +69,7 @@ public interface GrowlistmanagementApi {
      *         or Error, could not add Specimen to user (status code 500)
      */
     @Operation(
-        operationId = "growlistCloneCreateCloneTypePost",
+        operationId = "growlistCreateCloneCloneTypePost",
         summary = "Create a new IV or IC Clone and Add it to the Growlist",
         tags = { "Growlistmanagement" },
         responses = {
@@ -81,139 +81,16 @@ public interface GrowlistmanagementApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/growlist/clone/create/{cloneType}",
+        value = "/growlist/create/clone/{cloneType}",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    default ResponseEntity<SpecimenCloneDTO> growlistCloneCreateCloneTypePost(
+    default ResponseEntity<SpecimenCloneDTO> growlistCreateCloneCloneTypePost(
         @Parameter(name = "cloneType", description = "", required = true, in = ParameterIn.PATH) @PathVariable("cloneType") CloneType cloneType,
         @Parameter(name = "LabelCloneDTO", description = "") @Valid @RequestBody(required = false) LabelCloneDTO labelCloneDTO
     ) {
-        return getDelegate().growlistCloneCreateCloneTypePost(cloneType, labelCloneDTO);
-    }
-
-
-    /**
-     * DELETE /growlist/clones/{specimenId} : remove a clone from the growlisti If the removed plant was already used for a trade it will be a soft delete in the relation part
-     *
-     * @param specimenId  (required)
-     * @return OK (status code 200)
-     *         or Error, could not add Nepenthes Clone to user (status code 500)
-     */
-    @Operation(
-        operationId = "growlistClonesSpecimenIdDelete",
-        summary = "remove a clone from the growlisti If the removed plant was already used for a trade it will be a soft delete in the relation part",
-        tags = { "Growlistmanagement" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "500", description = "Error, could not add Nepenthes Clone to user")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/growlist/clones/{specimenId}"
-    )
-    
-    default ResponseEntity<Void> growlistClonesSpecimenIdDelete(
-        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId
-    ) {
-        return getDelegate().growlistClonesSpecimenIdDelete(specimenId);
-    }
-
-
-    /**
-     * PATCH /growlist/clones/{specimenId}/flowering : Update the flowering status of a clone
-     *
-     * @param specimenId  (required)
-     * @param specimenUpdateFlowerStatus  (required)
-     * @return OK (status code 200)
-     *         or Error, could not update flowering status (status code 500)
-     */
-    @Operation(
-        operationId = "growlistClonesSpecimenIdFloweringPatch",
-        summary = "Update the flowering status of a clone",
-        tags = { "Growlistmanagement" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenUpdateFlowerStatus.class))
-            }),
-            @ApiResponse(responseCode = "500", description = "Error, could not update flowering status")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/growlist/clones/{specimenId}/flowering",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    
-    default ResponseEntity<SpecimenUpdateFlowerStatus> growlistClonesSpecimenIdFloweringPatch(
-        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
-        @Parameter(name = "SpecimenUpdateFlowerStatus", description = "", required = true) @Valid @RequestBody SpecimenUpdateFlowerStatus specimenUpdateFlowerStatus
-    ) {
-        return getDelegate().growlistClonesSpecimenIdFloweringPatch(specimenId, specimenUpdateFlowerStatus);
-    }
-
-
-    /**
-     * GET /growlist/clones/{specimenId}
-     *
-     * @param specimenId  (required)
-     * @return OK (status code 200)
-     */
-    @Operation(
-        operationId = "growlistClonesSpecimenIdGet",
-        tags = { "Growlistmanagement" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenCloneDTO.class))
-            })
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/growlist/clones/{specimenId}",
-        produces = { "application/json" }
-    )
-    
-    default ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(
-        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId
-    ) {
-        return getDelegate().growlistClonesSpecimenIdGet(specimenId);
-    }
-
-
-    /**
-     * PUT /growlist/clones/{specimenId} : update values
-     *
-     * @param specimenId  (required)
-     * @param sex  (optional)
-     * @param file  (optional)
-     * @return OK (status code 200)
-     *         or Could not update Specimen (status code 500)
-     */
-    @Operation(
-        operationId = "growlistClonesSpecimenIdPut",
-        summary = "update values",
-        tags = { "Growlistmanagement" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "500", description = "Could not update Specimen")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/growlist/clones/{specimenId}",
-        consumes = { "multipart/form-data" }
-    )
-    
-    default ResponseEntity<Void> growlistClonesSpecimenIdPut(
-        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
-        @Parameter(name = "sex", description = "") @Valid @RequestParam(value = "sex", required = false) String sex,
-        @Parameter(name = "file", description = "") @RequestPart(value = "file", required = false) MultipartFile file
-    ) {
-        return getDelegate().growlistClonesSpecimenIdPut(specimenId, sex, file);
+        return getDelegate().growlistCreateCloneCloneTypePost(cloneType, labelCloneDTO);
     }
 
 
@@ -252,6 +129,35 @@ public interface GrowlistmanagementApi {
 
 
     /**
+     * PATCH /growlist/{growlistId}/public : set Growlist to public or private
+     *
+     * @param growlistId  (required)
+     * @param growlistPublic  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "growlistGrowlistIdPublicPatch",
+        summary = "set Growlist to public or private",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PATCH,
+        value = "/growlist/{growlistId}/public",
+        consumes = { "application/json" }
+    )
+    
+    default ResponseEntity<Void> growlistGrowlistIdPublicPatch(
+        @Parameter(name = "growlistId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("growlistId") String growlistId,
+        @Parameter(name = "GrowlistPublic", description = "", required = true) @Valid @RequestBody GrowlistPublic growlistPublic
+    ) {
+        return getDelegate().growlistGrowlistIdPublicPatch(growlistId, growlistPublic);
+    }
+
+
+    /**
      * GET /growlist/{username}/clones : get all Specimens of a specific User, if Growlist is public
      *
      * @param username  (required)
@@ -279,6 +185,161 @@ public interface GrowlistmanagementApi {
         @Parameter(name = "username", description = "", required = true, in = ParameterIn.PATH) @PathVariable("username") String username
     ) {
         return getDelegate().growlistUsernameClonesGet(username);
+    }
+
+
+    /**
+     * DELETE /specimens/{specimenId} : remove a specimen from the growlistist. If the removed plant was already used for a trade, only a soft delete will happen
+     *
+     * @param specimenId  (required)
+     * @return OK (status code 200)
+     *         or Error, could not add Nepenthes Clone to user (status code 500)
+     */
+    @Operation(
+        operationId = "specimensSpecimenIdDelete",
+        summary = "remove a specimen from the growlistist. If the removed plant was already used for a trade, only a soft delete will happen",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "500", description = "Error, could not add Nepenthes Clone to user")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.DELETE,
+        value = "/specimens/{specimenId}"
+    )
+    
+    default ResponseEntity<Void> specimensSpecimenIdDelete(
+        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId
+    ) {
+        return getDelegate().specimensSpecimenIdDelete(specimenId);
+    }
+
+
+    /**
+     * PATCH /specimens/{specimenId}/flowering : Update the flowering status of a clone
+     *
+     * @param specimenId  (required)
+     * @param specimenUpdateFlowerStatus  (required)
+     * @return OK (status code 200)
+     *         or Error, could not update flowering status (status code 500)
+     */
+    @Operation(
+        operationId = "specimensSpecimenIdFloweringPatch",
+        summary = "Update the flowering status of a clone",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenUpdateFlowerStatus.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error, could not update flowering status")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PATCH,
+        value = "/specimens/{specimenId}/flowering",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    default ResponseEntity<SpecimenUpdateFlowerStatus> specimensSpecimenIdFloweringPatch(
+        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
+        @Parameter(name = "SpecimenUpdateFlowerStatus", description = "", required = true) @Valid @RequestBody SpecimenUpdateFlowerStatus specimenUpdateFlowerStatus
+    ) {
+        return getDelegate().specimensSpecimenIdFloweringPatch(specimenId, specimenUpdateFlowerStatus);
+    }
+
+
+    /**
+     * GET /specimens/{specimenId}
+     *
+     * @param specimenId  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "specimensSpecimenIdGet",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenCloneDTO.class))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/specimens/{specimenId}",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<SpecimenCloneDTO> specimensSpecimenIdGet(
+        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId
+    ) {
+        return getDelegate().specimensSpecimenIdGet(specimenId);
+    }
+
+
+    /**
+     * PUT /specimens/{specimenId}/image : update Image
+     *
+     * @param specimenId  (required)
+     * @param file  (optional)
+     * @return OK (status code 200)
+     *         or Could not update Specimen (status code 500)
+     */
+    @Operation(
+        operationId = "specimensSpecimenIdImagePut",
+        summary = "update Image",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "500", description = "Could not update Specimen")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PUT,
+        value = "/specimens/{specimenId}/image",
+        consumes = { "multipart/form-data" }
+    )
+    
+    default ResponseEntity<Void> specimensSpecimenIdImagePut(
+        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
+        @Parameter(name = "file", description = "") @RequestPart(value = "file", required = false) MultipartFile file
+    ) {
+        return getDelegate().specimensSpecimenIdImagePut(specimenId, file);
+    }
+
+
+    /**
+     * PATCH /specimens/{specimenId}/sex : Update Sex of a specific Specimen, only works if Specimes current sex is unkown
+     *
+     * @param specimenId  (required)
+     * @param specimenUpdateSex  (required)
+     * @return OK (status code 200)
+     *         or Error, could not update Specimen Sex (status code 500)
+     */
+    @Operation(
+        operationId = "specimensSpecimenIdSexPatch",
+        summary = "Update Sex of a specific Specimen, only works if Specimes current sex is unkown",
+        tags = { "Growlistmanagement" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenUpdateSex.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "Error, could not update Specimen Sex")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.PATCH,
+        value = "/specimens/{specimenId}/sex",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    
+    default ResponseEntity<SpecimenUpdateSex> specimensSpecimenIdSexPatch(
+        @Parameter(name = "specimenId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("specimenId") String specimenId,
+        @Parameter(name = "SpecimenUpdateSex", description = "", required = true) @Valid @RequestBody SpecimenUpdateSex specimenUpdateSex
+    ) {
+        return getDelegate().specimensSpecimenIdSexPatch(specimenId, specimenUpdateSex);
     }
 
 }

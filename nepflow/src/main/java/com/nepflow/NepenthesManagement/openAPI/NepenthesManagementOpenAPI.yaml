@@ -1,7 +1,12 @@
 openapi: 3.0.0
 tags:
-  - name: NepenthesManagement
+  - name: nepenthes
     description: Operations to manage Nepenthes
+  - name: NepenthesMetadata
+    description: not sure if actually necessary for now
+  - name: Growlistmanagement
+    description: Operations for the GrowlistManagement of an user
+
 info:
   title: Nepflow Nepenthes
   description: |-
@@ -125,6 +130,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LabelCloneDTO'
+
+  /growlist/{growlistId}/public:
+    patch:
+      parameters:
+        - $ref: "#/components/parameters/growlistId"
+
+      summary: set Growlist to public or private
+      tags:
+        - Growlistmanagement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GrowlistPublic'
+      responses:
+        '200':
+          description: OK
+
+
+
+
   /growlist/clone/add/{internalCloneId}:
     parameters:
       - $ref: "#/components/parameters/internalCloneId"
@@ -142,7 +169,7 @@ paths:
         '500':
           description: Error, could not add Specimen to user
 
-  /growlist/clone/create/{cloneType}:
+  /growlist/create/clone/{cloneType}:
     parameters:
       - $ref: "#/components/parameters/cloneType"
     post:
@@ -184,11 +211,11 @@ paths:
                 $ref: '#/components/schemas/SpecimenCloneDTO'
         '500':
           description: Error, could not add Specimen to user
-  /growlist/clones/{specimenId}:
+  /specimens/{specimenId}:
     parameters:
       - $ref: "#/components/parameters/specimenId"
     delete:
-      summary: remove a clone from the growlisti If the removed plant was already used for a trade it will be a soft delete in the relation part
+      summary: remove a specimen from the growlistist. If the removed plant was already used for a trade, only a soft delete will happen
       tags:
         - Growlistmanagement
       responses:
@@ -196,21 +223,6 @@ paths:
           description: OK
         '500':
           description: Error, could not add Nepenthes Clone to user
-    put:
-      summary: update values
-      tags:
-        - Growlistmanagement
-      requestBody:
-        required: false
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/SpecimenUpdateCloneDTO'
-      responses:
-        '200':
-          description: OK
-        '500':
-          description: Could not update Specimen
     get:
       tags:
         - Growlistmanagement
@@ -221,7 +233,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SpecimenCloneDTO'
-  /growlist/clones/{specimenId}/flowering:
+  /specimens/{specimenId}/sex:
+    parameters:
+      - $ref: "#/components/parameters/specimenId"
+    patch:
+      summary: Update Sex of a specific Specimen, only works if Specimes current sex is unkown
+      tags:
+        - Growlistmanagement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpecimenUpdateSex'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecimenUpdateSex'
+
+        '500':
+          description: Error, could not update Specimen Sex
+
+  /specimens/{specimenId}/flowering:
     parameters:
       - $ref: "#/components/parameters/specimenId"
 
@@ -246,6 +282,25 @@ paths:
         '500':
           description: Error, could not update flowering status
 
+
+  /specimens/{specimenId}/image:
+    parameters:
+      - $ref: "#/components/parameters/specimenId"
+    put:
+      summary: update Image
+      tags:
+        - Growlistmanagement
+      requestBody:
+        required: false
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SpecimenUpdateImage'
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Could not update Specimen
 
 
 
@@ -316,6 +371,12 @@ components:
       schema:
         type: string
 
+    growlistId:
+      name: growlistId
+      in: path
+      required: true
+      schema:
+        type: string
 
 
   schemas:
@@ -390,16 +451,28 @@ components:
 
 
 
-    SpecimenUpdateCloneDTO:
+    SpecimenUpdateImage:
       type: object
       properties:
-        sex:
-          type: string
         file:
           type: string
           format: binary
 
+    SpecimenUpdateSex:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+
+
     SpecimenUpdateFlowerStatus:
+      type: object
+      properties:
+        isFlowering:
+          type: boolean
+
+    GrowlistPublic:
       type: object
       properties:
         isFlowering:

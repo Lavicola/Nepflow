@@ -8,7 +8,7 @@ import jakarta.annotation.Generated;
  * Gets or Sets NepenthesType
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-13T22:57:38.084130600+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-16T23:38:46.782047800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public enum NepenthesType {
   
   species("Species"),
