@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T14:27:09.400598300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T21:09:45.198252+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Growlistmanagement", description = "Operations for the GrowlistManagement of an user")
 public interface GrowlistmanagementApi {

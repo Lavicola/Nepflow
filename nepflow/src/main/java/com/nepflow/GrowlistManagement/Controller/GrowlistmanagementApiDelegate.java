@@ -24,7 +24,7 @@ import jakarta.annotation.Generated;
  * A delegate to be called by the {@link GrowlistmanagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T14:27:09.400598300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T21:09:45.198252+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface GrowlistmanagementApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
