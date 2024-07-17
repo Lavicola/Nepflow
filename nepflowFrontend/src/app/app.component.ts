@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "./services/AuthService";
+import {UsernameService} from "./services/UsernameService";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,8 @@ import {AuthService} from "./services/AuthService";
 })
 export class AppComponent implements OnInit{
   title = 'nepflowFrontend';
+  username!:string;
+
   newNepenthesRoute: string = "nepenthes/add";
   publicGrowlistsRoute: string = "users/growlist";
   myGrowlistRoute: string = "growlist/"
@@ -16,11 +19,14 @@ export class AppComponent implements OnInit{
   isLoggedIn:boolean = false;
 
 
-  constructor(public authService: AuthService) {
+  constructor(public authService: AuthService,
+              ) {
+
   }
 
   async ngOnInit(): Promise<void> {
     this.isLoggedIn = await this.authService.isAuthenticated();
+
   }
 
 

@@ -6,20 +6,16 @@ import { filter, map } from 'rxjs/operators';
 import {RequestBuilder} from "../../../core/openApiGeneratedFiles/request-builder";
 import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
 
-import { CloneType } from '../../models/clone-type';
-import { LabelCloneDto } from '../../models/label-clone-dto';
 import { SpecimenCloneDto } from '../../models/specimen-clone-dto';
 
-export interface GrowlistCreateNepenthesCloneTypePost$Params {
-  cloneType: CloneType;
-      body?: LabelCloneDto
+export interface SpecimensSpecimenIdGet$Params {
+  specimenId: string;
 }
 
-export function growlistCreateNepenthesCloneTypePost(http: HttpClient, rootUrl: string, params: GrowlistCreateNepenthesCloneTypePost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpecimenCloneDto>> {
-  const rb = new RequestBuilder(rootUrl, growlistCreateNepenthesCloneTypePost.PATH, 'post');
+export function specimensSpecimenIdGet(http: HttpClient, rootUrl: string, params: SpecimensSpecimenIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<SpecimenCloneDto>> {
+  const rb = new RequestBuilder(rootUrl, specimensSpecimenIdGet.PATH, 'get');
   if (params) {
-    rb.path('cloneType', params.cloneType, {});
-    rb.body(params.body, 'application/json');
+    rb.path('specimenId', params.specimenId, {});
   }
 
   return http.request(
@@ -32,4 +28,4 @@ export function growlistCreateNepenthesCloneTypePost(http: HttpClient, rootUrl: 
   );
 }
 
-growlistCreateNepenthesCloneTypePost.PATH = '/growlist/create/nepenthes/{cloneType}';
+specimensSpecimenIdGet.PATH = '/specimens/{specimenId}';

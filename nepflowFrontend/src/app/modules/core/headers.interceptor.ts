@@ -25,7 +25,7 @@ export class HeadersInterceptor implements HttpInterceptor {
 
 
     if (
-      (request.method === 'POST' || request.method === 'PUT'|| request.method === 'DELETE') &&
+      (request.method === 'POST' || request.method === 'PUT'|| request.method === 'DELETE' || request.method === 'PATCH' ) &&
       (lcUrl.startsWith('http://') ||
       lcUrl.startsWith('https://'))
     ) {

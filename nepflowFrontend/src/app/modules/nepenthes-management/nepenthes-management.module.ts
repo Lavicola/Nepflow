@@ -26,10 +26,10 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from "@angular/material/card";
-import {UserGrowlistPresentationComponent} from './user-growlist-presentation/user-growlist-presentation.component';
 import {MatExpansionPanelActionRow} from "@angular/material/expansion";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatDivider} from "@angular/material/divider";
 
 
 @NgModule({
@@ -39,7 +39,7 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     NepenthesCloneComponent,
     NepenthesCloneTableComponent,
     UserGrowlistComponent,
-    UserGrowlistPresentationComponent,
+
   ],
   exports: [
     NepenthesCloneDropdownComponent
@@ -76,7 +76,8 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
     MatCardActions,
     MatExpansionPanelActionRow,
     MatButtonModule,
-    MatSlideToggle
+    MatSlideToggle,
+    MatDivider
   ]
 })
 export class NepenthesManagementModule { }

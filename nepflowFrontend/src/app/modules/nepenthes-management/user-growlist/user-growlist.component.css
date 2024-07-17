@@ -1,29 +1,14 @@
-/* plant-grid.component.css */
-mat-card {
-  width: 300px; /* Set the desired width */
-  height: 400px; /* Set the desired height */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: 16px;
+mat-card img{
+  height: fit-content;
+  max-height: 450px !important;
   object-fit: cover;
-
-}
-img {
-  object-fit: cover;
+  object-position: center;
 }
 
-
-
-mat-card-img{
-  object-fit: cover; /*this makes the image in src fit to the size specified below*/
+mat-card{
+  height: 500px;
 }
 
-mat-card-header {
-  align-items: center;
-}
-
-
-mat-card-content p {
-  margin: 6px; /* Adjust the spacing between the paragraphs if needed */
+.container{
+  padding: 7px;
 }

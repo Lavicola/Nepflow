@@ -11,7 +11,7 @@
  </mat-menu>
 
  <div *ngIf="isLoggedIn; else loggedOut">
-   Welcome back, friend.
+       Welcome back, {{username}}
  </div>
 
  <ng-template #loggedOut>

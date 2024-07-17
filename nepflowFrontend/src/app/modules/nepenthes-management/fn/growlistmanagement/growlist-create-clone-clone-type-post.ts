@@ -10,13 +10,13 @@ import { CloneType } from '../../models/clone-type';
 import { LabelCloneDto } from '../../models/label-clone-dto';
 import { SpecimenCloneDto } from '../../models/specimen-clone-dto';
 
-export interface GrowlistCreateNepenthesCloneTypePost$Params {
+export interface GrowlistCreateCloneCloneTypePost$Params {
   cloneType: CloneType;
       body?: LabelCloneDto
 }
 
-export function growlistCreateNepenthesCloneTypePost(http: HttpClient, rootUrl: string, params: GrowlistCreateNepenthesCloneTypePost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpecimenCloneDto>> {
-  const rb = new RequestBuilder(rootUrl, growlistCreateNepenthesCloneTypePost.PATH, 'post');
+export function growlistCreateCloneCloneTypePost(http: HttpClient, rootUrl: string, params: GrowlistCreateCloneCloneTypePost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpecimenCloneDto>> {
+  const rb = new RequestBuilder(rootUrl, growlistCreateCloneCloneTypePost.PATH, 'post');
   if (params) {
     rb.path('cloneType', params.cloneType, {});
     rb.body(params.body, 'application/json');
@@ -32,4 +32,4 @@ export function growlistCreateNepenthesCloneTypePost(http: HttpClient, rootUrl: 
   );
 }
 
-growlistCreateNepenthesCloneTypePost.PATH = '/growlist/create/nepenthes/{cloneType}';
+growlistCreateCloneCloneTypePost.PATH = '/growlist/create/clone/{cloneType}';
