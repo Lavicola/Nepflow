@@ -38,7 +38,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         }
         Growlist growlist = this.growlistservice.getGrowlist(username);
         if (growlist != null && (growlist.isPublic() || user.getUsername().equals(username))) {
-            return ResponseEntity.status(HttpStatus.OK).body(this.convertGrowlistToDTO(growlist));
+            return ResponseEntity.status(HttpStatus.OK).body(this.modelMapper.map(growlist, GrowlistDTO.class));
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new GrowlistDTO());
@@ -100,6 +100,17 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
 
     public ResponseEntity<SpecimenUpdateSex> specimensSpecimenIdSexPatch(String specimenId,
                                                                          SpecimenUpdateSex specimenUpdateSex) {
+
+        User user = this.authenticationService.getAuthenticatedUser();
+        boolean isSuccess;
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        isSuccess = this.growlistservice.updateSex(user.getOAuthId(), specimenId, specimenUpdateSex.getSex());
+        if (isSuccess) {
+            return ResponseEntity.ok(specimenUpdateSex);
+        }
+
         return ResponseEntity.internalServerError().body(null);
 
     }
@@ -122,44 +133,37 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
 
     }
 
-    public ResponseEntity<Void> growlistGrowlistIdPublicPatch(String growlistId,
-                                                              GrowlistPublic growlistPublic) {
+    public ResponseEntity<GrowlistPublic> growlistGrowlistIdPublicPatch(String growlistId,
+                                                                        GrowlistPublic growlistPublic) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
 
-        System.out.println("CALLL");
+        boolean isSuccess;
+        isSuccess = this.growlistservice.updateGrowlistVisibility(user.getOAuthId(), growlistId, growlistPublic.getIsPublic());
 
-        return ResponseEntity.ok(null);
+        return isSuccess ? ResponseEntity.ok().body(growlistPublic) : ResponseEntity.internalServerError().body(null);
+
     }
 
-    public ResponseEntity<SpecimenCloneDTO> growlistClonesSpecimenIdGet(String specimenId) {
+    public ResponseEntity<SpecimenCloneDTO> specimensSpecimenIdGet(String specimenId) {
 
         return null;
 
     }
 
-
-    private GrowlistDTO convertGrowlistToDTO(Growlist growlist) {
-        GrowlistDTO growlistDTO = new GrowlistDTO();
-        SpecimenCloneDTO specimenCloneDTO;
-        if (growlist == null) {
-            return growlistDTO;
+    public ResponseEntity<Void> specimensSpecimenIdDelete(String specimenId) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        boolean isSuccess;
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        for (Specimen specimen : growlist.getSpecimens()) {
-            specimenCloneDTO = new SpecimenCloneDTO();
-            specimenCloneDTO.setCloneId(specimen.getClone().getCloneId());
-            specimenCloneDTO.setSpecimenId(specimen.getUuid());
-            specimenCloneDTO.setLocation(specimen.getClone().getLocationAsString());
-            specimenCloneDTO.setSex(specimen.getClone().getSexAsString());
-            specimenCloneDTO.setProducer(specimen.getClone().getSellerAsString());
-            specimenCloneDTO.setNepenthesName(specimen.getClone().getLabelName());
-            specimenCloneDTO.setFilelocation(specimen.getImagePath());
-            specimenCloneDTO.setIsFlowering(specimen.getFlowerStatus());
-            growlistDTO.addSpecimensItem(specimenCloneDTO);
+        isSuccess = this.growlistservice.deleteSpecimenFromGrowlist(user.getOAuthId(), specimenId);
 
-        }
+        return isSuccess ? ResponseEntity.ok().body(null) : ResponseEntity.internalServerError().body(null);
 
 
-        return growlistDTO;
     }
-
 
 }

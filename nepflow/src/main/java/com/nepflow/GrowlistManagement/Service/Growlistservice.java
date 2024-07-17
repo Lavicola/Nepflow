@@ -33,4 +33,6 @@ public interface Growlistservice {
 
     boolean updateGrowlistVisibility(String OAuthId, String growlistId,boolean isPublic);
 
+    boolean deleteSpecimenFromGrowlist(String OAuthId, String specimenId);
+
 }

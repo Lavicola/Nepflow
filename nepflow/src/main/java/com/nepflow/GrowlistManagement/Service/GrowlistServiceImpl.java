@@ -149,7 +149,23 @@ public class GrowlistServiceImpl implements Growlistservice {
 
     @Override
     public boolean updateGrowlistVisibility(String OAuthId, String growlistId, boolean isPublic) {
-        return this.updateGrowlistVisibility(OAuthId, growlistId, isPublic);
+        return this.growListRepository.updateGrowlistVisibility(OAuthId, growlistId, isPublic);
+    }
+
+    @Override
+    public boolean deleteSpecimenFromGrowlist(String OAuthId, String specimenId) {
+        Specimen specimen = specimenRepository.findSpecimenByUuid(specimenId);
+        String imageLocation;
+        if(specimen == null){
+            return false;
+        }
+        imageLocation = specimen.getImagePath();
+        if(!this.specimenRepository.deleteSpecimen(OAuthId,specimenId)){
+            return false;
+        }
+        this.imageService.deleteImage(bucketname,imageLocation);
+
+        return true;
     }
 
 

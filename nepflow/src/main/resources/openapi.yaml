@@ -246,6 +246,10 @@ paths:
         required: true
       responses:
         "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrowlistPublic"
           description: OK
       summary: set Growlist to public or private
       tags:
@@ -701,10 +705,9 @@ components:
       type: object
     SpecimenUpdateSex:
       example:
-        file: ""
+        sex: sex
       properties:
-        file:
-          format: binary
+        sex:
           type: string
       type: object
     SpecimenUpdateFlowerStatus:
@@ -716,13 +719,14 @@ components:
       type: object
     GrowlistPublic:
       example:
-        isFlowering: true
+        isPublic: true
       properties:
-        isFlowering:
+        isPublic:
           type: boolean
       type: object
     GrowlistDTO:
       example:
+        isPublic: true
         specimens:
         - filelocation: filelocation
           isFlowering: true
@@ -753,6 +757,8 @@ components:
           type: string
         username:
           type: string
+        isPublic:
+          type: boolean
         specimens:
           items:
             $ref: "#/components/schemas/SpecimenCloneDTO"

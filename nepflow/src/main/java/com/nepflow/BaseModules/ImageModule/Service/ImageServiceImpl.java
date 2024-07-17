@@ -85,9 +85,10 @@ public class ImageServiceImpl implements ImageService {
 
 
     @Override
-    public boolean deleteImage(String bucketname, String path, String filename) throws NoSuchAlgorithmException {
-        String pathFileExten = String.format("%s/%s.webp",path,Digest.sha256Hash(filename));
-        RemoveObjectArgs removeObjectArgs = RemoveObjectArgs.builder().bucket(bucketname).object(pathFileExten).build();
+    public boolean deleteImage(String bucketname,String url) {
+        String pathFileExten = url.split(bucketname)[1];
+        RemoveObjectArgs removeObjectArgs = RemoveObjectArgs.builder().
+                bucket(bucketname).object(pathFileExten).build();
         try {
             minioClient.removeObject(removeObjectArgs);
         } catch (Exception e) {

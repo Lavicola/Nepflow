@@ -5,22 +5,36 @@
  */
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.GrowlistManagement.Dto.*;
+import com.nepflow.GrowlistManagement.Dto.CloneType;
+import com.nepflow.GrowlistManagement.Dto.GrowlistDTO;
+import com.nepflow.GrowlistManagement.Dto.GrowlistPublic;
+import com.nepflow.GrowlistManagement.Dto.LabelCloneDTO;
+import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
+import com.nepflow.GrowlistManagement.Dto.SpecimenUpdateFlowerStatus;
+import com.nepflow.GrowlistManagement.Dto.SpecimenUpdateSex;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-16T23:38:46.782047800+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import java.util.List;
+import java.util.Map;
+import jakarta.annotation.Generated;
+
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T14:27:09.400598300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Growlistmanagement", description = "Operations for the GrowlistManagement of an user")
 public interface GrowlistmanagementApi {
@@ -140,16 +154,19 @@ public interface GrowlistmanagementApi {
         summary = "set Growlist to public or private",
         tags = { "Growlistmanagement" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "OK")
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = GrowlistPublic.class))
+            })
         }
     )
     @RequestMapping(
         method = RequestMethod.PATCH,
         value = "/growlist/{growlistId}/public",
+        produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    default ResponseEntity<Void> growlistGrowlistIdPublicPatch(
+    default ResponseEntity<GrowlistPublic> growlistGrowlistIdPublicPatch(
         @Parameter(name = "growlistId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("growlistId") String growlistId,
         @Parameter(name = "GrowlistPublic", description = "", required = true) @Valid @RequestBody GrowlistPublic growlistPublic
     ) {

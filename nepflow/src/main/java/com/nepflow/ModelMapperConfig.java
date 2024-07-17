@@ -1,5 +1,9 @@
 package com.nepflow;
 
+import com.nepflow.GrowlistManagement.Dto.GrowlistDTO;
+import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
+import com.nepflow.GrowlistManagement.Model.Growlist;
+import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.NepenthesManagement.Dto.CloneDTO;
 import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import com.nepflow.NepenthesManagement.Model.Clones.*;
@@ -37,9 +41,6 @@ public class ModelMapperConfig {
         CloneMap.include(ICPrimaryHybrid.class, CloneDTO.class);
         CloneMap.include(ICMultiHybrid.class, CloneDTO.class);
 
-
-
-
         modelMapper.addMappings(new PropertyMap<IVSpeciesClone, CloneDTO>() {
             @Override
             protected void configure() {
@@ -48,7 +49,28 @@ public class ModelMapperConfig {
             }
         });
 
+        modelMapper.addMappings(new PropertyMap<Growlist, GrowlistDTO>() {
+            @Override
+            protected void configure() {
+                map().setId(source.getUuid());
+                map().setIsPublic(source.isPublic());
+            }
 
+            });
+
+        modelMapper.addMappings(new PropertyMap<Specimen, SpecimenCloneDTO>() {
+            @Override
+            protected void configure() {
+                map().setSpecimenId(source.getUuid());
+                map().setIsFlowering(source.getFlowerStatus());
+                map().setFilelocation(source.getImagePath());
+                map().setProducer(source.getClone().getSellerAsString());
+                map().setSex(source.getClone().getSexAsString());
+                map().setNepenthesName(source.getClone().getLabelName());
+                map().setNickname(source.getClone().getCultivarName());
+                map().setLocation(source.getClone().getLocationAsString());
+            }
+        });
         modelMapper.addMappings(new PropertyMap<User, UserDTO>() {
             @Override
             protected void configure() {

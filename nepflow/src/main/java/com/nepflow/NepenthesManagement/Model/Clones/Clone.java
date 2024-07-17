@@ -28,6 +28,7 @@ public abstract class Clone {
     // for IV: combination of cloneId and first letter of Sex since IV clones are sometimes a Pool of plants
     protected String internalCloneId;
 
+    @Getter
     protected String cultivarName;
 
     @Property

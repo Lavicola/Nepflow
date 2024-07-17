@@ -26,12 +26,35 @@ public class Specimen {
     String imagePath;
 
     @Property
+            @Getter
     boolean isFlowering = false;
 
     public Specimen(Clone clone) {
         this.clone = clone;
         this.isFlowering = false;
     }
+
+    public String getSellerAsString(){
+        return this.clone.getSellerAsString();
+    }
+
+    public String getLocationAsString(){
+        return this.clone.getLocationAsString();
+    }
+
+    public String getSexAsString(){
+        return this.clone.getSexAsString();
+    }
+
+    public String getNepenthesname(){
+        return this.clone.getLabelName();
+    }
+
+
+    public String getCultivarName(){
+        return this.clone.getCultivarName();
+    }
+
 
     public void setClone(Clone clone){
         this.clone = clone;
@@ -44,6 +67,8 @@ public class Specimen {
     public void setFlowerStatus(boolean isFlowering){
         this.isFlowering = isFlowering;
     }
+
+
 
     @Override
     public int hashCode() {

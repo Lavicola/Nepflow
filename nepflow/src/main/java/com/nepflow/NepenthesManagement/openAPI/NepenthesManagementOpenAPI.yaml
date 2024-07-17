@@ -148,6 +148,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GrowlistPublic'
 
 
 
@@ -461,9 +465,8 @@ components:
     SpecimenUpdateSex:
       type: object
       properties:
-        file:
+        sex:
           type: string
-          format: binary
 
 
     SpecimenUpdateFlowerStatus:
@@ -475,11 +478,8 @@ components:
     GrowlistPublic:
       type: object
       properties:
-        isFlowering:
+        isPublic:
           type: boolean
-
-
-
 
 
 
@@ -491,6 +491,8 @@ components:
           type: string
         username:
           type: string
+        isPublic:
+          type: boolean
         specimens:
           type: array
           items:

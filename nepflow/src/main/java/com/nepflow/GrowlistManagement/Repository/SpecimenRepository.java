@@ -22,4 +22,10 @@ public interface SpecimenRepository extends Neo4jRepository<Specimen,String> {
 
     Specimen findSpecimenByUuid(String uuid);
 
+    @Query("MATCH (u:User {OAuthId: $id})-[r:CONTAINS_COLLECTION]->(g:Growlist)-[sr:CONTAINS_SPECIMEN]->(s:Specimen)\n" +
+            "WHERE elementId(s) = $specimenId\n" +
+            "detach delete s\n" +
+            "RETURN CASE WHEN s IS NOT NULL THEN true ELSE false END AS result")
+    boolean deleteSpecimen(String id, String specimenId);
+
 }

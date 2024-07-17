@@ -17,6 +17,7 @@ public class Growlist {
 
     @Id
     @GeneratedValue
+    @Getter
     protected String uuid;
 
     @Relationship(value = "CONTAINS_COLLECTION",direction = Relationship.Direction.INCOMING)
@@ -38,7 +39,5 @@ public class Growlist {
     public List<Specimen> getSpecimens() {
         return new ArrayList<>(specimenList);
     }
-
-
 
 }
