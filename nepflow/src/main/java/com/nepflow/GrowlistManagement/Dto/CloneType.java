@@ -17,21 +17,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Gets or Sets NepenthesType
+ * Gets or Sets CloneType
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-17T21:09:45.198252+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public enum NepenthesType {
+public enum CloneType {
   
-  species("Species"),
+  iv("iv"),
   
-  multihybrid("MultiHybrid"),
-  
-  primaryhybrid("PrimaryHybrid");
+  ic("ic");
 
   private String value;
 
-  NepenthesType(String value) {
+  CloneType(String value) {
     this.value = value;
   }
 
@@ -46,8 +44,8 @@ public enum NepenthesType {
   }
 
   @JsonCreator
-  public static NepenthesType fromValue(String value) {
-    for (NepenthesType b : NepenthesType.values()) {
+  public static CloneType fromValue(String value) {
+    for (CloneType b : CloneType.values()) {
       if (b.value.equals(value)) {
         return b;
       }
