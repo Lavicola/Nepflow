@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {NepenthesCloneComponent} from "./nepenthes-clone/nepenthes-clone.component";
 import {UserGrowlistComponent} from "./user-growlist/user-growlist.component";
+import {AllUsersOverviewComponent} from "./all-users-overview/all-users-overview.component";
 
 const routes: Routes = [
 
@@ -18,7 +19,10 @@ const routes: Routes = [
     component: UserGrowlistComponent,
     // canActivate: [authGuardAuthenticated]
   },
-
+  {path: "users/growlist",
+    component: AllUsersOverviewComponent,
+    // canActivate: [authGuardAuthenticated]
+  },
  // {path: "users/growlist",
  //   component: PublicUsersGrowlistComponent,
     // canActivate: [authGuardAuthenticated]

@@ -30,6 +30,7 @@ import {MatExpansionPanelActionRow} from "@angular/material/expansion";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatDivider} from "@angular/material/divider";
+import { AllUsersOverviewComponent } from './all-users-overview/all-users-overview.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {MatDivider} from "@angular/material/divider";
     NepenthesCloneComponent,
     NepenthesCloneTableComponent,
     UserGrowlistComponent,
+    AllUsersOverviewComponent,
 
   ],
   exports: [

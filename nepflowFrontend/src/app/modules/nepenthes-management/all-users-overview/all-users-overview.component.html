@@ -1,0 +1,14 @@
+<div>
+  <mat-form-field>
+    <div>
+      <input matInput [formControl]="usernameFilter" placeholder="Search users" />
+    </div>
+  </mat-form-field>
+
+</div>
+
+<ul>
+  <li *ngFor="let user of filteredUsers$|async">
+    <a [routerLink]="['/growlist',user.username]">{{ user.username }}</a>
+  </li>
+</ul>
