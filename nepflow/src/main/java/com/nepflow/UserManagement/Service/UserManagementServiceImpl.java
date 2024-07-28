@@ -96,5 +96,10 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     }
 
+    @Override
+    public List<User> getUsers() {
+        return this.userRepository.getAllUsers();
+    }
+
 
 }

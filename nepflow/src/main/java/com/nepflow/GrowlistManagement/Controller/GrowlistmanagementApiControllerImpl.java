@@ -122,7 +122,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        isSuccess = this.growlistservice.updateFlowerStatus(user.getOAuthId(), specimenId, specimenUpdateSex.getIsFlowering());
+        isSuccess = this.growlistservice.updateFlowerStatus(user, specimenId, specimenUpdateSex.getIsFlowering());
         if (isSuccess) {
             flowerStatus.setIsFlowering(specimenUpdateSex.getIsFlowering());
             return ResponseEntity.ok(flowerStatus);

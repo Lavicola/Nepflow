@@ -26,6 +26,8 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
 
+
+
         // Mapping of Label subclasses to LabelDTO
         TypeMap<Label, LabelDTO> LabeltypeMap = modelMapper.createTypeMap(Label.class, LabelDTO.class)
                 .addMapping(Label::getName, LabelDTO::setNepenthesName);

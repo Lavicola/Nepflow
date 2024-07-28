@@ -21,6 +21,7 @@ public class Growlist {
     protected String uuid;
 
     @Relationship(value = "CONTAINS_COLLECTION",direction = Relationship.Direction.INCOMING)
+    @Getter
     User user;
     @Relationship(value = "CONTAINS_SPECIMEN")
     List<Specimen> specimenList;

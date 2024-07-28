@@ -26,7 +26,7 @@ public class Specimen {
     String imagePath;
 
     @Property
-            @Getter
+    @Getter
     boolean isFlowering = false;
 
     public Specimen(Clone clone) {

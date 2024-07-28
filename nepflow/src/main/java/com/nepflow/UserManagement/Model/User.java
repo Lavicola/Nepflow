@@ -45,4 +45,21 @@ public class User {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof User))
+            return false;
+        User other = (User) o;
+        return this.getOAuthId().equals(other.getOAuthId());
+
+    }
+
+    @Override
+    public final int hashCode() {
+
+        return this.getOAuthId().hashCode();
+    }
+
 }

@@ -22,4 +22,8 @@ public interface UserManagementService {
     Country saveCountry(String countryAsString);
 
     Country getCountry(String countryAsString);
+
+
+    public List<User> getUsers();
+
 }

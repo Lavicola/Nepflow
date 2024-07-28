@@ -90,6 +90,7 @@ public abstract class Label {
         this.cloneIcList.add(icClone);
         return icClone;
     }
+    //TODO using this current method  enables  to add the  same clone (id wise)  twice
     public IVClone addIVClone(String cloneId, Sex sex, Location location, Producer producer){
         IVClone icClone = createIVClone( cloneId, sex, location, producer);
         this.cloneIvList.add(icClone);

@@ -4,20 +4,8 @@ import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
 import com.nepflow.GrowlistManagement.Service.Growlistservice;
-import com.nepflow.LabelCloneDefinitions;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
-import com.nepflow.NepenthesManagement.Model.Clones.Clone;
-import com.nepflow.NepenthesManagement.Model.Clones.ICSpeciesClone;
-import com.nepflow.NepenthesManagement.Model.Clones.IVSpeciesClone;
-import com.nepflow.NepenthesManagement.Model.Labels.Label;
-import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
-import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
-import com.nepflow.UserManagement.Model.Country;
-import com.nepflow.UserManagement.Model.User;
-import com.nepflow.UserManagement.Repository.CountryRepository;
 import com.nepflow.UserManagement.Service.AuthenticationService;
-import com.nepflow.UserManagement.Service.UserManagementService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,33 +36,15 @@ public class GrowlistManagementServiceTest {
     @MockBean
     DataInitializationService dataInitializationService;
 
-    @Autowired
-    CountryRepository countryRepository;
-
-    @Autowired
-    NepenthesManagementService nepenthesManagementService;
-
-    @Autowired
-    NepenthesManagementMetaDataService nepenthesManagementMetaDataService;
-
-    @Autowired
-    Growlistservice growlistservice;
-
-    @Autowired
-    UserManagementService userManagementService;
-
     @MockBean
     AuthenticationService authenticationService;
-
+    @Autowired
+    Growlistservice growlistservice;
     @Autowired
     GrowlistRepository growlistRepository;
+    @Autowired
+    GrowlistTestDataInserter  growlistTestDataInserter;
 
-
-    User user = new User("test","id");
-    Producer producer = LabelCloneDefinitions.producer;
-    Label species = LabelCloneDefinitions.species;
-    Clone icSpeciesClone = LabelCloneDefinitions.icSpeciesClone;
-    Clone ivSpeciesClone = LabelCloneDefinitions.ivSpeciesClone;
 
     static boolean executedOnce = false;
 
@@ -92,21 +62,9 @@ public class GrowlistManagementServiceTest {
     public void setUp(){
         // for now, since TestInstance.Lifecycle.PER_CLASS is not possible due to initializeNeo4j
         if(!executedOnce){
-            String country = "USA";
-            this.countryRepository.save(new Country(country));
-            this.userManagementService.createMinimalUser(user.getOAuthId(),user.getUsername(),"aaa","USA");
-            this.nepenthesManagementService.createLabel(species);
-            this.nepenthesManagementMetaDataService.saveProducer(producer.getName(),producer.getContact());
-            this.nepenthesManagementService.saveIVClone(species,
-                    ivSpeciesClone.getCloneId(),
-                    ivSpeciesClone.getSexAsString(),
-                    ivSpeciesClone.getLocationAsString(),
-                    ivSpeciesClone.getSellerAsString());
-            this.nepenthesManagementService.saveICCloneWithCloneId(species,
-                    icSpeciesClone.getCloneId(),
-                    ivSpeciesClone.getSexAsString(),
-                    ivSpeciesClone.getLocationAsString(),
-                    ivSpeciesClone.getSellerAsString());
+            this.growlistTestDataInserter.insertData();
+            this.growlistRepository.save(new Growlist(growlistTestDataInserter.user1));
+            this.growlistRepository.save(new Growlist(growlistTestDataInserter.user2));
             executedOnce = true;
         }
 
@@ -135,20 +93,18 @@ public class GrowlistManagementServiceTest {
     public void addNewIVCloneToGrowListTest(){
         Specimen ivSpecimen;
         Specimen icSpecimen;
-        Clone newClone1 = new IVSpeciesClone(species,"NEUIV",null,null,producer);
-        Clone newClone2 = new ICSpeciesClone(species,null,"NEUIC",null,producer);
-        ivSpecimen = this.growlistservice.addNewIVCloneToGrowList(user,species.getName(),
-                newClone1.getCloneId(),
-                newClone1.getSexAsString(),
-                newClone1.getLocationAsString(),
-                newClone1.getSellerAsString());
-        icSpecimen = this.growlistservice.addNewICCloneToGrowList(user,species.getName(),
-                newClone2.getCloneId(),
-                newClone2.getSexAsString(),
-                newClone2.getLocationAsString(),
-                newClone2.getSellerAsString());
-        Growlist growlist = this.growlistRepository.findGrowlistById(this.user.getOAuthId());
-
+        ivSpecimen = this.growlistservice.addNewIVCloneToGrowList(growlistTestDataInserter.user1,
+                growlistTestDataInserter.cloneNotInDBIV.getLabelName(),
+                growlistTestDataInserter.cloneNotInDBIV.getCloneId(),
+                growlistTestDataInserter.cloneNotInDBIV.getSexAsString(),
+                growlistTestDataInserter.cloneNotInDBIV.getLocationAsString(),
+                growlistTestDataInserter.cloneNotInDBIV.getSellerAsString());
+        icSpecimen = this.growlistservice.addNewICCloneToGrowList(growlistTestDataInserter.user1,growlistTestDataInserter.ivSpeciesClone.getLabelName(),
+                growlistTestDataInserter.cloneNotInDBIC.getCloneId(),
+                growlistTestDataInserter.cloneNotInDBIC.getSexAsString(),
+                growlistTestDataInserter.cloneNotInDBIC.getLocationAsString(),
+                growlistTestDataInserter.cloneNotInDBIC.getSellerAsString());
+        Growlist growlist = this.growlistRepository.findGrowlistById(growlistTestDataInserter.user1.getOAuthId());
         assertNotNull(ivSpecimen);
         assertNotNull(icSpecimen);
         assertNotNull(growlist);
@@ -160,16 +116,16 @@ public class GrowlistManagementServiceTest {
 
 
     /**
-     * In order to add a Plant to an User, it is necessary to create the User first (which usually happens in the frontend)
-     * After that the existing clone can be added (see startUp/clones.csv.
+     * Test to make sure that it is possible to add existing  Clones the  Growlist
+     *
      */
     @Test
-    public void addIVandICCloneToGrowListTest(){
+    public void addExistingIVandICCloneToGrowListTest(){
         Specimen ivSpecimen;
         Specimen icSpecimen;
-        ivSpecimen = this.growlistservice.addExistingCloneToGrowList(user, ivSpeciesClone.getInternalCloneId());
-        icSpecimen = this.growlistservice.addExistingCloneToGrowList(user, icSpeciesClone.getInternalCloneId());
-        Growlist growlist = this.growlistRepository.findGrowlistById(this.user.getOAuthId());
+        ivSpecimen = this.growlistservice.addExistingCloneToGrowList(growlistTestDataInserter.user1, growlistTestDataInserter.ivSpeciesClone.getInternalCloneId());
+        icSpecimen = this.growlistservice.addExistingCloneToGrowList(growlistTestDataInserter.user1, growlistTestDataInserter.icSpeciesClone.getInternalCloneId());
+        Growlist growlist = this.growlistRepository.findGrowlistById(growlistTestDataInserter.user1.getOAuthId());
 
         assertNotNull(ivSpecimen);
         assertNotNull(icSpecimen);
@@ -178,7 +134,5 @@ public class GrowlistManagementServiceTest {
         assertTrue(growlist.getSpecimens().contains(icSpecimen),"Growlist should contain ivSpecimen");
 
     }
-
-
 
 }

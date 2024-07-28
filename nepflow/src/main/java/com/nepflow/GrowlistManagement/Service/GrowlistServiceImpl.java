@@ -103,9 +103,9 @@ public class GrowlistServiceImpl implements Growlistservice {
         return true;
     }
 
-    public boolean updateFlowerStatus(String OAuthId, String specimenId, boolean isFlowering) {
+    public boolean updateFlowerStatus(User user, String specimenId, boolean isFlowering) {
         Specimen specimen = this.specimenRepository.findSpecimenByUuid(specimenId);
-        if (specimen == null || !this.specimenRepository.isSpeciesOfUser(OAuthId, specimenId)) {
+        if (specimen == null || !this.specimenRepository.isSpeciesOfUser(user.getOAuthId(), specimenId)) {
             return false;
         }
         if (specimen.getFlowerStatus() == isFlowering) {
@@ -116,9 +116,9 @@ public class GrowlistServiceImpl implements Growlistservice {
         }
 
         if (isFlowering) {
-            applicationEventPublisher.publishEvent(new SpecimenFloweringEvent(this, specimen));
+            applicationEventPublisher.publishEvent(new SpecimenFloweringEvent(this, specimen, user));
         } else {
-            applicationEventPublisher.publishEvent(new SpecimenStoppedFloweringEvent(this, specimen));
+            applicationEventPublisher.publishEvent(new SpecimenStoppedFloweringEvent(this, specimen, user));
         }
 
 
@@ -156,16 +156,22 @@ public class GrowlistServiceImpl implements Growlistservice {
     public boolean deleteSpecimenFromGrowlist(String OAuthId, String specimenId) {
         Specimen specimen = specimenRepository.findSpecimenByUuid(specimenId);
         String imageLocation;
-        if(specimen == null){
+        if (specimen == null) {
             return false;
         }
         imageLocation = specimen.getImagePath();
-        if(!this.specimenRepository.deleteSpecimen(OAuthId,specimenId)){
+        if (!this.specimenRepository.deleteSpecimen(OAuthId, specimenId)) {
             return false;
         }
-        this.imageService.deleteImage(bucketname,imageLocation);
+        this.imageService.deleteImage(bucketname, imageLocation);
 
         return true;
+    }
+
+    @Override
+    public boolean belongsSpecimenToUser(String specimenId, String userId) {
+
+        return this.specimenRepository.isSpeciesOfUser(specimenId, userId);
     }
 
 

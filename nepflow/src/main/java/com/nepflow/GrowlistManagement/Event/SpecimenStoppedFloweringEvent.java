@@ -1,20 +1,21 @@
 package com.nepflow.GrowlistManagement.Event;
 
 import com.nepflow.GrowlistManagement.Model.Specimen;
+import com.nepflow.UserManagement.Model.User;
+import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 public class SpecimenStoppedFloweringEvent extends ApplicationEvent {
-
+    @Getter
     private final Specimen specimen;
+    @Getter
+    private final User user;
 
 
-    public SpecimenStoppedFloweringEvent(Object source, Specimen specimen) {
+    public SpecimenStoppedFloweringEvent(Object source, Specimen specimen, User user) {
         super(source);
         this.specimen = specimen;
-    }
-
-    public Specimen getSpecimen() {
-        return this.specimen;
+        this.user = user;
     }
 
 

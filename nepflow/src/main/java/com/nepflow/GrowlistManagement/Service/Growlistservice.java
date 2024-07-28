@@ -27,12 +27,14 @@ public interface Growlistservice {
 
      boolean updateSpecimenImage(String OAuthId, String specimenId, MultipartFile multipartFile);
 
-    boolean updateFlowerStatus(String OAuthId, String specimenId, boolean isFlowering);
+    boolean updateFlowerStatus(User user, String specimenId, boolean isFlowering);
 
     boolean updateSex(String OAuthId, String specimenId,String sexAsString);
 
     boolean updateGrowlistVisibility(String OAuthId, String growlistId,boolean isPublic);
 
     boolean deleteSpecimenFromGrowlist(String OAuthId, String specimenId);
+
+    boolean belongsSpecimenToUser(String specimenId,String userId);
 
 }

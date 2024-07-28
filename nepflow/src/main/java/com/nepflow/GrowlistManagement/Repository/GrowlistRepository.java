@@ -41,7 +41,6 @@ public interface GrowlistRepository extends Neo4jRepository<Growlist,String> {
             "  COLLECT(sex) AS sexes\n ")
     Growlist findGrowlistById(String id);
 
-
    @Query("MATCH (u:User {username: $name})-[r:CONTAINS_COLLECTION]->(g:Growlist)\n" +
            "OPTIONAL MATCH (g)-[sr:CONTAINS_SPECIMEN]->(s:Specimen)-[cr:INSTANCE_OF]->(c:Clone)\n" +
            "OPTIONAL MATCH (c)-[spr:SOLD_BY]->(p:Producer)\n" +
@@ -64,5 +63,8 @@ public interface GrowlistRepository extends Neo4jRepository<Growlist,String> {
            "  COLLECT(sexR) AS sexRelations, \n" +
            "  COLLECT(sex) AS sexes\n")
     Growlist findGrowlistByUsername(String name);
+
+
+
 
 }
