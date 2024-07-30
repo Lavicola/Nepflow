@@ -1,0 +1,183 @@
+openapi: 3.0.0
+tags:
+  - name: Pollenexchange
+    description: Operations to manage and retrive Users
+info:
+  title: Nepflow Pollenexchange
+  description: |-
+    API for Pollenexchange Operations
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: http://localhost:4200/api
+paths:
+  /pollenexchange/pollenoffers:
+    get:
+      summary: return all PollenOffers except the ones of the currently logged in User
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: User exists.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollenOfferDTO'
+        '404':
+          description: error
+
+  /pollenexchange/trades:
+    get:
+      summary: return all Trades and their status of the currently logged in user
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: User exists.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TradeDTO'
+        '404':
+          description: error
+
+
+  /pollenexchange/create/trade:
+    post:
+      summary: create a Trade
+      tags:
+        - Pollenexchange
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TradeCreationDTO'
+      responses:
+        '200':
+          description: Trade created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradeDTO'
+        '404':
+          description: error  e.g userId and OfferId are wrong
+  /pollenexchange/trade/{tradeId}:
+    parameters:
+      - $ref: "#/components/parameters/tradeId"
+    put:
+      summary: accept or refuse a trade
+      tags:
+        - Pollenexchange
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TradeAnswerDTO'
+      responses:
+        '200':
+          description: Trade created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradeDTO'
+        '404':
+          description: error
+
+components:
+  parameters:
+    offerId:
+      name: offerId
+      in: path
+      required: true
+      schema:
+        type: string
+
+    tradeId:
+      name: tradeId
+      in: path
+      required: true
+      schema:
+        type: string
+
+
+
+  schemas:
+    TradeAnswerDTO:
+      type: object
+      properties:
+        acceptTrade:
+          type: boolean
+
+    TradeCreationDTO:
+      type: object
+      properties:
+        userInitiated:
+          type: string
+        userInitiatedOffer:
+          type: string
+        userRequested:
+          type: string
+        userRequestedOffer:
+          type: string
+
+
+    UserDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        country:
+          type: string
+
+
+    PollenOfferDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        user:
+          $ref: '#/components/schemas/UserDTO'
+        nepenthesName:
+          type: string
+        cloneId:
+          type: string
+        sex:
+          type: string
+        location:
+          type: string
+        seller:
+          type: string
+        pollenOfferOpenedDate:
+          type: string
+          format: date
+
+
+    TradeDTO:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        InitiatedOffer:
+          $ref: '#/components/schemas/PollenOfferDTO'
+        RequestedOffer:
+          $ref: '#/components/schemas/PollenOfferDTO'
+        tradeOpenedDate:
+          type: string
+          format: date
+
+
+
+
+
+
+

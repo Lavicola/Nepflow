@@ -99,7 +99,7 @@ public class GrowlistManagementServiceTest {
                 growlistTestDataInserter.cloneNotInDBIV.getSexAsString(),
                 growlistTestDataInserter.cloneNotInDBIV.getLocationAsString(),
                 growlistTestDataInserter.cloneNotInDBIV.getSellerAsString());
-        icSpecimen = this.growlistservice.addNewICCloneToGrowList(growlistTestDataInserter.user1,growlistTestDataInserter.ivSpeciesClone.getLabelName(),
+        icSpecimen = this.growlistservice.addNewICCloneToGrowList(growlistTestDataInserter.user1,growlistTestDataInserter.ivSpeciesCloneMale.getLabelName(),
                 growlistTestDataInserter.cloneNotInDBIC.getCloneId(),
                 growlistTestDataInserter.cloneNotInDBIC.getSexAsString(),
                 growlistTestDataInserter.cloneNotInDBIC.getLocationAsString(),
@@ -123,7 +123,7 @@ public class GrowlistManagementServiceTest {
     public void addExistingIVandICCloneToGrowListTest(){
         Specimen ivSpecimen;
         Specimen icSpecimen;
-        ivSpecimen = this.growlistservice.addExistingCloneToGrowList(growlistTestDataInserter.user1, growlistTestDataInserter.ivSpeciesClone.getInternalCloneId());
+        ivSpecimen = this.growlistservice.addExistingCloneToGrowList(growlistTestDataInserter.user1, growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId());
         icSpecimen = this.growlistservice.addExistingCloneToGrowList(growlistTestDataInserter.user1, growlistTestDataInserter.icSpeciesClone.getInternalCloneId());
         Growlist growlist = this.growlistRepository.findGrowlistById(growlistTestDataInserter.user1.getOAuthId());
 

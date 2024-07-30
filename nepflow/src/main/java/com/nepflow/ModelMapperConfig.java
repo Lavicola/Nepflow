@@ -9,6 +9,10 @@ import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import com.nepflow.NepenthesManagement.Model.Clones.*;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Species;
+import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
+import com.nepflow.PollenExchange.Dto.TradeDTO;
+import com.nepflow.PollenExchange.Model.PollenOffer;
+import com.nepflow.PollenExchange.Model.Trade;
 import com.nepflow.UserManagement.Dto.UserDTO;
 import com.nepflow.UserManagement.Model.User;
 import org.modelmapper.ModelMapper;
@@ -20,13 +24,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ModelMapperConfig {
 
+    ModelMapper modelMapper = new ModelMapper();
 
 
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
 
-
+        modelMapper.addMappings(new PropertyMap<User, UserDTO>() {
+            @Override
+            protected void configure() {
+                map().setUsername(source.getUsername());
+                map().setCountry(source.getCountry().getName());
+            }
+        });
 
         // Mapping of Label subclasses to LabelDTO
         TypeMap<Label, LabelDTO> LabeltypeMap = modelMapper.createTypeMap(Label.class, LabelDTO.class)
@@ -58,7 +68,7 @@ public class ModelMapperConfig {
                 map().setIsPublic(source.isPublic());
             }
 
-            });
+        });
 
         modelMapper.addMappings(new PropertyMap<Specimen, SpecimenCloneDTO>() {
             @Override
@@ -73,15 +83,43 @@ public class ModelMapperConfig {
                 map().setLocation(source.getClone().getLocationAsString());
             }
         });
-        modelMapper.addMappings(new PropertyMap<User, UserDTO>() {
+        //  PollenExchange Mapping
+        modelMapper.addMappings(new PropertyMap<PollenOffer, PollenOfferDTO>() {
             @Override
             protected void configure() {
-                map().setCountry(source.getCountry().getName());
+                map().setId(source.getUuid());
+                map().setLocation(source.getSpecimen().getLocationAsString());
+                map().setNepenthesName(source.getSpecimen().getNepenthesname());
+                map().setSeller(source.getSpecimen().getSellerAsString());
+                map().setSex(source.getSpecimen().getSexAsString());
+                map().setCloneId(source.getSpecimen().getClone().getCloneId());
+                map().setPollenOfferOpenedDate(source.getStartDate());
             }
         });
+        modelMapper.addMappings(new PropertyMap<Trade, TradeDTO>() {
+            @Override
+            protected void configure() {
+                map().setId(source.getUuid());
+                map().setStatus(source.getTradeStatus());
+                map().setTradeOpenedDate(source.getTradeOpenedDate());
+                using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getInitiatedOffer(), PollenOfferDTO.class))
+                        .map(source, destination.getInitiatedOffer());
+                using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getRequestedOffer(), PollenOfferDTO.class))
+                        .map(source, destination.getRequestedOffer());
+
+
+            }
+        });
+
 
         return modelMapper;
 
 
     }
+
+    private PollenOfferDTO convertToPollenOfferDTO(PollenOffer pollenOffer) {
+        return modelMapper.map(pollenOffer, PollenOfferDTO.class);
+    }
+
+
 }

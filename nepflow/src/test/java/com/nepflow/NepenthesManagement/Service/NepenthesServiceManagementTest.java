@@ -14,10 +14,14 @@ import com.nepflow.NepenthesManagement.Model.Clones.IVSpeciesClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Labels.Species;
-import com.nepflow.NepenthesManagement.Repository.*;
+import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
+import com.nepflow.NepenthesManagement.Repository.SexRepository;
 import jakarta.transaction.Transactional;
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +29,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -174,7 +176,7 @@ public class NepenthesServiceManagementTest {
 
         Producer producer = LabelCloneDefinitions.producer;
         Label species = new Species("hamata",0);
-        ICClone icSpeciesClone = (ICClone) LabelCloneDefinitions.icSpeciesClone;
+        ICClone icSpeciesClone = (ICClone) LabelCloneDefinitions.icSpeciesCloneNoSex;
         ICClone createdICClone = null;
         Clone cloneMale = null;
         Sex male = LabelCloneDefinitions.male;

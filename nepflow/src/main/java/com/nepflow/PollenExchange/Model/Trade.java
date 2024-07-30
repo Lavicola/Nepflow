@@ -8,6 +8,8 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
+import java.time.LocalDate;
+
 @Node
 @NoArgsConstructor
 public class Trade {
@@ -25,6 +27,10 @@ public class Trade {
 
     @Relationship(value = "INITIATED", direction = Relationship.Direction.OUTGOING)
     User userOffers;
+
+    @Getter
+    LocalDate tradeOpenedDate = LocalDate.now();
+
 
     @Relationship(value = "NEEDS_TO_ANSWER", direction = Relationship.Direction.OUTGOING)
     TradeUserAnswersRelationshipValue userWhichAnswers;

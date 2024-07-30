@@ -101,8 +101,39 @@ task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.
 
 }
 
+task generateOpenAPIPollenExchange(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	doNotTrackState("")
+	generatorName.set("spring")
+	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/PollenExchange/openAPI/PollenExchangeOpenAPI.yaml")
+	def openapi_spec = openapiSpecFile.absolutePath
+	configOptions.set([
+			delegatePattern           : "true",
+			useJakartaEe			  : "true",
+			globalProperty            : "apis",
+			generateApiDocumentation  : "true",
+			generateModelTests        : "false",
+			generateModelDocumentation: "false",
+			generateApiTests          : "false",
+			models                    : "false",
+			generateModels            : "false",
+			useTags					  : "true",
+			modelPackage              : "com.nepflow.PollenExchange.Dto",
+	])
+	typeMappings = ['string+date-time': 'LocalDateTime']
+	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
+					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+	]
+	inputSpec.set(openapi_spec)
+	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+	apiPackage.set("com.nepflow.PollenExchange.Controller")
+	invokerPackage.set("")
+
+}
+
+
 
 task generateOpenAPIUserManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	doNotTrackState("")
 	generatorName.set("spring")
 	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/UserManagement/openAPI/UserManagementOpenAPI.yaml")
 	def openapi_spec = openapiSpecFile.absolutePath
@@ -206,4 +237,9 @@ task generateOpenAPIFileManagement(type: org.openapitools.generator.gradle.plugi
 
 tasks.named('test') {
 	useJUnitPlatform()
+	reports {
+		junitXml.required.set(false)
+		html.required.set(true)
+	}
+
 }

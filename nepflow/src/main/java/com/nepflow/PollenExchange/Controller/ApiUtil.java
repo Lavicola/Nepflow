@@ -1,4 +1,4 @@
-package com.nepflow.GrowlistManagement.Controller;
+package com.nepflow.PollenExchange.Controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.context.request.NativeWebRequest;

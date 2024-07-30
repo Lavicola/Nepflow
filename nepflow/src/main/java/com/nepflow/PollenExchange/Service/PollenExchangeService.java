@@ -15,6 +15,10 @@ public interface PollenExchangeService {
 
     List<PollenOffer> getAllPollenOffersBySexFromOtherUsers(String username,String sexAsString);
 
+    List<PollenOffer> getAllPollenOffersFromOtherUsers(String username);
+
+    // either as initiator or requester
+    List<Trade> getAllTradesFromUser(String userId);
     Trade openTrade(User user,String pollenOfferId,String pollenOfferRequested);
 
     Trade refuseTrade(User user,String tradeId);

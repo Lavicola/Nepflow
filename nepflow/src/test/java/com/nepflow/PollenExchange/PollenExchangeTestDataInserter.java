@@ -5,6 +5,7 @@ import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
 import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
 import com.nepflow.Growlistmanagement.Service.GrowlistTestDataInserter;
+import com.nepflow.UserManagement.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,13 @@ import org.springframework.stereotype.Component;
 public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
 
 
+    public User user3 = new User("user3","user3");
+
+
     Growlist growlistUser1;
     Growlist growlistUser2;
+
+    Growlist growlistUser3;
 
     @Autowired
     GrowlistRepository growlistRepository;
@@ -27,19 +33,23 @@ public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
     @Autowired
     SpecimenRepository specimenRepository;
 
-    public Specimen user1Specimen;
-    public Specimen user1Specimen2;
-    public Specimen user1Specimen3;
+    public Specimen user1Specimen1NoSex;
+    public Specimen user1Specimen2Male;
+    public Specimen user1Specimen3Female;
 
-    public Specimen user2Specimen;
-    public Specimen user2Specimen2;
-    public Specimen user2Specimen3;
+    public Specimen user2Specimen1NoSex;
+    public Specimen user2Specimen2Male;
+    public Specimen user2Specimen3Female;
+
+    public Specimen user3Specimen1NoSex;
+    public Specimen user3Specimen2Male;
+    public Specimen user3Specimen3Female;
+
 
     public void insertData() {
         super.insertData();
         this.createGrowlists();
         this.createSpecimens();
-        this.updateSpecimens();
 
     }
 
@@ -50,60 +60,56 @@ public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
     }
 
 
+    public void createUsers() {
+        super.createUsers();
+        user3.setContactInformation("aaa");
+        user3.setCountry(country);
+        user3 = this.userRepository.save(user3);
+    }
 
-    private void createGrowlists() {
+        private void createGrowlists() {
         growlistUser1 = this.growlistRepository.save(new Growlist(this.user1));
         growlistUser2 = this.growlistRepository.save(new Growlist(this.user2));
+        growlistUser3 = this.growlistRepository.save(new Growlist(this.user3));
     }
 
     private void createSpecimens() {
-        this.growlistUser1.addSpecimen(new Specimen(icSpeciesClone));
-        this.growlistUser1.addSpecimen(new Specimen(ivSpeciesClone));
-        this.growlistUser1.addSpecimen(new Specimen(ivSpeciesClone2));
-        growlistUser1 = this.growlistRepository.save(growlistUser1);
-        this.growlistUser2.addSpecimen(new Specimen(icSpeciesClone));
-        this.growlistUser2.addSpecimen(new Specimen(ivSpeciesClone));
-        this.growlistUser2.addSpecimen(new Specimen(ivSpeciesClone2));
-        growlistUser2 = this.growlistRepository.save(growlistUser2);
+        user1Specimen1NoSex = new Specimen(icSpeciesClone);
+        user1Specimen2Male = new Specimen(ivSpeciesCloneMale);
+        user1Specimen3Female = new Specimen(ivSpeciesCloneFemale);
+        this.growlistUser1.addSpecimen(user1Specimen1NoSex);
+        this.growlistUser1.addSpecimen(user1Specimen2Male);
+        this.growlistUser1.addSpecimen(user1Specimen3Female);
+        this.growlistRepository.save(growlistUser1);
+        user2Specimen1NoSex = new Specimen(icSpeciesClone);
+        user2Specimen2Male = new Specimen(ivSpeciesCloneMale);
+        user2Specimen3Female = new Specimen(ivSpeciesCloneFemale);
+        this.growlistUser2.addSpecimen(user2Specimen1NoSex);
+        this.growlistUser2.addSpecimen(user2Specimen2Male);
+        this.growlistUser2.addSpecimen(user2Specimen3Female);
+        this.growlistRepository.save(growlistUser2);
+
+        user3Specimen1NoSex = new Specimen(icSpeciesClone);
+        user3Specimen2Male = new Specimen(ivSpeciesCloneMale);
+        user3Specimen3Female = new Specimen(ivSpeciesCloneFemale);
+
+        this.growlistUser3.addSpecimen(user3Specimen1NoSex);
+        this.growlistUser3.addSpecimen(user3Specimen2Male);
+        this.growlistUser3.addSpecimen(user3Specimen3Female);
+        this.growlistRepository.save(growlistUser3);
+
     }
 
-    private void updateSpecimens() {
-        this.user1Specimen = this.specimenRepository.findSpecimenByUuid(growlistUser1.getSpecimens().get(0).getUuid());
-        this.user1Specimen2 = this.specimenRepository.findSpecimenByUuid(growlistUser1.getSpecimens().get(1).getUuid());
-        this.user1Specimen3 = this.specimenRepository.findSpecimenByUuid(growlistUser1.getSpecimens().get(2).getUuid());
 
-        this.user2Specimen = this.specimenRepository.findSpecimenByUuid(growlistUser2.getSpecimens().get(0).getUuid());
-        this.user2Specimen2 = this.specimenRepository.findSpecimenByUuid(growlistUser2.getSpecimens().get(1).getUuid());
-        this.user2Specimen3 = this.specimenRepository.findSpecimenByUuid(growlistUser2.getSpecimens().get(2).getUuid());
-    }
 
     /**
      * These getters are necessary due to optimistic lock, because the Version is not valid if you perform
      * two times on the same specimen without changing the version  (thus loading it from the  repository again)
      */
-    public Specimen getUser1Specimen() {
-        return this.specimenRepository.findSpecimenByUuid(user1Specimen.getUuid());
-    }
 
-    public Specimen getUser1Specimen2() {
-        return this.specimenRepository.findSpecimenByUuid(user1Specimen2.getUuid());
-    }
+    public Specimen getUpdatedSpecimenVersion(Specimen specimen){
+        return this.specimenRepository.findSpecimenByUuid(specimen.getUuid());
 
-    public Specimen getUser1Specimen3() {
-        return this.specimenRepository.findSpecimenByUuid(user1Specimen3.getUuid());
-    }
-
-
-    public Specimen getUser2Specimen() {
-        return this.specimenRepository.findSpecimenByUuid(user2Specimen.getUuid());
-    }
-
-    public Specimen getUser2Specimen2() {
-        return this.specimenRepository.findSpecimenByUuid(user2Specimen2.getUuid());
-    }
-
-    public Specimen getUser2Specimen3() {
-        return this.specimenRepository.findSpecimenByUuid(user2Specimen3.getUuid());
     }
 
 }

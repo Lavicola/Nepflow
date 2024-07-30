@@ -2,7 +2,6 @@ package org.openapitools.configuration;
 
 import com.nepflow.GrowlistManagement.Dto.CloneType;
 import com.nepflow.GrowlistManagement.Dto.NepenthesType;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;

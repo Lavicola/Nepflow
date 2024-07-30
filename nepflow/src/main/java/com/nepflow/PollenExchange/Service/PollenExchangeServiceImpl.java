@@ -32,13 +32,32 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
 
     @Override
+    public PollenOffer closePollenOffer(Specimen specimen, User user) {
+        String pollenofferId = this.pollenOfferRepository.getOpenPollenOfferId(specimen.getUuid(),
+                LocalDate.now().toString(),
+                LocalDate.now().plusDays(MIN_DURATION_POLLENOFFER).toString());
+        if (pollenofferId != null) {
+            PollenOffer pollenOffer = this.pollenOfferRepository.findById(pollenofferId).get();
+            pollenOffer.closePollenOffer();
+            return this.pollenOfferRepository.save(pollenOffer);
+        }
+
+
+        return null;
+    }
+
+    @Override
     public PollenOffer createOrReOpenPollenOffer(Specimen specimen, User user) {
         PollenOffer pollenOffer;
-        if(this.pollenOfferRepository.pollenOfferExists(specimen.getUuid())){
+        if (this.pollenOfferRepository.pollenOfferExists(specimen.getUuid())) {
             // open offer already exists
             return null;
         }
-        if(!this.growlistservice.belongsSpecimenToUser(user.getOAuthId(),specimen.getUuid())){
+        if (specimen.getSexAsString().equals("")) {
+            return null;
+        }
+
+        if (!this.growlistservice.belongsSpecimenToUser(user.getOAuthId(), specimen.getUuid())) {
             return null;
         }
 
@@ -55,25 +74,22 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     }
 
-    @Override
-    public PollenOffer closePollenOffer(Specimen specimen, User user) {
-        String pollenofferId = this.pollenOfferRepository.getOpenPollenOfferId(specimen.getUuid(),
-                LocalDate.now().toString(),
-                LocalDate.now().plusDays(MIN_DURATION_POLLENOFFER).toString());
-        if (pollenofferId != null) {
-            PollenOffer pollenOffer = this.pollenOfferRepository.findById(pollenofferId).get();
-            pollenOffer.closePollenOffer();
-            return this.pollenOfferRepository.save(pollenOffer);
-        }
-
-
-        return null;
-    }
 
     @Override
     public List<PollenOffer> getAllPollenOffersBySexFromOtherUsers(String username, String sexAsString) {
         return this.pollenOfferRepository.getAllOpenPollenOffersBySexExceptOwn(username, sexAsString);
     }
+
+    @Override
+    public List<PollenOffer> getAllPollenOffersFromOtherUsers(String username) {
+        return this.pollenOfferRepository.getAllOpenPollenOffersExceptOwn(username);
+    }
+
+    @Override
+    public List<Trade> getAllTradesFromUser(String userId) {
+        return this.tradeRepository.findAllTradesForUser(userId);
+    }
+
 
     @Override
     public Trade openTrade(User initiatedUser, String pollenOfferId, String pollenOfferRequested) {
@@ -86,17 +102,17 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         if (!initiatedOffer.get().getUser().equals(initiatedUser)) {
             return null;
         }
-        newTrade = new Trade(initiatedUser,initiatedOffer.get(),requestedOffer.get(),requestedOffer.get().getUser());
+        newTrade = new Trade(initiatedUser, initiatedOffer.get(), requestedOffer.get(), requestedOffer.get().getUser());
         return this.tradeRepository.save(newTrade);
     }
 
     @Override
     public Trade refuseTrade(User user, String tradeId) {
         Optional<Trade> trade = this.tradeRepository.findById(tradeId);
-        if(!trade.isPresent()){
+        if (!trade.isPresent()) {
             return null;
         }
-        if(!trade.get().getUserWhoAnswersTrade().equals(user)){
+        if (!trade.get().getUserWhoAnswersTrade().equals(user)) {
             return null;
         }
         trade.get().refuseTrade();
@@ -107,10 +123,10 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     @Override
     public Trade acceptTrade(User user, String tradeId) {
         Optional<Trade> trade = this.tradeRepository.findById(tradeId);
-        if(!trade.isPresent()){
+        if (!trade.isPresent()) {
             return null;
         }
-        if(!trade.get().getUserWhoAnswersTrade().equals(user)){
+        if (!trade.get().getUserWhoAnswersTrade().equals(user)) {
             return null;
         }
         trade.get().acceptTrade();
@@ -119,7 +135,7 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     @Override
     public List<Trade> getAllInitiatedTradesFromUser(User user) {
-        return  user != null ? this.tradeRepository.findInitiatedTrades(user.getOAuthId()): null;
+        return user != null ? this.tradeRepository.findInitiatedTrades(user.getOAuthId()) : null;
     }
 
     @Override

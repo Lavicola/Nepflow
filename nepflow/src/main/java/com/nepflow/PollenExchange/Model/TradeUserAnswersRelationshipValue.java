@@ -43,6 +43,9 @@ public class TradeUserAnswersRelationshipValue {
         }
     }
 
+    public String getStatus(){
+        return this.status.toString();
+    }
     public boolean wasTradeRefused(){
         return this.status.equals(UserAnswers.REFUSED);
     }

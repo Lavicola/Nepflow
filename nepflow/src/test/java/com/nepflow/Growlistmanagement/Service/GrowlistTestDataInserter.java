@@ -28,8 +28,8 @@ public class GrowlistTestDataInserter {
     public Location location  = new Location("MT Murud");
 
     public Species species = new Species("aaa",0);
-    public Clone ivSpeciesClone = new IVSpeciesClone(species,"IV-55",male,location,producer);
-    public Clone ivSpeciesClone2 = new IVSpeciesClone(species,"IV-55",female,location,producer);
+    public Clone ivSpeciesCloneMale = new IVSpeciesClone(species,"IV-55",male,location,producer);
+    public Clone ivSpeciesCloneFemale = new IVSpeciesClone(species,"IV-55",female,location,producer);
 
     public Clone icSpeciesClone = new ICSpeciesClone(species,null,"IC-5555",location,producer);
 
@@ -44,7 +44,7 @@ public class GrowlistTestDataInserter {
     CountryRepository countryRepository;
 
     @Autowired
-    UserRepository userRepository;
+   protected UserRepository userRepository;
 
     @Autowired
     LocationRepository locationRepository;
@@ -110,27 +110,27 @@ public class GrowlistTestDataInserter {
     public void createLabelsAndClones() {
         icSpeciesClone = species.createICClone(icSpeciesClone.getCloneId(),icSpeciesClone.getSex(),
                 icSpeciesClone.getLocation(), producer);
-        ivSpeciesClone = species.createIVClone(ivSpeciesClone.getCloneId(),ivSpeciesClone.getSex(),
-                ivSpeciesClone.getLocation(), producer);
-        ivSpeciesClone2 = species.createIVClone(ivSpeciesClone2.getCloneId(),ivSpeciesClone2.getSex(),
-                ivSpeciesClone2.getLocation(), producer);
+        ivSpeciesCloneMale = species.createIVClone(ivSpeciesCloneMale.getCloneId(), ivSpeciesCloneMale.getSex(),
+                ivSpeciesCloneMale.getLocation(), producer);
+        ivSpeciesCloneFemale = species.createIVClone(ivSpeciesCloneFemale.getCloneId(), ivSpeciesCloneFemale.getSex(),
+                ivSpeciesCloneFemale.getLocation(), producer);
 
         species.addICClone(icSpeciesClone.getSex(),icSpeciesClone.getCloneId(),
                 icSpeciesClone.getLocation(), producer);
 
-        species.addIVClone(ivSpeciesClone.getCloneId(),ivSpeciesClone.getSex(),
-               ivSpeciesClone.getLocation(), producer);
+        species.addIVClone(ivSpeciesCloneMale.getCloneId(), ivSpeciesCloneMale.getSex(),
+               ivSpeciesCloneMale.getLocation(), producer);
 
-        species.addIVClone(ivSpeciesClone2.getCloneId(),ivSpeciesClone2.getSex(),
-                ivSpeciesClone2.getLocation(), producer);
+        species.addIVClone(ivSpeciesCloneFemale.getCloneId(), ivSpeciesCloneFemale.getSex(),
+                ivSpeciesCloneFemale.getLocation(), producer);
         this.species = this.labelRepository.save(species);
 
     }
 
     public void updateClones(){
         icSpeciesClone = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(icSpeciesClone.getCloneId(),icSpeciesClone.getSex()));
-        ivSpeciesClone = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(ivSpeciesClone.getCloneId(),ivSpeciesClone.getSex()));
-        ivSpeciesClone2 = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(ivSpeciesClone2.getCloneId(),ivSpeciesClone2.getSex()));
+        ivSpeciesCloneMale = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(ivSpeciesCloneMale.getCloneId(), ivSpeciesCloneMale.getSex()));
+        ivSpeciesCloneFemale = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(ivSpeciesCloneFemale.getCloneId(), ivSpeciesCloneFemale.getSex()));
     }
 
 

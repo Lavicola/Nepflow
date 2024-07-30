@@ -18,8 +18,6 @@ public interface PollenOfferRepository extends Neo4jRepository<PollenOffer,Strin
             "RETURN elementId(p)\n")
     String getIdOfclosedPollenOfferInRangeExists(String specimenid, String startDateAsString,String endDateAsString);
 
-
-
     @Query("match(p:PollenOffer) -[f:FLOWERS]-> (s) \n" +
             "WHERE f.startDate >= date($startDateAsString)\n" +
             "AND f.startDate <= date($endDateAsString)\n" +
@@ -27,21 +25,20 @@ public interface PollenOfferRepository extends Neo4jRepository<PollenOffer,Strin
             "RETURN elementId(p)\n")
     String getOpenPollenOfferId(String specimenid, String startDateAsString,String endDateAsString);
 
+    @Query("match(p:PollenOffer)-[pu:PUBLISHED_BY]->(u:User)" +
+            "Where NOT u.username = $username\n" +
+            "match(p) -[f:FLOWERS]->(s:Specimen)-[i]-(clone)-[lr:CLONE_OF_SPECIES]->(l:Label)\n" +
+            "match(clone)-[sR:HAS_SEX]->(sex{sexAsString:$sexAsString})" +
+            "return p,pu,u,f,clone,i,s,lr,l,sR,sex")
+    List<PollenOffer> getAllOpenPollenOffersBySexExceptOwn(String username, String sexAsString);
 
-
-    @Query("match(p)-[pu:PUBLISHED_BY]->(u:User)\n" +
-            "Where u.username = $username\n" +
-            "match(p:PollenOffer) -[f:FLOWERS]->(s:Specimen) -[i:INSTANCE_OF]->(c) -[]->(l)\n" +
-            "match(clone)-[sR:HAS_SEX]->(sex)" +
-            "return p,f,s,sr,sex")
-    List<PollenOffer> getAllOwnOpenPollenOffers(String username);
 
     @Query("match(p:PollenOffer)-[pu:PUBLISHED_BY]->(u:User)" +
             "Where NOT u.username = $username\n" +
             "match(p) -[f:FLOWERS]->(s:Specimen)-[i]-(clone)-[lr:CLONE_OF_SPECIES]->(l:Label)\n" +
             "match(clone)-[sR:HAS_SEX]->(sex)" +
             "return p,pu,u,f,clone,i,s,lr,l,sR,sex")
-    List<PollenOffer> getAllOpenPollenOffersBySexExceptOwn(String username, String sexAsString);
+    List<PollenOffer> getAllOpenPollenOffersExceptOwn(String username);
 
 
     @Query("RETURN EXISTS {\n" +
