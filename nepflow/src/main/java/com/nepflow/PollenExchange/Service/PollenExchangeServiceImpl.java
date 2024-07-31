@@ -3,9 +3,13 @@ package com.nepflow.PollenExchange.Service;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Service.Growlistservice;
 import com.nepflow.PollenExchange.Model.PollenOffer;
+import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeStartDate;
 import com.nepflow.PollenExchange.Repository.PollenOfferRepository;
+import com.nepflow.PollenExchange.Repository.PollenOfferStartDateRepository;
 import com.nepflow.PollenExchange.Repository.TradeRepository;
+import com.nepflow.PollenExchange.Repository.TradeStartDateRepository;
 import com.nepflow.UserManagement.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +34,12 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     @Autowired
     Growlistservice growlistservice;
 
+
+    @Autowired
+    PollenOfferStartDateRepository pollenOfferStartDateRepository;
+
+    @Autowired
+    TradeStartDateRepository tradeStartDateRepository;
 
     @Override
     public PollenOffer closePollenOffer(Specimen specimen, User user) {
@@ -65,12 +75,27 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         if (pollenOfferId != null) {
             pollenOffer = this.pollenOfferRepository.findById(pollenOfferId).get();
             pollenOffer.openPollenOffer();
-        } else {
+            return this.pollenOfferRepository.save(pollenOffer);
 
+        } else {
             pollenOffer = new PollenOffer(user, specimen);
+            pollenOffer = this.pollenOfferRepository.save(pollenOffer);
+            addPollenOfferToMonthYear(pollenOffer);
+            return pollenOffer;
         }
 
-        return this.pollenOfferRepository.save(pollenOffer);
+
+    }
+
+    @Override
+    public void addPollenOfferToMonthYear(PollenOffer pollenOffer) {
+        PollenOfferStartDate pollenOfferStartDate = new PollenOfferStartDate();
+        Optional<PollenOfferStartDate> rPollenOfferStartDate = this.pollenOfferStartDateRepository.findById(pollenOfferStartDate.getMonthYearId());
+        if(rPollenOfferStartDate.isPresent()){
+            pollenOfferStartDate = rPollenOfferStartDate.get();
+        }
+        pollenOfferStartDate.addPollenOffer(pollenOffer);
+        this.pollenOfferStartDateRepository.save(pollenOfferStartDate);
 
     }
 
@@ -103,7 +128,21 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
             return null;
         }
         newTrade = new Trade(initiatedUser, initiatedOffer.get(), requestedOffer.get(), requestedOffer.get().getUser());
-        return this.tradeRepository.save(newTrade);
+        newTrade = this.tradeRepository.save(newTrade);
+        addTradeToMotnYear(newTrade );
+        return newTrade;
+    }
+
+    @Override
+    public void addTradeToMotnYear(Trade trade) {
+        TradeStartDate tradeStartDate = new TradeStartDate();
+        Optional<TradeStartDate> rPollenOfferStartDate = this.tradeStartDateRepository.findById(tradeStartDate.getMonthYearId());
+        if(rPollenOfferStartDate.isPresent()){
+            tradeStartDate = rPollenOfferStartDate.get();
+        }
+        tradeStartDate.addTrade(trade);
+        this.tradeStartDateRepository.save(tradeStartDate);
+
     }
 
     @Override

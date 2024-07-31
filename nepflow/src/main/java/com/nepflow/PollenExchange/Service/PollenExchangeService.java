@@ -3,6 +3,7 @@ package com.nepflow.PollenExchange.Service;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.PollenExchange.Model.PollenOffer;
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeStartDate;
 import com.nepflow.UserManagement.Model.User;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface PollenExchangeService {
 
     PollenOffer createOrReOpenPollenOffer(Specimen specimen, User user);
+    void addPollenOfferToMonthYear(PollenOffer pollenOffer);
 
     PollenOffer closePollenOffer(Specimen specimen,User user);
 
@@ -20,6 +22,7 @@ public interface PollenExchangeService {
     // either as initiator or requester
     List<Trade> getAllTradesFromUser(String userId);
     Trade openTrade(User user,String pollenOfferId,String pollenOfferRequested);
+    void addTradeToMotnYear(Trade trade);
 
     Trade refuseTrade(User user,String tradeId);
 
