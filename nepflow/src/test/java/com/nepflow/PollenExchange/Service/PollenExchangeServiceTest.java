@@ -2,6 +2,7 @@ package com.nepflow.PollenExchange.Service;
 
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
 import com.nepflow.PollenExchange.Model.PollenOffer;
+import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
 import com.nepflow.PollenExchange.PollenExchangeTestDataInserter;
 import com.nepflow.PollenExchange.Repository.PollenOfferRepository;
@@ -518,6 +519,31 @@ public class PollenExchangeServiceTest {
                         ||
                         tradesOfInterest.get(1).getUserWhoAnswersTrade().equals(rTradesFromUser.get(0).getUserWhoAnswersTrade())
         );
+
+
+    }
+
+
+    @Test
+    public void  PollenOfferStartDateAddTest(){
+        PollenOffer pollenOffer1;
+        PollenOffer pollenOffer2;
+        List<PollenOfferStartDate> pollenOfferStartDates;
+        List<LocalDate> dates = new ArrayList<>(1);
+        User user1 = testDataInserter.user1;
+        User user2 = testDataInserter.user2;
+        dates.add(LocalDate.now());
+        pollenOffer1 = this.pollenExchangeService.createOrReOpenPollenOffer(
+                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
+                testDataInserter.updateUserVersion(user1));
+        pollenOffer2 = this.pollenExchangeService.createOrReOpenPollenOffer(
+                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen2Male),
+                testDataInserter.updateUserVersion(user2));
+        pollenOfferStartDates = this.pollenExchangeService.getPollenOffersByDates(dates);
+
+        assertTrue(pollenOfferStartDates.get(0).getPollenOffers().contains(pollenOffer1));
+        assertTrue(pollenOfferStartDates.get(0).getPollenOffers().contains(pollenOffer2));
+
 
 
     }

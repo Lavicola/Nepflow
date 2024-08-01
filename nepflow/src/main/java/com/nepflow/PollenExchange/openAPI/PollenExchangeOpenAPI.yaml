@@ -13,22 +13,66 @@ info:
 servers:
   - url: http://localhost:4200/api
 paths:
-  /pollenexchange/pollenoffers:
+  /pollenexchange/pollenoffers/dates:
     get:
-      summary: return all PollenOffers except the ones of the currently logged in User
+      summary: return stored dates (Month-Year)
       tags:
         - Pollenexchange
       responses:
         '200':
-          description: User exists.
+          description: ..
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PollenOfferDTO'
+                  type: string
         '404':
           description: error
+  /pollenexchange/pollenoffers:
+    get:
+      parameters:
+        - in: query
+          name: dates
+          schema:
+            type: array
+            items:
+              type: string
+              format: date
+          description: enables to show PollenOffers of different dates (MM/YYY)
+
+      summary: return all PollenOffers of the current Month/Year
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: ..
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollenOfferDateContainerDTO'
+        '404':
+          description: error
+
+  /pollenexchange/trades/dates:
+    get:
+      summary: return stored dates (Month-Year)
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: ..
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '404':
+          description: error
+
 
   /pollenexchange/trades:
     get:
@@ -43,7 +87,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TradeDTO'
+                  $ref: '#/components/schemas/TradeDateContainerDTO'
         '404':
           description: error
 
@@ -159,6 +203,18 @@ components:
           type: string
           format: date
 
+    PollenOfferDateContainerDTO:
+      type: object
+      properties:
+        date:
+          type: string
+          description: MM-YYYY
+        pollenOffers:
+          type:  array
+          items:
+            $ref: '#/components/schemas/PollenOfferDTO'
+
+
 
     TradeDTO:
       type: object
@@ -175,6 +231,17 @@ components:
           type: string
           format: date
 
+
+    TradeDateContainerDTO:
+      type: object
+      properties:
+        date:
+          type: string
+          description: MM-YYYY
+        trades:
+          type:  array
+          items:
+            $ref: '#/components/schemas/TradeDTO'
 
 
 

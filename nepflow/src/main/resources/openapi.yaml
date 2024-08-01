@@ -12,7 +12,7 @@ tags:
 - description: Operations to manage and retrive Users
   name: Pollenexchange
 paths:
-  /pollenexchange/pollenoffers:
+  /pollenexchange/pollenoffers/dates:
     get:
       responses:
         "200":
@@ -20,13 +20,64 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: "#/components/schemas/PollenOfferDTO"
+                  type: string
                 type: array
-          description: User exists.
+          description: ..
         "404":
           description: error
-      summary: return all PollenOffers except the ones of the currently logged in
-        User
+      summary: return stored dates (Month-Year)
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/pollenoffers:
+    get:
+      parameters:
+      - description: enables to show PollenOffers of different dates (MM/YYY)
+        explode: true
+        in: query
+        name: dates
+        required: false
+        schema:
+          items:
+            format: date
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/PollenOfferDateContainerDTO"
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return all PollenOffers of the current Month/Year
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/trades/dates:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return stored dates (Month-Year)
       tags:
       - Pollenexchange
       x-accepts:
@@ -41,7 +92,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: "#/components/schemas/TradeDTO"
+                  $ref: "#/components/schemas/TradeDateContainerDTO"
                 type: array
           description: User exists.
         "404":
@@ -194,6 +245,39 @@ components:
           format: date
           type: string
       type: object
+    PollenOfferDateContainerDTO:
+      example:
+        date: date
+        pollenOffers:
+        - seller: seller
+          sex: sex
+          nepenthesName: nepenthesName
+          location: location
+          id: id
+          cloneId: cloneId
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+        - seller: seller
+          sex: sex
+          nepenthesName: nepenthesName
+          location: location
+          id: id
+          cloneId: cloneId
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+      properties:
+        date:
+          description: MM-YYYY
+          type: string
+        pollenOffers:
+          items:
+            $ref: "#/components/schemas/PollenOfferDTO"
+          type: array
+      type: object
     TradeDTO:
       example:
         RequestedOffer:
@@ -233,4 +317,67 @@ components:
         tradeOpenedDate:
           format: date
           type: string
+      type: object
+    TradeDateContainerDTO:
+      example:
+        date: date
+        trades:
+        - RequestedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+          InitiatedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+          tradeOpenedDate: 2000-01-23
+          id: id
+          status: status
+        - RequestedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+          InitiatedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+          tradeOpenedDate: 2000-01-23
+          id: id
+          status: status
+      properties:
+        date:
+          description: MM-YYYY
+          type: string
+        trades:
+          items:
+            $ref: "#/components/schemas/TradeDTO"
+          type: array
       type: object

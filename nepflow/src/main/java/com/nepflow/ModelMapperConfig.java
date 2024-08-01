@@ -10,9 +10,13 @@ import com.nepflow.NepenthesManagement.Model.Clones.*;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
+import com.nepflow.PollenExchange.Dto.PollenOfferDateContainerDTO;
 import com.nepflow.PollenExchange.Dto.TradeDTO;
+import com.nepflow.PollenExchange.Dto.TradeDateContainerDTO;
 import com.nepflow.PollenExchange.Model.PollenOffer;
+import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeStartDate;
 import com.nepflow.UserManagement.Dto.UserDTO;
 import com.nepflow.UserManagement.Model.User;
 import org.modelmapper.ModelMapper;
@@ -110,16 +114,24 @@ public class ModelMapperConfig {
 
             }
         });
-
+        modelMapper.addMappings(new PropertyMap<TradeStartDate  , TradeDateContainerDTO>() {
+            @Override
+            protected void configure() {
+                map().setDate(source.getMonthYearId());
+            }
+        });
+        modelMapper.addMappings(new PropertyMap<PollenOfferStartDate, PollenOfferDateContainerDTO>() {
+            @Override
+            protected void configure() {
+                map().setDate(source.getMonthYearId());
+            }
+        });
 
         return modelMapper;
 
 
     }
 
-    private PollenOfferDTO convertToPollenOfferDTO(PollenOffer pollenOffer) {
-        return modelMapper.map(pollenOffer, PollenOfferDTO.class);
-    }
 
 
 }

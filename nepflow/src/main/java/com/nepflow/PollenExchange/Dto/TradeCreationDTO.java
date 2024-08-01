@@ -10,7 +10,7 @@ import java.util.Objects;
  * TradeCreationDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-31T01:14:44.217476+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-02T00:12:09.389563100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class TradeCreationDTO {
 
   private String userInitiated;

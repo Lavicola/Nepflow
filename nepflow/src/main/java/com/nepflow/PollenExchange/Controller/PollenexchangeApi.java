@@ -5,10 +5,7 @@
  */
 package com.nepflow.PollenExchange.Controller;
 
-import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
-import com.nepflow.PollenExchange.Dto.TradeAnswerDTO;
-import com.nepflow.PollenExchange.Dto.TradeCreationDTO;
-import com.nepflow.PollenExchange.Dto.TradeDTO;
+import com.nepflow.PollenExchange.Dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -21,14 +18,12 @@ import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-31T01:14:44.217476+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-02T00:12:09.389563100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Pollenexchange", description = "Operations to manage and retrive Users")
 public interface PollenexchangeApi {
@@ -70,18 +65,49 @@ public interface PollenexchangeApi {
 
 
     /**
-     * GET /pollenexchange/pollenoffers : return all PollenOffers except the ones of the currently logged in User
+     * GET /pollenexchange/pollenoffers/dates : return stored dates (Month-Year)
      *
-     * @return User exists. (status code 200)
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     */
+    @Operation(
+        operationId = "pollenexchangePollenoffersDatesGet",
+        summary = "return stored dates (Month-Year)",
+        tags = { "Pollenexchange" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "..", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = String.class)))
+            }),
+            @ApiResponse(responseCode = "404", description = "error")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pollenexchange/pollenoffers/dates",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<List<String>> pollenexchangePollenoffersDatesGet(
+        
+    ) {
+        return getDelegate().pollenexchangePollenoffersDatesGet();
+    }
+
+
+    /**
+     * GET /pollenexchange/pollenoffers : return all PollenOffers of the current Month/Year
+     *
+     * @param dates enables to show PollenOffers of different dates (MM/YYY) (optional)
+     * @return .. (status code 200)
      *         or error (status code 404)
      */
     @Operation(
         operationId = "pollenexchangePollenoffersGet",
-        summary = "return all PollenOffers except the ones of the currently logged in User",
+        summary = "return all PollenOffers of the current Month/Year",
         tags = { "Pollenexchange" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "User exists.", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PollenOfferDTO.class)))
+            @ApiResponse(responseCode = "200", description = "..", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PollenOfferDateContainerDTO.class)))
             }),
             @ApiResponse(responseCode = "404", description = "error")
         }
@@ -92,10 +118,10 @@ public interface PollenexchangeApi {
         produces = { "application/json" }
     )
     
-    default ResponseEntity<List<PollenOfferDTO>> pollenexchangePollenoffersGet(
-        
+    default ResponseEntity<List<PollenOfferDateContainerDTO>> pollenexchangePollenoffersGet(
+        @Parameter(name = "dates", description = "enables to show PollenOffers of different dates (MM/YYY)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "dates", required = false) List<LocalDate> dates
     ) {
-        return getDelegate().pollenexchangePollenoffersGet();
+        return getDelegate().pollenexchangePollenoffersGet(dates);
     }
 
 
@@ -134,6 +160,36 @@ public interface PollenexchangeApi {
 
 
     /**
+     * GET /pollenexchange/trades/dates : return stored dates (Month-Year)
+     *
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     */
+    @Operation(
+        operationId = "pollenexchangeTradesDatesGet",
+        summary = "return stored dates (Month-Year)",
+        tags = { "Pollenexchange" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "..", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = String.class)))
+            }),
+            @ApiResponse(responseCode = "404", description = "error")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pollenexchange/trades/dates",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<List<String>> pollenexchangeTradesDatesGet(
+        
+    ) {
+        return getDelegate().pollenexchangeTradesDatesGet();
+    }
+
+
+    /**
      * GET /pollenexchange/trades : return all Trades and their status of the currently logged in user
      *
      * @return User exists. (status code 200)
@@ -145,7 +201,7 @@ public interface PollenexchangeApi {
         tags = { "Pollenexchange" },
         responses = {
             @ApiResponse(responseCode = "200", description = "User exists.", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TradeDTO.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TradeDateContainerDTO.class)))
             }),
             @ApiResponse(responseCode = "404", description = "error")
         }
@@ -156,7 +212,7 @@ public interface PollenexchangeApi {
         produces = { "application/json" }
     )
     
-    default ResponseEntity<List<TradeDTO>> pollenexchangeTradesGet(
+    default ResponseEntity<List<TradeDateContainerDTO>> pollenexchangeTradesGet(
         
     ) {
         return getDelegate().pollenexchangeTradesGet();

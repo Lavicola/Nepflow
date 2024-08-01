@@ -15,8 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PollenExchangeServiceImpl implements PollenExchangeService {
@@ -80,7 +83,7 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         } else {
             pollenOffer = new PollenOffer(user, specimen);
             pollenOffer = this.pollenOfferRepository.save(pollenOffer);
-            addPollenOfferToMonthYear(pollenOffer);
+            addPollenOfferToMonthYearContainer(pollenOffer);
             return pollenOffer;
         }
 
@@ -88,10 +91,10 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     }
 
     @Override
-    public void addPollenOfferToMonthYear(PollenOffer pollenOffer) {
+    public void addPollenOfferToMonthYearContainer(PollenOffer pollenOffer) {
         PollenOfferStartDate pollenOfferStartDate = new PollenOfferStartDate();
         Optional<PollenOfferStartDate> rPollenOfferStartDate = this.pollenOfferStartDateRepository.findById(pollenOfferStartDate.getMonthYearId());
-        if(rPollenOfferStartDate.isPresent()){
+        if (rPollenOfferStartDate.isPresent()) {
             pollenOfferStartDate = rPollenOfferStartDate.get();
         }
         pollenOfferStartDate.addPollenOffer(pollenOffer);
@@ -101,14 +104,19 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
 
     @Override
-    public List<PollenOffer> getAllPollenOffersBySexFromOtherUsers(String username, String sexAsString) {
-        return this.pollenOfferRepository.getAllOpenPollenOffersBySexExceptOwn(username, sexAsString);
+    public List<PollenOfferStartDate> getPollenOffersByDates(List<LocalDate> dates) {
+        if(dates == null ||  dates.size()==0){
+            dates  = new ArrayList<>();
+            dates.add(LocalDate.now());
+        }
+        ArrayList<String> formattedDates = new ArrayList<>(dates.size());
+        DateTimeFormatter formatter = PollenOfferStartDate.getDateFormatter();
+        dates.forEach(localDate -> formattedDates.add(localDate.format(formatter)));
+
+        return this.pollenOfferStartDateRepository.getAllOpenPollenOffersUsingDates(formattedDates);
+
     }
 
-    @Override
-    public List<PollenOffer> getAllPollenOffersFromOtherUsers(String username) {
-        return this.pollenOfferRepository.getAllOpenPollenOffersExceptOwn(username);
-    }
 
     @Override
     public List<Trade> getAllTradesFromUser(String userId) {
@@ -129,15 +137,15 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         }
         newTrade = new Trade(initiatedUser, initiatedOffer.get(), requestedOffer.get(), requestedOffer.get().getUser());
         newTrade = this.tradeRepository.save(newTrade);
-        addTradeToMotnYear(newTrade );
+        addTradeToMonthYearContainer(newTrade);
         return newTrade;
     }
 
     @Override
-    public void addTradeToMotnYear(Trade trade) {
+    public void addTradeToMonthYearContainer(Trade trade) {
         TradeStartDate tradeStartDate = new TradeStartDate();
         Optional<TradeStartDate> rPollenOfferStartDate = this.tradeStartDateRepository.findById(tradeStartDate.getMonthYearId());
-        if(rPollenOfferStartDate.isPresent()){
+        if (rPollenOfferStartDate.isPresent()) {
             tradeStartDate = rPollenOfferStartDate.get();
         }
         tradeStartDate.addTrade(trade);
@@ -180,6 +188,30 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     @Override
     public List<Trade> getAllRequestedTradesFromUser(User user) {
         return null;
+    }
+
+    @Override
+    public List<String> getAllDatesTrades() {
+        List<String> dates = new ArrayList<>();
+        List<TradeStartDate> tradeStartDates;
+        tradeStartDates = tradeStartDateRepository.getTradeDatesWithoutOffers();
+        if (tradeStartDates == null) {
+            return dates;
+        }
+        tradeStartDates.stream().map(row -> dates.add(row.getMonthYearId())).collect(Collectors.toList());
+        return dates;
+    }
+
+    @Override
+    public List<String> getAllDatesPollenOffer() {
+        List<String> dates = new ArrayList<>();
+        List<PollenOfferStartDate> pollenOfferStartDates;
+        pollenOfferStartDates = pollenOfferStartDateRepository.getPollenOfferStartDatesWithoutOffers();
+        if (pollenOfferStartDates == null) {
+            return dates;
+        }
+        pollenOfferStartDates.stream().map(row -> dates.add(row.getMonthYearId())).collect(Collectors.toList());
+        return dates;
     }
 
 

@@ -1,15 +1,13 @@
 package com.nepflow.PollenExchange.Controller;
 
-import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
-import com.nepflow.PollenExchange.Dto.TradeAnswerDTO;
-import com.nepflow.PollenExchange.Dto.TradeCreationDTO;
-import com.nepflow.PollenExchange.Dto.TradeDTO;
+import com.nepflow.PollenExchange.Dto.*;
 import jakarta.annotation.Generated;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +15,7 @@ import java.util.Optional;
  * A delegate to be called by the {@link PollenexchangeApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-31T01:14:44.217476+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-02T00:12:09.389563100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface PollenexchangeApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -47,17 +45,39 @@ public interface PollenexchangeApiDelegate {
     }
 
     /**
-     * GET /pollenexchange/pollenoffers : return all PollenOffers except the ones of the currently logged in User
+     * GET /pollenexchange/pollenoffers/dates : return stored dates (Month-Year)
      *
-     * @return User exists. (status code 200)
+     * @return .. (status code 200)
      *         or error (status code 404)
-     * @see PollenexchangeApi#pollenexchangePollenoffersGet
+     * @see PollenexchangeApi#pollenexchangePollenoffersDatesGet
      */
-    default ResponseEntity<List<PollenOfferDTO>> pollenexchangePollenoffersGet() {
+    default ResponseEntity<List<String>> pollenexchangePollenoffersDatesGet() {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" } ]";
+                    String exampleString = "[ \"\", \"\" ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /pollenexchange/pollenoffers : return all PollenOffers of the current Month/Year
+     *
+     * @param dates enables to show PollenOffers of different dates (MM/YYY) (optional)
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     * @see PollenexchangeApi#pollenexchangePollenoffersGet
+     */
+    default ResponseEntity<List<PollenOfferDateContainerDTO>> pollenexchangePollenoffersGet(List<LocalDate> dates) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"date\" : \"date\", \"pollenOffers\" : [ { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" } ] }, { \"date\" : \"date\", \"pollenOffers\" : [ { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" } ] } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -92,17 +112,38 @@ public interface PollenexchangeApiDelegate {
     }
 
     /**
+     * GET /pollenexchange/trades/dates : return stored dates (Month-Year)
+     *
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     * @see PollenexchangeApi#pollenexchangeTradesDatesGet
+     */
+    default ResponseEntity<List<String>> pollenexchangeTradesDatesGet() {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ \"\", \"\" ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
      * GET /pollenexchange/trades : return all Trades and their status of the currently logged in user
      *
      * @return User exists. (status code 200)
      *         or error (status code 404)
      * @see PollenexchangeApi#pollenexchangeTradesGet
      */
-    default ResponseEntity<List<TradeDTO>> pollenexchangeTradesGet() {
+    default ResponseEntity<List<TradeDateContainerDTO>> pollenexchangeTradesGet() {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"RequestedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"InitiatedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"tradeOpenedDate\" : \"2000-01-23\", \"id\" : \"id\", \"status\" : \"status\" }, { \"RequestedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"InitiatedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"tradeOpenedDate\" : \"2000-01-23\", \"id\" : \"id\", \"status\" : \"status\" } ]";
+                    String exampleString = "[ { \"date\" : \"date\", \"trades\" : [ { \"RequestedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"InitiatedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"tradeOpenedDate\" : \"2000-01-23\", \"id\" : \"id\", \"status\" : \"status\" }, { \"RequestedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"InitiatedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"tradeOpenedDate\" : \"2000-01-23\", \"id\" : \"id\", \"status\" : \"status\" } ] }, { \"date\" : \"date\", \"trades\" : [ { \"RequestedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"InitiatedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"tradeOpenedDate\" : \"2000-01-23\", \"id\" : \"id\", \"status\" : \"status\" }, { \"RequestedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"InitiatedOffer\" : { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\" }, \"tradeOpenedDate\" : \"2000-01-23\", \"id\" : \"id\", \"status\" : \"status\" } ] } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
