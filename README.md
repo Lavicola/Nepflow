@@ -42,28 +42,30 @@ Most of the Datamodel is now developed and looks currently like this (only in li
 If the Datamodel is broken down into the most important parts it would look like this:
 ![First Draft](https://raw.githubusercontent.com/Lavicola/Nepflow/master/db_schemaBrokendown.svg)
 
-### Species, Clone, User and Nepenthes
-- A species is a specific Nepenthes such as "villosa".
-- A species has a Clone which can either be "seedgrown", but also clones which are propagted in an a Laboratory(Producer) with a specific code (e.g. BE-3225)
-- A user grows specific Nepenthes, which can either represent a specific clone (once again either "seedgrown" or "propagted")
-&rarr; A missing "Producer" Edge means the Clone must be Seedgrown  
-&rarr; Through the "Species" node it is later possible to find out how many different, unique clones, but also seedgrown specimens exist for them  
-&rarr; A User grows "Nepenthes". Via traversing the "Clone" and the "Species" can be found. This prevents super Nodes in Clones and also enables a clearer Datamodel.
+### Label, Clone, Specimen and User
+- A Label(Species/Primary Hybrid) is a specific Nepenthes such as "villosa".
+- A Label has Clones which can be "seedgrown" or "IV" (propagted in an a Laboratory with a specific code e.g. BE-3225)
+- A user grows specific "Specimens", which can either represent a specific clone (once again either "seedgrown" or "IV")
 
-### FlowerOffer
-Since the goal is to combine a PollenExchange with a familytree for Nepenthes a User must be able to "publish" a new "FlowerOffer". This FlowerOffer contains relationships to the User and the flowering Nepenthes he offers.  
-&rarr; Using the "flowers" relationship to a "FlowerOffer", the Question "how often did a specific Nepenthes bloom" answered, but also more general Questions.
+&rarr; Through the "Label" node it is later possible to find out how many different, unique clones, but also seedgrown specimens exist.  
+&rarr; A User grows "Specimens". Via traversing (Specimen --> Clone --> Label) the information can be retrieved. 
+
+### PollenOffer
+Since the goal is to combine a PollenExchange with a familytree for Nepenthes a User must be able to "publish" a new "PollenOffer". This PollenOffer contains relationships to the User and the flowering Nepenthes (more concrete to a specific Specimen).  
+
+&rarr; Using the amount of "PollenOffer" Nodes for a specific Specimen the Question "How often did the Specimen flower" can be answered using  
+&rarr; with a specific relationship (HAS_FLOWERED and FLOWERED) the current and old PollenOffer can be quickly found (specimen-[HAS_FLOWERED|FLOWERED]   
 
 
-### Datamodel(Species)
-While the first Datamodel gives an Overview, it is missing the functinality for the PollenExchange. Therefore the following Datamodel shows an Example on how the Datamodel looks like after a Trade(PollenExchange), if two
+### Datamodel(Label/Species)
+While the first Datamodel gives an Overview, it is missing the functinality for the PollenExchange. Therefore the following Datamodel shows an Example on how the Datamodel looks like after a Trade, if two
 Users have the same Species.  
 ![First Draft](https://github.com/Lavicola/Nepflow/blob/master/DatamodelSpecies.png)
 The Datamodel shows two different Clones of the same species. A User with an open FlowerOffer is able to initiate a Trade where he offers a specific FlowerOffer. For the start relationship the other Party has a "pending". Using this Information the User can then either "accept" or "refuse" the trade. If the Edge is "accepted" both Parties can confirm a new "Grex" once they received their seeds.
-&rarr; Using this Datamodel it is possible to prevent User creating duplicate Trades  
+&rarr; Using Nodes User <--Trade --> PollenOffer it is possible to detect/prevent duplicate Trades 
 &rarr; Using the "initiate" edge we can track the amount of Trades a specific User initiated.  
 &rarr; Using the "results_in" edge we can detect how many Trade actually resulted in a new Grex, which means we are able to track the amount of failures e.g. User did not send seed back or seeds were faulty.  
-&rarr; Using this Datamodel the offspring results in a new clone Node with a relation to the Species
+&rarr; Using this Datamodel the offspring results in a new clone Node with a relation to the Species and Grex   ( Grex --> Clone --> Label) 
 
 
 ### Class Diagram Clones
@@ -80,13 +82,15 @@ In the Domain "Nepenthes" there are several different types of Clones we must in
 
 ### Rough Overview of Components
 ![components](https://github.com/Lavicola/Nepflow/blob/master/MainComponents.png)
+
 I am Fan of modularity and therefore I always try to realize this.
 In Nepflow I am thinking roughly of four different Components:
 - UserManagement
-- NepenthesManagement, which is used in order to add new Clones/Nepenthes to the Application
-- GrowListManagement, which realized the functionallity to add different types of Clones to a specific User and therefore needs to access information of both Components
+- NepenthesManagement, which is used(provides functionality) in order to add new Clones/Labels to the Application
+- GrowlistManagement, which realizes the functionallity to add different types of Clones to a specific User and therefore needs to access information of both Components (UserManagement and NepenthesManagement)
 - PollenExhcnange, which will realize the functionallity for Trades. This Components needs to access GrowlistManagement and UserManagement.
+- later: ChatComponent: Will use Ids of Trades and Users in order to provide a Chat for every accepted Trade (since it only needs Ids and no real knowledge of Models I will realize it in the future as a small microservice with a document store e.g. MongoDB
 
 ### Example of GrowlistManagement as a Graph
 ![components](https://github.com/Lavicola/Nepflow/blob/master/exampleGrowlist.PNG)
-The yellow Nodes represent an instance of a specific Clone.
+The yellow Nodes represent an instance(specimen) of a specific Clone.
