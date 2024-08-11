@@ -1,6 +1,7 @@
 package com.nepflow.PollenExchange.Model;
 
 import lombok.Getter;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
@@ -20,15 +21,22 @@ public class TradeStartDate {
     @Relationship(value = "OPENED_IN",direction = Relationship.Direction.INCOMING)
     List<Trade> trades = new ArrayList<>();
 
+    @Transient
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
 
-    public void TradeStartDate(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
+
+    public TradeStartDate(){
         this.MonthYearId = LocalDate.now().format(formatter);
 
     }
 
-    public void addTrade(Trade trade){
-        this.trades.add(trade);
+    public boolean addTrade(Trade trade){
+        if( trade!= null  && trade.getTradeOpenedDate().format(this.formatter).equals(this.MonthYearId)){
+            this.trades.add(trade);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public List<Trade> getTrades(){

@@ -20,10 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-02T00:12:09.389563100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-04T17:32:10.082378700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Pollenexchange", description = "Operations to manage and retrive Users")
 public interface PollenexchangeApi {
@@ -95,15 +94,15 @@ public interface PollenexchangeApi {
 
 
     /**
-     * GET /pollenexchange/pollenoffers : return all PollenOffers of the current Month/Year
+     * GET /pollenexchange/pollenoffers/open : return open PollenOffers by Month-Year
      *
-     * @param dates enables to show PollenOffers of different dates (MM/YYY) (optional)
+     * @param dates if dates is not send, the current date in germany will be used (date in Format MM-YYY) (optional)
      * @return .. (status code 200)
      *         or error (status code 404)
      */
     @Operation(
-        operationId = "pollenexchangePollenoffersGet",
-        summary = "return all PollenOffers of the current Month/Year",
+        operationId = "pollenexchangePollenoffersOpenGet",
+        summary = "return open PollenOffers by Month-Year",
         tags = { "Pollenexchange" },
         responses = {
             @ApiResponse(responseCode = "200", description = "..", content = {
@@ -114,14 +113,14 @@ public interface PollenexchangeApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/pollenexchange/pollenoffers",
+        value = "/pollenexchange/pollenoffers/open",
         produces = { "application/json" }
     )
     
-    default ResponseEntity<List<PollenOfferDateContainerDTO>> pollenexchangePollenoffersGet(
-        @Parameter(name = "dates", description = "enables to show PollenOffers of different dates (MM/YYY)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "dates", required = false) List<LocalDate> dates
+    default ResponseEntity<List<PollenOfferDateContainerDTO>> pollenexchangePollenoffersOpenGet(
+        @Parameter(name = "dates", description = "if dates is not send, the current date in germany will be used (date in Format MM-YYY)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "dates", required = false) List<String> dates
     ) {
-        return getDelegate().pollenexchangePollenoffersGet(dates);
+        return getDelegate().pollenexchangePollenoffersOpenGet(dates);
     }
 
 
@@ -190,17 +189,50 @@ public interface PollenexchangeApi {
 
 
     /**
-     * GET /pollenexchange/trades : return all Trades and their status of the currently logged in user
+     * GET /pollenexchange/{username}/pollenoffers/open : return all open PollenOffers of the user
      *
-     * @return User exists. (status code 200)
+     * @param username  (required)
+     * @return .. (status code 200)
      *         or error (status code 404)
      */
     @Operation(
-        operationId = "pollenexchangeTradesGet",
+        operationId = "pollenexchangeUsernamePollenoffersOpenGet",
+        summary = "return all open PollenOffers of the user",
+        tags = { "Pollenexchange" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "..", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PollenOfferDTO.class)))
+            }),
+            @ApiResponse(responseCode = "404", description = "error")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pollenexchange/{username}/pollenoffers/open",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<List<PollenOfferDTO>> pollenexchangeUsernamePollenoffersOpenGet(
+        @Parameter(name = "username", description = "", required = true, in = ParameterIn.PATH) @PathVariable("username") String username
+    ) {
+        return getDelegate().pollenexchangeUsernamePollenoffersOpenGet(username);
+    }
+
+
+    /**
+     * GET /pollenexchange/{username}/trades : return all Trades and their status of the currently logged in user
+     *
+     * @param username  (required)
+     * @param dates if dates is not send, the current date in germany will be used (date in Format MM-YYY) (optional)
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     */
+    @Operation(
+        operationId = "pollenexchangeUsernameTradesGet",
         summary = "return all Trades and their status of the currently logged in user",
         tags = { "Pollenexchange" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "User exists.", content = {
+            @ApiResponse(responseCode = "200", description = "..", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TradeDateContainerDTO.class)))
             }),
             @ApiResponse(responseCode = "404", description = "error")
@@ -208,14 +240,15 @@ public interface PollenexchangeApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/pollenexchange/trades",
+        value = "/pollenexchange/{username}/trades",
         produces = { "application/json" }
     )
     
-    default ResponseEntity<List<TradeDateContainerDTO>> pollenexchangeTradesGet(
-        
+    default ResponseEntity<List<TradeDateContainerDTO>> pollenexchangeUsernameTradesGet(
+        @Parameter(name = "username", description = "", required = true, in = ParameterIn.PATH) @PathVariable("username") String username,
+        @Parameter(name = "dates", description = "if dates is not send, the current date in germany will be used (date in Format MM-YYY)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "dates", required = false) List<String> dates
     ) {
-        return getDelegate().pollenexchangeTradesGet();
+        return getDelegate().pollenexchangeUsernameTradesGet(username, dates);
     }
 
 }

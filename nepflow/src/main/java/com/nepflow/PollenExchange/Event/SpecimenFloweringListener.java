@@ -16,7 +16,7 @@ public class SpecimenFloweringListener {
     @EventListener
     public void handleSpecimenFloweringEvent(SpecimenFloweringEvent event) {
 
-        this.pollenExchangeService.createOrReOpenPollenOffer(event.getSpecimen(),event.getUser());
+        this.pollenExchangeService.createOrReOpenPollenOffer(event.getSpecimen());
 
 
     }

@@ -127,6 +127,10 @@ public class GrowlistTestDataInserter {
 
     }
 
+    public Clone getUpdatedCloneVersion(Clone clone){
+        return this.cloneRepository.findCloneByInternalCloneId(clone.getInternalCloneId());
+    }
+
     public void updateClones(){
         icSpeciesClone = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(icSpeciesClone.getCloneId(),icSpeciesClone.getSex()));
         ivSpeciesCloneMale = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(ivSpeciesCloneMale.getCloneId(), ivSpeciesCloneMale.getSex()));

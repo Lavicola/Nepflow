@@ -1,18 +1,25 @@
+
 package com.nepflow.PollenExchange.Service;
 
+import com.nepflow.GrowlistManagement.Model.Specimen;
+import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
 import com.nepflow.PollenExchange.Model.PollenOffer;
 import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
 import com.nepflow.PollenExchange.PollenExchangeTestDataInserter;
 import com.nepflow.PollenExchange.Repository.PollenOfferRepository;
+import com.nepflow.PollenExchange.Repository.PollenOfferStartDateRepository;
 import com.nepflow.PollenExchange.Repository.TradeRepository;
-import com.nepflow.UserManagement.Model.User;
+import com.nepflow.PollenExchange.Repository.TradeStartDateRepository;
+import com.nepflow.UserManagement.Repository.UserRepository;
 import com.nepflow.UserManagement.Service.AuthenticationService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +30,6 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,13 +49,23 @@ public class PollenExchangeServiceTest {
     PollenExchangeService pollenExchangeService;
 
     @Autowired
+    PollenOfferStartDateRepository pollenOfferStartDateRepository;
+
+    @Autowired
     PollenOfferRepository pollenOfferRepository;
 
     @Autowired
     TradeRepository tradeRepository;
 
     @Autowired
+    TradeStartDateRepository tradeStartDateRepository;
+
+    @Autowired
     PollenExchangeTestDataInserter testDataInserter;
+
+    @Autowired
+    SpecimenRepository specimenRepository;
+
 
     static boolean executedOnce = false;
 
@@ -66,11 +82,11 @@ public class PollenExchangeServiceTest {
     @BeforeEach
     public void setUp() {
         if (!executedOnce) {
-            this.testDataInserter.insertData();
+            //   this.testDataInserter.insertData();
             executedOnce = true;
         }
-        this.pollenOfferRepository.deleteAll();
-        this.tradeRepository.deleteAll();
+        this.testDataInserter.deleteData();
+        this.testDataInserter.insertData();
 
     }
 
@@ -91,33 +107,12 @@ public class PollenExchangeServiceTest {
 
     @Test
     @Transactional
-    public void createPollenOfferTest() {
+    public void createNewPollenOfferTest() {
+        Specimen specimen = updateEntityVersion(this.testDataInserter.user3Specimen2Male);
+        PollenOffer pollenOffer = pollenExchangeService.createNewPollenOffer(specimen);
 
-        PollenOffer icPollenOffer;
-        icPollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(testDataInserter.user1));
-
-        assertEquals(icPollenOffer.getSpecimen(), testDataInserter.user1Specimen3Female);
-        assertEquals(testDataInserter.user1, icPollenOffer.getUser());
-        assertEquals(LocalDate.now(), icPollenOffer.getStartDate());
+        assertNotNull(pollenOffer);
         assertEquals(1, this.pollenOfferRepository.findAll().size());
-
-
-    }
-
-
-    @Test
-    @Transactional
-    public void createPollenOfferTestIfSpecimenNoSex() {
-
-        PollenOffer icPollenOffer;
-        icPollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen1NoSex),
-                testDataInserter.updateUserVersion(testDataInserter.user1));
-
-        assertNull(icPollenOffer);
-
 
     }
 
@@ -125,430 +120,236 @@ public class PollenExchangeServiceTest {
     @Test
     @Transactional
     public void closePollenOfferTest() {
-        User user1 = testDataInserter.user1;
+        Specimen specimen = updateEntityVersion(testDataInserter.user1Specimen2Male);
+        PollenOffer pollenOffer = new PollenOffer(specimen);
+        this.pollenOfferRepository.save(pollenOffer);
+        PollenOffer rPollenOffer = this.pollenExchangeService.closePollenOffer(pollenOffer.getSpecimen());
 
-        PollenOffer icPollenOffer;
-        PollenOffer icPollenOfferClosed;
+        assertNotNull(rPollenOffer);
+        assertFalse(rPollenOffer.isOpen());
+        assertTrue(rPollenOffer.isPollenOfferValid());
 
-        icPollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen2Male),
-                testDataInserter.updateUserVersion(user1));
-        icPollenOfferClosed = this.pollenExchangeService.closePollenOffer(
-                icPollenOffer.getSpecimen(),
-                testDataInserter.updateUserVersion(user1));
+    }
 
-        assertEquals(icPollenOffer, icPollenOfferClosed);
-        assertEquals(icPollenOffer.getSpecimen(), testDataInserter.user1Specimen2Male);
-        assertEquals(testDataInserter.user1, icPollenOffer.getUser());
-        assertEquals(LocalDate.now(), icPollenOffer.getStartDate());
+    /**
+     * The first case: A PollenOffer for this specimen does not exist and therefore gets created
+     */
+
+    @Test
+    @Transactional
+    public void createOrReOpenPollenOfferNoOfferAtFirstTest() {
+        Specimen specimen = updateEntityVersion(testDataInserter.user3Specimen2Male);
+        PollenOffer pollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(specimen);
+
+        assertTrue(pollenOffer.isOpen());
+        assertTrue(pollenOffer.isPollenOfferValid());
         assertEquals(1, this.pollenOfferRepository.findAll().size());
-
+        assertEquals(pollenOffer, this.pollenOfferRepository.findAll().get(0));
 
     }
 
     /**
-     * In order to close a PollenOfffer, it is necessary to create the User first (which usually happens in the frontend)
-     * After that a new Clone can be created and added and after that a Specimen can be added to the User which can then be used to create a PollenOffer
-     * which can then be closed and opened again
+     * The second case: A PollenOffer for this specimen exists but is closed
+     * and therefore the PollenOffer must be opened
      */
-    @Test
-    public void closeAndOpenPollenOfferTest() {
-        User user1 = testDataInserter.user1;
-        PollenOffer opened;
-        PollenOffer closed;
-        PollenOffer reOpened;
 
-        opened = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(user1));
-        closed = this.pollenExchangeService.closePollenOffer(opened.getSpecimen(),
-                testDataInserter.updateUserVersion(user1));
-        reOpened = this.pollenExchangeService.createOrReOpenPollenOffer(opened.getSpecimen(),
-                testDataInserter.updateUserVersion(user1));
-
-
-        assertNotNull(opened);
-        assertNotNull(closed);
-        assertNotNull(reOpened);
-
-        assertEquals(opened, closed);
-        assertEquals(opened, reOpened);
-        assertEquals(closed, reOpened);
-
-
-    }
-
-
-    /**
-     * Make sure that even if more users have the same specimen, that only the non owned PollenOffers are shown
-     **/
     @Test
     @Transactional
-    public void getPollenOffersVariantsTest() {
-        User user1 = testDataInserter.user1;
-        User user2 = testDataInserter.user2;
-
-
-        List<PollenOffer> pollenOffersOtherUserList;
-        List<PollenOffer> allPollenOffers;
-        List<PollenOffer> allFemalePollenOffers;
-
-
-        this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(user1));
-        this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen2Male),
-                testDataInserter.updateUserVersion(user1));
-        this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen3Female),
-                testDataInserter.updateUserVersion(user2));
-        this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen2Male),
-                testDataInserter.updateUserVersion(user2));
-
-
-        pollenOffersOtherUserList = this.pollenOfferRepository.getAllOpenPollenOffersBySexExceptOwn(
-                testDataInserter.user1.getUsername(),
-                testDataInserter.user1Specimen3Female.getSexAsString());
-        allFemalePollenOffers = this.pollenOfferRepository.getAllOpenPollenOffersBySexExceptOwn(
-                testDataInserter.user1.getUsername() + "ddd",
-                testDataInserter.user2Specimen2Male.getSexAsString());
-        allPollenOffers = this.pollenOfferRepository.findAll();
-
-        assertEquals(1, pollenOffersOtherUserList.size(), "Only one different Users owns a female specimen and therefore  the Result  should  be  1");
-        assertEquals(2, allFemalePollenOffers.size(), "Two Users have one female  PollenOffers  there  this should return 2");
-        assertEquals(4, allPollenOffers.size(), "4 PollenOffer should exists");
-
+    public void createOrReOpenPollenOfferExistingOfferClosed() {
+        Specimen specimen = updateEntityVersion(testDataInserter.user2Specimen3Female);
+        PollenOffer rPollenOffer;
+        PollenOffer pollenOffer = new PollenOffer(specimen);
+        pollenOffer.closePollenOffer();
+        this.pollenOfferRepository.save(pollenOffer);
+        rPollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(specimen);
+        assertNotNull(rPollenOffer);
+        assertTrue(rPollenOffer.isPollenOfferValid());
+        assertTrue(rPollenOffer.isOpen());
+        assertEquals(rPollenOffer, pollenOffer);
 
     }
 
-
     /**
-     * Prevent creation of duplicate PollenOffers where Specimen is the same
-     **/
+     * The third case: A PollenOffer for this specimen exists but is expired
+     * and therefore a new PollenOffer must be created
+     */
+
     @Test
     @Transactional
-    public void duplicatePollenOfferTest() {
-        User user1 = testDataInserter.user1;
-        PollenOffer pollenOffer;
-        PollenOffer pollenOfferDuplicate;
+    public void createOrReOpenPollenOfferExistingButExpiredOfferClosed() {
 
-        pollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(user1));
-        pollenOfferDuplicate = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(user1));
 
-        assertNotNull(pollenOffer);
-        assertNull(pollenOfferDuplicate);
+        PollenOffer newPollenOffer;
+        LocalDate nextOfferDate = LocalDate.now().plusDays(21);
 
-    }
+        Specimen specimen = updateEntityVersion(testDataInserter.user2Specimen3Female);
+        PollenOffer pollenOffer = new PollenOffer(specimen);
+        pollenOffer.closePollenOffer();
 
-    /**
-     * Test what happens if a specimen which does not belong to an user is used to create a PollenOffer
-     */
-    @Test
-    public void wrongSpecimenAndUserTest() {
-        User user1 = testDataInserter.user1;
-        User user2 = testDataInserter.user2;
-        PollenOffer pollenOffer;
-        PollenOffer pollenOfferWrongSpecimen;
+        this.pollenOfferRepository.save(pollenOffer);
+        try (MockedStatic mocked = Mockito.mockStatic(LocalDate.class, Mockito.CALLS_REAL_METHODS)) {
+            mocked.when(LocalDate::now).thenReturn(nextOfferDate);
+            newPollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(pollenOffer.getSpecimen());
+        }
 
-        pollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(user1));
-        pollenOfferWrongSpecimen = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen2Male),
-                testDataInserter.updateUserVersion(user2));
-
-        assertNotNull(pollenOffer);
-        assertNull(pollenOfferWrongSpecimen);
-
+        assertNotEquals(pollenOffer, newPollenOffer);
+        assertEquals(2, this.pollenOfferRepository.findAll().size());
 
     }
 
-    /**
-     * This Test tries to open a Trade
-     **/
     @Test
+    @Transactional
+    public void addPollenOfferToMonthYearContainerTest() {
+        Specimen specimen = updateEntityVersion(testDataInserter.user2Specimen3Female);
+        PollenOffer pollenOffer = new PollenOffer(specimen);
+        pollenExchangeService.addPollenOfferToMonthYearContainer(pollenOffer);
+
+        assertEquals(1, this.pollenOfferRepository.findAll().size());
+        assertEquals(1, this.pollenOfferStartDateRepository.findAll().size());
+        assertEquals(this.pollenOfferRepository.findAll().size(), this.pollenOfferStartDateRepository.findAll().get(0).getPollenOffers().size());
+
+    }
+
+    @Test
+    @Transactional
+    public void getAllDatesPollenOfferTest() {
+        LocalDate nextOfferDate = LocalDate.now().plusMonths(1);
+        PollenOfferStartDate offerStartDate = new PollenOfferStartDate();
+        PollenOfferStartDate nextMonth;
+        List<String> dates;
+
+        try (MockedStatic mocked = Mockito.mockStatic(LocalDate.class, Mockito.CALLS_REAL_METHODS)) {
+            mocked.when(LocalDate::now).thenReturn(nextOfferDate);
+            nextMonth = new PollenOfferStartDate();
+
+        }
+        this.pollenOfferStartDateRepository.save(offerStartDate);
+        this.pollenOfferStartDateRepository.save(nextMonth);
+        dates = this.pollenExchangeService.getAllDatesPollenOffer();
+
+        assertEquals(2, dates.size());
+        assertTrue(dates.contains(offerStartDate.getMonthYearId()));
+        assertTrue(dates.contains(nextMonth.getMonthYearId()));
+
+
+    }
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Test
+    @Transactional
     public void openTradeTest() {
-        PollenOffer initiatedOffer;
-        PollenOffer requestedOffer;
-        User initiatedUser = testDataInserter.user1;
-        User requestedUser = testDataInserter.user2;
-        Trade trade;
-        initiatedOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(initiatedUser));
-        requestedOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen2Male),
-                testDataInserter.updateUserVersion(requestedUser));
+        PollenOffer offer = this.pollenExchangeService.createOrReOpenPollenOffer(updateEntityVersion(testDataInserter.user2Specimen2Male));
+        PollenOffer offer2 = this.pollenExchangeService.createOrReOpenPollenOffer(updateEntityVersion(testDataInserter.user3Specimen3Female));
 
-        trade = this.pollenExchangeService.openTrade(
-                testDataInserter.updateUserVersion(initiatedUser), initiatedOffer.getUuid(), requestedOffer.getUuid());
+        Trade trade = this.pollenExchangeService.openTrade(offer.getUser(), offer.getUuid(), offer2.getUuid());
 
         assertNotNull(trade);
-        assertEquals(trade.getInitiatedOffer(), initiatedOffer);
-        assertEquals(trade.getRequestedOffer(), requestedOffer);
-        assertEquals(trade.getUserWhoInitiatedTrade(), initiatedUser);
-        assertEquals(trade.getUserWhoAnswersTrade(), requestedUser);
+        assertEquals(1, this.tradeRepository.findAll().size());
+        assertEquals(trade.getUserWhoInitiatedTrade(), offer.getUser());
+        assertEquals(trade.getUserWhoAnswersTrade(), offer2.getUser());
+        assertEquals(trade.getInitiatedOffer(), offer);
+        assertEquals(trade.getRequestedOffer(), offer2);
 
     }
 
-    /**
-     * This Test tries to refuse an open Trade
-     **/
     @Test
-    public void RefuseTradeTest() {
-        PollenOffer initiatedOffer;
-        PollenOffer requestedOffer;
-        User initiatedUser = testDataInserter.user1;
-        User requestedUser = testDataInserter.user2;
-        Trade trade;
-        initiatedOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(initiatedUser));
-        requestedOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen2Male),
-                testDataInserter.updateUserVersion(requestedUser));
+    @Transactional
+    public void addTradeToMonthYearContainerTest() {
+        LocalDate nextMonth = LocalDate.now().plusMonths(1);
+        Trade tradeNextMonth;
+        Specimen specimenUser2Female = updateEntityVersion(testDataInserter.user2Specimen3Female);
+        Specimen specimenUser1Male = updateEntityVersion(testDataInserter.user2Specimen2Male);
+        PollenOffer pollenOffer1 = new PollenOffer(updateEntityVersion(testDataInserter.user2Specimen2Male));
+        pollenOffer1 = this.pollenOfferRepository.save(pollenOffer1);
+        PollenOffer pollenOffer2 = new PollenOffer(updateEntityVersion(testDataInserter.user3Specimen3Female));
+        pollenOffer2 = this.pollenOfferRepository.save(pollenOffer2);
+        // retrieve the PollenOffer since in a Trade creation the  offer version will always be retrieved
+        // otherwise Optimistic Locking
+        Trade tradeThisMonth = new Trade(
+                this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
+                this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
 
-        trade = this.pollenExchangeService.openTrade(testDataInserter.updateUserVersion(initiatedUser)
-                , initiatedOffer.getUuid(), requestedOffer.getUuid());
-        trade = this.pollenExchangeService.refuseTrade(
-                testDataInserter.updateUserVersion(requestedUser), trade.getUuid());
+        pollenExchangeService.addTradeToMonthYearContainer(tradeThisMonth);
 
-        assertNotNull(trade);
+        try (MockedStatic mocked = Mockito.mockStatic(LocalDate.class, Mockito.CALLS_REAL_METHODS)) {
+            mocked.when(LocalDate::now).thenReturn(nextMonth);
+            pollenOffer1 = new PollenOffer(updateEntityVersion(specimenUser1Male));
+            pollenOffer1 = this.pollenOfferRepository.save(pollenOffer1);
+            pollenOffer2 = new PollenOffer(updateEntityVersion(specimenUser2Female));
+            pollenOffer2 = this.pollenOfferRepository.save(pollenOffer2);
+            // retrieve the PollenOffer since in a Trade creation the  offer version will always be retrieved
+            // otherwise Optimistic Locking
+            tradeNextMonth =  new Trade(
+                    this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
+                    this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
+            pollenExchangeService.addTradeToMonthYearContainer(tradeNextMonth);
+
+        }
+
+
+
+        assertEquals(2, this.tradeStartDateRepository.findAll().size());
+        assertEquals(2, this.tradeRepository.findAll().size());
+
+
+
+
+    }
+
+    @Test
+    @Transactional
+    public void refuseTradeTest() {
+        PollenOffer pollenOffer1 = new PollenOffer(updateEntityVersion(testDataInserter.user2Specimen2Male));
+        pollenOffer1 = this.pollenOfferRepository.save(pollenOffer1);
+        PollenOffer pollenOffer2 = new PollenOffer(updateEntityVersion(testDataInserter.user3Specimen3Female));
+        pollenOffer2 = this.pollenOfferRepository.save(pollenOffer2);
+        Trade trade = new Trade(
+                this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
+                this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
+        trade  = this.tradeRepository.save(trade);
+        trade = this.pollenExchangeService.refuseTrade(pollenOffer2.getUser(),trade.getUuid());
+
         assertTrue(trade.wasTradeRefused());
-        assertEquals(trade.getInitiatedOffer(), initiatedOffer);
-        assertEquals(trade.getRequestedOffer(), requestedOffer);
-        assertEquals(trade.getUserWhoInitiatedTrade(), initiatedUser);
-        assertEquals(trade.getUserWhoAnswersTrade(), requestedUser);
+        assertEquals(1,tradeRepository.findAll().size());
+
+
+
 
     }
 
-    /**
-     * This Test tries to accept an open Trade
-     **/
     @Test
-    public void AcceptTradeTest() {
-        PollenOffer initiatedOffer;
-        PollenOffer requestedOffer;
-        User initiatedUser = testDataInserter.user1;
-        User requestedUser = testDataInserter.user2;
-        Trade trade;
-        initiatedOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(initiatedUser));
-        requestedOffer = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen2Male),
-                testDataInserter.updateUserVersion(requestedUser));
-
-        trade = this.pollenExchangeService.openTrade(testDataInserter.updateUserVersion(initiatedUser)
-                , initiatedOffer.getUuid(), requestedOffer.getUuid());
-        trade = this.pollenExchangeService.acceptTrade(testDataInserter.updateUserVersion(requestedUser), trade.getUuid());
-
-        assertNotNull(trade);
+    @Transactional
+    public void acceptTradeTest() {
+        PollenOffer pollenOffer1 = new PollenOffer(updateEntityVersion(testDataInserter.user2Specimen2Male));
+        pollenOffer1 = this.pollenOfferRepository.save(pollenOffer1);
+        PollenOffer pollenOffer2 = new PollenOffer(updateEntityVersion(testDataInserter.user3Specimen3Female));
+        pollenOffer2 = this.pollenOfferRepository.save(pollenOffer2);
+        Trade trade = new Trade(
+                this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
+                this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
+        trade  = this.tradeRepository.save(trade);
+        trade = this.pollenExchangeService.acceptTrade(pollenOffer2.getUser(),trade.getUuid());
         assertTrue(trade.wasTradeAccepted());
-        assertEquals(trade.getInitiatedOffer(), initiatedOffer);
-        assertEquals(trade.getRequestedOffer(), requestedOffer);
-        assertEquals(trade.getUserWhoInitiatedTrade(), initiatedUser);
-        assertEquals(trade.getUserWhoAnswersTrade(), requestedUser);
-
-    }
-
-    /**
-     * This Test makes sure, that the amount of Trades the User initiated is right
-     **/
-    @Test
-    public void getInitiatedTradesTest() {
-        List<PollenOffer> offers = new ArrayList<>(2);
-        PollenOffer offeree;
-        List<Trade> initiatedTrades;
-
-        User initiatedUser = testDataInserter.user1;
-        User requestedUser = testDataInserter.user2;
-        Trade trade;
-        Trade trade1;
-        offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(initiatedUser)));
-        offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen2Male),
-                testDataInserter.updateUserVersion(initiatedUser)));
-
-        offeree = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen3Female),
-                testDataInserter.updateUserVersion(requestedUser));
-
-        trade = this.pollenExchangeService.openTrade(testDataInserter.updateUserVersion(initiatedUser)
-                , offers.get(0).getUuid(), offeree.getUuid());
-        trade1 = this.pollenExchangeService.openTrade(testDataInserter.updateUserVersion(initiatedUser)
-                , offers.get(1).getUuid(), offeree.getUuid());
-        initiatedTrades = this.tradeRepository.findInitiatedTrades(initiatedUser.getOAuthId());
-
-        assertNotNull(trade);
-        assertEquals(2, initiatedTrades.size());
-        assertTrue(initiatedTrades.contains(trade));
-        assertTrue(initiatedTrades.contains(trade1));
-        assertTrue(offers.contains(trade.getInitiatedOffer()));
-        assertTrue(offers.contains(trade1.getInitiatedOffer()));
-        assertTrue(offeree.equals(trade.getRequestedOffer()));
-        assertTrue(offeree.equals(trade1.getRequestedOffer()));
-
-
-    }
-
-    /**
-     * Test if the amount of (requested) Trades the user got is right
-     **/
-    @Test
-    public void getRequestedTradesTest() {
-        List<PollenOffer> offers = new ArrayList<>(2);
-        PollenOffer offeree;
-        List<Trade> initiatedTrades;
-
-        User initiatedUser = testDataInserter.user1;
-        User requestedUser = testDataInserter.user2;
-        Trade trade;
-        Trade trade1;
-        offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(initiatedUser)));
-        offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen2Male),
-                testDataInserter.updateUserVersion(initiatedUser)));
-
-        offeree = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen3Female),
-                testDataInserter.updateUserVersion(requestedUser));
-
-        trade = this.pollenExchangeService.openTrade(testDataInserter.updateUserVersion(initiatedUser)
-                , offers.get(0).getUuid(), offeree.getUuid());
-        trade1 = this.pollenExchangeService.openTrade(testDataInserter.updateUserVersion(initiatedUser)
-                , offers.get(1).getUuid(), offeree.getUuid());
-        initiatedTrades = this.tradeRepository.findRequestedTrades(requestedUser.getOAuthId());
-
-        assertNotNull(trade);
-        assertEquals(2, initiatedTrades.size());
-        assertTrue(initiatedTrades.contains(trade));
-        assertTrue(initiatedTrades.contains(trade1));
-        assertTrue(offers.contains(trade.getInitiatedOffer()));
-        assertTrue(offers.contains(trade1.getInitiatedOffer()));
-        assertTrue(offeree.equals(trade.getRequestedOffer()));
-        assertTrue(offeree.equals(trade1.getRequestedOffer()));
+        assertEquals(1,tradeRepository.findAll().size());
     }
 
 
-    /**
-     * Test if the amount of (requested) Trades the user got is right, user1 is of interested
-     **/
-    @Test
-    public void getAllTradesFromUserTest() {
-        // we care about user1 trades
-        User user1 = testDataInserter.user1;
-        User user2 = testDataInserter.user2;
-        User user3 = testDataInserter.user3;
-        List<PollenOffer> user1Offers = new ArrayList<>(2);
-        List<PollenOffer> user2Offers = new ArrayList<>(2);
-        List<PollenOffer> user3Offers = new ArrayList<>(2);
-        List<Trade> tradesOfInterest = new ArrayList<>(2);
-        List<Trade> dontCareTrade = new ArrayList<>(1);
-        List<Trade> rTradesFromUser;
-        List<Trade> allTrades;
-
-        user1Offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(user1)));
-        user1Offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen2Male),
-                testDataInserter.updateUserVersion(user1)));
-
-        user2Offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen3Female),
-                testDataInserter.updateUserVersion(user2)));
-        user2Offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen2Male),
-                testDataInserter.updateUserVersion(user2)));
-
-        user3Offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user3Specimen3Female),
-                testDataInserter.updateUserVersion(user3)));
-        user3Offers.add(this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user3Specimen2Male),
-                testDataInserter.updateUserVersion(user3)));
-
-        tradesOfInterest.add(this.pollenExchangeService.openTrade(
-                testDataInserter.updateUserVersion(user1),
-                user1Offers.get(0).getUuid(), user2Offers.get(1).getUuid()));
-        tradesOfInterest.add(
-                this.pollenExchangeService.openTrade(
-                        testDataInserter.updateUserVersion(user3),
-                        user3Offers.get(1).getUuid(), user1Offers.get(0).getUuid()));
-        dontCareTrade.add(
-                this.pollenExchangeService.openTrade(
-                        testDataInserter.updateUserVersion(user3),
-                        user3Offers.get(1).getUuid(), user2Offers.get(0).getUuid()));
-
-        rTradesFromUser = this.pollenExchangeService.getAllTradesFromUser(user1.getOAuthId());
-        allTrades = this.tradeRepository.findAll();
-
-        assertEquals(tradesOfInterest.size(), rTradesFromUser.size());
-        assertEquals(allTrades.size(), dontCareTrade.size() + tradesOfInterest.size());
-        assertTrue(tradesOfInterest.contains(rTradesFromUser.get(0)));
-        assertTrue(tradesOfInterest.contains(rTradesFromUser.get(1)));
-        // we dont know the order, therefore check both
-        assertTrue(
-                tradesOfInterest.get(0).getInitiatedOffer().equals(rTradesFromUser.get(0).getInitiatedOffer())
-                        ||
-                        tradesOfInterest.get(1).getInitiatedOffer().equals(rTradesFromUser.get(0).getInitiatedOffer())
-        );
-        assertTrue(
-                tradesOfInterest.get(0).getRequestedOffer().equals(rTradesFromUser.get(0).getRequestedOffer())
-                        ||
-                        tradesOfInterest.get(1).getRequestedOffer().equals(rTradesFromUser.get(0).getRequestedOffer())
-        );
-        assertTrue(
-                tradesOfInterest.get(0).getUserWhoInitiatedTrade().equals(rTradesFromUser.get(0).getUserWhoInitiatedTrade())
-                        ||
-                        tradesOfInterest.get(1).getUserWhoInitiatedTrade().equals(rTradesFromUser.get(0).getUserWhoInitiatedTrade())
-        );
-        assertTrue(
-                tradesOfInterest.get(0).getUserWhoAnswersTrade().equals(rTradesFromUser.get(0).getUserWhoAnswersTrade())
-                        ||
-                        tradesOfInterest.get(1).getUserWhoAnswersTrade().equals(rTradesFromUser.get(0).getUserWhoAnswersTrade())
-        );
-
-
-    }
 
 
     @Test
-    public void  PollenOfferStartDateAddTest(){
-        PollenOffer pollenOffer1;
-        PollenOffer pollenOffer2;
-        List<PollenOfferStartDate> pollenOfferStartDates;
-        List<LocalDate> dates = new ArrayList<>(1);
-        User user1 = testDataInserter.user1;
-        User user2 = testDataInserter.user2;
-        dates.add(LocalDate.now());
-        pollenOffer1 = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user1Specimen3Female),
-                testDataInserter.updateUserVersion(user1));
-        pollenOffer2 = this.pollenExchangeService.createOrReOpenPollenOffer(
-                testDataInserter.getUpdatedSpecimenVersion(testDataInserter.user2Specimen2Male),
-                testDataInserter.updateUserVersion(user2));
-        pollenOfferStartDates = this.pollenExchangeService.getPollenOffersByDates(dates);
-
-        assertTrue(pollenOfferStartDates.get(0).getPollenOffers().contains(pollenOffer1));
-        assertTrue(pollenOfferStartDates.get(0).getPollenOffers().contains(pollenOffer2));
-
-
+    @Transactional
+    public void getAllDatesTradestest() {
 
     }
 
 
+
+    private Specimen updateEntityVersion(Specimen specimen) {
+        return testDataInserter.getUpdatedSpecimenVersion(specimen);
+    }
 
 
 }
+

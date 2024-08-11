@@ -4,9 +4,11 @@ src/main/java/com/nepflow/PollenExchange/Controller/ApiUtil.java
 src/main/java/com/nepflow/PollenExchange/Controller/PollenexchangeApi.java
 src/main/java/com/nepflow/PollenExchange/Controller/PollenexchangeApiDelegate.java
 src/main/java/com/nepflow/PollenExchange/Dto/PollenOfferDTO.java
+src/main/java/com/nepflow/PollenExchange/Dto/PollenOfferDateContainerDTO.java
 src/main/java/com/nepflow/PollenExchange/Dto/TradeAnswerDTO.java
 src/main/java/com/nepflow/PollenExchange/Dto/TradeCreationDTO.java
 src/main/java/com/nepflow/PollenExchange/Dto/TradeDTO.java
+src/main/java/com/nepflow/PollenExchange/Dto/TradeDateContainerDTO.java
 src/main/java/com/nepflow/PollenExchange/Dto/UserDTO.java
 src/main/java/org/openapitools/OpenApiGeneratorApplication.java
 src/main/java/org/openapitools/RFC3339DateFormat.java

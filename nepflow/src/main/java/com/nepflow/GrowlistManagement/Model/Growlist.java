@@ -20,7 +20,7 @@ public class Growlist {
     @Getter
     protected String uuid;
 
-    @Relationship(value = "CONTAINS_COLLECTION",direction = Relationship.Direction.INCOMING)
+    @Relationship(value = "CONTAINS_COLLECTION", direction = Relationship.Direction.INCOMING)
     @Getter
     User user;
     @Relationship(value = "CONTAINS_SPECIMEN")
@@ -29,14 +29,23 @@ public class Growlist {
     protected boolean isPublic;
 
     public Growlist(User user) {
+        if (user == null) {
+            throw new RuntimeException("User is Null");
+        }
         this.user = user;
         this.specimenList = new ArrayList<>();
         this.isPublic = true;
     }
 
-    public void addSpecimen(Specimen specimen){
-        this.specimenList.add(specimen);
+    public boolean addSpecimen(Specimen specimen) {
+        if (specimen.getUser().equals(this.user)) {
+            this.specimenList.add(specimen);
+            return true;
+        } else {
+            return false;
+        }
     }
+
     public List<Specimen> getSpecimens() {
         return new ArrayList<>(specimenList);
     }

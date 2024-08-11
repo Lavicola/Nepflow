@@ -6,9 +6,11 @@ import com.nepflow.ModelMapperConfig;
 import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
 import com.nepflow.PollenExchange.Dto.PollenOfferDateContainerDTO;
 import com.nepflow.PollenExchange.Dto.TradeDTO;
+import com.nepflow.PollenExchange.Dto.TradeDateContainerDTO;
 import com.nepflow.PollenExchange.Model.PollenOffer;
 import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeStartDate;
 import com.nepflow.UserManagement.Model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,9 +33,8 @@ public class PollenExchangeModelMapperTest {
     public void pollenOfferToPollenOfferDTOTest() {
         PollenOffer pollenOffer;
         PollenOfferDTO pollenOfferDTO;
-        User user1 = LabelCloneDefinitions.user1;
-        Specimen specimenM = LabelCloneDefinitions.SpecimenM;
-        pollenOffer = new PollenOffer(user1, specimenM);
+        Specimen specimenM = LabelCloneDefinitions.specimenUser1Male;
+        pollenOffer = new PollenOffer(specimenM);
         pollenOfferDTO = this.modelMapper.map(pollenOffer, PollenOfferDTO.class);
 
         PollenOfferGenericTester(pollenOffer, pollenOfferDTO);
@@ -46,10 +47,10 @@ public class PollenExchangeModelMapperTest {
         PollenOffer pollenOffer1;
         PollenOffer pollenOffer2;
         User user1 = LabelCloneDefinitions.user1;
-        Specimen specimenM = LabelCloneDefinitions.SpecimenM;
-        Specimen specimenF = LabelCloneDefinitions.SpecimenF;
-        pollenOffer1 = new PollenOffer(user1, specimenM);
-        pollenOffer2 = new PollenOffer(user1, specimenF);
+        Specimen specimenM = LabelCloneDefinitions.specimenUser1Male;
+        Specimen specimenF = LabelCloneDefinitions.specimenUser2Female;
+        pollenOffer1 = new PollenOffer(specimenM);
+        pollenOffer2 = new PollenOffer( specimenF);
         pollenOfferStartDate.addPollenOffer(pollenOffer1);
         pollenOfferStartDate.addPollenOffer(pollenOffer2);
         pollenOfferDateContainerDTO = this.modelMapper.map(pollenOfferStartDate,PollenOfferDateContainerDTO.class);
@@ -73,12 +74,12 @@ public class PollenExchangeModelMapperTest {
         PollenOffer requestedPollenOffer;
         User user1 = LabelCloneDefinitions.user1;
         User user2 = LabelCloneDefinitions.user2;
-        Specimen specimenM = LabelCloneDefinitions.SpecimenM;
-        Specimen specimenF = LabelCloneDefinitions.SpecimenF;
+        Specimen specimenM = LabelCloneDefinitions.specimenUser1Male;
+        Specimen specimenF = LabelCloneDefinitions.specimenUser2Female;
 
-        initiatedPollenOffer = new PollenOffer(user1, specimenM);
-        requestedPollenOffer = new PollenOffer(user2, specimenF);
-        trade = new Trade(user1, initiatedPollenOffer, requestedPollenOffer, user2);
+        initiatedPollenOffer = new PollenOffer( specimenM);
+        requestedPollenOffer = new PollenOffer( specimenF);
+        trade = new Trade(initiatedPollenOffer, requestedPollenOffer);
         tradeDTO = this.modelMapper.map(trade, TradeDTO.class);
 
         PollenOfferGenericTester(initiatedPollenOffer, tradeDTO.getInitiatedOffer());
@@ -87,6 +88,30 @@ public class PollenExchangeModelMapperTest {
 
     }
 
+    @Test
+    public void tradeDatesToTradeDTOTest() {
+
+        Trade trade;
+        TradeStartDate  tradeStartDate  = new TradeStartDate();
+        TradeDateContainerDTO tradeDateContainerDTO;
+
+        PollenOffer initiatedPollenOffer;
+        PollenOffer requestedPollenOffer;
+        Specimen specimenM = LabelCloneDefinitions.specimenUser1Male;
+        Specimen specimenF = LabelCloneDefinitions.specimenUser2Female;
+
+        initiatedPollenOffer = new PollenOffer( specimenM);
+        requestedPollenOffer = new PollenOffer( specimenF);
+        trade = new Trade(initiatedPollenOffer, requestedPollenOffer);
+        tradeStartDate.addTrade(trade);
+
+        tradeDateContainerDTO = this.modelMapper.map(tradeStartDate, TradeDateContainerDTO.class);
+
+        PollenOfferGenericTester(initiatedPollenOffer, tradeDateContainerDTO.getTrades().get(0).getInitiatedOffer());
+        PollenOfferGenericTester(requestedPollenOffer,  tradeDateContainerDTO.getTrades().get(0).getRequestedOffer());
+
+
+    }
 
     private void PollenOfferGenericTester(PollenOffer pollenOffer, PollenOfferDTO pollenOfferDTO) {
         // should be null since  uuid is set by Database

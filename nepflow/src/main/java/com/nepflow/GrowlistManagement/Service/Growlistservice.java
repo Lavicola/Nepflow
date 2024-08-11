@@ -35,6 +35,5 @@ public interface Growlistservice {
 
     boolean deleteSpecimenFromGrowlist(String OAuthId, String specimenId);
 
-    boolean belongsSpecimenToUser(String specimenId,String userId);
 
 }

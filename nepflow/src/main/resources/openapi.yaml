@@ -32,17 +32,17 @@ paths:
       - application/json
       x-tags:
       - tag: Pollenexchange
-  /pollenexchange/pollenoffers:
+  /pollenexchange/pollenoffers/open:
     get:
       parameters:
-      - description: enables to show PollenOffers of different dates (MM/YYY)
+      - description: "if dates is not send, the current date in germany will be used\
+          \ (date in Format MM-YYY)"
         explode: true
         in: query
         name: dates
         required: false
         schema:
           items:
-            format: date
             type: string
           type: array
         style: form
@@ -57,7 +57,35 @@ paths:
           description: ..
         "404":
           description: error
-      summary: return all PollenOffers of the current Month/Year
+      summary: return open PollenOffers by Month-Year
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/{username}/pollenoffers/open:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/PollenOfferDTO"
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return all open PollenOffers of the user
       tags:
       - Pollenexchange
       x-accepts:
@@ -84,8 +112,27 @@ paths:
       - application/json
       x-tags:
       - tag: Pollenexchange
-  /pollenexchange/trades:
+  /pollenexchange/{username}/trades:
     get:
+      parameters:
+      - description: "if dates is not send, the current date in germany will be used\
+          \ (date in Format MM-YYY)"
+        explode: true
+        in: query
+        name: dates
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
       responses:
         "200":
           content:
@@ -94,7 +141,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/TradeDateContainerDTO"
                 type: array
-          description: User exists.
+          description: ..
         "404":
           description: error
       summary: return all Trades and their status of the currently logged in user
@@ -180,6 +227,26 @@ components:
       schema:
         type: string
       style: simple
+    username:
+      explode: false
+      in: path
+      name: username
+      required: true
+      schema:
+        type: string
+      style: simple
+    dates:
+      description: "if dates is not send, the current date in germany will be used\
+        \ (date in Format MM-YYY)"
+      explode: true
+      in: query
+      name: dates
+      required: false
+      schema:
+        items:
+          type: string
+        type: array
+      style: form
   schemas:
     TradeAnswerDTO:
       example:
@@ -226,6 +293,7 @@ components:
           country: country
           username: username
         pollenOfferOpenedDate: 2000-01-23
+        imageLocation: imageLocation
       properties:
         id:
           type: string
@@ -240,6 +308,8 @@ components:
         location:
           type: string
         seller:
+          type: string
+        imageLocation:
           type: string
         pollenOfferOpenedDate:
           format: date
@@ -259,6 +329,7 @@ components:
             country: country
             username: username
           pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
         - seller: seller
           sex: sex
           nepenthesName: nepenthesName
@@ -269,6 +340,7 @@ components:
             country: country
             username: username
           pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
       properties:
         date:
           description: MM-YYYY
@@ -291,6 +363,7 @@ components:
             country: country
             username: username
           pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
         InitiatedOffer:
           seller: seller
           sex: sex
@@ -302,6 +375,7 @@ components:
             country: country
             username: username
           pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
         tradeOpenedDate: 2000-01-23
         id: id
         status: status
@@ -333,6 +407,7 @@ components:
               country: country
               username: username
             pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
           InitiatedOffer:
             seller: seller
             sex: sex
@@ -344,6 +419,7 @@ components:
               country: country
               username: username
             pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
           tradeOpenedDate: 2000-01-23
           id: id
           status: status
@@ -358,6 +434,7 @@ components:
               country: country
               username: username
             pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
           InitiatedOffer:
             seller: seller
             sex: sex
@@ -369,6 +446,7 @@ components:
               country: country
               username: username
             pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
           tradeOpenedDate: 2000-01-23
           id: id
           status: status

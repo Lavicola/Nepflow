@@ -4,22 +4,28 @@ import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.PollenExchange.Model.PollenOffer;
 import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeStartDate;
 import com.nepflow.UserManagement.Model.User;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface PollenExchangeService {
 
-    PollenOffer createOrReOpenPollenOffer(Specimen specimen, User user);
+    PollenOffer createOrReOpenPollenOffer(Specimen specimen);
+
+    PollenOffer createNewPollenOffer(Specimen specimen);
+
     void addPollenOfferToMonthYearContainer(PollenOffer pollenOffer);
 
-    PollenOffer closePollenOffer(Specimen specimen,User user);
+    PollenOffer closePollenOffer(Specimen specimen);
 
-    List<PollenOfferStartDate> getPollenOffersByDates(List<LocalDate> dates);
+    List<PollenOfferStartDate> getPollenOffersByDates(List<String> dates);
 
-    // either as initiator or requester
-    List<Trade> getAllTradesFromUser(String userId);
+
+
+    List<TradeStartDate> getTradesByUsernameAndDates(String username, List<String>  dates);
+
+
     Trade openTrade(User user,String pollenOfferId,String pollenOfferRequested);
     void addTradeToMonthYearContainer(Trade trade);
 
@@ -27,11 +33,7 @@ public interface PollenExchangeService {
 
     Trade acceptTrade(User user,String tradeId);
 
-
-    List<Trade> getAllInitiatedTradesFromUser(User user);
-
-    // trades the user needs to answer
-    List<Trade> getAllRequestedTradesFromUser(User user);
+    List<PollenOfferStartDate> getAllOpenPollenOffersByDateAndExcludeUsernames(List<String> dates, List<String> usernames);
 
     List<String> getAllDatesTrades();
 

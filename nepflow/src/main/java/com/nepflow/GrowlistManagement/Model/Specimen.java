@@ -1,6 +1,7 @@
 package com.nepflow.GrowlistManagement.Model;
 
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
+import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,10 +17,13 @@ public class Specimen {
     @GeneratedValue
     protected String uuid;
 
-
     @Relationship(value = "INSTANCE_OF", direction = Relationship.Direction.OUTGOING)
     @Getter
     Clone clone;
+
+    @Relationship(value = "GROWS_BY", direction = Relationship.Direction.OUTGOING)
+    @Getter
+    User user;
 
     @Getter
     @Setter
@@ -29,8 +33,16 @@ public class Specimen {
     @Getter
     boolean isFlowering = false;
 
-    public Specimen(Clone clone) {
+
+    public Specimen(Clone clone,User user) {
+        if(clone  ==  null){
+            throw new RuntimeException("Clone is not allowd to  be  null");
+        }
+        if(user ==  null){
+            throw new RuntimeException("User is not allowd to  be  null");
+        }
         this.clone = clone;
+        this.user = user;
         this.isFlowering = false;
     }
 
@@ -69,6 +81,9 @@ public class Specimen {
     }
 
 
+    public boolean isSpecimenOwner(User user){
+        return this.user.equals(user);
+    }
 
     @Override
     public int hashCode() {
@@ -83,7 +98,7 @@ public class Specimen {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        return this.uuid.equals(((Specimen) obj).uuid) && this.getClone().equals(((Specimen) obj).getClone());
+        return this.uuid.equals(((Specimen) obj).uuid);
 
     }
 

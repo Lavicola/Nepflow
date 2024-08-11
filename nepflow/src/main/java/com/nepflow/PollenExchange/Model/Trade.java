@@ -1,5 +1,8 @@
 package com.nepflow.PollenExchange.Model;
 
+import com.nepflow.PollenExchange.Exception.PollenOfferIsClosedException;
+import com.nepflow.PollenExchange.Exception.PollenOfferIsExpired;
+import com.nepflow.PollenExchange.Exception.TradePollenOfferSameSexException;
 import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,12 +38,32 @@ public class Trade {
     @Relationship(value = "NEEDS_TO_ANSWER", direction = Relationship.Direction.OUTGOING)
     TradeUserAnswersRelationshipValue userWhichAnswers;
 
-    public Trade(User user, PollenOffer pollenOffer, PollenOffer requestedOffer, User userWhichAnswers) {
-        this.userOffers = user;
+    public Trade(PollenOffer pollenOffer, PollenOffer requestedOffer) {
+        if (pollenOffer.getSexAsString().equals(requestedOffer.getSexAsString())) {
+            throw new TradePollenOfferSameSexException(pollenOffer.getSexAsString(), requestedOffer.getSexAsString());
+        }
+        if (!pollenOffer.isOpen() || !requestedOffer.isOpen()) {
+            throw new PollenOfferIsClosedException(pollenOffer.isOpen(), requestedOffer.isOpen());
+        }
+        if (!pollenOffer.isPollenOfferValid() || !pollenOffer.isPollenOfferValid()) {
+            throw new PollenOfferIsExpired(!pollenOffer.isPollenOfferValid(), !requestedOffer.isPollenOfferValid());
+        }
+
+
+        this.userOffers = pollenOffer.getUser();
         this.initiatedOffer = pollenOffer;
         this.requestedOffer = requestedOffer;
-        this.userWhichAnswers = new TradeUserAnswersRelationshipValue(userWhichAnswers);
+        this.userWhichAnswers = new TradeUserAnswersRelationshipValue(requestedOffer.getUser());
     }
+
+    public boolean isAllowedToRefuseTrade(User user) {
+        return this.isTradeOpen()  &&  this.userWhichAnswers.getUser().equals(user);
+    }
+
+    public boolean isAllowedToAcceptTrade(User user) {
+        return this.isTradeOpen()  &&  this.userWhichAnswers.getUser().equals(user);
+    }
+
 
 
     public User getUserWhoAnswersTrade() {
@@ -60,15 +83,15 @@ public class Trade {
         this.userWhichAnswers.acceptTrade();
     }
 
-    public boolean wasTradeRefused(){
+    public boolean wasTradeRefused() {
         return this.userWhichAnswers.wasTradeRefused();
     }
 
-    public boolean wasTradeAccepted(){
+    public boolean wasTradeAccepted() {
         return this.userWhichAnswers.wasTradeAccepted();
     }
 
-    public boolean isTradeOpen(){
+    public boolean isTradeOpen() {
         return this.userWhichAnswers.isTradeOpen();
     }
 

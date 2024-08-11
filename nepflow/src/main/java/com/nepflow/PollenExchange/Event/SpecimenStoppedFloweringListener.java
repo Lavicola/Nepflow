@@ -15,7 +15,7 @@ public class SpecimenStoppedFloweringListener {
 
     @EventListener
     public void handleSpecimenStoppedFloweringEvent(SpecimenStoppedFloweringEvent event) {
-        this.pollenExchangeService.closePollenOffer(event.getSpecimen(),event.getUser());
+        this.pollenExchangeService.closePollenOffer(event.getSpecimen());
 
 
     }

@@ -64,7 +64,7 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Override
     public Specimen addExistingCloneToGrowList(User user, String internalId) {
         Clone clone = this.nepenthesRetrivalService.getCloneByInternalId(internalId);
-        Specimen specimen = this.specimenRepository.addSpecimenToGrowlist(user.getOAuthId(), clone.getInternalCloneId());
+        Specimen specimen = this.specimenRepository.addSpecimenToGrowlistAndUser(user.getOAuthId(), clone.getInternalCloneId());
         return specimen;
     }
 
@@ -86,7 +86,7 @@ public class GrowlistServiceImpl implements Growlistservice {
     public boolean updateSpecimenImage(String oAuthId, String specimenId, MultipartFile multipartFile) {
         Specimen specimen = this.specimenRepository.findSpecimenByUuid(specimenId);
         String location;
-        if (specimen == null || !this.specimenRepository.isSpeciesOfUser(oAuthId, specimenId)) {
+        if (specimen == null || !specimen.getUser().getOAuthId().equals(oAuthId)) {
             return false;
         }
 
@@ -105,7 +105,7 @@ public class GrowlistServiceImpl implements Growlistservice {
 
     public boolean updateFlowerStatus(User user, String specimenId, boolean isFlowering) {
         Specimen specimen = this.specimenRepository.findSpecimenByUuid(specimenId);
-        if (specimen == null || !this.specimenRepository.isSpeciesOfUser(user.getOAuthId(), specimenId)) {
+        if (specimen == null || !specimen.getUser().equals(user)) {
             return false;
         }
         if (specimen.getFlowerStatus() == isFlowering) {
@@ -126,10 +126,10 @@ public class GrowlistServiceImpl implements Growlistservice {
     }
 
     @Override
-    public boolean updateSex(String OAuthId, String specimenId, String sexAsString) {
+    public boolean updateSex(String oAuthId, String specimenId, String sexAsString) {
         Specimen specimen = specimenRepository.findSpecimenByUuid(specimenId);
 
-        if (specimen == null || !specimenRepository.isSpeciesOfUser(OAuthId, specimenId)) {
+        if (specimen == null || !specimen.getUser().getOAuthId().equals(oAuthId)) {
             return false;
         }
 
@@ -154,13 +154,15 @@ public class GrowlistServiceImpl implements Growlistservice {
 
     @Override
     public boolean deleteSpecimenFromGrowlist(String OAuthId, String specimenId) {
+        // TODO check if specimen belongs to user
         Specimen specimen = specimenRepository.findSpecimenByUuid(specimenId);
         String imageLocation;
         if (specimen == null) {
             return false;
         }
         imageLocation = specimen.getImagePath();
-        if (!this.specimenRepository.deleteSpecimen(OAuthId, specimenId)) {
+        // not necessary to check if specimen belongs to user, the query  does that
+        if (!this.specimenRepository.deleteSpecimen(OAuthId,specimenId)) {
             return false;
         }
         this.imageService.deleteImage(bucketname, imageLocation);
@@ -168,11 +170,7 @@ public class GrowlistServiceImpl implements Growlistservice {
         return true;
     }
 
-    @Override
-    public boolean belongsSpecimenToUser(String specimenId, String userId) {
 
-        return this.specimenRepository.isSpeciesOfUser(specimenId, userId);
-    }
 
 
 }

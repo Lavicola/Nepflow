@@ -104,7 +104,7 @@ public class GrowlistManagementServiceTest {
                 growlistTestDataInserter.cloneNotInDBIC.getSexAsString(),
                 growlistTestDataInserter.cloneNotInDBIC.getLocationAsString(),
                 growlistTestDataInserter.cloneNotInDBIC.getSellerAsString());
-        Growlist growlist = this.growlistRepository.findGrowlistById(growlistTestDataInserter.user1.getOAuthId());
+        Growlist growlist = this.growlistRepository.findGrowlistByUserId(growlistTestDataInserter.user1.getOAuthId());
         assertNotNull(ivSpecimen);
         assertNotNull(icSpecimen);
         assertNotNull(growlist);
@@ -125,7 +125,7 @@ public class GrowlistManagementServiceTest {
         Specimen icSpecimen;
         ivSpecimen = this.growlistservice.addExistingCloneToGrowList(growlistTestDataInserter.user1, growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId());
         icSpecimen = this.growlistservice.addExistingCloneToGrowList(growlistTestDataInserter.user1, growlistTestDataInserter.icSpeciesClone.getInternalCloneId());
-        Growlist growlist = this.growlistRepository.findGrowlistById(growlistTestDataInserter.user1.getOAuthId());
+        Growlist growlist = this.growlistRepository.findGrowlistByUserId(growlistTestDataInserter.user1.getOAuthId());
 
         assertNotNull(ivSpecimen);
         assertNotNull(icSpecimen);

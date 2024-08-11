@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
 
 
-    public User user3 = new User("user3","user3");
+    public User user3 = new User("user3", "user3");
 
 
     Growlist growlistUser1;
@@ -32,6 +32,8 @@ public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
 
     @Autowired
     SpecimenRepository specimenRepository;
+
+
 
     public Specimen user1Specimen1NoSex;
     public Specimen user1Specimen2Male;
@@ -48,8 +50,7 @@ public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
 
     public void insertData() {
         super.insertData();
-        this.createGrowlists();
-        this.createSpecimens();
+        this.createSpecimensAndGrowlist();
 
     }
 
@@ -67,31 +68,36 @@ public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
         user3 = this.userRepository.save(user3);
     }
 
-        private void createGrowlists() {
-        growlistUser1 = this.growlistRepository.save(new Growlist(this.user1));
-        growlistUser2 = this.growlistRepository.save(new Growlist(this.user2));
-        growlistUser3 = this.growlistRepository.save(new Growlist(this.user3));
+    private void createGrowlists() {
+        growlistUser1 = this.growlistRepository.save(new Growlist(this.updateUserVersion(this.user1)));
+        growlistUser2 = this.growlistRepository.save(new Growlist(this.updateUserVersion(this.user2)));
+        growlistUser3 = this.growlistRepository.save(new Growlist(this.updateUserVersion(this.user3)));
     }
 
-    private void createSpecimens() {
-        user1Specimen1NoSex = new Specimen(icSpeciesClone);
-        user1Specimen2Male = new Specimen(ivSpeciesCloneMale);
-        user1Specimen3Female = new Specimen(ivSpeciesCloneFemale);
+    private void createSpecimensAndGrowlist() {
+        user1Specimen1NoSex = new Specimen(icSpeciesClone, this.user1);
+        user1Specimen2Male = new Specimen(ivSpeciesCloneMale, this.user1);
+        user1Specimen3Female = new Specimen(ivSpeciesCloneFemale, this.user1);
+        this.growlistUser1 = new Growlist(user1);
         this.growlistUser1.addSpecimen(user1Specimen1NoSex);
         this.growlistUser1.addSpecimen(user1Specimen2Male);
         this.growlistUser1.addSpecimen(user1Specimen3Female);
         this.growlistRepository.save(growlistUser1);
-        user2Specimen1NoSex = new Specimen(icSpeciesClone);
-        user2Specimen2Male = new Specimen(ivSpeciesCloneMale);
-        user2Specimen3Female = new Specimen(ivSpeciesCloneFemale);
+
+        user2Specimen1NoSex = new Specimen(icSpeciesClone, this.user2);
+        user2Specimen2Male  = new Specimen(ivSpeciesCloneMale, this.user2);
+        user2Specimen3Female = new Specimen(ivSpeciesCloneFemale, this.user2);
+        this.growlistUser2 = new Growlist(user2);
+
         this.growlistUser2.addSpecimen(user2Specimen1NoSex);
         this.growlistUser2.addSpecimen(user2Specimen2Male);
         this.growlistUser2.addSpecimen(user2Specimen3Female);
         this.growlistRepository.save(growlistUser2);
 
-        user3Specimen1NoSex = new Specimen(icSpeciesClone);
-        user3Specimen2Male = new Specimen(ivSpeciesCloneMale);
-        user3Specimen3Female = new Specimen(ivSpeciesCloneFemale);
+        user3Specimen1NoSex = new Specimen(icSpeciesClone, this.user3);
+        user3Specimen2Male  = new Specimen(ivSpeciesCloneMale, this.user3);
+        user3Specimen3Female=  new Specimen(ivSpeciesCloneFemale, this.user3);
+        this.growlistUser3 = new Growlist(user3);
 
         this.growlistUser3.addSpecimen(user3Specimen1NoSex);
         this.growlistUser3.addSpecimen(user3Specimen2Male);
@@ -107,7 +113,7 @@ public class PollenExchangeTestDataInserter extends GrowlistTestDataInserter {
      * two times on the same specimen without changing the version  (thus loading it from the  repository again)
      */
 
-    public Specimen getUpdatedSpecimenVersion(Specimen specimen){
+    public Specimen getUpdatedSpecimenVersion(Specimen specimen) {
         return this.specimenRepository.findSpecimenByUuid(specimen.getUuid());
 
     }

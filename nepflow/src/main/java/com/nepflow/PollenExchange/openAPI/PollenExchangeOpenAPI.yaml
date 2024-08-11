@@ -29,19 +29,11 @@ paths:
                   type: string
         '404':
           description: error
-  /pollenexchange/pollenoffers:
+  /pollenexchange/pollenoffers/open:
     get:
       parameters:
-        - in: query
-          name: dates
-          schema:
-            type: array
-            items:
-              type: string
-              format: date
-          description: enables to show PollenOffers of different dates (MM/YYY)
-
-      summary: return all PollenOffers of the current Month/Year
+        - $ref: "#/components/parameters/dates"
+      summary: return open PollenOffers by Month-Year
       tags:
         - Pollenexchange
       responses:
@@ -53,6 +45,24 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PollenOfferDateContainerDTO'
+        '404':
+          description: error
+  /pollenexchange/{username}/pollenoffers/open:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/username"
+      summary: return all open PollenOffers of the user
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: ..
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollenOfferDTO'
         '404':
           description: error
 
@@ -74,14 +84,18 @@ paths:
           description: error
 
 
-  /pollenexchange/trades:
+  /pollenexchange/{username}/trades:
     get:
       summary: return all Trades and their status of the currently logged in user
+      parameters:
+        - $ref: "#/components/parameters/dates"
+        - $ref: "#/components/parameters/username"
+
       tags:
         - Pollenexchange
       responses:
         '200':
-          description: User exists.
+          description: ..
           content:
             application/json:
               schema:
@@ -90,7 +104,6 @@ paths:
                   $ref: '#/components/schemas/TradeDateContainerDTO'
         '404':
           description: error
-
 
   /pollenexchange/create/trade:
     post:
@@ -151,6 +164,25 @@ components:
       schema:
         type: string
 
+    username:
+      name: username
+      in: path
+      schema:
+        type: string
+      required: true
+
+    dates:
+      name: dates
+      description: if dates is not send, the current date in germany will be used (date in Format MM-YYY)
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+
+
+
+
 
 
   schemas:
@@ -198,6 +230,8 @@ components:
         location:
           type: string
         seller:
+          type: string
+        imageLocation:
           type: string
         pollenOfferOpenedDate:
           type: string

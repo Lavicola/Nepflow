@@ -44,6 +44,11 @@ public class User {
         this.username = username;
     }
 
+    public User(String username, String oAuthId,Country country) {
+        this(oAuthId);
+        this.username = username;
+        this.country = country;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -13,7 +13,7 @@ import java.util.Objects;
  * PollenOfferDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-02T00:12:09.389563100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-04T17:32:10.082378700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class PollenOfferDTO {
 
   private String id;
@@ -29,6 +29,8 @@ public class PollenOfferDTO {
   private String location;
 
   private String seller;
+
+  private String imageLocation;
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate pollenOfferOpenedDate;
@@ -173,6 +175,26 @@ public class PollenOfferDTO {
     this.seller = seller;
   }
 
+  public PollenOfferDTO imageLocation(String imageLocation) {
+    this.imageLocation = imageLocation;
+    return this;
+  }
+
+  /**
+   * Get imageLocation
+   * @return imageLocation
+  */
+  
+  @Schema(name = "imageLocation", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("imageLocation")
+  public String getImageLocation() {
+    return imageLocation;
+  }
+
+  public void setImageLocation(String imageLocation) {
+    this.imageLocation = imageLocation;
+  }
+
   public PollenOfferDTO pollenOfferOpenedDate(LocalDate pollenOfferOpenedDate) {
     this.pollenOfferOpenedDate = pollenOfferOpenedDate;
     return this;
@@ -209,12 +231,13 @@ public class PollenOfferDTO {
         Objects.equals(this.sex, pollenOfferDTO.sex) &&
         Objects.equals(this.location, pollenOfferDTO.location) &&
         Objects.equals(this.seller, pollenOfferDTO.seller) &&
+        Objects.equals(this.imageLocation, pollenOfferDTO.imageLocation) &&
         Objects.equals(this.pollenOfferOpenedDate, pollenOfferDTO.pollenOfferOpenedDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, user, nepenthesName, cloneId, sex, location, seller, pollenOfferOpenedDate);
+    return Objects.hash(id, user, nepenthesName, cloneId, sex, location, seller, imageLocation, pollenOfferOpenedDate);
   }
 
   @Override
@@ -228,6 +251,7 @@ public class PollenOfferDTO {
     sb.append("    sex: ").append(toIndentedString(sex)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    seller: ").append(toIndentedString(seller)).append("\n");
+    sb.append("    imageLocation: ").append(toIndentedString(imageLocation)).append("\n");
     sb.append("    pollenOfferOpenedDate: ").append(toIndentedString(pollenOfferOpenedDate)).append("\n");
     sb.append("}");
     return sb.toString();

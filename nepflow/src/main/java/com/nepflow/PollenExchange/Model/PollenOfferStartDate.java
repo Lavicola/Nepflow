@@ -19,25 +19,31 @@ public class PollenOfferStartDate {
     @Getter
     String MonthYearId;
 
-    @Relationship(value = "POSTED_IN",direction = Relationship.Direction.INCOMING)
+    @Relationship(value = "POSTED_IN", direction = Relationship.Direction.INCOMING)
     List<PollenOffer> pollenOffers = new ArrayList<>();
 
     @Transient
-   private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
+    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
 
-    public PollenOfferStartDate(){
+    public PollenOfferStartDate() {
         this.MonthYearId = LocalDate.now().format(formatter);
     }
 
-    public void addPollenOffer(PollenOffer pollenOffer){
-        this.pollenOffers.add(pollenOffer);
+    public boolean addPollenOffer(PollenOffer pollenOffer) {
+        if (pollenOffer.getStartDate().format(formatter).equals(this.MonthYearId)) {
+            this.pollenOffers.add(pollenOffer);
+            return true;
+
+        } else {
+            return false;
+        }
     }
 
-    public List<PollenOffer> getPollenOffers(){
+    public List<PollenOffer> getPollenOffers() {
         return new ArrayList<>(pollenOffers);
     }
 
-    public static DateTimeFormatter getDateFormatter(){
+    public static DateTimeFormatter getDateFormatter() {
         return formatter;
     }
 

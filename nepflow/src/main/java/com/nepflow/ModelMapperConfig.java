@@ -105,12 +105,12 @@ public class ModelMapperConfig {
             protected void configure() {
                 map().setId(source.getUuid());
                 map().setStatus(source.getTradeStatus());
+
                 map().setTradeOpenedDate(source.getTradeOpenedDate());
                 using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getInitiatedOffer(), PollenOfferDTO.class))
                         .map(source, destination.getInitiatedOffer());
                 using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getRequestedOffer(), PollenOfferDTO.class))
                         .map(source, destination.getRequestedOffer());
-
 
             }
         });
@@ -118,6 +118,7 @@ public class ModelMapperConfig {
             @Override
             protected void configure() {
                 map().setDate(source.getMonthYearId());
+
             }
         });
         modelMapper.addMappings(new PropertyMap<PollenOfferStartDate, PollenOfferDateContainerDTO>() {
