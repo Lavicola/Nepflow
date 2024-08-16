@@ -159,7 +159,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        isSuccess = this.growlistservice.deleteSpecimenFromGrowlist(user.getOAuthId(), specimenId);
+        isSuccess = this.growlistservice.deleteSpecimenFromGrowlist(user, specimenId);
 
         return isSuccess ? ResponseEntity.ok().body(null) : ResponseEntity.internalServerError().body(null);
 

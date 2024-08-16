@@ -63,8 +63,12 @@ public class GrowlistServiceImpl implements Growlistservice {
 
     @Override
     public Specimen addExistingCloneToGrowList(User user, String internalId) {
+        Specimen specimen = null;
         Clone clone = this.nepenthesRetrivalService.getCloneByInternalId(internalId);
-        Specimen specimen = this.specimenRepository.addSpecimenToGrowlistAndUser(user.getOAuthId(), clone.getInternalCloneId());
+        if (clone != null) {
+            specimen = this.specimenRepository.addSpecimenToGrowlistAndUserReturnSpecimenWithoutUser(user.getOAuthId(), clone.getInternalCloneId());
+        }
+
         return specimen;
     }
 
@@ -153,24 +157,21 @@ public class GrowlistServiceImpl implements Growlistservice {
     }
 
     @Override
-    public boolean deleteSpecimenFromGrowlist(String OAuthId, String specimenId) {
-        // TODO check if specimen belongs to user
+    public boolean deleteSpecimenFromGrowlist(User user, String specimenId) {
         Specimen specimen = specimenRepository.findSpecimenByUuid(specimenId);
         String imageLocation;
         if (specimen == null) {
             return false;
         }
         imageLocation = specimen.getImagePath();
-        // not necessary to check if specimen belongs to user, the query  does that
-        if (!this.specimenRepository.deleteSpecimen(OAuthId,specimenId)) {
+        if (!specimen.isSpecimenOwner(user)) {
             return false;
         }
+        this.specimenRepository.delete(specimen);
         this.imageService.deleteImage(bucketname, imageLocation);
 
         return true;
     }
-
-
 
 
 }

@@ -16,7 +16,7 @@ public interface SpecimenRepository extends Neo4jRepository<Specimen,String> {
             "CREATE (g)-[:CONTAINS_SPECIMEN]-> (s:Specimen {isFlowering: false}) -[i:INSTANCE_OF]->(c)\n" +
             "CREATE (s)-[:GROWS_BY]-> (u)" +
             "return s,c,i,u,cl,l")
-    Specimen addSpecimenToGrowlistAndUser(String userId, String internalCloneId);
+    Specimen addSpecimenToGrowlistAndUserReturnSpecimenWithoutUser(String userId, String internalCloneId);
 
 
     Specimen findSpecimenByUuid(String uuid);

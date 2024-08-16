@@ -10,16 +10,16 @@ import java.util.List;
 @Repository
 public interface PollenOfferStartDateRepository extends Neo4jRepository<PollenOfferStartDate, String> {
 
-    @Query("MATCH (startDates:PollenOfferStartDate)<-[posted:POSTED_IN]-(offer:PollenOffer)-[published:PUBLISHED_BY]->(userss)-[userRel]->(userNodes)\n" +
-            "WHERE NOT ANY(x IN $usernames WHERE x  IN userss.username) AND startDates.MonthYearId IN $dates\n" +
-            "WITH *\n" +
-            "MATCH  (offer)-[flower:FLOWERS]->(specimen)-[instance:INSTANCE_OF]-(clone:Clone)-[relations]->(entities)\n" +
+    @Query("MATCH (startDates:PollenOfferStartDate)<-[posted:POSTED_IN]-(offer:PollenOffer)-[flower:FLOWERS|HAS_FLOWERED]->(specimen)-[grows:GROWS_BY]->(userss:User)-[userRel]->(userNodes)\n" +
+            "WHERE startDates.MonthYearId IN $dates AND NOT userss.username IN $usernames\n" +
             "\n" +
+            "WITH *\n" +
+            "MATCH  (specimen)-[instance:INSTANCE_OF]-(clone:Clone)-[relations]->(entities)\n" +
             "RETURN\n" +
             "startDates,\n" +
             "Collect(posted),\n" +
             "Collect(offer),\n" +
-            "Collect(published),\n" +
+            "COLLECT(grows),\n" +
             "Collect(userss),\n" +
             "Collect(flower),\n" +
             "Collect(specimen),\n" +

@@ -21,6 +21,8 @@ public class PollenOffer {
 
     @Transient
     // Within of three weeks a PollenOffer is valid and can be opened/closed several times
+    // it does  not  mean that a PollenOffer is  not  allowed to stay open  longer, but only after  21 days
+    // it is not  possible  to  reopen  it again
     final private int MIN_DURATION_POLLENOFFER = 21;
 
     @Id

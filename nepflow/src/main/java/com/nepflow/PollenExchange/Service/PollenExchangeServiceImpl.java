@@ -23,7 +23,6 @@ import java.util.Optional;
 public class PollenExchangeServiceImpl implements PollenExchangeService {
 
 
-
     @Autowired
     PollenOfferRepository pollenOfferRepository;
 
@@ -63,7 +62,7 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     @Override
     public List<PollenOfferStartDate> getPollenOffersByDates(List<String> dates) {
 
-        return this.pollenOfferStartDateRepository.getAllOpenPollenOffersUsingDatesAndExcludeUsers(dates,new ArrayList<>());
+        return this.pollenOfferStartDateRepository.getAllOpenPollenOffersUsingDatesAndExcludeUsers(dates, new ArrayList<>());
 
     }
 
@@ -174,10 +173,14 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
             return null;
         }
         trade1 = trade.get();
-        if (!trade1.isAllowedToRefuseTrade(user)) {
+        if (!trade1.isAllowedToAnswerTrade(user)) {
             return null;
         }
-        trade.get().refuseTrade();
+        if (trade.get().isTradeExpired()) {
+            trade.get().setTradeToExpired();
+        } else {
+            trade.get().refuseTrade();
+        }
         return this.tradeRepository.save(trade.get());
 
     }
@@ -192,10 +195,15 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
             return null;
         }
         trade1 = trade.get();
-        if (!trade1.isAllowedToAcceptTrade(user)) {
+        if (!trade1.isAllowedToAnswerTrade(user)) {
             return null;
         }
-        trade.get().acceptTrade();
+        if (trade.get().isTradeExpired()) {
+            trade.get().setTradeToExpired();
+        } else {
+            trade.get().acceptTrade();
+        }
+
         return this.tradeRepository.save(trade.get());
     }
 

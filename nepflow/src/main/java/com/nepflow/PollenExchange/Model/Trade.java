@@ -12,6 +12,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Node
 @NoArgsConstructor
@@ -45,9 +46,6 @@ public class Trade {
         if (!pollenOffer.isOpen() || !requestedOffer.isOpen()) {
             throw new PollenOfferIsClosedException(pollenOffer.isOpen(), requestedOffer.isOpen());
         }
-        if (!pollenOffer.isPollenOfferValid() || !pollenOffer.isPollenOfferValid()) {
-            throw new PollenOfferIsExpired(!pollenOffer.isPollenOfferValid(), !requestedOffer.isPollenOfferValid());
-        }
 
 
         this.userOffers = pollenOffer.getUser();
@@ -56,11 +54,7 @@ public class Trade {
         this.userWhichAnswers = new TradeUserAnswersRelationshipValue(requestedOffer.getUser());
     }
 
-    public boolean isAllowedToRefuseTrade(User user) {
-        return this.isTradeOpen()  &&  this.userWhichAnswers.getUser().equals(user);
-    }
-
-    public boolean isAllowedToAcceptTrade(User user) {
+    public boolean isAllowedToAnswerTrade(User user) {
         return this.isTradeOpen()  &&  this.userWhichAnswers.getUser().equals(user);
     }
 
@@ -83,6 +77,16 @@ public class Trade {
         this.userWhichAnswers.acceptTrade();
     }
 
+    public void setTradeToExpired(){
+
+        ArrayList<Boolean> a = new ArrayList<>(10);
+
+
+        this.userWhichAnswers.setTradeToExpired();
+    }
+
+
+
     public boolean wasTradeRefused() {
         return this.userWhichAnswers.wasTradeRefused();
     }
@@ -93,6 +97,14 @@ public class Trade {
 
     public boolean isTradeOpen() {
         return this.userWhichAnswers.isTradeOpen();
+    }
+
+    public boolean isTradeExpired(){
+        if(this.initiatedOffer.isOpen() && this.requestedOffer.isOpen()){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public String getTradeStatus() {

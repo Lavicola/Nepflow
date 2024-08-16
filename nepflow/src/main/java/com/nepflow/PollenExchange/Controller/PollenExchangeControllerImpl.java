@@ -61,6 +61,9 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
         if (trade == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+        if(trade.isTradeExpired()){
+           return ResponseEntity.status(HttpStatus.CONFLICT).body(this.modelMapper.map(trade, TradeDTO.class));
+        }
 
         return ResponseEntity.ok(this.modelMapper.map(trade, TradeDTO.class));
 

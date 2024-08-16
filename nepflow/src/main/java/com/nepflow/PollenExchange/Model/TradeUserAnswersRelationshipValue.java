@@ -43,6 +43,11 @@ public class TradeUserAnswersRelationshipValue {
         }
     }
 
+    public void setTradeToExpired(){
+        this.status = UserAnswers.EXPIRED;
+    }
+
+
     public String getStatus(){
         return this.status.toString();
     }
@@ -62,6 +67,7 @@ public class TradeUserAnswersRelationshipValue {
         WAITING,
         ACCEPTED,
         REFUSED,
+        EXPIRED,
     }
 
 }
