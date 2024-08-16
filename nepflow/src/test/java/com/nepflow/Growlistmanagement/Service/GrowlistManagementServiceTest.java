@@ -1,10 +1,12 @@
 package com.nepflow.Growlistmanagement.Service;
 
+import com.nepflow.BaseModules.ImageModule.Service.ImageService;
 import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
 import com.nepflow.GrowlistManagement.Service.Growlistservice;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
+import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Service.AuthenticationService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -18,8 +20,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -38,6 +40,10 @@ public class GrowlistManagementServiceTest {
 
     @MockBean
     AuthenticationService authenticationService;
+
+    @MockBean
+    ImageService imageService;
+
     @Autowired
     Growlistservice growlistservice;
     @Autowired
@@ -45,6 +51,9 @@ public class GrowlistManagementServiceTest {
     @Autowired
     GrowlistTestDataInserter  growlistTestDataInserter;
 
+
+    String bucketname = "";
+    String url = "";
 
     static boolean executedOnce = false;
 
@@ -62,6 +71,8 @@ public class GrowlistManagementServiceTest {
     public void setUp(){
         // for now, since TestInstance.Lifecycle.PER_CLASS is not possible due to initializeNeo4j
         if(!executedOnce){
+            when(authenticationService.getAuthenticatedUser()).thenReturn(growlistTestDataInserter.user1);
+            when(imageService.deleteImage(bucketname,url)).thenReturn(true);
             this.growlistTestDataInserter.insertData();
             this.growlistRepository.save(new Growlist(growlistTestDataInserter.user1));
             this.growlistRepository.save(new Growlist(growlistTestDataInserter.user2));
@@ -85,10 +96,6 @@ public class GrowlistManagementServiceTest {
     }
 
 
-    /**
-     * In order to create and add a Plant to an User, it is necessary to create the User first (which usually happens in the frontend)
-     * After that a new Clone can be created and added
-     */
     @Test
     public void addNewIVCloneToGrowListTest(){
         Specimen ivSpecimen;
@@ -116,7 +123,7 @@ public class GrowlistManagementServiceTest {
 
 
     /**
-     * Test to make sure that it is possible to add existing  Clones the  Growlist
+     * Test to make sure that it is possible to add existing Clones the Growlist
      *
      */
     @Test
@@ -135,4 +142,37 @@ public class GrowlistManagementServiceTest {
 
     }
 
-}
+    @Test
+    public void deleteSpecimenFromGrowlistTest() {
+        User user = growlistTestDataInserter.user1;
+        Specimen ivSpecimen = new Specimen(growlistTestDataInserter.ivSpeciesCloneMale,user);
+
+        int amountBeforeDelete;
+        int amountAfterDelete;
+        boolean wasDeleted;
+        ivSpecimen = this.growlistservice.addExistingCloneToGrowList(user, growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId());
+        this.growlistservice.addExistingCloneToGrowList(user, growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId());
+
+        amountBeforeDelete = this.growlistservice.getGrowlist(user.getUsername()).getSpecimens().size();
+        wasDeleted = this.growlistservice.deleteSpecimenFromGrowlist(user,ivSpecimen.getUuid());
+        amountAfterDelete    = this.growlistservice.getGrowlist(user.getUsername()).getSpecimens().size();
+
+        assertTrue(wasDeleted);
+        assertEquals(amountBeforeDelete,amountAfterDelete+1);
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+    }

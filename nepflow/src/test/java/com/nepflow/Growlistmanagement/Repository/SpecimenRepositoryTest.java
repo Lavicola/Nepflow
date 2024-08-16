@@ -71,7 +71,7 @@ public class SpecimenRepositoryTest {
         Specimen rSpecimen;
         this.cloneRepository.save(specimen.getClone());
         this.growlistRepository.save(growlist);
-        rSpecimen  = this.specimenRepository.addSpecimenToGrowlistAndUser(specimen.getUser().getOAuthId(),specimen.getClone().getInternalCloneId());
+        rSpecimen  = this.specimenRepository.addSpecimenToGrowlistAndUserReturnSpecimenWithoutUser(specimen.getUser().getOAuthId(),specimen.getClone().getInternalCloneId());
         rGrowlist = this.growlistRepository.findGrowlistByUsername(specimen.getUser().getUsername());
         assertNotNull(rSpecimen);
         assertNotNull(rGrowlist);

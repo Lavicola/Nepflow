@@ -55,6 +55,16 @@ public class ImageServiceHandlerTest {
         multipartFileJPG = new MockMultipartFile("fileItem",
                 testImageJPGOutput, "image/jpg", IOUtils.toByteArray(inputJPG));
 
+
+
+        int i = 4;
+        long j = 2;
+        j = i + j;
+        System.out.println(i);
+
+
+
     }
+
 
 }

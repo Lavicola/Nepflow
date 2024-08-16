@@ -3,6 +3,7 @@ package com.nepflow.PollenExchange.Model;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.LabelCloneDefinitions;
 import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
 
 public class TradeTest {
 
@@ -16,6 +17,19 @@ public class TradeTest {
     public void validTradeTest() {
         new Trade(pollenOffer,pollenOffer2);;
     }
+
+    @Test
+    public void isAllowedToAnswerTradeTest() {
+        Trade trade = new Trade(pollenOffer,pollenOffer2);
+
+        assertTrue(trade.isAllowedToAnswerTrade(pollenOffer2.getUser()));
+        assertFalse(trade.isAllowedToAnswerTrade(pollenOffer.getUser()));
+
+
+
+
+    }
+
 
 
 
