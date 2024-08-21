@@ -1,5 +1,9 @@
 name: Nepflow Gradle Test Action
-on: push
+on:
+  push:
+    paths:
+    - "nepflow/**"
+  
 
 jobs:
   container-job:
