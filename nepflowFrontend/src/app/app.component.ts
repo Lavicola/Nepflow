@@ -1,13 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "./services/AuthService";
-import {UsernameService} from "./services/UsernameService";
+import {RouterLink, RouterOutlet} from '@angular/router';
+import {AuthService} from "./core/services/auth.service";
+import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import {MatToolbar} from "@angular/material/toolbar";
+import {MatAnchor, MatButton} from "@angular/material/button";
+import {NgIf} from "@angular/common";
+
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet, RouterLink, MatMenuTrigger, MatToolbar, MatMenu, MatMenuItem, MatAnchor, NgIf, MatButton],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrl: './app.component.sass'
 })
-export class AppComponent implements OnInit{
+export class AppComponent  implements OnInit{
   title = 'nepflowFrontend';
   username!:string;
 
@@ -21,7 +28,7 @@ export class AppComponent implements OnInit{
 
 
   constructor(public authService: AuthService,
-              ) {
+  ) {
 
   }
 

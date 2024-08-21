@@ -1,19 +1,16 @@
 {
+
+
+
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nepflowFront": {
+    "nepflowFrontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "standalone": false
-        },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
+          "style": "sass"
         }
       },
       "root": "",
@@ -23,20 +20,21 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/nepflow-front",
+            "outputPath": "dist/nepflow-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "sass",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/purple-green.css",
+              "src/styles.sass"
             ],
             "scripts": []
           },
@@ -68,11 +66,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "nepflowFront:build:production"
+              "buildTarget": "nepflowFrontend:build:production"
             },
             "development": {
-              "buildTarget": "nepflowFront:build:development",
-		      	  "proxyConfig": "src/proxy.conf.js"
+              "buildTarget": "nepflowFrontend:build:development",
+              "proxyConfig": "src/proxy.conf.js"
 
             }
           },
@@ -81,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "nepflowFront:build"
+            "buildTarget": "nepflowFrontend:build"
           }
         },
         "test": {
@@ -92,13 +90,14 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "sass",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/purple-green.css",
+              "src/styles.sass"
             ],
             "scripts": []
           }
@@ -107,6 +106,6 @@
     }
   },
   "cli": {
-    "analytics": "c0dc741c-0892-453a-a3cd-ea0b50aa23c0"
+    "analytics": "0aa5ce3d-5836-4794-b37e-f0b37fb2f94e"
   }
 }

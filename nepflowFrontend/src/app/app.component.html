@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span>Nepflow</span>
+  <h1>Nepflow</h1>
   <a mat-button [routerLink]="profileRoute">Profile</a>
   <a mat-button [routerLink]="newNepenthesRoute">add Nepenthes</a>
 
@@ -8,21 +8,21 @@
   <mat-menu #growlistMenu="matMenu">
     <button mat-menu-item [routerLink]="myGrowlistRoute">My Growlist</button>
     <button mat-menu-item [routerLink]="publicGrowlistsRoute">Public Growlists</button>
- </mat-menu>
+  </mat-menu>
   <a mat-button [routerLink]="pollenOffersRoute">Pollen offers</a>
 
- <div *ngIf="isLoggedIn; else loggedOut">
-       Welcome back, {{username}}
- </div>
+  <div *ngIf="isLoggedIn; else loggedOut">
+    Welcome back, {{username}}
+  </div>
 
- <ng-template #loggedOut>
-   <button mat-raised-button color="primary" (click)="authService.login()" id="login">Login</button>
- </ng-template>
+  <ng-template #loggedOut>
+    <button mat-raised-button color="primary" (click)="authService.login()" id="login">Login</button>
+  </ng-template>
 
 
 </mat-toolbar>
 
 <div class="container">
 
- <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>

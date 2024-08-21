@@ -1,0 +1,30 @@
+<!-- app.component.html -->
+<div class="container">
+  <mat-button-toggle-group
+    name="fontStyle"
+    aria-label="Font Style"
+    [(ngModel)]="selectedButton"
+    appearance="standard">
+    <mat-button-toggle (change)="nepenthesService.switchToSpecies();resetDropdownContent()">Species</mat-button-toggle>
+    <mat-button-toggle (change)="nepenthesService.switchToPrimaryHybrid();resetDropdownContent()">Primary Hybrid</mat-button-toggle>
+    <mat-button-toggle (change)="nepenthesService.switchToMultiHybrid();resetDropdownContent()">MultiHybride</mat-button-toggle>
+  </mat-button-toggle-group>
+  <br>
+  <mat-form-field class="example-full-width">
+    <mat-label>Nepenthes</mat-label>
+    <input matInput [readonly]="plantSelected"
+           type="text"
+           [formControl]="nepenthesControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let label of filteredOptions | async"
+                  [value]="label.nepenthesName"
+                  (click)="selectedNepenthes($event, label)">
+        {{ label.nepenthesName }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  <button *ngIf=plantSelected mat-icon-button matSuffix aria-label="Clear" (click)="clearSelection()">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>
