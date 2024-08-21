@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {NepenthesCloneComponent} from "./nepenthes-clone/nepenthes-clone.component";
 import {UserGrowlistComponent} from "./user-growlist/user-growlist.component";
 import {AllUsersOverviewComponent} from "./all-users-overview/all-users-overview.component";
+import {PollenOffersOverviewComponent} from "./pollen-offers-overview/pollen-offers-overview.component";
 
 const routes: Routes = [
 
@@ -23,10 +24,10 @@ const routes: Routes = [
     component: AllUsersOverviewComponent,
     // canActivate: [authGuardAuthenticated]
   },
- // {path: "users/growlist",
- //   component: PublicUsersGrowlistComponent,
+  {path: "pollenoffers",
+    component: PollenOffersOverviewComponent,
     // canActivate: [authGuardAuthenticated]
- // },
+  },
 
 
 ];

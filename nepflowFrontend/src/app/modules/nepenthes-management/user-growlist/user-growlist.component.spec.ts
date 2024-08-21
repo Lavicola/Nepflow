@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {UserGrowlistComponent} from './user-growlist.component';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('UserGrowlistComponent', () => {
   let component: UserGrowlistComponent;
@@ -8,7 +9,9 @@ describe('UserGrowlistComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [UserGrowlistComponent]
+      declarations: [UserGrowlistComponent],
+      imports: [HttpClientTestingModule]
+
     })
     .compileComponents();
 

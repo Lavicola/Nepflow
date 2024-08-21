@@ -9,6 +9,7 @@
     <button mat-menu-item [routerLink]="myGrowlistRoute">My Growlist</button>
     <button mat-menu-item [routerLink]="publicGrowlistsRoute">Public Growlists</button>
  </mat-menu>
+  <a mat-button [routerLink]="pollenOffersRoute">Pollen offers</a>
 
  <div *ngIf="isLoggedIn; else loggedOut">
        Welcome back, {{username}}

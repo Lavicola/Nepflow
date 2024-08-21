@@ -31,6 +31,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatDivider} from "@angular/material/divider";
 import { AllUsersOverviewComponent } from './all-users-overview/all-users-overview.component';
+import {PollenOffersOverviewComponent} from "./pollen-offers-overview/pollen-offers-overview.component";
 
 
 @NgModule({
@@ -41,10 +42,11 @@ import { AllUsersOverviewComponent } from './all-users-overview/all-users-overvi
     NepenthesCloneTableComponent,
     UserGrowlistComponent,
     AllUsersOverviewComponent,
+    PollenOffersOverviewComponent
 
   ],
   exports: [
-    NepenthesCloneDropdownComponent
+    NepenthesCloneDropdownComponent,
   ],
   imports: [
     CommonModule,

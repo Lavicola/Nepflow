@@ -1,0 +1,19 @@
+<div class="container">
+  <!-- Dropdown Component -->
+  <div class="dropdown-section">
+    <app-nepenthes-dropdown></app-nepenthes-dropdown>
+  </div>
+
+  <!-- Font Style Button Group -->
+  <div class="button-group-section">
+    <mat-button-toggle-group
+      name="fontStyle"
+      aria-label="Font Style"
+      appearance="standard">
+      <mat-button-toggle (change)="switchToIv();">IV</mat-button-toggle>
+      <mat-button-toggle (change)="switchToIC();">IC</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div>
+
+<app-nepenthes-clone-table [existingClones]="existingClones"></app-nepenthes-clone-table>

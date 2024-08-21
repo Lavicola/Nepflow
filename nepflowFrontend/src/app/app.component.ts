@@ -17,6 +17,7 @@ export class AppComponent implements OnInit{
 
   profileRoute: string = "user/overview";
   isLoggedIn:boolean = false;
+  pollenOffersRoute: string = "pollenoffers"
 
 
   constructor(public authService: AuthService,
