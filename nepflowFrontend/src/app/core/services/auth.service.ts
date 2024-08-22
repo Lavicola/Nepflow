@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Location} from '@angular/common';
 import {BehaviorSubject, lastValueFrom, map, Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {UserDto} from "../models/user-dto";
 
 const headers = new HttpHeaders().set('Accept', 'application/json');

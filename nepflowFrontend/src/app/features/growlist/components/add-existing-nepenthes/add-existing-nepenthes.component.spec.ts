@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddExistingNepenthesComponent } from './add-existing-nepenthes.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AddExistingNepenthesComponent', () => {
   let component: AddExistingNepenthesComponent;
@@ -10,8 +11,9 @@ describe('AddExistingNepenthesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddExistingNepenthesComponent,HttpClientTestingModule,BrowserAnimationsModule]
-    })
+    imports: [AddExistingNepenthesComponent, BrowserAnimationsModule],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(AddExistingNepenthesComponent);

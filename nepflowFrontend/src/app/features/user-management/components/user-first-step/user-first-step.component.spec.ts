@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserFirstStepComponent } from './user-first-step.component';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserFirstStepComponent', () => {
   let component: UserFirstStepComponent;
@@ -10,9 +11,9 @@ describe('UserFirstStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserFirstStepComponent,HttpClientTestingModule],
-      providers: [provideAnimationsAsync()]
-    })
+    imports: [UserFirstStepComponent],
+    providers: [provideAnimationsAsync(), provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(UserFirstStepComponent);
