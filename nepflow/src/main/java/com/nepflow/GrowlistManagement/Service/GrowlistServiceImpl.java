@@ -99,7 +99,7 @@ public class GrowlistServiceImpl implements Growlistservice {
                     this.bucketname,
                     this.path, multipartFile.getOriginalFilename(),
                     multipartFile);
-        } catch (IOException | NoSuchAlgorithmException e) {
+        } catch (IOException | NoSuchAlgorithmException | RuntimeException e) {
             return false;
         }
         specimen.setImagePath(location);
