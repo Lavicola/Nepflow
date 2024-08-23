@@ -22,6 +22,12 @@ import {
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {NgForOf, NgIf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
+import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
+import {FormsModule} from "@angular/forms";
+import {MatIcon} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {MatDivider} from "@angular/material/divider";
+import {FilterboxComponent} from "../filterbox/filterbox.component";
 
 @Component({
   selector: 'app-overview',
@@ -41,7 +47,14 @@ import {MatButton} from "@angular/material/button";
     NgForOf,
     NgIf,
     MatCardLgImage,
-    MatButton
+    MatButton,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    FormsModule,
+    MatInput,
+    MatIcon,
+    MatDivider,
+    FilterboxComponent
   ],
   templateUrl: './pollen-overview.component.html',
   styleUrl: './pollen-overview.component.sass'
@@ -53,8 +66,11 @@ export class PollenOverviewComponent implements OnInit {
   // --> O(1) to  check, if  for a specific PollenOffer(external), a  PollenOffer(of the current  User)  exists
   lookup = new Map<string, Map<string, PollenOfferDto>>()
 
+  test:any;
+
   otherPollenOffers: PollenOfferDateContainerDto[] = []
   myPollenOffers: PollenOfferDto[] = []
+  filteredPollenOffers:PollenOfferDateContainerDto[] = []
   // all Dates which  exists for PollenOffers.
   allDates:string[]  =  []
   dates:string[]  =  []
@@ -68,6 +84,8 @@ export class PollenOverviewComponent implements OnInit {
               private snackBar: MatSnackBar) {
 
 
+
+
   }
 
   ngOnInit(): void {
@@ -78,7 +96,7 @@ export class PollenOverviewComponent implements OnInit {
     this.pollenExchangeService.pollenexchangePollenoffersDatesGet().pipe(
       concatMap(dates => {
         this.allDates = dates;
-        this.dates  = dates.slice(0,this.datesToRender)
+        this.dates = dates.slice(0, this.datesToRender)
         console.log(dates)
         return this.pollenExchangeService.pollenexchangePollenoffersOpenGet({dates: this.dates});
       }),
@@ -93,11 +111,15 @@ export class PollenOverviewComponent implements OnInit {
         },
         error: () => {
           //  anonymous User, show all
-          this.otherPollenOffers =  containers
+          this.otherPollenOffers = containers
+          this.filteredPollenOffers = this.otherPollenOffers
+
         },
         complete: () => {
           if (this.user != null && this.user.username) {
-            [this.myPollenOffers, this.otherPollenOffers] = splitOffers(containers, this.user?.username);
+            [this.myPollenOffers, this.otherPollenOffers] = this.splitOffers(containers, this.user?.username);
+            this.filteredPollenOffers = this.otherPollenOffers
+
             this.pollenExchangeService.pollenexchangeUsernameTradesGet({
               username: this.user.username,
               dates: this.dates
@@ -114,10 +136,10 @@ export class PollenOverviewComponent implements OnInit {
         }
       });
 
-    function splitOffers(offerContainers: PollenOfferDateContainerDto[], username: string | undefined): [PollenOfferDto[], PollenOfferDateContainerDto[]] {
+  }
+  splitOffers(offerContainers: PollenOfferDateContainerDto[], username: string | undefined): [PollenOfferDto[], PollenOfferDateContainerDto[]] {
       let containers: PollenOfferDateContainerDto[] = []
       let myOffers: PollenOfferDto[] = []
-
 
       if (username == undefined) {
         return [myOffers, offerContainers]
@@ -145,8 +167,6 @@ export class PollenOverviewComponent implements OnInit {
 
     }
 
-  }
-
 
   private updateLookup(offerId: string | undefined, relatedOfferId: string | undefined, offer: PollenOfferDto) {
     if (!(offerId && relatedOfferId)) {
@@ -167,7 +187,7 @@ export class PollenOverviewComponent implements OnInit {
     }
   }
 
-  processTrade(trade: TradeDto) {
+ private processTrade(trade: TradeDto) {
     if (!(trade.InitiatedOffer && trade.RequestedOffer)) {
       return
     }
@@ -215,5 +235,8 @@ export class PollenOverviewComponent implements OnInit {
   }
 
 
+  onFiltered($event: PollenOfferDateContainerDto[]) {
+    this.filteredPollenOffers = $event
 
+  }
 }

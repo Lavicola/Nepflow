@@ -1,4 +1,6 @@
-<div *ngFor="let container of otherPollenOffers">
+<app-filterbox (filteredElements)="onFiltered($event)" [offerContainers]="otherPollenOffers"></app-filterbox>
+
+<div *ngFor="let container of filteredPollenOffers">
   <div class="date-header">
     <h2>Pollen Offers in: {{ container.date }}</h2>
   </div>
