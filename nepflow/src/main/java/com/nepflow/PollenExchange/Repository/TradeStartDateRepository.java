@@ -44,7 +44,7 @@ public interface TradeStartDateRepository extends Neo4jRepository<TradeStartDate
             "    Collect(userNodes2),\n" +
             "    COLLECT(otherUser), \n" +
             "    COLLECT(otherOffer),\n" +
-            "    COLLECT(grows),\n" +
+            "    COLLECT(grows),COLLECT(grows2),\n" +
             "    COLLECT(flower2),\n" +
             "    COLLECT(specimen2), \n" +
             "    COLLECT(instance2),\n" +

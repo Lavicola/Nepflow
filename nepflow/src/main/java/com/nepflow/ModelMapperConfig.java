@@ -101,7 +101,6 @@ public class ModelMapperConfig {
                 map().setPollenOfferOpenedDate(source.getStartDate());
                 map().getUser().setCountry(source.getUser().getCountry().getName());
                 map().getUser().setUsername(source.getUser().getUsername());
-
             }
         });
         modelMapper.addMappings(new PropertyMap<Trade, TradeDTO>() {
@@ -115,6 +114,14 @@ public class ModelMapperConfig {
                         .map(source, destination.getInitiatedOffer());
                 using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getRequestedOffer(), PollenOfferDTO.class))
                         .map(source, destination.getRequestedOffer());
+
+                using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getInitiatedOffer().getUser().getUsername(), UserDTO.class))
+                        .map(source, destination.getInitiatedOffer().getUser().getUsername());
+
+                using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getRequestedOffer().getUser().getUsername(), UserDTO.class))
+                        .map(source, destination.getRequestedOffer().getUser().getUsername());
+
+
 
             }
         });
