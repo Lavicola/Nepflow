@@ -1,0 +1,24 @@
+  <mat-form-field>
+    <mat-label>Select an option</mat-label>
+    <mat-select [(value)]="selectedOwnOffer">
+      <ng-container *ngFor="let myOffer of myPollenOffers|async ">
+        <ng-container *ngIf="myOffer.sex != selectedOffer.sex">
+          <ng-container
+            *ngIf="selectedOffer.id && myOffer.id && lookup &&
+            lookup.has(selectedOffer.id) && lookup.get(selectedOffer.id)?.has(myOffer.id) ; then tradeExists;
+            else ignore"></ng-container>
+        </ng-container>
+        <ng-template #tradeExists>
+          <mat-option disabled="" *ngIf="selectedOffer.id && myOffer.id && lookup && lookup.has(selectedOffer.id)" [value]="myOffer">
+            <s>{{ lookup.get(selectedOffer.id)?.get(myOffer.id)?.nepenthesName  }} </s>
+          </mat-option>
+        </ng-template>
+        <ng-template #ignore>
+          <mat-option *ngIf="selectedOffer.id && myOffer.id" [value]="myOffer">
+            {{ myOffer.nepenthesName  }}
+          </mat-option>
+        </ng-template>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+  <button (click)="createTrade(selectedOffer)" mat-raised-button>Basic</button>

@@ -1,0 +1,21 @@
+<mat-card class="pollen-offer-card">
+  <mat-card-header>
+    <mat-card-title>{{ offer.nepenthesName || 'No Name' }}</mat-card-title>
+    <mat-card-subtitle>Location: {{ offer.location || 'Unknown' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <img mat-card-lg-image
+         [src]="offer.imageLocation || 'assets/placeholder.jpg'"
+         alt="{{ offer.nepenthesName }}">
+    <p><strong>Origin:</strong> {{ offer.seller || 'N/A' }}</p>
+    <p><strong>Location:</strong> {{ offer.location || 'N/A' }}</p>
+    <p><strong>Sex:</strong> {{ offer.sex || 'N/A' }}</p>
+    <p><strong>Searching since:</strong> {{ offer.pollenOfferOpenedDate || 'N/A' }}</p>
+    <p><strong>User:</strong> {{ offer.user?.username + "("+offer.user?.country+")" || 'No User' }}</p>
+    <ng-content>
+
+
+
+    </ng-content>
+  </mat-card-content>
+</mat-card>

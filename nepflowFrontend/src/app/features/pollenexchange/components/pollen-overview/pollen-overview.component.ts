@@ -28,6 +28,8 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {MatDivider} from "@angular/material/divider";
 import {FilterboxComponent} from "../filterbox/filterbox.component";
+import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-basecard.component";
+import {NepenthesCardDropdownComponent} from "../nepenthes-card-dropdown/nepenthes-card-dropdown.component";
 
 @Component({
   selector: 'app-overview',
@@ -55,7 +57,9 @@ import {FilterboxComponent} from "../filterbox/filterbox.component";
     MatIcon,
     MatDivider,
     FilterboxComponent,
-    AsyncPipe
+    AsyncPipe,
+    NepenthesBasecardComponent,
+    NepenthesCardDropdownComponent
   ],
   templateUrl: './pollen-overview.component.html',
   styleUrl: './pollen-overview.component.sass'
@@ -66,12 +70,11 @@ export class PollenOverviewComponent implements OnInit {
   // lookup[externalPollenOfferId][myPollenOfferid] =  PollenOffer
   // --> O(1) to  check, if  for a specific PollenOffer(external), a  PollenOffer(of the current  User)  exists
   lookup = new Map<string, Map<string, PollenOfferDto>>()
+  emptyMap = new Map<string,PollenOfferDto>
   // all Dates which  exists for PollenOffers.
   allDates: string[] = []
   dates: string[] = []
   datesToRender: number = 3
-  //TODO directory since this is all
-  selectedOwnOffer!: PollenOfferDto;
 
 
   private myPollenOffersSubject = new BehaviorSubject<PollenOfferDto[]>([]);
@@ -219,7 +222,7 @@ export class PollenOverviewComponent implements OnInit {
     }
 
   }
-
+/*
   createTrade(offer: PollenOfferDto) {
     if (this.selectedOwnOffer && offer && offer.id && offer.user?.username) {
       return
@@ -242,7 +245,7 @@ export class PollenOverviewComponent implements OnInit {
 
 
   }
-
+*/
   private snackDialog(msg: string, action: string, duration: number) {
     this.snackBar.open(msg, action, {
       duration: duration,
