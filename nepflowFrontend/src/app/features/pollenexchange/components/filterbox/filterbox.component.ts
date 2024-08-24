@@ -1,4 +1,13 @@
-import {AfterContentInit, Component, EventEmitter, Input, Output} from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatCard} from "@angular/material/card";
@@ -8,7 +17,8 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {PollenOfferDateContainerDto} from "../../models/pollen-offer-date-container-dto";
 import {PollenOfferDto} from "../../models/pollen-offer-dto";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
+import {BehaviorSubject, combineLatest, map, Observable, of, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-filterbox',
@@ -23,102 +33,131 @@ import {NgIf} from "@angular/common";
     MatIcon,
     MatInput,
     MatLabel,
-    NgIf
+    NgIf,
+    NgForOf
   ],
   templateUrl: './filterbox.component.html',
   styleUrl: './filterbox.component.sass'
 })
-export class FilterboxComponent {
+export class FilterboxComponent implements OnInit, OnDestroy {
+  @Input() offerContainers$: Observable<PollenOfferDateContainerDto[]> = of([]); // Observable list of offer containers
+  @Input() searchFilter: boolean = true;
+  @Input() regionFilter: boolean = true;
+  @Input() sexFilter: boolean = true;
+  @Input() dateFilter: boolean = true;
+  @Output() filteredElements = new EventEmitter<PollenOfferDateContainerDto[]>(); // Emit filtered results
+  private criteriaSubject = new BehaviorSubject<Criteria>(new NullCriteria()); // Manage filter criteria
+  selectedRegions: string[] = [];
+  selectedSexes: string[] = [];
+  selectedDates: string[] = [];
+  searchTerm: string = '';
+  uniqueDates: string[] = [];
 
-  @Input() offerContainers: PollenOfferDateContainerDto[] = []
-  @Input() searchFilter: boolean = true
-  @Input() regionFilter: boolean = true
-  @Input() sexFilter: boolean = true
-
-  @Output() filteredElements = new EventEmitter<PollenOfferDateContainerDto[]>();
-
-
-  selectedRegions: any;
-  selectedSexes: any;
-  searchTerm: any;
-
-
-  constructor() {
-  }
-
-  doFilter() {
-
-    const filteredContainers: PollenOfferDateContainerDto[] = []
-    let concatenatedCriteria = this.createConcatenatedCriteriaFilter();
-    this.offerContainers.forEach(container => {
-      let filteredOffers: PollenOfferDto[] = []
-      if (container.pollenOffers) {
-        filteredOffers = concatenatedCriteria.meetCriteria(container.pollenOffers)
-      } else {
-        filteredOffers = []
-
-      }
-      filteredContainers.push({
-        date: container.date,
-        pollenOffers: filteredOffers
-      })
-    })
-    this.filteredElements.emit(filteredContainers)
-
-
-  }
-
-  createConcatenatedCriteriaFilter(): Criteria {
-
-    let nullCriteria = new NullCriteria();
-    let sexCriteria;
-    let regionCriteria;
-    let textCriteria;
+  private createConcatenatedCriteriaFilter(): Criteria {
+    const nullCriteria = new NullCriteria();
+    let sexCriteria: Criteria = nullCriteria;
+    let regionCriteria: Criteria = nullCriteria;
+    let textCriteria: Criteria = nullCriteria;
 
     // Filter by Sex if selected
-    if (this.selectedSexes) {
-      switch (this.selectedSexes.length) {
-        case 1:
-          sexCriteria = CriteriaGetter.getCriteria(this.selectedSexes[0]);
-          break
-        default:
-          // if both are selected, all are selected
-          sexCriteria = nullCriteria;
+    if (this.selectedSexes.length > 0) {
+      if (this.selectedSexes.length === 1) {
+        sexCriteria = CriteriaGetter.getCriteria(this.selectedSexes[0]);
+      } else {
+        // If multiple sexes are selected, treat as all are selected
+        sexCriteria = nullCriteria;
       }
-    } else {
-      sexCriteria = nullCriteria
     }
+
     // Filter by Region if selected
-    if (this.selectedRegions) {
-      switch (this.selectedRegions.length) {
-        case 1:
-          regionCriteria = CriteriaGetter.getCriteria(this.selectedRegions[0]);
-          break
-        case 2:
-          regionCriteria = new OrCriteria(CriteriaGetter.getCriteria(this.selectedRegions[0]), CriteriaGetter.getCriteria(this.selectedRegions[1]));
-          break
-        default:
-          // if three are selected, all are selected
-          regionCriteria = nullCriteria;
+    if (this.selectedRegions.length > 0) {
+      if (this.selectedRegions.length === 1) {
+        regionCriteria = CriteriaGetter.getCriteria(this.selectedRegions[0]);
+      } else if (this.selectedRegions.length === 2) {
+        regionCriteria = new OrCriteria(
+          CriteriaGetter.getCriteria(this.selectedRegions[0]),
+          CriteriaGetter.getCriteria(this.selectedRegions[1])
+        );
+      } else {
+        // If more than two regions are selected, treat as all are selected
+        regionCriteria = nullCriteria;
       }
-    } else {
-      regionCriteria = nullCriteria
     }
+
     // Filter by search text
     if (this.searchTerm) {
-      textCriteria = new TextCriteria(this.searchTerm)
-    } else {
-      textCriteria = new NullCriteria();
+      textCriteria = new TextCriteria(this.searchTerm);
     }
 
-    return new AndCriteria(textCriteria, new AndCriteria(sexCriteria, regionCriteria))
+    // Combine all criteria
+    return new AndCriteria(textCriteria, new AndCriteria(sexCriteria, regionCriteria));
+  }
 
+  private subscriptions: Subscription = new Subscription();
 
+  ngOnInit(): void {
+    this.offerContainers$.subscribe(containers => {
+      containers.forEach(container => {
+        if (container.date) {
+          this.uniqueDates.push(container.date)
+        }
+      })
+
+    });
+
+    // Combine latest values from offerContainers$ and criteriaSubject
+    this.subscriptions.add(
+      combineLatest([this.offerContainers$, this.criteriaSubject]).pipe(
+        map(([containers, criteria]) => this.applyFilters(containers, criteria))
+      ).subscribe(filtered => this.filteredElements.emit(filtered))
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe(); // Unsubscribes from all subscriptions added
   }
 
 
-}
+  private applyFilters(offerContainers: PollenOfferDateContainerDto[], criteria: Criteria): PollenOfferDateContainerDto[] {
 
+    return offerContainers.map(container => {
+      let filteredOffers: PollenOfferDto[] = []
+
+      if (!container.pollenOffers || !container.date) {
+        // this case should be impossible
+        return {
+          date: "???",
+          pollenOffers: filteredOffers
+        };
+
+      }
+
+
+      //prefilter, either container is of date or not
+      if (this.selectedDates.length) {
+        filteredOffers = this.selectedDates.includes(container.date) ? container.pollenOffers : [];
+      } else {
+        filteredOffers = container.pollenOffers
+      }
+
+      filteredOffers = criteria.meetCriteria(filteredOffers);
+
+      return {
+        date: container.date,
+        pollenOffers: filteredOffers
+      };
+    });
+  }
+
+  updateFilter() {
+    const concatenatedCriteria = this.createConcatenatedCriteriaFilter();
+    this.criteriaSubject.next(concatenatedCriteria);
+  }
+
+  clearFilters(): void {
+    this.criteriaSubject.next(new NullCriteria()); // Reset to no filters
+  }
+}
 
 class CriteriaGetter {
   public static getCriteria(filtername: string): Criteria {

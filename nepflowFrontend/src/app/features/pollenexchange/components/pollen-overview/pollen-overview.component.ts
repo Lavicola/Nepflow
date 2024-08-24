@@ -5,7 +5,7 @@ import {PollenOfferDto} from "../../models/pollen-offer-dto";
 import {PollenOfferDateContainerDto} from "../../models/pollen-offer-date-container-dto";
 import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {AuthService} from "../../../../core/services/auth.service";
-import {concatMap} from "rxjs";
+import {BehaviorSubject, catchError, concatMap, of, tap} from "rxjs";
 import {TradeDto} from "../../models/trade-dto";
 import {TradeCreationDto} from "../../models/trade-creation-dto";
 import {MatOption} from "@angular/material/autocomplete";
@@ -20,7 +20,7 @@ import {
   MatCardTitle
 } from "@angular/material/card";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {FormsModule} from "@angular/forms";
@@ -54,7 +54,8 @@ import {FilterboxComponent} from "../filterbox/filterbox.component";
     MatInput,
     MatIcon,
     MatDivider,
-    FilterboxComponent
+    FilterboxComponent,
+    AsyncPipe
   ],
   templateUrl: './pollen-overview.component.html',
   styleUrl: './pollen-overview.component.sass'
@@ -65,107 +66,122 @@ export class PollenOverviewComponent implements OnInit {
   // lookup[externalPollenOfferId][myPollenOfferid] =  PollenOffer
   // --> O(1) to  check, if  for a specific PollenOffer(external), a  PollenOffer(of the current  User)  exists
   lookup = new Map<string, Map<string, PollenOfferDto>>()
-
-  test:any;
-
-  otherPollenOffers: PollenOfferDateContainerDto[] = []
-  myPollenOffers: PollenOfferDto[] = []
-  filteredPollenOffers:PollenOfferDateContainerDto[] = []
   // all Dates which  exists for PollenOffers.
-  allDates:string[]  =  []
-  dates:string[]  =  []
-  datesToRender:number  = 2
-
-
+  allDates: string[] = []
+  dates: string[] = []
+  datesToRender: number = 3
+  //TODO directory since this is all
   selectedOwnOffer!: PollenOfferDto;
+
+
+  private myPollenOffersSubject = new BehaviorSubject<PollenOfferDto[]>([]);
+  private otherPollenOffersSubject = new BehaviorSubject<PollenOfferDateContainerDto[]>([]);
+  private filteredPollenOffersSubject = new BehaviorSubject<PollenOfferDateContainerDto[]>([]);
+
+  myPollenOffers$ = this.myPollenOffersSubject.asObservable();
+  otherPollenOffers$ = this.otherPollenOffersSubject.asObservable();
+  filteredPollenOffers$ = this.filteredPollenOffersSubject.asObservable();
+
 
   constructor(private pollenExchangeService: PollenexchangeService,
               private userService: AuthService,
               private snackBar: MatSnackBar) {
 
 
-
-
   }
 
   ngOnInit(): void {
+    this.fetchData();
 
 
-    let containers: PollenOfferDateContainerDto[] = []
+  }
 
+
+  fetchData(): void {
     this.pollenExchangeService.pollenexchangePollenoffersDatesGet().pipe(
       concatMap(dates => {
         this.allDates = dates;
-        this.dates = dates.slice(0, this.datesToRender)
-        console.log(dates)
+        this.dates = dates.slice(0, this.datesToRender);
         return this.pollenExchangeService.pollenexchangePollenoffersOpenGet({dates: this.dates});
       }),
-      concatMap(container => {
-        containers = container;
-        return this.userService.getUser();
-      })
-    )
-      .subscribe({
-        next: (user: UserDto) => {
-          this.user = user
-        },
-        error: () => {
-          //  anonymous User, show all
-          this.otherPollenOffers = containers
-          this.filteredPollenOffers = this.otherPollenOffers
+      concatMap(containers => this.userService.getUser().pipe(
+        tap(user => {
+          this.user = user;
+          this.splitOffers(containers, this.user?.username);
+        }),
+        catchError(error => {
+          // Handle error fetching user data
+          console.error('Error fetching user:', error);
+          this.splitOffers(containers, undefined); // Provide fallback for unauthenticated user
+          return of(null); // Return an observable to continue the stream
+        })
+      )),
+      concatMap(user => {
+        if (!user || !user.username) {
+          return of(null);
+        }
+        this.pollenExchangeService.pollenexchangeUsernameTradesGet({
+          dates: this.dates,
+          username: user.username
+        }).subscribe({
+          next: (myTradeContainer) => {
+            myTradeContainer.forEach(container => {
+              container.trades?.forEach(trade => {
+                this.processTrade(trade)
 
-        },
-        complete: () => {
-          if (this.user != null && this.user.username) {
-            [this.myPollenOffers, this.otherPollenOffers] = this.splitOffers(containers, this.user?.username);
-            this.filteredPollenOffers = this.otherPollenOffers
-
-            this.pollenExchangeService.pollenexchangeUsernameTradesGet({
-              username: this.user.username,
-              dates: this.dates
-            }).subscribe({
-              next: (myTradeContainer) => {
-                myTradeContainer.forEach(container => {
-                  container.trades?.forEach(trade => {
-                    this.processTrade(trade)
-                  })
-                })
-              }
+              })
             })
           }
-        }
-      });
+        });
+
+        return of(null);
+
+      }),
+
+      catchError(error => {
+        // Handle error fetching pollen offers
+        console.error('Error fetching pollen offers:', error);
+        this.splitOffers([], undefined); // Provide fallback for error in pollen offers fetching
+        return of([]);
+      })
+    ).subscribe();
 
   }
+
   splitOffers(offerContainers: PollenOfferDateContainerDto[], username: string | undefined): [PollenOfferDto[], PollenOfferDateContainerDto[]] {
-      let containers: PollenOfferDateContainerDto[] = []
-      let myOffers: PollenOfferDto[] = []
+    let containers: PollenOfferDateContainerDto[] = []
+    let myOffers: PollenOfferDto[] = []
 
-      if (username == undefined) {
-        return [myOffers, offerContainers]
-      }
+    if (username == undefined) {
+      this.myPollenOffersSubject.next(myOffers);
+      this.otherPollenOffersSubject.next(offerContainers);
 
-      offerContainers.forEach(container => {
-        let otherOffers: PollenOfferDto[] = []
+      return [myOffers, offerContainers]
+    }
 
-        container.pollenOffers?.forEach(offer => {
-          if (offer.user?.username == username) {
-            myOffers.push(offer)
-          } else {
-            otherOffers.push(offer)
-          }
+    offerContainers.forEach(container => {
+      let otherOffers: PollenOfferDto[] = []
 
-        })
+      container.pollenOffers?.forEach(offer => {
+        if (offer.user?.username == username) {
+          myOffers.push(offer)
+        } else {
+          otherOffers.push(offer)
+        }
 
-        containers.push({
-          date: container.date,
-          pollenOffers: otherOffers
-        })
       })
 
-      return [myOffers, containers]
+      containers.push({
+        date: container.date,
+        pollenOffers: otherOffers
+      })
+    })
+    this.myPollenOffersSubject.next(myOffers);
+    this.otherPollenOffersSubject.next(containers);
 
-    }
+    return [myOffers, containers]
+
+  }
 
 
   private updateLookup(offerId: string | undefined, relatedOfferId: string | undefined, offer: PollenOfferDto) {
@@ -187,7 +203,7 @@ export class PollenOverviewComponent implements OnInit {
     }
   }
 
- private processTrade(trade: TradeDto) {
+  private processTrade(trade: TradeDto) {
     if (!(trade.InitiatedOffer && trade.RequestedOffer)) {
       return
     }
@@ -205,7 +221,7 @@ export class PollenOverviewComponent implements OnInit {
   }
 
   createTrade(offer: PollenOfferDto) {
-    if (!this.selectedOwnOffer && offer && offer.id && offer.user?.username) {
+    if (this.selectedOwnOffer && offer && offer.id && offer.user?.username) {
       return
     }
     let trade: TradeCreationDto = {
@@ -216,18 +232,18 @@ export class PollenOverviewComponent implements OnInit {
     }
 
     this.pollenExchangeService.pollenexchangeCreateTradePost({body: trade}).subscribe({
-      next: (trade:TradeDto) => {
+      next: (trade: TradeDto) => {
         this.processTrade(trade)
-        this.snackDialog("Request was sent!","Close",3000)
+        this.snackDialog("Request was sent!", "Close", 3000)
 
       },
-      error: (err) => this.snackDialog("There was an error","Close",3000)
+      error: (err) => this.snackDialog("There was an error", "Close", 3000)
     })
 
 
   }
 
-  private snackDialog(msg:string,action:string,duration:number){
+  private snackDialog(msg: string, action: string, duration: number) {
     this.snackBar.open(msg, action, {
       duration: duration,
       verticalPosition: 'bottom', // Options: 'top', 'bottom'
@@ -236,7 +252,7 @@ export class PollenOverviewComponent implements OnInit {
 
 
   onFiltered($event: PollenOfferDateContainerDto[]) {
-    this.filteredPollenOffers = $event
-
+    this.filteredPollenOffersSubject.next($event)
   }
+
 }
