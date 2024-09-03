@@ -95,9 +95,6 @@ export class NepenthesCardDropdownComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // @ts-ignore
-    console.log(this.lookup)
-
   }
 
 }

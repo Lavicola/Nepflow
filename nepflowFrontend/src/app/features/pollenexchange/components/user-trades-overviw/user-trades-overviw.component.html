@@ -1,0 +1,8 @@
+<div *ngFor="let date of dates$|async" >
+  <button (click)="updateByDate(date)" >{{date}}</button>
+  {{date}}
+
+</div>
+
+<app-user-trades-closed  [allTrades]="selectedTrades$"></app-user-trades-closed>
+

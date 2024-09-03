@@ -6,6 +6,9 @@ import {
 import {PollenOverviewComponent} from "./features/pollenexchange/components/pollen-overview/pollen-overview.component";
 import {UserGrowlistComponent} from "./features/growlist/components/user-growlist/user-growlist.component";
 import {AllGrowlistsComponent} from "./features/growlist/components/all-growlists/all-growlists.component";
+import {
+  UserTradesOverviwComponent
+} from "./features/pollenexchange/components/user-trades-overviw/user-trades-overviw.component";
 
 export const routes: Routes = [
 
@@ -32,6 +35,9 @@ export const routes: Routes = [
     component: PollenOverviewComponent,
     // canActivate: [authGuardAuthenticated]
   },
-
+  {path: "trades",
+    component: UserTradesOverviwComponent,
+    // canActivate: [authGuardAuthenticated]
+  },
 
 ];

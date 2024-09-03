@@ -9,6 +9,13 @@
     <button mat-menu-item [routerLink]="myGrowlistRoute">My Growlist</button>
     <button mat-menu-item [routerLink]="publicGrowlistsRoute">Public Growlists</button>
   </mat-menu>
+  <button mat-button [matMenuTriggerFor]="tradeMenu">Trades</button>
+  <mat-menu #tradeMenu="matMenu">
+    <button mat-menu-item [routerLink]="myTradeRoute">All Trades</button>
+    <button mat-menu-item [routerLink]="myOpenTradeRoute">Open Trades</button>
+  </mat-menu>
+
+
   <a mat-button [routerLink]="pollenOffersRoute">Pollen offers</a>
 
   <div *ngIf="isLoggedIn; else loggedOut">

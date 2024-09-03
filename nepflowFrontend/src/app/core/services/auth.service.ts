@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Location} from '@angular/common';
-import {BehaviorSubject, lastValueFrom, map, Observable} from "rxjs";
+import {BehaviorSubject, catchError, lastValueFrom, map, Observable, of, shareReplay, tap} from "rxjs";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {UserDto} from "../models/user-dto";
 
@@ -17,20 +17,27 @@ export class AuthService {
   }
 
   getUser(): Observable<UserDto> {
-    return this.http.get<UserDto>('/api/user', { headers },)
-      .pipe(map((response: UserDto) => {
+    return this.http.get<UserDto>('/api/user', { headers })
+      .pipe(
+        tap((response: UserDto) => {
           if (response !== null) {
             this.$authenticationState.next(true);
           }
-          return response;
-        })
+        }),
+        catchError(error => {
+          console.error('Error fetching user:', error);
+          this.$authenticationState.next(false);
+          return of({} as UserDto); // Return null or an appropriate fallback value
+        }),
+        shareReplay(1) // Cache the response and share it among multiple subscribers
       );
   }
 
 
   async isAuthenticated(): Promise<boolean> {
     const user = await lastValueFrom(this.getUser());
-    return user !== null;
+
+    return !(Object.keys(user).length === 0);
   }
   async finishedFirstStep(): Promise<boolean> {
     const user = await lastValueFrom(this.getUser());

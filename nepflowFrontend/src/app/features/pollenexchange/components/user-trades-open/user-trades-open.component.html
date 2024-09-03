@@ -1,0 +1,41 @@
+<h1>Trades for you to Answer</h1>
+<div *ngFor="let trade of myTradesToAnswerFiltered$ | async">
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile colspan='1'>
+      <ng-container *ngIf="trade.InitiatedOffer">
+        <app-nepenthes-basecard [offer]="trade.InitiatedOffer">
+          <button (click)="answerTrade(true,trade.id)" mat-raised-button>Accept</button>
+          <button (click)="answerTrade(false,trade.id)" mat-raised-button>Reject</button>
+
+
+        </app-nepenthes-basecard>
+      </ng-container>
+    </mat-grid-tile>
+    <mat-grid-tile colspan='1'>
+      <ng-container *ngIf="trade.RequestedOffer">
+        <app-nepenthes-basecard [offer]="trade.RequestedOffer">
+        </app-nepenthes-basecard>
+      </ng-container>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+  <br>
+</div>
+<h1>Open Trades you are waiting for responses</h1>
+<div *ngFor="let trade of myInitiatedTrades$ | async">
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile>
+
+      <ng-container *ngIf="trade.InitiatedOffer">
+        <app-nepenthes-basecard [offer]="trade.InitiatedOffer"></app-nepenthes-basecard>
+      </ng-container>
+
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <ng-container *ngIf="trade.RequestedOffer">
+        <app-nepenthes-basecard [offer]="trade.RequestedOffer"></app-nepenthes-basecard>
+      </ng-container>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
