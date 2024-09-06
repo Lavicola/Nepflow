@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <h1>Nepflow</h1>
   <a mat-button [routerLink]="profileRoute">Profile</a>
   <a mat-button [routerLink]="newNepenthesRoute">add Nepenthes</a>
@@ -26,7 +26,7 @@
     <button mat-raised-button color="primary" (click)="authService.login()" id="login">Login</button>
   </ng-template>
 
-
+<app-dark-light-theme></app-dark-light-theme>
 </mat-toolbar>
 
 <div class="container">

@@ -17,7 +17,7 @@
     <div *ngIf="searchFilter" class="search-container">
       <mat-form-field appearance="outline" class="search-box">
         <mat-label>Search Offers</mat-label>
-        <input (input)="updateFilter()" matInput placeholder="Enter search term" [(ngModel)]="searchTerm"/>
+        <input (input)="updateFilter()" matInput  [(ngModel)]="searchTerm"/>
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>

@@ -1,22 +1,31 @@
-<app-filterbox (filteredElements)="onFiltered($event)" [offerContainers$]="otherPollenOffers$"></app-filterbox>
+<div class="container">
 
-<div *ngFor="let container of filteredPollenOffers$|async">
-  <div class="date-header">
-    <h2>Pollen Offers in: {{ container.date }}</h2>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Filters </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="filterbox">
+      <app-filterbox (filteredElements)="onFiltered($event)" [offerContainers$]="otherPollenOffers$"></app-filterbox>
+    </div>
+  </mat-expansion-panel>
+
+
+  <div class="content">
+    <div *ngFor="let container of (filteredPollenOffers$ | async)?.slice()?.reverse()">
+      <div class="date-header">
+        <h2>Pollen Offers in: {{ container.date }}</h2>
+      </div>
+      <mat-grid-list cols="2" gutterSize="5px">
+        <mat-grid-tile *ngFor="let offer of container.pollenOffers" class="pollen-offer-tile">
+          <app-nepenthes-basecard [offer]="offer">
+            <app-nepenthes-card-dropdown
+              [lookup]="lookup"
+              [selectedOffer]="offer"
+              [myPollenOffers]="myPollenOffers$">
+            </app-nepenthes-card-dropdown>
+          </app-nepenthes-basecard>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
   </div>
-  <mat-grid-list cols="2" gutterSize="5px">
-    <mat-grid-tile *ngFor="let offer of container.pollenOffers" class="pollen-offer-tile">
-      <app-nepenthes-basecard [offer]="offer">
-        <app-nepenthes-card-dropdown
-          [lookup]="lookup"
-
-
-          [selectedOffer]="offer"
-                                     [myPollenOffers]="myPollenOffers$">
-
-        </app-nepenthes-card-dropdown>
-      </app-nepenthes-basecard>
-    </mat-grid-tile>
-  </mat-grid-list>
-
 </div>

@@ -5,12 +5,13 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatAnchor, MatButton} from "@angular/material/button";
 import {NgIf} from "@angular/common";
+import {DarkLightThemeComponent} from "./core/components/dark-light-theme/dark-light-theme.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, MatMenuTrigger, MatToolbar, MatMenu, MatMenuItem, MatAnchor, NgIf, MatButton],
+  imports: [RouterOutlet, RouterLink, MatMenuTrigger, MatToolbar, MatMenu, MatMenuItem, MatAnchor, NgIf, MatButton, DarkLightThemeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })

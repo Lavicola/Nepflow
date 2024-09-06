@@ -30,6 +30,12 @@ import {MatDivider} from "@angular/material/divider";
 import {FilterboxComponent} from "../filterbox/filterbox.component";
 import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-basecard.component";
 import {NepenthesCardDropdownComponent} from "../nepenthes-card-dropdown/nepenthes-card-dropdown.component";
+import {
+  MatExpansionPanel,
+  MatExpansionPanelDescription,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from "@angular/material/expansion";
 
 @Component({
   selector: 'app-overview',
@@ -58,8 +64,15 @@ import {NepenthesCardDropdownComponent} from "../nepenthes-card-dropdown/nepenth
     MatDivider,
     FilterboxComponent,
     AsyncPipe,
+    MatExpansionPanelDescription,
+    MatExpansionPanelTitle,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
     NepenthesBasecardComponent,
-    NepenthesCardDropdownComponent
+    NepenthesCardDropdownComponent,
+    MatExpansionPanel,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription
   ],
   templateUrl: './pollen-overview.component.html',
   styleUrl: './pollen-overview.component.sass'

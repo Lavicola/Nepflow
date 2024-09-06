@@ -102,10 +102,12 @@ export class FilterboxComponent implements OnInit, OnDestroy {
           this.uniqueDates.push(container.date)
         }
       })
+      if(this.uniqueDates.length>=1){
+        this.uniqueDates.reverse();
+      }
 
     });
 
-    // Combine latest values from offerContainers$ and criteriaSubject
     this.subscriptions.add(
       combineLatest([this.offerContainers$, this.criteriaSubject]).pipe(
         map(([containers, criteria]) => this.applyFilters(containers, criteria))
