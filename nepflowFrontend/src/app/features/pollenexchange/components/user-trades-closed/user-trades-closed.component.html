@@ -1,38 +1,25 @@
 <h1>Accepted Trades</h1>
 <div *ngFor="let trade of acceptedTrades$ | async">
-  <mat-grid-list cols="2" rowHeight="1:1">
-    <mat-grid-tile colspan='1'>
-      <ng-container *ngIf="trade.InitiatedOffer">
-        <app-nepenthes-basecard [offer]="trade.InitiatedOffer">
-        </app-nepenthes-basecard>
-      </ng-container>
-    </mat-grid-tile>
-    <mat-grid-tile colspan='1'>
-      <ng-container *ngIf="trade.RequestedOffer">
-        <app-nepenthes-basecard [offer]="trade.RequestedOffer">
-        </app-nepenthes-basecard>
-      </ng-container>
-
-    </mat-grid-tile>
-  </mat-grid-list>
-  <br>
+  <div class="trade-container">
+    <ng-container *ngIf="trade.InitiatedOffer">
+      <app-nepenthes-basecard [offer]="trade.InitiatedOffer">
+      </app-nepenthes-basecard>
+    </ng-container>
+    <ng-container *ngIf="trade.RequestedOffer">
+      <app-nepenthes-basecard [offer]="trade.RequestedOffer">
+      </app-nepenthes-basecard>
+    </ng-container>
+  </div>
 </div>
 <h1>Refused Trades</h1>
 <div *ngFor="let trade of declinedTrades$ | async">
-  <mat-grid-list cols="2" rowHeight="1:1">
-    <mat-grid-tile>
-
-      <ng-container *ngIf="trade.InitiatedOffer">
-        <app-nepenthes-basecard [offer]="trade.InitiatedOffer"></app-nepenthes-basecard>
-      </ng-container>
-
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <ng-container *ngIf="trade.RequestedOffer">
-        <app-nepenthes-basecard [offer]="trade.RequestedOffer"></app-nepenthes-basecard>
-      </ng-container>
-
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="trade-container">
+    <ng-container *ngIf="trade.InitiatedOffer">
+      <app-nepenthes-basecard [offer]="trade.InitiatedOffer"></app-nepenthes-basecard>
+    </ng-container>
+    <ng-container *ngIf="trade.RequestedOffer">
+      <app-nepenthes-basecard [offer]="trade.RequestedOffer"></app-nepenthes-basecard>
+    </ng-container>
+  </div>
 </div>
 

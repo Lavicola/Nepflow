@@ -8,9 +8,20 @@ import {GrowlistDto} from "../../models/growlist-dto";
 import {UsernameService} from "../../../../core/services/UsernameService";
 import {MatExpansionPanelActionRow} from "@angular/material/expansion";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
-import {MatCard, MatCardContent, MatCardHeader} from "@angular/material/card";
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardLgImage,
+  MatCardSubtitle,
+  MatCardTitle
+} from "@angular/material/card";
 import {MatDivider} from "@angular/material/divider";
 import {NgForOf, NgIf} from "@angular/common";
+import {
+  NepenthesBasecardComponent
+} from "../../../pollenexchange/components/nepenthes-basecard/nepenthes-basecard.component";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-user-growlist',
@@ -23,7 +34,12 @@ import {NgForOf, NgIf} from "@angular/common";
     MatCardHeader,
     MatCard,
     MatDivider,
-    NgIf
+    NgIf,
+    NepenthesBasecardComponent,
+    MatCardLgImage,
+    MatCardSubtitle,
+    MatCardTitle,
+    MatButton
   ],
   templateUrl: './user-growlist.component.html',
   styleUrl: './user-growlist.component.sass'

@@ -11,12 +11,12 @@
 
 
   <div class="content">
-    <div *ngFor="let container of (filteredPollenOffers$ | async)?.slice()?.reverse()">
+    <div class="card" *ngFor="let container of (filteredPollenOffers$ | async)?.slice()?.reverse()">
       <div class="date-header">
         <h2>Pollen Offers in: {{ container.date }}</h2>
       </div>
-      <mat-grid-list cols="2" gutterSize="5px">
-        <mat-grid-tile *ngFor="let offer of container.pollenOffers" class="pollen-offer-tile">
+      <div class="pollen-offer-containers">
+        <div *ngFor="let offer of container.pollenOffers" class="pollen-offer-container">
           <app-nepenthes-basecard [offer]="offer">
             <app-nepenthes-card-dropdown
               [lookup]="lookup"
@@ -24,8 +24,8 @@
               [myPollenOffers]="myPollenOffers$">
             </app-nepenthes-card-dropdown>
           </app-nepenthes-basecard>
-        </mat-grid-tile>
-      </mat-grid-list>
+        </div>
+      </div>
     </div>
   </div>
 </div>
