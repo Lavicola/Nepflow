@@ -22,8 +22,8 @@ export class AppComponent  implements OnInit{
   newNepenthesRoute: string = "nepenthes/add";
   publicGrowlistsRoute: string = "users/growlist";
   myGrowlistRoute: string = "growlist/"
-  myTradeRoute:string = "trades/"
-  myOpenTradeRoute:string = "trades/open/"
+  closedTrades:string = "trades/closed"
+  pendingTrades:string = "trades/pending"
 
   profileRoute: string = "user/overview";
   isLoggedIn:boolean = false;

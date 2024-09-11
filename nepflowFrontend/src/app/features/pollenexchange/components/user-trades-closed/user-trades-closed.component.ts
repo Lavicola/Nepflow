@@ -5,6 +5,8 @@ import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-basecard.component";
 import {MatButton} from "@angular/material/button";
+import {getNameOfCross} from "../../services/male-female-name-combiner";
+import {PollenOfferDto} from "../../models/pollen-offer-dto";
 
 @Component({
   selector: 'app-user-trades-closed',
@@ -19,6 +21,7 @@ export class UserTradesClosedComponent {
   acceptedTrades$:Observable<TradeDto[]> = new Observable<TradeDto[]>();
   declinedTrades$:Observable<TradeDto[]> = new Observable<TradeDto[]>();
 
+
   ngOnInit() {
     this.acceptedTrades$ = this.allTrades.pipe(
       map(trades => trades.filter(trade => trade.status === 'ACCEPTED'))
@@ -29,4 +32,5 @@ export class UserTradesClosedComponent {
     );
   }
 
+  protected readonly getNameOfCross = getNameOfCross;
 }

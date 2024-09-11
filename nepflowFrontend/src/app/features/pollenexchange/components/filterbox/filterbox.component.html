@@ -4,8 +4,8 @@
     <!-- Date Box -->
     <div *ngIf="dateFilter" class="search-container">
       <mat-label class="toggle-group-label">Filter by Date:</mat-label>
-      <mat-button-toggle-group *ngFor="let date of uniqueDates" (change)="updateFilter()" [(ngModel)]="selectedDates" multiple>
-        <mat-button-toggle value="{{date}}">{{date}}</mat-button-toggle>
+      <mat-button-toggle-group  [(ngModel)]="selectedDates" multiple>
+        <mat-button-toggle *ngFor="let date of uniqueDates" (change)="updateFilter()" value="{{date}}">{{date}}</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
   </mat-card>
@@ -13,17 +13,6 @@
 
 
   <mat-card class="filter-card">
-    <!-- Search Box -->
-    <div *ngIf="searchFilter" class="search-container">
-      <mat-form-field appearance="outline" class="search-box">
-        <mat-label>Search Offers</mat-label>
-        <input (input)="updateFilter()" matInput  [(ngModel)]="searchTerm"/>
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-    </div>
-
-    <mat-divider></mat-divider>
-
     <!-- Toggle Buttons for Region -->
     <div *ngIf="regionFilter" class="toggle-group-container">
       <mat-label class="toggle-group-label">Filter by Region:</mat-label>
@@ -44,5 +33,19 @@
         <mat-button-toggle value="Female">Female</mat-button-toggle>
       </mat-button-toggle-group>
     </div>
+    <mat-divider></mat-divider>
+
+    <!-- Search Box -->
+    <div *ngIf="searchFilter" class="search-container">
+      <mat-form-field appearance="outline" class="search-box">
+        <mat-label>Search Offers</mat-label>
+        <input (input)="updateFilter()" matInput  [(ngModel)]="searchTerm"/>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+
+
+
   </mat-card>
 </div>

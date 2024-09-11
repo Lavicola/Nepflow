@@ -11,11 +11,15 @@ import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-baseca
 import {UserTradesClosedComponent} from "../user-trades-closed/user-trades-closed.component";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {UserTradesOpenComponent} from "../user-trades-open/user-trades-open.component";
+import {MatButton} from "@angular/material/button";
+import {MatLabel} from "@angular/material/form-field";
+import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-user-trades-overviw',
   standalone: true,
-  imports: [AsyncPipe, NgIf, NgForOf, NepenthesBasecardComponent, UserTradesClosedComponent, UserTradesOpenComponent],
+  imports: [AsyncPipe, NgIf, NgForOf, NepenthesBasecardComponent, UserTradesClosedComponent, UserTradesOpenComponent, MatButton, MatLabel, MatButtonToggle, MatButtonToggleGroup],
   templateUrl: './user-trades-overviw.component.html',
   styleUrl: './user-trades-overviw.component.sass'
 })
@@ -44,12 +48,12 @@ export class UserTradesOverviwComponent implements OnInit {
   private datesSubject = new BehaviorSubject<string[]>([]);
   dates$ = this.datesSubject.asObservable();
   private tradesSubject = new BehaviorSubject<TradeDateContainerDto[]>([]);
-
-
   private user: UserDto | undefined = undefined;
+  public status:string = ""
 
   constructor(private tradeService: PollenexchangeService,
-              private userService: AuthService) {
+              private userService: AuthService,
+              private route: ActivatedRoute) {
 
 
   };
@@ -92,6 +96,15 @@ export class UserTradesOverviwComponent implements OnInit {
         })
       }
     })
+
+    this.route.paramMap.subscribe(params => {
+      const tradeParam = params.get('status');
+      if (tradeParam) {
+        this.status = tradeParam
+      }
+    });
+
+
   }
 
 

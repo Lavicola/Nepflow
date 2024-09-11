@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserTradesOverviwComponent } from './user-trades-overviw.component';
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {RouterModule} from "@angular/router";
 
 describe('UserTradesOverviwComponent', () => {
   let component: UserTradesOverviwComponent;
@@ -10,7 +11,7 @@ describe('UserTradesOverviwComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserTradesOverviwComponent],
+      imports: [UserTradesOverviwComponent,RouterModule.forRoot([])],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
     .compileComponents();

@@ -1,25 +1,26 @@
 <h1>Accepted Trades</h1>
 <div *ngFor="let trade of acceptedTrades$ | async">
   <div class="trade-container">
-    <ng-container *ngIf="trade.InitiatedOffer">
-      <app-nepenthes-basecard [offer]="trade.InitiatedOffer">
-      </app-nepenthes-basecard>
-    </ng-container>
-    <ng-container *ngIf="trade.RequestedOffer">
-      <app-nepenthes-basecard [offer]="trade.RequestedOffer">
-      </app-nepenthes-basecard>
+    <ng-container *ngIf="trade.InitiatedOffer && trade.RequestedOffer">
+      <h2 class="trade-title"> {{getNameOfCross(trade.InitiatedOffer,trade.RequestedOffer)}}</h2>
+      <div class="trade-container-cards">
+        <app-nepenthes-basecard [offer]="trade.InitiatedOffer"></app-nepenthes-basecard>
+        <app-nepenthes-basecard [offer]="trade.RequestedOffer"></app-nepenthes-basecard>
+      </div>
     </ng-container>
   </div>
 </div>
 <h1>Refused Trades</h1>
 <div *ngFor="let trade of declinedTrades$ | async">
   <div class="trade-container">
-    <ng-container *ngIf="trade.InitiatedOffer">
-      <app-nepenthes-basecard [offer]="trade.InitiatedOffer"></app-nepenthes-basecard>
+    <ng-container *ngIf="trade.InitiatedOffer && trade.RequestedOffer">
+      <h2 class="trade-title"> {{getNameOfCross(trade.InitiatedOffer,trade.RequestedOffer)}}</h2>
+      <div class="trade-container-cards">
+        <app-nepenthes-basecard [offer]="trade.InitiatedOffer"></app-nepenthes-basecard>
+        <app-nepenthes-basecard [offer]="trade.RequestedOffer"></app-nepenthes-basecard>
+      </div>
     </ng-container>
-    <ng-container *ngIf="trade.RequestedOffer">
-      <app-nepenthes-basecard [offer]="trade.RequestedOffer"></app-nepenthes-basecard>
-    </ng-container>
+
   </div>
 </div>
 

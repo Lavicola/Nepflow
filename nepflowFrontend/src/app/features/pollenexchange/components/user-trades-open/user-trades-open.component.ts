@@ -22,6 +22,7 @@ import {TradeAnswerDto} from "../../models/trade-answer-dto";
 import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PollenOfferDto} from "../../models/pollen-offer-dto";
+import {getNameOfCross} from "../../services/male-female-name-combiner";
 
 @Component({
   selector: 'app-user-trades-open',
@@ -122,5 +123,5 @@ export class UserTradesOpenComponent implements OnInit {
   }
 
 
-
+  protected readonly getNameOfCross = getNameOfCross;
 }

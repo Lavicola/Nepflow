@@ -35,7 +35,11 @@ export const routes: Routes = [
     component: PollenOverviewComponent,
     // canActivate: [authGuardAuthenticated]
   },
-  {path: "trades",
+  {path: "trades/:status",
+    component: UserTradesOverviwComponent,
+    // canActivate: [authGuardAuthenticated]
+  },
+  {path: "trades/:status",
     component: UserTradesOverviwComponent,
     // canActivate: [authGuardAuthenticated]
   },

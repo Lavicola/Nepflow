@@ -1,8 +1,20 @@
-<div *ngFor="let date of dates$|async" >
-  <button (click)="updateByDate(date)" >{{date}}</button>
-  {{date}}
+  <mat-label class="toggle-group-label">Filter by Date:</mat-label>
+  <br>
+  <mat-button-toggle-group multiple="false">
+    <mat-button-toggle *ngFor="let date of dates$ | async" (click)="updateByDate(date)">
+      {{date}}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
-</div>
+  <div *ngIf="status == 'pending'; then thenTemplateName else elseTemplateName">
+  </div>
 
-<app-user-trades-closed  [allTrades]="selectedTrades$"></app-user-trades-closed>
+  <ng-template #thenTemplateName>
+    <app-user-trades-open  [allTrades]="selectedTrades$"></app-user-trades-open>
+  </ng-template>
+
+  <ng-template #elseTemplateName>
+    <app-user-trades-closed  [allTrades]="selectedTrades$"></app-user-trades-closed>
+  </ng-template>
+
 
