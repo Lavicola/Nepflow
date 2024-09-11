@@ -39,4 +39,6 @@ public interface PollenExchangeService {
 
     List<String> getAllDatesPollenOffer();
 
+    Trade getTradeById(String id);
+
 }

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-04T17:32:10.082378700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-12T00:59:51.133905700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Pollenexchange", description = "Operations to manage and retrive Users")
 public interface PollenexchangeApi {
@@ -121,6 +121,37 @@ public interface PollenexchangeApi {
         @Parameter(name = "dates", description = "if dates is not send, the current date in germany will be used (date in Format MM-YYY)", in = ParameterIn.QUERY) @Valid @RequestParam(value = "dates", required = false) List<String> dates
     ) {
         return getDelegate().pollenexchangePollenoffersOpenGet(dates);
+    }
+
+
+    /**
+     * GET /pollenexchange/trade/{tradeId} : get a specific Trade
+     *
+     * @param tradeId  (required)
+     * @return Trade found. (status code 200)
+     *         or error (status code 404)
+     */
+    @Operation(
+        operationId = "pollenexchangeTradeTradeIdGet",
+        summary = "get a specific Trade",
+        tags = { "Pollenexchange" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Trade found.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = TradeDTO.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "error")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pollenexchange/trade/{tradeId}",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<TradeDTO> pollenexchangeTradeTradeIdGet(
+        @Parameter(name = "tradeId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("tradeId") String tradeId
+    ) {
+        return getDelegate().pollenexchangeTradeTradeIdGet(tradeId);
     }
 
 

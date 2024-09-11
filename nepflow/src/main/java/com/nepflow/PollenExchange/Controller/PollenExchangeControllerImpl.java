@@ -61,8 +61,8 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
         if (trade == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-        if(trade.isTradeExpired()){
-           return ResponseEntity.status(HttpStatus.CONFLICT).body(this.modelMapper.map(trade, TradeDTO.class));
+        if (trade.isTradeExpired()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(this.modelMapper.map(trade, TradeDTO.class));
         }
 
         return ResponseEntity.ok(this.modelMapper.map(trade, TradeDTO.class));
@@ -70,30 +70,28 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
     }
 
 
-
     public ResponseEntity<List<TradeDateContainerDTO>> pollenexchangeUsernameTradesGet(String username,
                                                                                        List<String> dates) {
         User user = this.authenticationService.getAuthenticatedUser();
-        if (user == null  || !user.getUsername().equals(username)) {
+        if (user == null || !user.getUsername().equals(username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        List<TradeStartDate> tradesByMonths  = this.pollenExchangeService.getTradesByUsernameAndDates(user.getUsername(),dates);
+        List<TradeStartDate> tradesByMonths = this.pollenExchangeService.getTradesByUsernameAndDates(user.getUsername(), dates);
 
         return ResponseEntity.ok(tradesByMonths.stream().map(tradeStartDate -> this.modelMapper.map(tradeStartDate,
                 TradeDateContainerDTO.class)).collect(Collectors.toList()));
-
 
 
     }
 
 
     public ResponseEntity<List<PollenOfferDateContainerDTO>> pollenexchangePollenoffersOpenGet(List<String> dates) {
-        List<PollenOfferStartDate>   pollenOfferStartDates = this.pollenExchangeService.getAllOpenPollenOffersByDateAndExcludeUsernames(dates,new ArrayList<>());
-        if(pollenOfferStartDates !=  null){
+        List<PollenOfferStartDate> pollenOfferStartDates = this.pollenExchangeService.getAllOpenPollenOffersByDateAndExcludeUsernames(dates, new ArrayList<>());
+        if (pollenOfferStartDates != null) {
 
             return ResponseEntity.ok(pollenOfferStartDates.stream().map(offerContainer -> this.modelMapper.map(offerContainer,
                     PollenOfferDateContainerDTO.class)).collect(Collectors.toList()));
-        }else{
+        } else {
             return ResponseEntity.internalServerError().body(null);
 
         }
@@ -110,5 +108,28 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
 
     }
 
+    public ResponseEntity<TradeDTO> pollenexchangeTradeTradeIdGet(String tradeId) {
+        User user = this.authenticationService.getAuthenticatedUser();
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        Trade trade = this.pollenExchangeService.getTradeById(tradeId);
+        if(trade == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        TradeDTO tradeDTO = this.modelMapper.map(trade,TradeDTO.class);
+
+        if(trade.isUserPartOfTrade(user)){
+            return ResponseEntity.status(HttpStatus.OK).body(this.modelMapper.map(trade,TradeDTO.class));
+        }else{
+            UserDTO privateUser = new UserDTO();
+            tradeDTO.getInitiatedOffer().setUser(privateUser);
+            tradeDTO.getRequestedOffer().setUser(privateUser);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(this.modelMapper.map(trade,TradeDTO.class));
+
 
     }
+
+
+}

@@ -147,6 +147,20 @@ paths:
                 $ref: '#/components/schemas/TradeDTO'
         '404':
           description: error
+    get:
+      summary: get a specific Trade
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: Trade found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradeDTO'
+        '404':
+          description: error
+
 
 components:
   parameters:

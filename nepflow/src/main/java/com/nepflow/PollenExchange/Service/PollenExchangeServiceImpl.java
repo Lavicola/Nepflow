@@ -198,13 +198,13 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         if (!trade1.isAllowedToAnswerTrade(user)) {
             return null;
         }
-        if (trade.get().isTradeExpired()) {
-            trade.get().setTradeToExpired();
+        if (trade1.isTradeExpired()) {
+            trade1.setTradeToExpired();
         } else {
-            trade.get().acceptTrade();
+            trade1.acceptTrade();
         }
 
-        return this.tradeRepository.save(trade.get());
+        return this.tradeRepository.save(trade1);
     }
 
     @Override
@@ -229,6 +229,13 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     public List<String> getAllDatesPollenOffer() {
         List<String> dates = new ArrayList<>();
         return pollenOfferStartDateRepository.getPollenOfferStartDates();
+    }
+
+    @Override
+    public Trade getTradeById(String id) {
+        Optional<Trade> trade = this.tradeRepository.findById(id);
+
+        return trade.orElse(null);
     }
 
 

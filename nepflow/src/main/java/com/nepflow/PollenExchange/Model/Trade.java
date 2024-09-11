@@ -1,7 +1,6 @@
 package com.nepflow.PollenExchange.Model;
 
 import com.nepflow.PollenExchange.Exception.PollenOfferIsClosedException;
-import com.nepflow.PollenExchange.Exception.PollenOfferIsExpired;
 import com.nepflow.PollenExchange.Exception.TradePollenOfferSameSexException;
 import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
@@ -69,6 +68,7 @@ public class Trade {
     }
 
 
+
     public void refuseTrade() {
         this.userWhichAnswers.refuseTrade();
     }
@@ -86,6 +86,11 @@ public class Trade {
     }
 
 
+
+    public boolean isUserPartOfTrade(User user){
+        return this.userWhichAnswers.getUser().equals(user) || this.userOffers.equals(user);
+
+    }
 
     public boolean wasTradeRefused() {
         return this.userWhichAnswers.wasTradeRefused();

@@ -112,6 +112,7 @@ public class PollenOffer {
         }
     }
 
+
     public boolean pollenOfferBelongsToUser(User user) {
         return this.getUser().equals(user);
     }
