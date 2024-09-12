@@ -1,20 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {PollenexchangeService} from "../../services/pollenexchange.service";
-import {TradeDateContainerDto} from "../../models/trade-date-container-dto";
-import {BehaviorSubject, catchError, combineLatest, concatMap, map, Observable, of, tap} from "rxjs";
-import {PollenOfferDto} from "../../models/pollen-offer-dto";
+import {BehaviorSubject, catchError, combineLatest, map, Observable, of} from "rxjs";
 import {AuthService} from "../../../../core/services/auth.service";
 import {UserDto} from "../../../../core/models/user-dto";
 import {TradeDto} from "../../models/trade-dto";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-basecard.component";
 import {UserTradesClosedComponent} from "../user-trades-closed/user-trades-closed.component";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {UserTradesOpenComponent} from "../user-trades-open/user-trades-open.component";
 import {MatButton} from "@angular/material/button";
 import {MatLabel} from "@angular/material/form-field";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {ActivatedRoute} from "@angular/router";
+import {TradeService} from "../../services/trade.service";
 
 @Component({
   selector: 'app-user-trades-overviw',
@@ -25,12 +23,10 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class UserTradesOverviwComponent implements OnInit {
 
-  tradeDateCacheSubject: BehaviorSubject<Map<string, TradeDto[]>> =
-    new BehaviorSubject<Map<string, TradeDto[]>>(new Map());
   private selectedDateSubject: BehaviorSubject<string> = new BehaviorSubject('');
-
+  dates$: Observable<string[]> = this.tradeService.subscribeToDateSubject()
   selectedTrades$: Observable<TradeDto[]> = combineLatest([
-    this.tradeDateCacheSubject.asObservable(),
+    this.tradeService.subscribeTotradeDateCacheSubject(),
     this.selectedDateSubject.asObservable()
   ]).pipe(
     map(([container, selectedDate]) => {
@@ -43,59 +39,29 @@ export class UserTradesOverviwComponent implements OnInit {
     })
   );
 
+  public status: string = ""
 
-
-  private datesSubject = new BehaviorSubject<string[]>([]);
-  dates$ = this.datesSubject.asObservable();
-  private tradesSubject = new BehaviorSubject<TradeDateContainerDto[]>([]);
-  private user: UserDto | undefined = undefined;
-  public status:string = ""
-
-  constructor(private tradeService: PollenexchangeService,
-              private userService: AuthService,
+  constructor(private userService: AuthService,
+              private tradeService: TradeService,
               private route: ActivatedRoute) {
-
-
   };
 
 
   ngOnInit(): void {
-
-
-
-    this.userService.getUser().pipe(
-      concatMap(lUser => {
-        // Assign user
-        this.user = lUser;
-
-        // Check if the user and username are present
-        if (this.user && this.user.username) {
-          // Fetch dates if the user exists
-          return this.tradeService.pollenexchangeTradesDatesGet();
-        } else {
-          // Return an observable of null if the user doesn't exist
-          return of(null);
-        }
-      }),
-      concatMap(dates => {
-        if (dates) {
-          this.datesSubject.next(dates)
-          // @ts-ignore
-          //this.tradeService.pollenexchangeUsernameTradesGet({username:this.user?.username.username,dates:dates}).subscribe()
-          return of(dates);
-        } else {
-          return of(null);
-        }
-      })
-    ).subscribe({
-      next: (dates) => {
-        // @ts-ignore
-        this.tradeService.pollenexchangeUsernameTradesGet({username: this.user.username, dates: dates}).subscribe({
-          next: (tradeContainer) => this.tradesSubject.next(tradeContainer),
-          error: (err) => console.log("could not get trades" + err)
-        })
+    this.userService.getUser().subscribe({
+      next: (user: UserDto) => {
+        this.tradeService.setUser(user)
+        this.tradeService.init()
+        console.log('User fetched:', user);
+      },
+      error: (error) => {
+        console.error('Error occurred while fetching the user:', error);
+      },
+      complete: () => {
+        console.log('User fetching completed.');
       }
-    })
+    });
+
 
     this.route.paramMap.subscribe(params => {
       const tradeParam = params.get('status');
@@ -109,40 +75,8 @@ export class UserTradesOverviwComponent implements OnInit {
 
 
   updateByDate(date: string) {
-    if( !(this.user && this.user.username)){
-      return
-    }
-
-    this.getTradesByDateAndUsername(date, this.user.username).subscribe(trades => {
-      this.addOrUpdateTradeDate(date, trades);
-      this.selectedDateSubject.next(date);
-    });
+    this.tradeService.updateByDate(date)
+    this.selectedDateSubject.next(date)
 
   }
-
-
-  private getTradesByDateAndUsername(date: string, username: string): Observable<TradeDto[]> {
-    return this.tradeService.pollenexchangeUsernameTradesGet({ username, dates: [date] }).pipe(
-      map(tradeContainer => {
-        if (tradeContainer.length && tradeContainer[0].trades) {
-          return tradeContainer[0].trades;
-        } else {
-          console.log('No trades found:', tradeContainer);
-          return [];
-        }
-      }),
-      catchError(err => {
-        console.log('Error fetching trades:', err);
-        return of([]);
-      })
-    );
-  }
-
-  private addOrUpdateTradeDate(key: string, value: TradeDto[]) {
-    const currentCache = this.tradeDateCacheSubject.value;
-    currentCache.set(key, value);
-    this.tradeDateCacheSubject.next(currentCache);
-  }
-
-
 }
