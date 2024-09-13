@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {UserDto} from "../../../../core/models/user-dto";
 import {BehaviorSubject, map, Observable} from "rxjs";
@@ -20,7 +20,7 @@ Chart.register(PieController, ArcElement, Title, Legend,Tooltip);
 })
 export class TradeStatisticsComponent implements OnInit {
 
-  username: string = "lavicola"
+  @Input() username!: string;
   tradeRatingsBehaviorSubject: BehaviorSubject<TradeRatingsDto> = new BehaviorSubject<TradeRatingsDto>({});
   tradeRating: Observable<TradeRatingsDto> = this.tradeRatingsBehaviorSubject.asObservable();
   ratingCounter = new Map<string, number>;
@@ -81,9 +81,8 @@ export class TradeStatisticsComponent implements OnInit {
     }
 
     this.chart = new Chart("PieChart", {
-      type: 'pie', //this denotes tha type of chart
-
-      data: {// values on X-Axis
+      type: 'pie',
+      data: {
         labels: this.data.labels,
         datasets: this.data.datasets
       },

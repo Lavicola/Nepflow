@@ -1,10 +1,14 @@
 
 <div class="split left">
 
-<app-trade-statistics></app-trade-statistics>
+
+
+<app-trade-statistics *ngIf="this.user && this.user.username"  [username]="this.user.username"></app-trade-statistics>
 </div>
 
 <div class="split right">
+
+  <app-specimen-statistics></app-specimen-statistics>
 
 </div>
 
