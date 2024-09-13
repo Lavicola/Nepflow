@@ -3,21 +3,25 @@ package com.nepflow.PollenExchange.Dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Generated;
+import jakarta.validation.Valid;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * UserDTO
+ * TradeRatingsDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-13T22:16:38.894889700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class UserDTO {
+public class TradeRatingsDTO {
 
   private String username;
 
-  private String country;
+  @Valid
+  private List<@Valid TradeRatingDTO> ratings = new ArrayList<>();
 
-  public UserDTO username(String username) {
+  public TradeRatingsDTO username(String username) {
     this.username = username;
     return this;
   }
@@ -37,24 +41,32 @@ public class UserDTO {
     this.username = username;
   }
 
-  public UserDTO country(String country) {
-    this.country = country;
+  public TradeRatingsDTO ratings(List<@Valid TradeRatingDTO> ratings) {
+    this.ratings = ratings;
+    return this;
+  }
+
+  public TradeRatingsDTO addRatingsItem(TradeRatingDTO ratingsItem) {
+    if (this.ratings == null) {
+      this.ratings = new ArrayList<>();
+    }
+    this.ratings.add(ratingsItem);
     return this;
   }
 
   /**
-   * Get country
-   * @return country
+   * Get ratings
+   * @return ratings
   */
-  
-  @Schema(name = "country", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("country")
-  public String getCountry() {
-    return country;
+  @Valid 
+  @Schema(name = "ratings", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("ratings")
+  public List<@Valid TradeRatingDTO> getRatings() {
+    return ratings;
   }
 
-  public void setCountry(String country) {
-    this.country = country;
+  public void setRatings(List<@Valid TradeRatingDTO> ratings) {
+    this.ratings = ratings;
   }
 
   @Override
@@ -65,22 +77,22 @@ public class UserDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UserDTO userDTO = (UserDTO) o;
-    return Objects.equals(this.username, userDTO.username) &&
-        Objects.equals(this.country, userDTO.country);
+    TradeRatingsDTO tradeRatingsDTO = (TradeRatingsDTO) o;
+    return Objects.equals(this.username, tradeRatingsDTO.username) &&
+        Objects.equals(this.ratings, tradeRatingsDTO.ratings);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, country);
+    return Objects.hash(username, ratings);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UserDTO {\n");
+    sb.append("class TradeRatingsDTO {\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    country: ").append(toIndentedString(country)).append("\n");
+    sb.append("    ratings: ").append(toIndentedString(ratings)).append("\n");
     sb.append("}");
     return sb.toString();
   }

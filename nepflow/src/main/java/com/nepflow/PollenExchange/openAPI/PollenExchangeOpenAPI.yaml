@@ -65,6 +65,25 @@ paths:
                   $ref: '#/components/schemas/PollenOfferDTO'
         '404':
           description: error
+  /pollenexchange/{username}/pollenoffers/statistics:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/username"
+      summary: return PollenOffer statistics on the different specimens
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: ..
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PollenOfferSpeciesStatisticsDTO'
+        '404':
+          description: error
+
 
   /pollenexchange/trades/dates:
     get:
@@ -158,6 +177,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TradeDTO'
+        '404':
+          description: error
+  /pollenexchange/{username}/trade/status:
+    get:
+      summary: return the status of all Trades from an User
+      parameters:
+        - $ref: "#/components/parameters/username"
+      tags:
+        - Pollenexchange
+      responses:
+        '200':
+          description: ..
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradeRatingsDTO'
         '404':
           description: error
 
@@ -291,6 +326,54 @@ components:
           items:
             $ref: '#/components/schemas/TradeDTO'
 
+    TradeRatingsDTO:
+      type: object
+      properties:
+        username:
+          type: string
+        ratings:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradeRatingDTO'
+
+
+    TradeRatingDTO:
+      type: object
+      properties:
+        tradeId:
+          type: string
+        date:
+          type: string
+          description: MM-YYYY
+        status:
+          $ref: '#/components/schemas/TradeStatus'
+
+
+
+
+    TradeStatus:
+      type: string
+      enum: &TradeStatus
+        - SUCCESS
+        - FAILURE
+        - PENDING
+      x-enum-varnames: *TradeStatus
+      x-enumNames:
+        - SUCCESS
+        - FAILURE
+        - PENDING
+
+    PollenOfferSpeciesStatisticsDTO:
+      type: object
+      properties:
+        specimenId:
+          type: string
+        floweringCount:
+          type: integer
+        cloneId:
+          type: string
+        nepenthesName:
+          type: string
 
 
 

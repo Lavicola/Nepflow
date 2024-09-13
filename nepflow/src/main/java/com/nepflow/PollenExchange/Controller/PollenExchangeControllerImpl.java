@@ -3,7 +3,10 @@ package com.nepflow.PollenExchange.Controller;
 import com.nepflow.PollenExchange.Dto.*;
 import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeRating;
 import com.nepflow.PollenExchange.Model.TradeStartDate;
+import com.nepflow.PollenExchange.Projection.PollenOfferSpeciesStatisticsDTOProjection;
+import com.nepflow.PollenExchange.Repository.PollenOfferRepository;
 import com.nepflow.PollenExchange.Service.PollenExchangeService;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Service.AuthenticationService;
@@ -29,6 +32,7 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
     @Autowired
     PollenExchangeService pollenExchangeService;
 
+
     public ResponseEntity<TradeDTO> pollenexchangeCreateTradePost(TradeCreationDTO tradeCreationDTO) {
         User user = this.authenticationService.getAuthenticatedUser();
         Trade trade;
@@ -53,7 +57,7 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         if (tradeAnswerDTO.getAcceptTrade()) {
-            trade = this.pollenExchangeService.acceptTrade(user, tradeId);
+            trade = this.pollenExchangeService.acceptTradeAndCreateRatings(user, tradeId);
         } else {
             trade = this.pollenExchangeService.refuseTrade(user, tradeId);
         }
@@ -114,22 +118,48 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         Trade trade = this.pollenExchangeService.getTradeById(tradeId);
-        if(trade == null){
+        if (trade == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        TradeDTO tradeDTO = this.modelMapper.map(trade,TradeDTO.class);
+        TradeDTO tradeDTO = this.modelMapper.map(trade, TradeDTO.class);
 
-        if(trade.isUserPartOfTrade(user)){
-            return ResponseEntity.status(HttpStatus.OK).body(this.modelMapper.map(trade,TradeDTO.class));
-        }else{
+        if (trade.isUserPartOfTrade(user)) {
+            return ResponseEntity.status(HttpStatus.OK).body(this.modelMapper.map(trade, TradeDTO.class));
+        } else {
             UserDTO privateUser = new UserDTO();
             tradeDTO.getInitiatedOffer().setUser(privateUser);
             tradeDTO.getRequestedOffer().setUser(privateUser);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(this.modelMapper.map(trade,TradeDTO.class));
+        return ResponseEntity.status(HttpStatus.OK).body(this.modelMapper.map(trade, TradeDTO.class));
 
 
     }
 
+    @Autowired
+    PollenOfferRepository pollenOfferRepository;
 
+    public ResponseEntity<TradeRatingsDTO> pollenexchangeUsernameTradeStatusGet(String username) {
+        List<TradeRating> ratings = this.pollenExchangeService.getTradesStatusWithDate(username);
+
+        TradeRatingsDTO tradeRatingsDTO = new TradeRatingsDTO();
+        tradeRatingsDTO.setUsername(username);
+
+        if (ratings == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(tradeRatingsDTO);
+        }
+        tradeRatingsDTO.setRatings(ratings.stream().map(rating ->
+                this.modelMapper.map(rating, TradeRatingDTO.class)).collect(Collectors.toList()));
+
+        return ResponseEntity.ok(tradeRatingsDTO);
+    }
+
+    public ResponseEntity<List<PollenOfferSpeciesStatisticsDTO>> pollenexchangeUsernamePollenoffersStatisticsGet(String username) {
+        List<PollenOfferSpeciesStatisticsDTOProjection> statistics = this.pollenExchangeService.getPollenOfferStatistics(username);
+        if (statistics.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(statistics.stream().map(statistic ->
+                this.modelMapper.map(statistic, PollenOfferSpeciesStatisticsDTO.class)).collect(Collectors.toList()));
+
+    }
 }

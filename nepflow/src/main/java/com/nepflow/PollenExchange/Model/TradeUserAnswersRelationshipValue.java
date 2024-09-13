@@ -63,7 +63,7 @@ public class TradeUserAnswersRelationshipValue {
         return this.status.equals(UserAnswers.WAITING);
     }
 
-    private enum UserAnswers {
+    public enum UserAnswers {
         WAITING,
         ACCEPTED,
         REFUSED,

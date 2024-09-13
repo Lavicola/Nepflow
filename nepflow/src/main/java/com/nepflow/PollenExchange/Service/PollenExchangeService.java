@@ -1,10 +1,8 @@
 package com.nepflow.PollenExchange.Service;
 
 import com.nepflow.GrowlistManagement.Model.Specimen;
-import com.nepflow.PollenExchange.Model.PollenOffer;
-import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
-import com.nepflow.PollenExchange.Model.Trade;
-import com.nepflow.PollenExchange.Model.TradeStartDate;
+import com.nepflow.PollenExchange.Model.*;
+import com.nepflow.PollenExchange.Projection.PollenOfferSpeciesStatisticsDTOProjection;
 import com.nepflow.UserManagement.Model.User;
 
 import java.util.List;
@@ -41,4 +39,13 @@ public interface PollenExchangeService {
 
     Trade getTradeById(String id);
 
-}
+    List<TradeRating> getTradesStatusWithDate(String username);
+
+    void createTradeRatings(User user1,User user2,Trade trade);
+
+    Trade acceptTradeAndCreateRatings(User user,String tradeId);
+
+    List<PollenOfferSpeciesStatisticsDTOProjection> getPollenOfferStatistics(String username);
+
+
+    }

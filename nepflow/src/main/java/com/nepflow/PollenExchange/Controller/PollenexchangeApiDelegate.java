@@ -14,7 +14,7 @@ import java.util.Optional;
  * A delegate to be called by the {@link PollenexchangeApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-12T00:59:51.133905700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-13T22:16:38.894889700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public interface PollenexchangeApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -166,6 +166,50 @@ public interface PollenexchangeApiDelegate {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "[ { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\", \"imageLocation\" : \"imageLocation\" }, { \"seller\" : \"seller\", \"sex\" : \"sex\", \"nepenthesName\" : \"nepenthesName\", \"location\" : \"location\", \"id\" : \"id\", \"cloneId\" : \"cloneId\", \"user\" : { \"country\" : \"country\", \"username\" : \"username\" }, \"pollenOfferOpenedDate\" : \"2000-01-23\", \"imageLocation\" : \"imageLocation\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /pollenexchange/{username}/pollenoffers/statistics : return PollenOffer statistics on the different specimens
+     *
+     * @param username  (required)
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     * @see PollenexchangeApi#pollenexchangeUsernamePollenoffersStatisticsGet
+     */
+    default ResponseEntity<List<PollenOfferSpeciesStatisticsDTO>> pollenexchangeUsernamePollenoffersStatisticsGet(String username) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"floweringCount\" : 0, \"specimenId\" : \"specimenId\", \"nepenthesName\" : \"nepenthesName\", \"cloneId\" : \"cloneId\" }, { \"floweringCount\" : 0, \"specimenId\" : \"specimenId\", \"nepenthesName\" : \"nepenthesName\", \"cloneId\" : \"cloneId\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /pollenexchange/{username}/trade/status : return the status of all Trades from an User
+     *
+     * @param username  (required)
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     * @see PollenexchangeApi#pollenexchangeUsernameTradeStatusGet
+     */
+    default ResponseEntity<TradeRatingsDTO> pollenexchangeUsernameTradeStatusGet(String username) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"ratings\" : [ { \"date\" : \"date\", \"tradeId\" : \"tradeId\", \"status\" : \"SUCCESS\" }, { \"date\" : \"date\", \"tradeId\" : \"tradeId\", \"status\" : \"SUCCESS\" } ], \"username\" : \"username\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

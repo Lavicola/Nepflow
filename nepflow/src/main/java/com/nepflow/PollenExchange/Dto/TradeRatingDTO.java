@@ -1,27 +1,47 @@
 package com.nepflow.PollenExchange.Dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nepflow.PollenExchange.Model.TradeRating.RATING;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
- * TradeDateContainerDTO
+ * TradeRatingDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-13T22:16:38.894889700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
-public class TradeDateContainerDTO {
+public class TradeRatingDTO {
+
+  private String tradeId;
 
   private String date;
 
-  @Valid
-  private List<@Valid TradeDTO> trades = new ArrayList<>();
+  private RATING status;
 
-  public TradeDateContainerDTO date(String date) {
+  public TradeRatingDTO tradeId(String tradeId) {
+    this.tradeId = tradeId;
+    return this;
+  }
+
+  /**
+   * Get tradeId
+   * @return tradeId
+  */
+  
+  @Schema(name = "tradeId", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("tradeId")
+  public String getTradeId() {
+    return tradeId;
+  }
+
+  public void setTradeId(String tradeId) {
+    this.tradeId = tradeId;
+  }
+
+  public TradeRatingDTO date(String date) {
     this.date = date;
     return this;
   }
@@ -41,32 +61,24 @@ public class TradeDateContainerDTO {
     this.date = date;
   }
 
-  public TradeDateContainerDTO trades(List<@Valid TradeDTO> trades) {
-    this.trades = trades;
-    return this;
-  }
-
-  public TradeDateContainerDTO addTradesItem(TradeDTO tradesItem) {
-    if (this.trades == null) {
-      this.trades = new ArrayList<>();
-    }
-    this.trades.add(tradesItem);
+  public TradeRatingDTO status(RATING status) {
+    this.status = status;
     return this;
   }
 
   /**
-   * Get trades
-   * @return trades
+   * Get status
+   * @return status
   */
   @Valid 
-  @Schema(name = "trades", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("trades")
-  public List<@Valid TradeDTO> getTrades() {
-    return trades;
+  @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("status")
+  public RATING getStatus() {
+    return status;
   }
 
-  public void setTrades(List<@Valid TradeDTO> trades) {
-    this.trades = trades;
+  public void setStatus(RATING status) {
+    this.status = status;
   }
 
   @Override
@@ -77,22 +89,24 @@ public class TradeDateContainerDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TradeDateContainerDTO tradeDateContainerDTO = (TradeDateContainerDTO) o;
-    return Objects.equals(this.date, tradeDateContainerDTO.date) &&
-        Objects.equals(this.trades, tradeDateContainerDTO.trades);
+    TradeRatingDTO tradeRatingDTO = (TradeRatingDTO) o;
+    return Objects.equals(this.tradeId, tradeRatingDTO.tradeId) &&
+        Objects.equals(this.date, tradeRatingDTO.date) &&
+        Objects.equals(this.status, tradeRatingDTO.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(date, trades);
+    return Objects.hash(tradeId, date, status);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TradeDateContainerDTO {\n");
+    sb.append("class TradeRatingDTO {\n");
+    sb.append("    tradeId: ").append(toIndentedString(tradeId)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
-    sb.append("    trades: ").append(toIndentedString(trades)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();
   }

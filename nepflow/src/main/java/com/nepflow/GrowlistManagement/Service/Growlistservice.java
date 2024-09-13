@@ -16,7 +16,7 @@ public interface Growlistservice {
 
 
     // Both Methods need to access the NepenthesManagementService in order to create a Clone first
-    // If Resource are of no concern, it is recommended to do two Requests in Frontend to avoid this loose coupling
+    // If Resource are of no concern, it is recommended to do two Requests in Frontend to avoid this coupling
      Specimen addNewIVCloneToGrowList(User user,String labelName,String cloneId,
                                             String sexAsString,
                                             String locationAsString, String producerAsString);

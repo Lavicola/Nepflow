@@ -2,14 +2,9 @@ package com.nepflow.PollenExchange.Service;
 
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Service.Growlistservice;
-import com.nepflow.PollenExchange.Model.PollenOffer;
-import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
-import com.nepflow.PollenExchange.Model.Trade;
-import com.nepflow.PollenExchange.Model.TradeStartDate;
-import com.nepflow.PollenExchange.Repository.PollenOfferRepository;
-import com.nepflow.PollenExchange.Repository.PollenOfferStartDateRepository;
-import com.nepflow.PollenExchange.Repository.TradeRepository;
-import com.nepflow.PollenExchange.Repository.TradeStartDateRepository;
+import com.nepflow.PollenExchange.Model.*;
+import com.nepflow.PollenExchange.Projection.PollenOfferSpeciesStatisticsDTOProjection;
+import com.nepflow.PollenExchange.Repository.*;
 import com.nepflow.UserManagement.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +23,9 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     @Autowired
     TradeRepository tradeRepository;
+
+    @Autowired
+    TradeRatingRepository tradeRatingRepository;
 
     @Autowired
     Growlistservice growlistservice;
@@ -188,6 +186,27 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     @Override
     @Transactional("transactionManager")
 
+    public void createTradeRatings(User user1,User user2,Trade trade){
+        List<TradeRating> tradeRatings = new ArrayList<>(2);
+        tradeRatings.add(new TradeRating(user1,trade));
+        tradeRatings.add(new TradeRating(user2,trade));
+        this.tradeRatingRepository.saveAll(tradeRatings);
+    }
+
+    @Override
+    @Transactional("transactionManager")
+    public Trade acceptTradeAndCreateRatings(User user, String tradeId) {
+        Trade trade = this.acceptTrade(user,tradeId);
+        if(trade != null){
+            this.createTradeRatings(trade.getUserWhoInitiatedTrade(),trade.getUserWhoAnswersTrade(),trade);
+        }else{
+            return null;
+        }
+        return trade;
+    }
+
+    @Override
+    @Transactional("transactionManager")
     public Trade acceptTrade(User user, String tradeId) {
         Optional<Trade> trade = this.tradeRepository.findById(tradeId);
         Trade trade1;
@@ -217,17 +236,13 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     @Override
     @Transactional("transactionManager")
-
     public List<String> getAllDatesTrades() {
-        List<String> dates = new ArrayList<>();
         return tradeStartDateRepository.getTradeDates();
     }
 
     @Override
     @Transactional("transactionManager")
-
     public List<String> getAllDatesPollenOffer() {
-        List<String> dates = new ArrayList<>();
         return pollenOfferStartDateRepository.getPollenOfferStartDates();
     }
 
@@ -238,5 +253,12 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         return trade.orElse(null);
     }
 
-
+    @Override
+    public List<TradeRating> getTradesStatusWithDate(String username) {
+        return this.tradeRatingRepository.getTradeRatingByUsername(username);
+    }
+    @Override
+    public List<PollenOfferSpeciesStatisticsDTOProjection> getPollenOfferStatistics(String username){
+        return this.pollenOfferRepository.getPollenOfferStatisticsBySpecimen(username);
+    }
 }

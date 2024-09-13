@@ -58,6 +58,10 @@ public class Trade {
     }
 
 
+    public String convertOpenedDay(){
+        return this.getTradeOpenedDate().toString();
+    }
+
 
     public User getUserWhoAnswersTrade() {
         return this.userWhichAnswers.getUser();

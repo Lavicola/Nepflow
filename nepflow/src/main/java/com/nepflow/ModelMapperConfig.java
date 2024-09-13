@@ -9,14 +9,9 @@ import com.nepflow.NepenthesManagement.Dto.LabelDTO;
 import com.nepflow.NepenthesManagement.Model.Clones.*;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Species;
-import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
-import com.nepflow.PollenExchange.Dto.PollenOfferDateContainerDTO;
-import com.nepflow.PollenExchange.Dto.TradeDTO;
-import com.nepflow.PollenExchange.Dto.TradeDateContainerDTO;
-import com.nepflow.PollenExchange.Model.PollenOffer;
-import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
-import com.nepflow.PollenExchange.Model.Trade;
-import com.nepflow.PollenExchange.Model.TradeStartDate;
+import com.nepflow.PollenExchange.Dto.*;
+import com.nepflow.PollenExchange.Model.*;
+import com.nepflow.PollenExchange.Projection.PollenOfferSpeciesStatisticsDTOProjection;
 import com.nepflow.UserManagement.Dto.UserDTO;
 import com.nepflow.UserManagement.Model.User;
 import org.modelmapper.ModelMapper;
@@ -138,7 +133,26 @@ public class ModelMapperConfig {
                 map().setDate(source.getMonthYearId());
             }
         });
+        modelMapper.addMappings(new PropertyMap<TradeRating, TradeRatingDTO>() {
+            @Override
+            protected void configure() {
+                // TODO maybe check mapping in order to not have a wrapper method
+                map().setDate(source.getTrade().convertOpenedDay());
+                map().setStatus(source.getRating());
+                map().setTradeId(source.getTrade().getUuid());
+            }
 
+        });
+        modelMapper.addMappings(new PropertyMap<PollenOfferSpeciesStatisticsDTOProjection, PollenOfferSpeciesStatisticsDTO>() {
+            @Override
+            protected void configure() {
+                map().setCloneId(source.getCloneId());
+                map().setNepenthesName(source.getNepenthesName());
+                map().setSpecimenId(source.getSpecimenId());
+                map().setFloweringCount(source.getFloweringCount());
+            }
+
+        });
         return modelMapper;
 
 

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-12T00:59:51.133905700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-13T22:16:38.894889700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Pollenexchange", description = "Operations to manage and retrive Users")
 public interface PollenexchangeApi {
@@ -247,6 +247,68 @@ public interface PollenexchangeApi {
         @Parameter(name = "username", description = "", required = true, in = ParameterIn.PATH) @PathVariable("username") String username
     ) {
         return getDelegate().pollenexchangeUsernamePollenoffersOpenGet(username);
+    }
+
+
+    /**
+     * GET /pollenexchange/{username}/pollenoffers/statistics : return PollenOffer statistics on the different specimens
+     *
+     * @param username  (required)
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     */
+    @Operation(
+        operationId = "pollenexchangeUsernamePollenoffersStatisticsGet",
+        summary = "return PollenOffer statistics on the different specimens",
+        tags = { "Pollenexchange" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "..", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = PollenOfferSpeciesStatisticsDTO.class)))
+            }),
+            @ApiResponse(responseCode = "404", description = "error")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pollenexchange/{username}/pollenoffers/statistics",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<List<PollenOfferSpeciesStatisticsDTO>> pollenexchangeUsernamePollenoffersStatisticsGet(
+        @Parameter(name = "username", description = "", required = true, in = ParameterIn.PATH) @PathVariable("username") String username
+    ) {
+        return getDelegate().pollenexchangeUsernamePollenoffersStatisticsGet(username);
+    }
+
+
+    /**
+     * GET /pollenexchange/{username}/trade/status : return the status of all Trades from an User
+     *
+     * @param username  (required)
+     * @return .. (status code 200)
+     *         or error (status code 404)
+     */
+    @Operation(
+        operationId = "pollenexchangeUsernameTradeStatusGet",
+        summary = "return the status of all Trades from an User",
+        tags = { "Pollenexchange" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "..", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = TradeRatingsDTO.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "error")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/pollenexchange/{username}/trade/status",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<TradeRatingsDTO> pollenexchangeUsernameTradeStatusGet(
+        @Parameter(name = "username", description = "", required = true, in = ParameterIn.PATH) @PathVariable("username") String username
+    ) {
+        return getDelegate().pollenexchangeUsernameTradeStatusGet(username);
     }
 
 
