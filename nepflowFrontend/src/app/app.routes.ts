@@ -9,9 +9,11 @@ import {AllGrowlistsComponent} from "./features/growlist/components/all-growlist
 import {
   UserTradesOverviwComponent
 } from "./features/pollenexchange/components/user-trades-overviw/user-trades-overviw.component";
+import {UserStatisticsComponent} from "./features/user-management/components/user-statistics/user-statistics.component";
 
 export const routes: Routes = [
 
+  {path: "user/overview",component: UserStatisticsComponent},
   {path: "first-steps", component: UserFirstStepComponent},
 
   {path: "nepenthes/add",

@@ -4,7 +4,6 @@ import { PollenOverviewComponent } from './pollen-overview.component';
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import {RouterModule} from "@angular/router";
 
 describe('OverviewComponent', () => {
   let component: PollenOverviewComponent;

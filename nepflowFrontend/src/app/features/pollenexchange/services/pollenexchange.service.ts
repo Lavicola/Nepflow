@@ -14,19 +14,27 @@ import { pollenexchangePollenoffersOpenGet } from '../fn/pollenexchange/pollenex
 import { PollenexchangePollenoffersOpenGet$Params } from '../fn/pollenexchange/pollenexchange-pollenoffers-open-get';
 import { pollenexchangeTradesDatesGet } from '../fn/pollenexchange/pollenexchange-trades-dates-get';
 import { PollenexchangeTradesDatesGet$Params } from '../fn/pollenexchange/pollenexchange-trades-dates-get';
+import { pollenexchangeTradeTradeIdGet } from '../fn/pollenexchange/pollenexchange-trade-trade-id-get';
+import { PollenexchangeTradeTradeIdGet$Params } from '../fn/pollenexchange/pollenexchange-trade-trade-id-get';
 import { pollenexchangeTradeTradeIdPut } from '../fn/pollenexchange/pollenexchange-trade-trade-id-put';
 import { PollenexchangeTradeTradeIdPut$Params } from '../fn/pollenexchange/pollenexchange-trade-trade-id-put';
 import { pollenexchangeUsernamePollenoffersOpenGet } from '../fn/pollenexchange/pollenexchange-username-pollenoffers-open-get';
 import { PollenexchangeUsernamePollenoffersOpenGet$Params } from '../fn/pollenexchange/pollenexchange-username-pollenoffers-open-get';
+import { pollenexchangeUsernamePollenoffersStatisticsGet } from '../fn/pollenexchange/pollenexchange-username-pollenoffers-statistics-get';
+import { PollenexchangeUsernamePollenoffersStatisticsGet$Params } from '../fn/pollenexchange/pollenexchange-username-pollenoffers-statistics-get';
 import { pollenexchangeUsernameTradesGet } from '../fn/pollenexchange/pollenexchange-username-trades-get';
 import { PollenexchangeUsernameTradesGet$Params } from '../fn/pollenexchange/pollenexchange-username-trades-get';
+import { pollenexchangeUsernameTradeStatusGet } from '../fn/pollenexchange/pollenexchange-username-trade-status-get';
+import { PollenexchangeUsernameTradeStatusGet$Params } from '../fn/pollenexchange/pollenexchange-username-trade-status-get';
 import { PollenOfferDateContainerDto } from '../models/pollen-offer-date-container-dto';
 import { PollenOfferDto } from '../models/pollen-offer-dto';
+import { PollenOfferSpeciesStatisticsDto } from '../models/pollen-offer-species-statistics-dto';
 import { TradeDateContainerDto } from '../models/trade-date-container-dto';
 import { TradeDto } from '../models/trade-dto';
+import { TradeRatingsDto } from '../models/trade-ratings-dto';
 import {BaseService} from "../../../core/openApiGeneratedFiles/base-service";
-import {ApiConfiguration} from "../../../core/openApiGeneratedFiles/api-configuration";
 import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
+import {ApiConfiguration} from "../../../core/openApiGeneratedFiles/api-configuration";
 
 
 /**
@@ -34,12 +42,12 @@ import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-htt
  */
 @Injectable({ providedIn: 'root' })
 export class PollenexchangeService extends BaseService {
-constructor(config: ApiConfiguration, http: HttpClient) {
-super(config, http);
-}
+  constructor(config: ApiConfiguration, http: HttpClient) {
+    super(config, http);
+  }
 
-      /** Path part for operation `pollenexchangePollenoffersDatesGet()` */
-      static readonly PollenexchangePollenoffersDatesGetPath = '/pollenexchange/pollenoffers/dates';
+  /** Path part for operation `pollenexchangePollenoffersDatesGet()` */
+  static readonly PollenexchangePollenoffersDatesGetPath = '/pollenexchange/pollenoffers/dates';
 
   /**
    * return stored dates (Month-Year).
@@ -71,8 +79,8 @@ super(config, http);
     );
   }
 
-      /** Path part for operation `pollenexchangePollenoffersOpenGet()` */
-      static readonly PollenexchangePollenoffersOpenGetPath = '/pollenexchange/pollenoffers/open';
+  /** Path part for operation `pollenexchangePollenoffersOpenGet()` */
+  static readonly PollenexchangePollenoffersOpenGetPath = '/pollenexchange/pollenoffers/open';
 
   /**
    * return open PollenOffers by Month-Year.
@@ -104,8 +112,8 @@ super(config, http);
     );
   }
 
-      /** Path part for operation `pollenexchangeUsernamePollenoffersOpenGet()` */
-      static readonly PollenexchangeUsernamePollenoffersOpenGetPath = '/pollenexchange/{username}/pollenoffers/open';
+  /** Path part for operation `pollenexchangeUsernamePollenoffersOpenGet()` */
+  static readonly PollenexchangeUsernamePollenoffersOpenGetPath = '/pollenexchange/{username}/pollenoffers/open';
 
   /**
    * return all open PollenOffers of the user.
@@ -137,8 +145,41 @@ super(config, http);
     );
   }
 
-      /** Path part for operation `pollenexchangeTradesDatesGet()` */
-      static readonly PollenexchangeTradesDatesGetPath = '/pollenexchange/trades/dates';
+  /** Path part for operation `pollenexchangeUsernamePollenoffersStatisticsGet()` */
+  static readonly PollenexchangeUsernamePollenoffersStatisticsGetPath = '/pollenexchange/{username}/pollenoffers/statistics';
+
+  /**
+   * return PollenOffer statistics on the different specimens.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `pollenexchangeUsernamePollenoffersStatisticsGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  pollenexchangeUsernamePollenoffersStatisticsGet$Response(params: PollenexchangeUsernamePollenoffersStatisticsGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<PollenOfferSpeciesStatisticsDto>>> {
+    return pollenexchangeUsernamePollenoffersStatisticsGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * return PollenOffer statistics on the different specimens.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `pollenexchangeUsernamePollenoffersStatisticsGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  pollenexchangeUsernamePollenoffersStatisticsGet(params: PollenexchangeUsernamePollenoffersStatisticsGet$Params, context?: HttpContext): Observable<Array<PollenOfferSpeciesStatisticsDto>> {
+    return this.pollenexchangeUsernamePollenoffersStatisticsGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<PollenOfferSpeciesStatisticsDto>>): Array<PollenOfferSpeciesStatisticsDto> => r.body)
+    );
+  }
+
+  /** Path part for operation `pollenexchangeTradesDatesGet()` */
+  static readonly PollenexchangeTradesDatesGetPath = '/pollenexchange/trades/dates';
 
   /**
    * return stored dates (Month-Year).
@@ -170,8 +211,8 @@ super(config, http);
     );
   }
 
-      /** Path part for operation `pollenexchangeUsernameTradesGet()` */
-      static readonly PollenexchangeUsernameTradesGetPath = '/pollenexchange/{username}/trades';
+  /** Path part for operation `pollenexchangeUsernameTradesGet()` */
+  static readonly PollenexchangeUsernameTradesGetPath = '/pollenexchange/{username}/trades';
 
   /**
    * return all Trades and their status of the currently logged in user.
@@ -203,8 +244,8 @@ super(config, http);
     );
   }
 
-      /** Path part for operation `pollenexchangeCreateTradePost()` */
-      static readonly PollenexchangeCreateTradePostPath = '/pollenexchange/create/trade';
+  /** Path part for operation `pollenexchangeCreateTradePost()` */
+  static readonly PollenexchangeCreateTradePostPath = '/pollenexchange/create/trade';
 
   /**
    * create a Trade.
@@ -236,8 +277,41 @@ super(config, http);
     );
   }
 
-      /** Path part for operation `pollenexchangeTradeTradeIdPut()` */
-      static readonly PollenexchangeTradeTradeIdPutPath = '/pollenexchange/trade/{tradeId}';
+  /** Path part for operation `pollenexchangeTradeTradeIdGet()` */
+  static readonly PollenexchangeTradeTradeIdGetPath = '/pollenexchange/trade/{tradeId}';
+
+  /**
+   * get a specific Trade.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `pollenexchangeTradeTradeIdGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  pollenexchangeTradeTradeIdGet$Response(params: PollenexchangeTradeTradeIdGet$Params, context?: HttpContext): Observable<StrictHttpResponse<TradeDto>> {
+    return pollenexchangeTradeTradeIdGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * get a specific Trade.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `pollenexchangeTradeTradeIdGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  pollenexchangeTradeTradeIdGet(params: PollenexchangeTradeTradeIdGet$Params, context?: HttpContext): Observable<TradeDto> {
+    return this.pollenexchangeTradeTradeIdGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<TradeDto>): TradeDto => r.body)
+    );
+  }
+
+  /** Path part for operation `pollenexchangeTradeTradeIdPut()` */
+  static readonly PollenexchangeTradeTradeIdPutPath = '/pollenexchange/trade/{tradeId}';
 
   /**
    * accept or refuse a trade.
@@ -269,4 +343,37 @@ super(config, http);
     );
   }
 
+  /** Path part for operation `pollenexchangeUsernameTradeStatusGet()` */
+  static readonly PollenexchangeUsernameTradeStatusGetPath = '/pollenexchange/{username}/trade/status';
+
+  /**
+   * return the status of all Trades from an User.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `pollenexchangeUsernameTradeStatusGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  pollenexchangeUsernameTradeStatusGet$Response(params: PollenexchangeUsernameTradeStatusGet$Params, context?: HttpContext): Observable<StrictHttpResponse<TradeRatingsDto>> {
+    return pollenexchangeUsernameTradeStatusGet(this.http, this.rootUrl, params, context);
   }
+
+  /**
+   * return the status of all Trades from an User.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `pollenexchangeUsernameTradeStatusGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  pollenexchangeUsernameTradeStatusGet(params: PollenexchangeUsernameTradeStatusGet$Params, context?: HttpContext): Observable<TradeRatingsDto> {
+    return this.pollenexchangeUsernameTradeStatusGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<TradeRatingsDto>): TradeRatingsDto => r.body)
+    );
+  }
+
+}
