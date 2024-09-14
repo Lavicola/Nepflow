@@ -3,18 +3,16 @@
 @use "src/themes/light-theme" as light
 
 
+
 @include mat.core()
-//@import '@angular/material/prebuilt-themes/cyan-orange.css'
+
+html
+  @include mat.all-component-themes(light.$light-theme)
 
 
 
 
 .dark-mode
-  @include mat.core-theme(dark.$dark-theme)
-  @include mat.all-component-themes(dark.$dark-theme)
+  @include mat.all-component-colors(dark.$dark-theme)
 
 
-
-.light-mode
-  @include mat.core-theme(light.$light-theme)
-  @include mat.all-component-themes(light.$light-theme)

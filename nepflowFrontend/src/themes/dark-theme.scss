@@ -141,4 +141,10 @@ $dark-theme: mat.define-theme((
     primary: $_primary,
     tertiary: $_tertiary,
   ),
+  typography: (
+    use-system-variables: true,
+  ),
+  density: (
+    scale: 0,
+  ),
 ));
