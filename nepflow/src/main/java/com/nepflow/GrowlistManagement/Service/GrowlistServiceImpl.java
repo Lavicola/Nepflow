@@ -10,7 +10,7 @@ import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
 import com.nepflow.NepenthesManagement.Exception.CloneAlreadyHasASex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
-import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
+import com.nepflow.NepenthesManagement.Service.NepenthesRetrievalService;
 import com.nepflow.UserManagement.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +39,7 @@ public class GrowlistServiceImpl implements Growlistservice {
     SpecimenRepository specimenRepository;
 
     @Autowired
-    NepenthesRetrivalService nepenthesRetrivalService;
+    NepenthesRetrievalService nepenthesRetrievalService;
 
     @Autowired
     NepenthesManagementService nepenthesManagementService;
@@ -64,7 +64,7 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Override
     public Specimen addExistingCloneToGrowList(User user, String internalId) {
         Specimen specimen = null;
-        Clone clone = this.nepenthesRetrivalService.getCloneByInternalId(internalId);
+        Clone clone = this.nepenthesRetrievalService.getCloneByInternalId(internalId);
         if (clone != null) {
             specimen = this.specimenRepository.addSpecimenToGrowlistAndUserReturnSpecimenWithoutUser(user.getOAuthId(), clone.getInternalCloneId());
         }

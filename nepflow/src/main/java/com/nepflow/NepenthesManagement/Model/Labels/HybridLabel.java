@@ -7,7 +7,7 @@ import org.springframework.data.neo4j.core.schema.Property;
 
 /**
  * This Class represents the Base Class of the different types of Hybrids.
- * All of them share a common logic and therefore this Abstract Class defines the common Logic
+ * All of them share a common logic and therefore this Abstract Class defines this common Logic.
  */
 @Node
 public abstract class HybridLabel extends Label {

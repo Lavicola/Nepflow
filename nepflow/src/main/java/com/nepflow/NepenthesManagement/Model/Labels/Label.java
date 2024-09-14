@@ -20,7 +20,8 @@ import java.util.List;
 
 /**
  * This Abstract Class represents the abstraction needed for the different types of subclasses of
- * Nepenthes(the species itself), hybrid (two Nepenthe's crossbreed), multi hybrids(more than three hybrids)
+ * Nepenthes(the species itself), hybrid (two Nepenthe's crossbreed), multi hybrids(more than three hybrids).
+ *
  */
 
 

@@ -11,39 +11,55 @@ import com.nepflow.NepenthesManagement.Model.Clones.IVClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Repository.CloneRepository;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
-import com.nepflow.NepenthesManagement.Repository.LocationRepository;
-import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Implementation of NepenthesManagementService.
+ *
+ * @author David Schmidt
+ * @version 14. Nov 2024
+ */
 @Service
 public class NepenthesManagementServiceImpl implements NepenthesManagementService {
 
+    /**
+     * LabelRepository used to retrieve and store Labels into the Database.
+     */
     @Autowired
-    LabelRepository labelRepository;
+    private LabelRepository labelRepository;
 
+    /**
+     * CloneRepository used to retrieve and store Clones into the Database.
+     */
     @Autowired
-    CloneRepository cloneRepository;
-
+    private CloneRepository cloneRepository;
+    /**
+     * LabelRecognizerService to determine Label classes at runtime.
+     */
     @Autowired
-    LocationRepository locationRepository;
-
+    private LabelRecognizerService labelRecognizerService;
+    /**
+     * Location Repository used to retrieve and store Location into the Database.
+     */
     @Autowired
-    ProducerRepository producerRepository;
+    private NepenthesManagementMetaDataService managementMetaDataService;
 
-    @Autowired
-    LabelRecognizerService labelRecognizerService;
-
-
-    @Autowired
-    NepenthesManagementMetaDataService managementMetaDataService;
-
-
+    /**
+     * Method Implementation to create a new IVClone using a subclass of Label.
+     *
+     * @param label            any Subclass of a Label
+     * @param cloneId          the unique Id of a clone
+     * @param sexAsString      the sex of a clone
+     * @param locationAsString the origin of the clone
+     * @param producerAsString the IV Seller of the clone
+     * @return IVClone object corresponding to the right Label
+     */
     @Override
-    public IVClone saveIVClone(Label label, String cloneId,
-                               String sexAsString,
-                               String locationAsString, String producerAsString) {
+    public IVClone saveIVClone(final Label label, final String cloneId,
+                               final String sexAsString, final String locationAsString,
+                               final String producerAsString) {
         IVClone newIvClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
         Producer producer = this.managementMetaDataService.getProducer(producerAsString);
@@ -61,10 +77,19 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
     }
 
 
+    /**
+     * Method Implementation to create a new ICClone using a subclass of Label.
+     *
+     * @param label            any Subclass of a Label
+     * @param sexAsString      the sex of a clone
+     * @param locationAsString the origin of the clone
+     * @param sellerAsString   the (private) seller of a IC clone
+     * @return ICCLone object corresponding to the right Label
+     */
+
     @Override
-    //TODO at some point remove Code duplication --> helper method for common logic
-    public ICClone saveICClone(Label label, String sexAsString,
-                               String locationAsString, String sellerAsString) {
+    public ICClone saveICClone(final Label label, final String sexAsString,
+                               final String locationAsString, final String sellerAsString) {
         Location location;
         ICClone newIcClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
@@ -75,8 +100,23 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         return newIcClone;
     }
 
+    /**
+     * Method Implementation to create a new ICClone with a specific cloneId
+     * using a subclass of Label.
+     *
+     * @param label            any Subclass of a Label
+     * @param cloneId          the unique Id of a clone
+     * @param sexAsString      the sex of a clone
+     * @param locationAsString the origin of the clone
+     * @param sellerAsString   the IV Seller of the clone
+     * @return ICCLone object corresponding to the right Label
+     */
+
     @Override
-    public ICClone saveICCloneWithCloneId(Label label, String cloneId, String sexAsString, String locationAsString, String sellerAsString) {
+    public ICClone saveICCloneWithCloneId(final Label label, final String cloneId,
+                                          final String sexAsString,
+                                          final String locationAsString,
+                                          final String sellerAsString) {
         Location location;
         ICClone newIcClone;
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
@@ -92,8 +132,22 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         return newIcClone;
     }
 
+    /**
+     * Method Implementation to create a new IVClone
+     * using a subclass of Label determined at runtime.
+     *
+     * @param labelName        name of the Label to determine the concrete Label class
+     * @param cloneId          the unique Id of a clone
+     * @param sexAsString      the sex of a clone
+     * @param locationAsString the origin of the clone
+     * @param producerAsString name of the producer
+     * @return IVClone object corresponding to the right Label
+     */
+
     @Override
-    public IVClone saveIVClone(String labelName, String cloneId, String sexAsString, String locationAsString, String producerAsString) {
+    public IVClone saveIVClone(final String labelName, final String cloneId,
+                               final String sexAsString, final String locationAsString,
+                               final String producerAsString) {
         Label label = this.labelRecognizerService.returnRightLabelClass(labelName);
         if (label != null) {
             label = this.createLabel(label);
@@ -102,8 +156,20 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         return null;
     }
 
+    /**
+     * Method Implementation to create a new ICClone
+     * using a subclass of Label determined at runtime.
+     *
+     * @param labelName        name of the Label to determine the concrete Label class
+     * @param sexAsString      the sex of a clone
+     * @param locationAsString the origin of the clone
+     * @param sellerAsString   name of the seller
+     * @return IVClone object corresponding to the right Label
+     */
+
     @Override
-    public ICClone saveICClone(String labelName, String sexAsString, String locationAsString, String sellerAsString) {
+    public ICClone saveICClone(final String labelName, final String sexAsString,
+                               final String locationAsString, final String sellerAsString) {
         Label label = this.labelRecognizerService.returnRightLabelClass(labelName);
         if (label != null) {
             label = this.createLabel(label);
@@ -112,8 +178,15 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         return null;
     }
 
+    /**
+     * Method Implementation to store a Label into the Database.
+     *
+     * @param label concrete Label to store into the Database
+     * @return concrete Label object stored in the Database
+     */
+
     @Override
-    public Label createLabel(Label label) {
+    public Label createLabel(final Label label) {
         Label rLabel = this.labelRepository.findLabelByName(label.getName());
         if (rLabel != null) {
             return rLabel;
@@ -124,15 +197,31 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
         return this.labelRepository.save(label);
     }
 
+    /**
+     * Method Implementation to retrieve the Amount of different subclass Labels.
+     *
+     * @param className Name of the (subclass) Label
+     * @return amount of different (subclass) Label
+     */
+
     @Override
-    public int getLabelCount(String className) {
+    public int getLabelCount(final String className) {
         return this.labelRepository.countLabelByLabelClass(className);
     }
 
-
+    /**
+     * Method Implementation to create for an existing unknown clone an identical sexed clone
+     * This Method is used in the Frontend for Growlist in order be able to change
+     * the Sex of at first unknown sexed clone.
+     *
+     * @param clone       clone to clone
+     * @param sexAsString sex of the clone to clone
+     * @return sexed clone
+     * @throws CloneAlreadyHasASex if Clone with sex already exists
+     */
     @Override
     @Transactional("transactionManager")
-    public Clone getOrCreateSexedClone(Clone clone, String sexAsString) throws CloneAlreadyHasASex {
+    public Clone getOrCreateSexedClone(final Clone clone, final String sexAsString) throws CloneAlreadyHasASex {
         Sex sex = this.managementMetaDataService.getSex(sexAsString);
         Clone rClone = this.cloneRepository.findCloneByInternalCloneId(Clone.generateInternalCloneId(clone.getCloneId(), sex));
         if (rClone != null) {
@@ -143,7 +232,7 @@ public class NepenthesManagementServiceImpl implements NepenthesManagementServic
             return this.saveIVClone(clone.getLabel(), clone.getCloneId(), sexAsString, clone.getLocationAsString(), clone.getSellerAsString());
         }
         // if the clone is IC and already has a sex, we won´t allow to change it
-        if(clone.getSex() != null){
+        if (clone.getSex() != null) {
             throw new CloneAlreadyHasASex(clone.getSexAsString());
         }
 

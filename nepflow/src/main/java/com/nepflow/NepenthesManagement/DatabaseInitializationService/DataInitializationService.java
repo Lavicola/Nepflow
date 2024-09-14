@@ -7,7 +7,7 @@ import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Service.LabelRecognizerService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementMetaDataService;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
-import com.nepflow.NepenthesManagement.Service.NepenthesRetrivalService;
+import com.nepflow.NepenthesManagement.Service.NepenthesRetrievalService;
 import com.nepflow.UserManagement.Service.UserManagementService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class DataInitializationService {
 
 
     @Autowired
-    NepenthesRetrivalService nepenthesRetrivalService;
+    NepenthesRetrievalService nepenthesRetrievalService;
 
     @Autowired
     LabelRecognizerService labelRecognizerService;
