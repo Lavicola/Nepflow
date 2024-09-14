@@ -38,6 +38,8 @@ export class TradeStatisticsComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.createChart();
     this.tradeService.pollenexchangeUsernameTradeStatusGet({username: this.username}).subscribe({
       next: (trades: TradeRatingsDto) => this.tradeRatingsBehaviorSubject.next(trades)
     });
@@ -58,7 +60,6 @@ export class TradeStatisticsComponent implements OnInit {
       error: (err) => console.log(err)
     })
 
-    this.createChart();
 
   }
 

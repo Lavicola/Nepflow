@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {BehaviorSubject, Observable} from "rxjs";
 import {PollenOfferSpeciesStatisticsDto} from "../../models/pollen-offer-species-statistics-dto";
-import {TradeStatus} from "../../models/trade-status";
 import {
   Chart, BarController, Title, Legend, CategoryScale, LinearScale, BarElement
 } from 'chart.js'
@@ -29,6 +28,9 @@ export class SpecimenStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createChart();
+
+
     this.tradeService.pollenexchangeUsernamePollenoffersStatisticsGet({username: this.username}).subscribe({
       next: (stats) => this.specimenStatisticBehaviourSubject.next(stats),
       error: (err) => console.log(err)
@@ -43,17 +45,18 @@ export class SpecimenStatisticsComponent implements OnInit {
 
           this.data.push(<number>stat.floweringCount)
         });
+        this.chart.update();
       },
       error: (err) => {
         console.error('Error fetching specimen statistics', err);
       },
       complete: () => {
         console.log('Completed fetching specimen statistics');
+
       }
     });
 
 
-    this.createChart();
 
   }
 
@@ -90,7 +93,7 @@ export class SpecimenStatisticsComponent implements OnInit {
           datasets: data.datasets
         },
 
-      options: {
+        options: {
 
           plugins: {
             legend: {
@@ -108,7 +111,6 @@ export class SpecimenStatisticsComponent implements OnInit {
             x: {
               display: true,
               ticks: {
-                // Include a dollar sign in the ticks
                 callback: function (value, index, ticks) {
                   // @ts-ignore
                   return index;
