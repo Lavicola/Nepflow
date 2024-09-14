@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpecimenStatisticsComponent } from './specimen-statistics.component';
+import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 
 describe('SpecimenStatisticsComponent', () => {
   let component: SpecimenStatisticsComponent;
@@ -8,7 +10,9 @@ describe('SpecimenStatisticsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SpecimenStatisticsComponent]
+      imports: [SpecimenStatisticsComponent],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+
     })
     .compileComponents();
 

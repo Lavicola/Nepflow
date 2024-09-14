@@ -8,7 +8,7 @@
 
 <div class="split right">
 
-  <app-specimen-statistics></app-specimen-statistics>
+  <app-specimen-statistics *ngIf="this.user && this.user.username"  [username]="this.user.username"></app-specimen-statistics>
 
 </div>
 
