@@ -3,16 +3,14 @@
 @use "src/themes/light-theme" as light
 
 
-
 @include mat.core()
 
 html
   @include mat.all-component-themes(light.$light-theme)
 
 
-
-
 .dark-mode
   @include mat.all-component-colors(dark.$dark-theme)
+
 
 

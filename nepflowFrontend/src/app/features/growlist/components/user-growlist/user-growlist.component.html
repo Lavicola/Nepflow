@@ -1,15 +1,17 @@
-
-
-<div *ngIf="isOwnGrowlist || growlistSubject.value.isPublic; then thenBlock else elseBlock"></div>
+<div *ngIf=" (isGrowlistPublicSubject |async )|| (isOwnGrowlist$ | async); then thenBlock else elseBlock"></div>
 
 
 <ng-template #thenBlock>
 
-  <div class="growlist-toggle" *ngIf="isOwnGrowlist">
-    <mat-slide-toggle [checked]="growlistSubject.value.isPublic" (change)="updateGrowlistVisibility()"> </mat-slide-toggle>
-    <span class="switch-label">Growlist is currently:  {{ this.growlistSubject.value.isPublic? '   public' : '  private' }}</span>
+  <div *ngIf="isOwnGrowlist$|async">
+    <div class="growlist-toggle">
+      <mat-slide-toggle [checked]="growlistSubject.value.isPublic"
+                        (change)="updateGrowlistVisibility()"></mat-slide-toggle>
+      <span
+            class="switch-label">Growlist is currently:  {{ this.growlistSubject.value.isPublic ? '   public' : '  private' }}</span>
+    </div>
+    <mat-divider></mat-divider>
   </div>
-  <mat-divider></mat-divider>
   <div style="display:flex; flex-wrap:wrap; justify-content:flex-start">
     <div *ngFor="let offer of specimens;let i = index">
       <div class="container">
@@ -35,10 +37,13 @@
             <ng-content>
             </ng-content>
           </mat-card-content>
-          <mat-action-row>
+          <mat-action-row *ngIf="isOwnGrowlist$ | async">
             <br>
-            <button mat-button (click)="deleteSpecimen(i,offer.specimenId)" mat-raised-button color="warn">Delete</button>
-            <p> <span *ngIf="isOwnGrowlist">open Pollen exchange?:</span> <mat-slide-toggle  [checked]="specimens[i].isFlowering" (change)="changeOfferStatus(i)" ></mat-slide-toggle></p>
+            <button mat-button (click)="deleteSpecimen(i,offer.specimenId)" mat-raised-button color="warn">Delete
+            </button>
+            <p><span>open Pollen exchange?:</span>
+              <mat-slide-toggle [checked]="specimens[i].isFlowering" (change)="changeOfferStatus(i)"></mat-slide-toggle>
+            </p>
           </mat-action-row>
         </mat-card>
 

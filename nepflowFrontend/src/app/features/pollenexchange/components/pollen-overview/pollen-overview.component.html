@@ -11,8 +11,8 @@
 
 
   <div class="content">
-    <div class="card" *ngFor="let container of (filteredPollenOffers$ | async)?.slice()?.reverse()">
-      <div class="date-header">
+    <div class="card" *ngFor="let container of (filteredPollenOffers$ | async)">
+      <div *ngIf="container.pollenOffers?.length" class="date-header">
         <h2>Pollen Offers in: {{ container.date }}</h2>
       </div>
       <div class="pollen-offer-containers">

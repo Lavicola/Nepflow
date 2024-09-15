@@ -19,6 +19,7 @@ import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
 import {MatIcon} from "@angular/material/icon";
 import {NgForOf} from "@angular/common";
 import {MatInputModule} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-nepenthes-clone-table',
@@ -34,7 +35,8 @@ import {MatInputModule} from "@angular/material/input";
     MatMenu,
     MatIcon,
     MatMenuTrigger,
-    MatInputModule
+    MatInputModule,
+    MatButton
   ],
   templateUrl: './nepenthes-clone-table.component.html',
   styleUrl: './nepenthes-clone-table.component.sass'

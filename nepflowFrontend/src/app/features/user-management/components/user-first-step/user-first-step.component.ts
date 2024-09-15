@@ -7,6 +7,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatInputModule} from "@angular/material/input";
 import {NgForOf} from "@angular/common";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-user-first-step',
@@ -19,7 +20,8 @@ import {NgForOf} from "@angular/common";
     ReactiveFormsModule,
     MatLabel,
     MatOption,
-    NgForOf
+    NgForOf,
+    MatButton
   ],
   templateUrl: './user-first-step.component.html',
   styleUrl: './user-first-step.component.sass'

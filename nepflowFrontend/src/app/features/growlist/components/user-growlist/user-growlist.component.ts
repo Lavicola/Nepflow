@@ -3,9 +3,8 @@ import {SpecimenUpdateCloneDto} from "../../models/specimen-update-clone-dto";
 import {GrowlistmanagementService} from "../../services/growlistmanagement.service";
 import {ActivatedRoute} from "@angular/router";
 import {SpecimenCloneDto} from "../../models/specimen-clone-dto";
-import {BehaviorSubject} from "rxjs";
+import {async, BehaviorSubject, catchError, combineLatest, of, switchMap} from "rxjs";
 import {GrowlistDto} from "../../models/growlist-dto";
-import {UsernameService} from "../../../../core/services/UsernameService";
 import {MatExpansionPanelActionRow} from "@angular/material/expansion";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {
@@ -17,11 +16,12 @@ import {
   MatCardTitle
 } from "@angular/material/card";
 import {MatDivider} from "@angular/material/divider";
-import {NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {
   NepenthesBasecardComponent
 } from "../../../pollenexchange/components/nepenthes-basecard/nepenthes-basecard.component";
 import {MatButton} from "@angular/material/button";
+import {AuthService} from "../../../../core/services/auth.service";
 
 @Component({
   selector: 'app-user-growlist',
@@ -35,6 +35,7 @@ import {MatButton} from "@angular/material/button";
     MatCard,
     MatDivider,
     NgIf,
+    AsyncPipe,
     NepenthesBasecardComponent,
     MatCardLgImage,
     MatCardSubtitle,
@@ -50,10 +51,14 @@ export class UserGrowlistComponent implements OnInit {
   growlist = this.growlistSubject.asObservable();
   specimens: SpecimenCloneDto[] = [];
 
-  isOwnGrowlist!: boolean;
+  isOwnGrowlistSubject = new BehaviorSubject(false);
+  isOwnGrowlist$ = this.isOwnGrowlistSubject.asObservable()
+  isGrowlistPublicSubject = new BehaviorSubject(false);
+  isGrowlistPublic$ = this.isOwnGrowlistSubject.asObservable()
+
 
   constructor(private growmanagementService: GrowlistmanagementService,
-              private usernameService: UsernameService,
+              private usernameService: AuthService,
               private route: ActivatedRoute
   ) {
 
@@ -90,7 +95,7 @@ export class UserGrowlistComponent implements OnInit {
   changeOfferStatus(i: number) {
     let specimenId = this.specimens[i]?.specimenId ?? undefined;
     let flowering = this.specimens[i]?.isFlowering ?? undefined;
-    if (specimenId && flowering != undefined && this.isOwnGrowlist) {
+    if (specimenId && flowering != undefined && this.isOwnGrowlist$) {
       this.growmanagementService.specimensSpecimenIdFloweringPatch({
         specimenId: specimenId,
         body: {isFlowering: !flowering}
@@ -104,7 +109,7 @@ export class UserGrowlistComponent implements OnInit {
   }
 
   updateGrowlistVisibility() {
-    if(!this.growlistSubject.value.id){
+    if (!this.growlistSubject.value.id) {
       return;
     }
 
@@ -112,32 +117,49 @@ export class UserGrowlistComponent implements OnInit {
       growlistId: this.growlistSubject.value.id,
       body: {isPublic: !this.growlistSubject.value.isPublic}
     }).subscribe({
-      next: (growlistPublic) =>  this.growlistSubject.value.isPublic = growlistPublic.body.isPublic,
+      next: (growlistPublic) => this.growlistSubject.value.isPublic = growlistPublic.body.isPublic,
       error: (err) => console.log(err)
     })
 
   }
 
   ngOnInit(): void {
-    this.usernameService.getUsernameObs().subscribe({
-      next: (currentUsername: string) => {
-        console.log(currentUsername)
-        this.route.paramMap.subscribe(params => {
-          const userParam = params.get('user');
-          if (userParam) {
-            this.getGrowlist(userParam);
-            this.isOwnGrowlist = userParam === currentUsername;
-          } else {
-            this.getGrowlist(currentUsername);
-            this.isOwnGrowlist = true;
-          }
-        });
-      }
+
+
+
+    // Combine both observables
+    combineLatest([
+      this.usernameService.getUser().pipe(
+        catchError(() => {
+          return of(null);
+        })
+      ),
+      this.route.paramMap
+    ]).pipe(
+      switchMap(([currentUser, params]) => {
+        const userParam = params.get('user');
+        if (userParam) {
+          // Fetch the growlist for the user in the URL
+          this.getGrowlist(userParam);
+          this.isOwnGrowlistSubject.next(userParam === currentUser?.username);
+        } else if (currentUser?.username) {
+          // Fetch the growlist for the current logged-in user if no userParam exists
+          this.getGrowlist(currentUser?.username);
+          this.isOwnGrowlistSubject.next(true);
+        } else {
+          console.log(currentUser?.username)
+          this.isOwnGrowlistSubject.next(false);
+        }
+        return of(null);  // Return an observable to satisfy the switchMap requirement
+      })
+    ).subscribe({
+      error: (err) => console.log('Error:', err)
     });
+
 
     this.growlist.subscribe({
       // @ts-ignore
-      next: (growlist:GrowlistDto) => this.specimens = growlist.specimens,
+      next: (growlist: GrowlistDto) => this.specimens = growlist.specimens,
       error: (err) => console.log(err)
     })
   }
@@ -145,17 +167,20 @@ export class UserGrowlistComponent implements OnInit {
   getGrowlist(username: string) {
     this.growmanagementService.growlistUsernameClonesGet({username: username}).subscribe({
       next: (growlist) => {
-        this.growlistSubject.next(growlist)},
+        this.growlistSubject.next(growlist)
+        // @ts-ignore
+        this.isGrowlistPublicSubject.next(growlist.isPublic)
+      },
       error: () => console.log("error")
     })
 
   }
 
   deleteSpecimen(index: number, specimenId: string | undefined) {
-    if(specimenId == undefined){
+    if (specimenId == undefined) {
       return;
     }
-    this.growmanagementService.specimensSpecimenIdDelete({specimenId:specimenId}).subscribe({
+    this.growmanagementService.specimensSpecimenIdDelete({specimenId: specimenId}).subscribe({
       next: () => {
         const updatedSpecimens = this.specimens.filter((_, i) => i !== index);
         this.growlistSubject.next({
@@ -163,11 +188,12 @@ export class UserGrowlistComponent implements OnInit {
           specimens: updatedSpecimens
         });
       },
-      error: (err:string) => console.log(err)
+      error: (err: string) => console.log(err)
     })
 
 
   }
+
 }
 
 

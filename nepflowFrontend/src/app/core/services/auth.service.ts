@@ -41,6 +41,8 @@ export class AuthService {
   }
   async finishedFirstStep(): Promise<boolean> {
     const user = await lastValueFrom(this.getUser());
+
+
     return user.contactInformation !== null &&user.contactInformation !== "";
   }
 

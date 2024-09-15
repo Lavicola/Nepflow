@@ -166,11 +166,9 @@ export class PollenOverviewComponent implements OnInit {
   splitOffers(offerContainers: PollenOfferDateContainerDto[], username: string | undefined): [PollenOfferDto[], PollenOfferDateContainerDto[]] {
     let containers: PollenOfferDateContainerDto[] = []
     let myOffers: PollenOfferDto[] = []
-
     if (username == undefined) {
       this.myPollenOffersSubject.next(myOffers);
       this.otherPollenOffersSubject.next(offerContainers);
-
       return [myOffers, offerContainers]
     }
 
@@ -193,7 +191,6 @@ export class PollenOverviewComponent implements OnInit {
     })
     this.myPollenOffersSubject.next(myOffers);
     this.otherPollenOffersSubject.next(containers);
-
     return [myOffers, containers]
 
   }

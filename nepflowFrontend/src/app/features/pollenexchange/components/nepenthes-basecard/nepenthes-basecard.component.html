@@ -7,6 +7,7 @@
     <img mat-card-lg-image
          [src]="offer.imageLocation || 'assets/placeholder.jpg'"
          alt="{{ offer.nepenthesName }}">
+    <p><strong>Clone Id:</strong> {{ offer.cloneId || 'N/A' }}</p>
     <p><strong>Origin:</strong> {{ offer.seller || 'N/A' }}</p>
     <p><strong>Location:</strong> {{ offer.location || 'N/A' }}</p>
     <p><strong>Sex:</strong> {{ offer.sex || 'N/A' }}</p>
