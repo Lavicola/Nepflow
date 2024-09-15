@@ -8,6 +8,26 @@ presents an extensive picture gallery that allows you to view pictures of differ
 The GFP (Society for Carnivorous Plants) maintains a special [subforum](https://forum.carnivoren.org/forums/forum/132-pollen/)
 in their forum, which is used to find crossing partners for Nepenthes. In addition to GFP, there are various [groups](https://www.facebook.com/groups/1615538418599583?_rdr) on Facebook dedicated to the exchange of pollen providers and seekers.
 
+## Current State
+Click on the image below to view a YouTube video showcasing the current state of the project. While the design of the video may not be the primary focus, the emphasis is on demonstrating the functionality and progress of the project.
+<a href="https://www.youtube.com/watch?v=wQUNHZGiVh8"><img src="https://nepflow.de/wp-content/uploads/2024/09/thumbnail.png" alt="Press to see video" style="width:800px;height:350px;"></a> <br>
+the video shows the following functionalities:
+- Custom Angular Material 3 Theme
+- Account creation via an external identity management system (passwords are never stored by me and neither are email addresses at present)
+- Fill in a user name and contact information as well as the country (these are then stored in my application)
+- Adding a plant
+- Viewing the growlist and making changes to a plant
+- Viewing all current pollen offers, filtering and sending a request for pollen/flowering
+- Viewing the trades for which the user is still waiting for a response
+(Switching the browser to a new user and opening a new pollen offer) 
+- Sending another request for the newly created pollen offer
+(switching the browser to a new user and answering the request)
+- Show the completed trades and the dark mode
+- Opening a private growlist
+- Switching the browser to a new user and viewing the statistics (Each bar shows a specific plant, as you can have several specimens of one species)
+
+
+
 ## Motivation
 In addition to the wealth of websites offering special features for Nepenthes and the ever-growing number of stores stocking these plants, the increasing variety of hybrid plants being bred underlines the fact that this hobby is in a golden age. However, one problem that currently arises from the many crosses and hybrids is that over time it becomes increasingly difficult to trace the lineage of one's own plant. Nepflow aims to help tackle this challenge using the following steps:
 1. At first Nepflow introduce a NepenthesManagagement Component which will allow to create Clones of specific Nepenthes (mostly done)
@@ -32,6 +52,7 @@ While the Main Focus in on the Pollen Exchange, Nepflow and the underlying Datam
 - Neo4j
 - MinIo
 - GitHubActions
+
 
 ## Wireframes Frontend
 For a rough overview of the different pages, see [Wireframes](https://app.moqups.com/Fi0hP5DnuFjdzxUPjcqYW32ByDKFwJDz/view/page/ae3f4a291), which are updated/improved/extended at irregular intervals.
