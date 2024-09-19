@@ -1,0 +1,28 @@
+<app-nepenthes-basecard>
+
+  <div slot="header">
+    <mat-card-title>{{ offer.nepenthesName || 'No Name' }}</mat-card-title>
+    <mat-card-subtitle>Location: {{ offer.location || 'Unknown' }}</mat-card-subtitle>
+
+  </div>
+
+  <div slot="content">
+    <img mat-card-lg-image
+         [src]="offer.imageLocation || 'assets/placeholder.jpg'"
+         alt="{{ offer.nepenthesName }}">
+    <p><strong>Clone Id:</strong> {{ offer.cloneId || 'N/A' }}</p>
+    <p><strong>Origin:</strong> {{ offer.seller || 'N/A' }}</p>
+    <p><strong>Location:</strong> {{ offer.location || 'N/A' }}</p>
+    <p><strong>Sex:</strong> {{ offer.sex || 'N/A' }}</p>
+    <p><strong>Searching since:</strong> {{ offer.pollenOfferOpenedDate || 'N/A' }}</p>
+    <p><strong>User:</strong> {{ offer.user?.username + "("+offer.user?.country+")" || 'No User' }}</p>
+    <ng-content select="[slot=afterContent]">
+    </ng-content>
+
+
+  </div>
+
+
+
+
+</app-nepenthes-basecard>

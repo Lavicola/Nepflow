@@ -22,12 +22,15 @@ import {
 } from "../../../pollenexchange/components/nepenthes-basecard/nepenthes-basecard.component";
 import {MatButton} from "@angular/material/button";
 import {AuthService} from "../../../../core/services/auth.service";
+import {ImageCroppedEvent, ImageCropperComponent, LoadedImage} from "ngx-image-cropper";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-user-growlist',
   standalone: true,
   imports: [
     NgForOf,
+    ImageCropperComponent,
     MatExpansionPanelActionRow,
     MatSlideToggle,
     MatCardContent,
@@ -40,7 +43,8 @@ import {AuthService} from "../../../../core/services/auth.service";
     MatCardLgImage,
     MatCardSubtitle,
     MatCardTitle,
-    MatButton
+    MatButton,
+    ImageCropperComponent
   ],
   templateUrl: './user-growlist.component.html',
   styleUrl: './user-growlist.component.sass'
@@ -59,7 +63,8 @@ export class UserGrowlistComponent implements OnInit {
 
   constructor(private growmanagementService: GrowlistmanagementService,
               private usernameService: AuthService,
-              private route: ActivatedRoute
+              private route: ActivatedRoute,
+              private sanitizer:DomSanitizer
   ) {
 
   }
@@ -193,6 +198,28 @@ export class UserGrowlistComponent implements OnInit {
 
 
   }
+  imageChangedEvent: Event | null = null;
+  croppedImage: SafeUrl  = '';
+
+  fileChangeEvent(event: Event): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    if (event.objectUrl != null) {
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+    }
+    // event.blob can be used to upload the cropped image
+  }
+  imageLoaded(image: LoadedImage) {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+
 
 }
 

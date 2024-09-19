@@ -36,6 +36,8 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
+import {NepenthesCardSimpleComponent} from "../nepenthes-card-simple/nepenthes-card-simple.component";
+import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-text.component";
 
 @Component({
   selector: 'app-overview',
@@ -72,7 +74,9 @@ import {
     NepenthesCardDropdownComponent,
     MatExpansionPanel,
     MatExpansionPanelTitle,
-    MatExpansionPanelDescription
+    MatExpansionPanelDescription,
+    NepenthesCardSimpleComponent,
+    NepenthesCardTextComponent
   ],
   templateUrl: './pollen-overview.component.html',
   styleUrl: './pollen-overview.component.sass'

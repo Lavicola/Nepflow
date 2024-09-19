@@ -23,6 +23,8 @@ import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {PollenOfferDto} from "../../models/pollen-offer-dto";
 import {getNameOfCross} from "../../services/male-female-name-combiner";
+import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-text.component";
+import {NepenthesCardSimpleComponent} from "../nepenthes-card-simple/nepenthes-card-simple.component";
 
 @Component({
   selector: 'app-user-trades-open',
@@ -35,7 +37,9 @@ import {getNameOfCross} from "../../services/male-female-name-combiner";
     MatGridList,
     MatGridTile,
     MatFormField,
-    MatButton
+    MatButton,
+    NepenthesCardTextComponent,
+    NepenthesCardSimpleComponent
   ],
   templateUrl: './user-trades-open.component.html',
   styleUrl: './user-trades-open.component.sass'

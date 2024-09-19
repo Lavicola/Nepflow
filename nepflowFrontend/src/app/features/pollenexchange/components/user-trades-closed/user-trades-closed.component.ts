@@ -7,11 +7,13 @@ import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-baseca
 import {MatButton} from "@angular/material/button";
 import {getNameOfCross} from "../../services/male-female-name-combiner";
 import {PollenOfferDto} from "../../models/pollen-offer-dto";
+import {NepenthesCardSimpleComponent} from "../nepenthes-card-simple/nepenthes-card-simple.component";
+import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-text.component";
 
 @Component({
   selector: 'app-user-trades-closed',
   standalone: true,
-  imports: [AsyncPipe, NgForOf, MatGridList, MatGridTile, NepenthesBasecardComponent, NgIf, MatButton],
+  imports: [AsyncPipe, NgForOf, MatGridList, MatGridTile, NepenthesBasecardComponent, NgIf, MatButton, NepenthesCardSimpleComponent, NepenthesCardTextComponent],
   templateUrl: './user-trades-closed.component.html',
   styleUrl: './user-trades-closed.component.sass'
 })

@@ -15,7 +15,7 @@
   <div style="display:flex; flex-wrap:wrap; justify-content:flex-start">
     <div *ngFor="let offer of specimens;let i = index">
       <div class="container">
-        <mat-card class="pollen-offer-card">
+        <mat-card appearance="outlined" class="pollen-offer-card">
           <mat-card-header>
             <mat-card-title>{{ offer.nepenthesName || 'No Name' }}</mat-card-title>
             <mat-card-subtitle>Location: {{ offer.Location || 'Unknown' }}</mat-card-subtitle>
@@ -54,3 +54,17 @@
 <ng-template #elseBlock>
   <h1>This Growlist is Private</h1>
 </ng-template>
+
+<image-cropper
+  [imageChangedEvent]="imageChangedEvent"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="4 / 3"
+  format="png"
+  (imageCropped)="imageCropped($event)"
+  (imageLoaded)="imageLoaded($event)"
+  (cropperReady)="cropperReady()"
+  (loadImageFailed)="loadImageFailed()"
+
+></image-cropper>
+
+<img [src]="'assets/placeholder.jpg'" />

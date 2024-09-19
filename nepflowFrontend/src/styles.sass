@@ -7,10 +7,18 @@
 
 html
   @include mat.all-component-themes(light.$light-theme)
+  //@include mat.all-component-themes(dark.$dark-theme)
 
+
+.light-mode
+  @include mat.all-component-colors(light.$light-theme)
 
 .dark-mode
   @include mat.all-component-colors(dark.$dark-theme)
+
+
+
+
 
 
 

@@ -1,0 +1,57 @@
+<app-nepenthes-basecard>
+  <div slot="content">
+    <div class="container">
+
+      <img mat-card-lg-image class=" image"
+           [src]="offer.imageLocation || 'assets/placeholder.jpg'"
+           alt="{{ offer.nepenthesName }}">
+      <div class="visibleTitle">
+        {{ offer.nepenthesName }}
+      </div>
+      <div class="svg-container">
+
+        <svg
+          *ngIf="offer.sex == 'Male'"
+          xmlns="http://www.w3.org/2000/svg"
+          height="48px"
+          viewBox="0 -960 960 960"
+          width="48px"
+          male
+        ></svg>
+        <svg
+          *ngIf="offer.sex == 'Female'"
+          xmlns="http://www.w3.org/2000/svg"
+          height="48px"
+          viewBox="0 -960 960 960"
+          width="48px"
+          female
+        ></svg>
+      </div>
+      <div class="middle">
+        <div class="text">
+          <p class="title">{{ offer.nepenthesName }}</p>
+          <mat-grid-list [gutterSize]="'1px'" cols="2" rowHeight="20px">
+            <mat-grid-tile><strong>Clone Id:</strong></mat-grid-tile>
+            <mat-grid-tile>{{ offer.cloneId || 'N/A' }}</mat-grid-tile>
+            <mat-grid-tile><strong>Origin:</strong></mat-grid-tile>
+            <mat-grid-tile>{{ offer.seller || 'N/A' }}</mat-grid-tile>
+            <mat-grid-tile><strong>Location:</strong></mat-grid-tile>
+            <mat-grid-tile>{{ offer.location || 'N/A' }}</mat-grid-tile>
+            <mat-grid-tile><strong>Opened at:</strong></mat-grid-tile>
+            <mat-grid-tile>{{ offer.pollenOfferOpenedDate || 'N/A' }}</mat-grid-tile>
+            <mat-grid-tile><strong>User:</strong></mat-grid-tile>
+            <mat-grid-tile>{{ offer.user?.username + " (" + offer.user?.country + ")" || 'No User' }}</mat-grid-tile>
+
+          </mat-grid-list>
+        </div>
+
+      </div>
+    </div>
+    <ng-content select="[slot=afterContent]">
+    </ng-content>
+
+
+  </div>
+
+
+</app-nepenthes-basecard>
