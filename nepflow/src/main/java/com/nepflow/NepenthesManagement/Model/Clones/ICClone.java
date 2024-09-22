@@ -47,16 +47,5 @@ public abstract class ICClone extends Clone {
         return this.seller != null ? this.seller.getName() : "";
     }
 
-    /**
-     * ICClones can use the cloneId as internalCloneId, because ICClones are always truly unique
-     * and never refer to a batch of "seeds" like in IV.
-     *
-     * @param cloneId clone Id
-     * @param sex     sex
-     * @return internal Clone Id
-     */
-    public static String generateInternalCloneId(final String cloneId, final Sex sex) {
-        return cloneId;
-    }
 
 }

@@ -1,6 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NepenthesQuickAddComponent } from './nepenthes-quick-add.component';
+import {NepenthesQuickAddComponent} from './nepenthes-quick-add.component';
+import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
+import {provideHttpClientTesting} from "@angular/common/http/testing";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 describe('NepenthesQuickAddComponent', () => {
   let component: NepenthesQuickAddComponent;
@@ -8,9 +11,11 @@ describe('NepenthesQuickAddComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NepenthesQuickAddComponent]
+      imports: [NepenthesQuickAddComponent, BrowserAnimationsModule],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(NepenthesQuickAddComponent);
     component = fixture.componentInstance;
