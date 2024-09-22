@@ -5,14 +5,33 @@ import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
+/**
+ * Event used to asynchronous mark a Specimen as not flowering for the PollenExchange.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 public class SpecimenStoppedFloweringEvent extends ApplicationEvent {
+    /**
+     *
+     */
     @Getter
     private final Specimen specimen;
+    /**
+     *
+     */
     @Getter
     private final User user;
 
 
-    public SpecimenStoppedFloweringEvent(Object source, Specimen specimen, User user) {
+    /**
+     * @param source
+     * @param specimen
+     * @param user
+     */
+    public SpecimenStoppedFloweringEvent(final Object source,
+                                         final Specimen specimen, final User user) {
         super(source);
         this.specimen = specimen;
         this.user = user;

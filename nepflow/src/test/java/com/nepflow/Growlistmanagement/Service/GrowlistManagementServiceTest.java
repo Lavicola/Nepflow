@@ -8,6 +8,7 @@ import com.nepflow.GrowlistManagement.Service.Growlistservice;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Service.AuthenticationService;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +20,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -159,19 +163,47 @@ public class GrowlistManagementServiceTest {
 
         assertTrue(wasDeleted);
         assertEquals(amountBeforeDelete,amountAfterDelete+1);
+    }
 
+    @Test
+    @Transactional
+    public void addExistingClonesToGrowlistTest() {
+        User user = growlistTestDataInserter.user1;
+        Growlist growlist;
+        int growlistBeforeAdd;
+        List<String> cloneIds = Arrays.asList(
+                growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId(),
+                growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId(),
+                growlistTestDataInserter.icSpeciesClone.getInternalCloneId()
+        );
+        growlistBeforeAdd = this.growlistservice.getGrowlist(user.getUsername()).getSpecimens().size();
+        this.growlistservice.addExistingClonesToGrowlist(user, cloneIds);
+        growlist = this.growlistservice.getGrowlist(user.getUsername());
 
-
-
-
-
-
-
+        assertEquals(cloneIds.size(), growlist.getSpecimens().size()-growlistBeforeAdd);
 
     }
 
+    @Test
+    @Transactional
+    public void addExistingClonesToGrowlistWithOneInvalidInternalCloneIdTest() {
+        User user = growlistTestDataInserter.user1;
+        Growlist growlist;
+        int growlistBeforeAdd;
+
+        List<String> cloneIds = Arrays.asList(
+                growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId() + "M",
+                growlistTestDataInserter.ivSpeciesCloneMale.getInternalCloneId(),
+                growlistTestDataInserter.icSpeciesClone.getInternalCloneId()
+        );
+        growlistBeforeAdd = this.growlistservice.getGrowlist(user.getUsername()).getSpecimens().size();
+        this.growlistservice.addExistingClonesToGrowlist(user, cloneIds);
+        growlist = this.growlistservice.getGrowlist(user.getUsername());
 
 
+        assertEquals(cloneIds.size()-1, growlist.getSpecimens().size()-growlistBeforeAdd);
+
+    }
 
 
 

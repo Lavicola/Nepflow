@@ -12,6 +12,9 @@ import {
 import {UserStatisticsComponent} from "./features/user-management/components/user-statistics/user-statistics.component";
 import {authGuardAuthenticated} from "./core/guards/authGuardAuthenticated";
 import {firstStepGuard} from "./core/guards/first-step.guard";
+import {
+  NepenthesQuickAddComponent
+} from "./features/growlist/components/nepenthes-quick-add/nepenthes-quick-add.component";
 
 export const routes: Routes = [
 
@@ -23,8 +26,9 @@ export const routes: Routes = [
   {path: "user/overview",component: UserStatisticsComponent},
   {path: "user/first-steps", component: UserFirstStepComponent,
   },
+  {path: "nepenthes/quick/add", component: NepenthesQuickAddComponent,},
 
-  {path: "nepenthes/add", component: AddExistingNepenthesComponent,},
+  {path: "nepenthes/guided/add", component: AddExistingNepenthesComponent,},
 
   {path: "growlist/:user",
     component: UserGrowlistComponent,

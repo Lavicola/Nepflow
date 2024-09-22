@@ -7,17 +7,40 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * LabelRepository which enables to save and retrieve any subclasses of Labels.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Repository
-public interface LabelRepository extends Neo4jRepository<Label,String> {
+public interface LabelRepository extends Neo4jRepository<Label, String> {
 
+    /**
+     * @param nepenthesName Name of the Nepenthes
+     * @return concrete Label subclass object
+     */
     Label findLabelByName(String nepenthesName);
-    @Query("MATCH (n:`:#{literal(#label)}`) RETURN count(n)")
-    int countLabelByLabelClass(String label);
 
-    @Query("match(n:`:#{literal(#labelClass)}`{name: $nepenthesName})" +
+    /**
+     * @param labelType LabelType e.g Species
+     * @return amount of unique Labels in the Database
+     */
+    @Query("MATCH (n:`:#{literal(#labelType)}`) RETURN count(n)")
+    int countLabelByLabelClass(String labelType);
+
+    /**
+     * @param labelType     labelType e.g Species, PrimaryHybrid
+     * @param nepenthesName Name of the Nepenthes
+     * @param cloneType     CloneType e.g. IVPrimaryHybrid
+     * @param sellerType    SellerType e.g. Producer
+     * @return concrete Label, their clones and Metadata depending on given CloneType
+     */
+    @Query("match(n:`:#{literal(#labelType)}`{name: $nepenthesName})" +
             "-[r:HAS_CLONE]->(c:`:#{literal(#cloneType)}`) " +
             "-[s:SOLD_BY]->(p)" +
-            "Optional Match( (clone)-[sexRel:HAS_SEX]->(sex))"+
+            "Optional Match( (clone)-[sexRel:HAS_SEX]->(sex))" +
             "RETURN n, " +
             "COLLECT(r) as relationships, " +
             "COLLECT(c) as clones," +
@@ -25,12 +48,14 @@ public interface LabelRepository extends Neo4jRepository<Label,String> {
             "COLLECT(p) as producer," +
             "COLLECT(sexRel) as sexRel," +
             "COLLECT(sex) as sex")
-    Label findLabelClonesByLabelAndNepenthesNameAndCloneType(String labelClass,String nepenthesName,String cloneType,String sellerType);
+    Label findLabelClonesByLabelAndNepenthesNameAndCloneType(String labelType, String nepenthesName, String cloneType, String sellerType);
 
-    @Query("MATCH (n:`:#{literal(#labelClass)}`) RETURN n")
-    List<Label> getNepenthesByNepenthesType(String labelClass);
-
-
+    /**
+     * @param labelType labelType e.g. Species
+     * @return List of Labels WITHOUT Clones references and Metadata
+     */
+    @Query("MATCH (n:`:#{literal(#labelType)}`) RETURN n")
+    List<Label> getNepenthesByNepenthesType(String labelType);
 
 
 }

@@ -5,16 +5,34 @@ import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
+/**
+ * Event used to asynchronous mark a Specimen as flowering for the PollenExchange.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 
 public class SpecimenFloweringEvent extends ApplicationEvent {
 
+    /**
+     *
+     */
     @Getter
     private final Specimen specimen;
+    /**
+     *
+     */
     @Getter
     private final User user;
 
 
-    public SpecimenFloweringEvent(Object source, Specimen specimen, User user) {
+    /**
+     * @param source
+     * @param specimen
+     * @param user
+     */
+    public SpecimenFloweringEvent(final Object source, final Specimen specimen, final User user) {
         super(source);
         this.specimen = specimen;
         this.user = user;

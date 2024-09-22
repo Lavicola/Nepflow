@@ -14,31 +14,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service which implements the business Logic to provide and maintain
+ * a Pollenexchange for Nepenthes.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Service
 public class PollenExchangeServiceImpl implements PollenExchangeService {
 
 
+    /**
+     *
+     */
     @Autowired
-    PollenOfferRepository pollenOfferRepository;
+    private PollenOfferRepository pollenOfferRepository;
 
+    /**
+     *
+     */
     @Autowired
-    TradeRepository tradeRepository;
+    private TradeRepository tradeRepository;
 
+    /**
+     *
+     */
     @Autowired
-    TradeRatingRepository tradeRatingRepository;
+    private TradeRatingRepository tradeRatingRepository;
 
+
+    /**
+     *
+     */
     @Autowired
-    Growlistservice growlistservice;
+    private PollenOfferStartDateRepository pollenOfferStartDateRepository;
 
-
+    /**
+     *
+     */
     @Autowired
-    PollenOfferStartDateRepository pollenOfferStartDateRepository;
+    private TradeStartDateRepository tradeStartDateRepository;
 
-    @Autowired
-    TradeStartDateRepository tradeStartDateRepository;
-
+    /**
+     * @param specimen
+     * @return
+     */
     @Override
-    public PollenOffer closePollenOffer(Specimen specimen) {
+    public PollenOffer closePollenOffer(final Specimen specimen) {
         PollenOffer pollenOffer;
 
         String pollenOfferId = this.pollenOfferRepository.getNewestPollenOfferIdBySpecimen(specimen.getUuid());
@@ -57,16 +81,24 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         }
     }
 
+    /**
+     * @param dates dates in format MM-yyyy
+     * @return The Containers containing all PollenOffers
+     */
     @Override
-    public List<PollenOfferStartDate> getPollenOffersByDates(List<String> dates) {
+    public List<PollenOfferStartDate> getPollenOffersByDates(final List<String> dates) {
 
         return this.pollenOfferStartDateRepository.getAllOpenPollenOffersUsingDatesAndExcludeUsers(dates, new ArrayList<>());
 
     }
 
+    /**
+     * @param specimen
+     * @return
+     */
     @Override
     @Transactional("transactionManager")
-    public PollenOffer createOrReOpenPollenOffer(Specimen specimen) {
+    public PollenOffer createOrReOpenPollenOffer(final Specimen specimen) {
         String pollenOfferId;
         PollenOffer pollenOffer;
 
@@ -93,18 +125,25 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     }
 
 
+    /**
+     * @param specimen
+     * @return
+     */
     @Override
     @Transactional("transactionManager")
 
-    public PollenOffer createNewPollenOffer(Specimen specimen) {
+    public PollenOffer createNewPollenOffer(final Specimen specimen) {
         PollenOffer pollenOffer = new PollenOffer(specimen);
         addPollenOfferToMonthYearContainer(pollenOffer);
         return pollenOffer;
     }
 
+    /**
+     * @param pollenOffer
+     */
     @Override
     @Transactional("transactionManager")
-    public void addPollenOfferToMonthYearContainer(PollenOffer pollenOffer) {
+    public void addPollenOfferToMonthYearContainer(final PollenOffer pollenOffer) {
         PollenOfferStartDate pollenOfferStartDate = new PollenOfferStartDate();
         Optional<PollenOfferStartDate> rPollenOfferStartDate = this.pollenOfferStartDateRepository.findById(pollenOfferStartDate.getMonthYearId());
         if (rPollenOfferStartDate.isPresent()) {
@@ -116,7 +155,13 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     }
 
 
-    public List<TradeStartDate> getTradesByUsernameAndDates(String username, List<String> dates) {
+    /**
+     * @param username username
+     * @param dates    dates in format MM-yyyy
+     * @return The Containers containing all Trades
+     */
+    public List<TradeStartDate> getTradesByUsernameAndDates(final String username,
+                                                            final List<String> dates) {
         if (dates == null || dates.isEmpty()) {
             return null;
         }
@@ -124,20 +169,27 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     }
 
 
+    /**
+     * @param initiatedUser          user which initiated the trade
+     * @param pollenOfferId          pollenofferId which the user offers
+     * @param pollenOfferRequestedId pollenOffer Id which the user wants
+     * @return
+     */
     @Override
     @Transactional("transactionManager")
 
-    public Trade openTrade(User initiatedUser, String pollenOfferId, String pollenOfferRequested) {
+    public Trade openTrade(final User initiatedUser, final String pollenOfferId,
+                           final String pollenOfferRequestedId) {
         Trade newTrade;
         Optional<PollenOffer> initiatedOffer = this.pollenOfferRepository.findById(pollenOfferId);
-        Optional<PollenOffer> requestedOffer = this.pollenOfferRepository.findById(pollenOfferRequested);
+        Optional<PollenOffer> requestedOffer = this.pollenOfferRepository.findById(pollenOfferRequestedId);
         if (!(initiatedOffer.isPresent() && requestedOffer.isPresent())) {
             return null;
         }
         if (!initiatedOffer.get().pollenOfferBelongsToUser(initiatedUser)) {
             return null;
         }
-        if (this.tradeRepository.tradeOrReverseTradeExists(pollenOfferId, pollenOfferRequested)) {
+        if (this.tradeRepository.tradeOrReverseTradeExists(pollenOfferId, pollenOfferRequestedId)) {
             // don´t  allow reverse Trade to prevent a Case where two Trades create two/one Grex
             return null;
         }
@@ -147,10 +199,13 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         return newTrade;
     }
 
+    /**
+     * @param trade trade to be added
+     */
     @Override
     @Transactional("transactionManager")
 
-    public void addTradeToMonthYearContainer(Trade trade) {
+    public void addTradeToMonthYearContainer(final Trade trade) {
         TradeStartDate tradeStartDate = new TradeStartDate();
         Optional<TradeStartDate> rPollenOfferStartDate = this.tradeStartDateRepository.findById(tradeStartDate.getMonthYearId());
         if (rPollenOfferStartDate.isPresent()) {
@@ -161,10 +216,15 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     }
 
+    /**
+     * @param user    user who wants to rejects a trade
+     * @param tradeId id of the Trade
+     * @return the refused trade
+     */
     @Override
     @Transactional("transactionManager")
 
-    public Trade refuseTrade(User user, String tradeId) {
+    public Trade refuseTrade(final User user, final String tradeId) {
         Optional<Trade> trade = this.tradeRepository.findById(tradeId);
         Trade trade1;
         if (!trade.isPresent()) {
@@ -183,31 +243,46 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     }
 
+    /**
+     * @param user1
+     * @param user2
+     * @param trade
+     */
     @Override
     @Transactional("transactionManager")
 
-    public void createTradeRatings(User user1,User user2,Trade trade){
+    public void createTradeRatings(final User user1, final User user2, final Trade trade) {
         List<TradeRating> tradeRatings = new ArrayList<>(2);
-        tradeRatings.add(new TradeRating(user1,trade));
-        tradeRatings.add(new TradeRating(user2,trade));
+        tradeRatings.add(new TradeRating(user1, trade));
+        tradeRatings.add(new TradeRating(user2, trade));
         this.tradeRatingRepository.saveAll(tradeRatings);
     }
 
+    /**
+     * @param user
+     * @param tradeId
+     * @return
+     */
     @Override
     @Transactional("transactionManager")
-    public Trade acceptTradeAndCreateRatings(User user, String tradeId) {
-        Trade trade = this.acceptTrade(user,tradeId);
-        if(trade != null){
-            this.createTradeRatings(trade.getUserWhoInitiatedTrade(),trade.getUserWhoAnswersTrade(),trade);
-        }else{
+    public Trade acceptTradeAndCreateRatings(final User user, final String tradeId) {
+        Trade trade = this.acceptTrade(user, tradeId);
+        if (trade != null) {
+            this.createTradeRatings(trade.getUserWhoInitiatedTrade(), trade.getUserWhoAnswersTrade(), trade);
+        } else {
             return null;
         }
         return trade;
     }
 
+    /**
+     * @param user    user who wants to accept a trade
+     * @param tradeId id of the Trade
+     * @return the accepted trade
+     */
     @Override
     @Transactional("transactionManager")
-    public Trade acceptTrade(User user, String tradeId) {
+    public Trade acceptTrade(final User user, final String tradeId) {
         Optional<Trade> trade = this.tradeRepository.findById(tradeId);
         Trade trade1;
         if (!trade.isPresent()) {
@@ -226,6 +301,11 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         return this.tradeRepository.save(trade1);
     }
 
+    /**
+     * @param dates     dates in format MM-yyyy
+     * @param usernames usernames to be excluded
+     * @return all PollenOffer containers with their Pollenoffer excluding the specified Users
+     */
     @Override
     @Transactional("transactionManager")
 
@@ -234,31 +314,50 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     }
 
 
+    /**
+     * @return all existing Dates of Trades in Format MM-yyyy
+     */
     @Override
     @Transactional("transactionManager")
     public List<String> getAllDatesTrades() {
         return tradeStartDateRepository.getTradeDates();
     }
 
+    /**
+     * @return all existing Dates of PollenOffers in Format MM-yyyy
+     */
     @Override
     @Transactional("transactionManager")
     public List<String> getAllDatesPollenOffer() {
         return pollenOfferStartDateRepository.getPollenOfferStartDates();
     }
 
+    /**
+     * @param id id of the trade
+     * @return the Trade
+     */
     @Override
-    public Trade getTradeById(String id) {
+    public Trade getTradeById(final String id) {
         Optional<Trade> trade = this.tradeRepository.findById(id);
 
         return trade.orElse(null);
     }
 
+    /**
+     * @param username
+     * @return
+     */
     @Override
-    public List<TradeRating> getTradesStatusWithDate(String username) {
+    public List<TradeRating> getTradesStatusWithDate(final String username) {
         return this.tradeRatingRepository.getTradeRatingByUsername(username);
     }
+
+    /**
+     * @param username
+     * @return
+     */
     @Override
-    public List<PollenOfferSpeciesStatisticsDTOProjection> getPollenOfferStatistics(String username){
+    public List<PollenOfferSpeciesStatisticsDTOProjection> getPollenOfferStatistics(final String username) {
         return this.pollenOfferRepository.getPollenOfferStatisticsBySpecimen(username);
     }
 }

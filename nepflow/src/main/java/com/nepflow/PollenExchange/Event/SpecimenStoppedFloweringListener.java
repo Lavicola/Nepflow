@@ -6,20 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * Eventlistener used to close a PollenOffer asynchronous.
+ *
+ * @author David Schmidt
+ * @version 14. Nov 2024
+ */
+
 @Component
 public class SpecimenStoppedFloweringListener {
 
+    /**
+     *
+     */
     @Autowired
-    PollenExchangeService pollenExchangeService;
+    private PollenExchangeService pollenExchangeService;
 
 
+    /**
+     * @param event SpecimenStoppedFloweringEvent
+     */
     @EventListener
-    public void handleSpecimenStoppedFloweringEvent(SpecimenStoppedFloweringEvent event) {
+    public void handleSpecimenStoppedFloweringEvent(final SpecimenStoppedFloweringEvent event) {
         this.pollenExchangeService.closePollenOffer(event.getSpecimen());
 
 
     }
-
 
 
 }

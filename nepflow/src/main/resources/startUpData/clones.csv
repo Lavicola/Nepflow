@@ -222,6 +222,7 @@ Borneo Exotics,IV,ventricosa ,BE-3771, ,
 Borneo Exotics,IV,ventricosa ,BE-3772, ,
 Borneo Exotics,IV,vieillardii,BE-3224, ,
 Borneo Exotics,IV,vieillardii,BE-4599, ,
+Borneo Exotics,IV,villosa,BE-3225, ,
 Borneo Exotics,IV,villosa,BE-3225,Female,
 Borneo Exotics,IV,burkei ,BE-3254, ,
 Borneo Exotics,IV,burkei ,BE-4512, ,
@@ -731,6 +732,18 @@ Floravitro,IV,clipeata,FV-030-12,Female,Mount Kelam
 Floravitro,IV,clipeata,FV-030-13,Male,Mount Kelam
 Floravitro,IV,clipeata,FV-030-16,Female,Mount Kelam
 Floravitro,IV,clipeata,FV-030-17,Female,Mount Kelam
+Floravitro,IV,clipeata,FV-030-01,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-03,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-04,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-05,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-07,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-09,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-10,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-11,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-12,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-13,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-16,  ,Mount Kelam
+Floravitro,IV,clipeata,FV-030-17,  ,Mount Kelam
 Floravitro,IV,singalana,FV-033, ,Mount Kunyit
 Floravitro,IV,singalana,FV-033-01, ,Mount Kunyit
 Floravitro,IV,albomarginata,FV-034, ,Penang Island
@@ -748,6 +761,8 @@ Floravitro,ISC,khasiana,FV-043-ISC, ,Meghalaya
 Floravitro,IV,sp. Papua,FV-044, ,Mount Doorman
 Floravitro,IV,sp. Papua,FV-044-01, ,Mount Doorman
 Floravitro,IV,clipeata,FV-045, ,Mount Kelam
+Floravitro,IV,clipeata,FV-045-01, ,Mount Kelam
+Floravitro,IV,clipeata,FV-045-02, ,Mount Kelam
 Floravitro,IV,clipeata,FV-045-01,Female,Mount Kelam
 Floravitro,IV,clipeata,FV-045-02,Female,Mount Kelam
 Floravitro,IV,clipeata,FV-046, ,Mount Kelam

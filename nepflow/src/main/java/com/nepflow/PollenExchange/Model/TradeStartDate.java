@@ -11,35 +11,62 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model(Container) which contains all Trades for every Month.
+ * The Container can therefore be seen as a way to optimize queries.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Node
 public class TradeStartDate {
 
+    /**
+     * Primary Key in Format MM-yyyy.
+     */
     @Id
     @Getter
-    String MonthYearId;
+    private String MonthYearId;
 
-    @Relationship(value = "OPENED_IN",direction = Relationship.Direction.INCOMING)
-    List<Trade> trades = new ArrayList<>();
+    /**
+     *
+     */
+    @Relationship(value = "OPENED_IN", direction = Relationship.Direction.INCOMING)
+    private List<Trade> trades = new ArrayList<>();
 
+    /**
+     * formatter to gain the MM-yyy Format.
+     */
     @Transient
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-yyyy");
 
 
-    public TradeStartDate(){
+    /**
+     * Primary Key in Format MM-yyyy.
+     */
+    public TradeStartDate() {
         this.MonthYearId = LocalDate.now().format(formatter);
 
     }
 
-    public boolean addTrade(Trade trade){
-        if( trade!= null  && trade.getTradeOpenedDate().format(this.formatter).equals(this.MonthYearId)){
+    /**
+     * @param trade trade to be added to the Container
+     * @return true if trade could be added, else  false
+     */
+    public boolean addTrade(final Trade trade) {
+        if (trade != null && trade.getTradeOpenedDate().format(this.formatter).equals(this.MonthYearId)) {
             this.trades.add(trade);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public List<Trade> getTrades(){
+    /**
+     * @return copy of all Trades the Container contains
+     */
+    public List<Trade> getTrades() {
         return new ArrayList<>(trades);
     }
 

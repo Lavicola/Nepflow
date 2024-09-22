@@ -5,20 +5,44 @@ import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository to retrieve and save Growlists.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Repository
-public interface GrowlistRepository extends Neo4jRepository<Growlist,String> {
+public interface GrowlistRepository extends Neo4jRepository<Growlist, String> {
 
 
+    /**
+     * @param oAuth OAuth id of the User
+     * @return The id of the Growlist
+     */
+    @Query("match(g:Growlist)<-[a]-(u:User {OAuthId: $oAuth})\n" +
+            "RETURN elementId(g)\n")
+    String getGrowlistIdByUserId(String oAuth);
 
+    /**
+     * @param oAuth      OAuth id of the User
+     * @param growlistId id of the growlist
+     * @param isPublic   true if Growlist shall be public, else false
+     * @return true if update was success, else false
+     */
     @Query("match(g:Growlist)\n" +
             "where elementId(g) = $growlistId\n" +
             "match (g)<-[a]-(u:User {OAuthId: $oAuth})\n" +
             "Set g.isPublic = $isPublic\n" +
             "RETURN CASE WHEN g IS NOT NULL THEN true ELSE false END AS result\n")
-    boolean updateGrowlistVisibility(String oAuth,String growlistId, boolean isPublic);
+    boolean updateGrowlistVisibility(String oAuth, String growlistId, boolean isPublic);
 
 
-    @Query(" MATCH (u:User {OAuthId: $userId})-[r:CONTAINS_COLLECTION]->(g:Growlist)\n" +
+    /**
+     * @param oAuth OAuth id of the User
+     * @return Growlist and all references EXCEPT the reference from Specimen to User
+     */
+    @Query(" MATCH (u:User {OAuthId: $oAuth})-[r:CONTAINS_COLLECTION]->(g:Growlist)\n" +
             "OPTIONAL MATCH (g)-[sr:CONTAINS_SPECIMEN]->(s:Specimen)-[cr:INSTANCE_OF]->(c:Clone)\n" +
             "OPTIONAL MATCH (c)-[spr:SOLD_BY]->(p:Producer)\n" +
             "OPTIONAL MATCH (c)-[lr:CLONE_OF_SPECIES]->(l:Label)\n" +
@@ -41,10 +65,12 @@ public interface GrowlistRepository extends Neo4jRepository<Growlist,String> {
             "  COLLECT(loc) ,\n" +
             "  COLLECT(sexR) , \n" +
             "  COLLECT(sex)\n ")
-    // Careful! this Query  does  not  return the User  for every Specimen for performance Sake.
-    //  Growlist.getUser  -> works , Growlist.getSpecimen.getUser --> null
-    Growlist findGrowlistByUserId(String userId);
+    Growlist findGrowlistByUserId(String oAuth);
 
+    /**
+     * @param username username of the User
+     * @return Growlist and all references EXCEPT the reference from Specimen to User
+     */
     @Query(" MATCH (u:User {username: $username})-[r:CONTAINS_COLLECTION]->(g:Growlist)\n" +
             "OPTIONAL MATCH (g)-[sr:CONTAINS_SPECIMEN]->(s:Specimen)-[cr:INSTANCE_OF]->(c:Clone)\n" +
             "OPTIONAL MATCH (c)-[spr:SOLD_BY]->(p:Producer)\n" +
@@ -68,11 +94,7 @@ public interface GrowlistRepository extends Neo4jRepository<Growlist,String> {
             "  COLLECT(loc) AS locations,\n" +
             "  COLLECT(sexR) AS sexRelations, \n" +
             "  COLLECT(sex) AS sexes\n ")
-       // Careful! this Query  does  not  return the User  for every Specimen for performance Sake.
-       //  Growlist.getUser  -> works , Growlist.getSpecimen.getUser --> null
-   Growlist findGrowlistByUsername(String username);
-
-
+    Growlist findGrowlistByUsername(String username);
 
 
 }

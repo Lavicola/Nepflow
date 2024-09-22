@@ -13,24 +13,50 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Implements Methods in order convert and store webp Images to a MinIO server.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
 @Service
 public class ImageServiceImpl implements ImageService {
 
+    /**
+     *
+     */
     @Autowired
-    MinioClient minioClient;
+    private MinioClient minioClient;
 
+    /**
+     *
+     */
     @Value("${minio.url}")
     private String url;
 
+    /**
+     *
+     */
     @Value("${minio.port}")
     private int port;
 
 
+    /**
+     * @param bucketname name of the bucket to store the image into
+     * @param path       path of where the  bucket can be found
+     * @param filename   name of the file
+     * @param imageFile  image
+     * @return absolute Path where the Image can be found
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     */
     @Override
-    public String saveImageToStorageWebp(String bucketname, String path, String fileName, MultipartFile imageFile) throws IOException, NoSuchAlgorithmException {
+    public String saveImageToStorageWebp(final String bucketname, final String path,
+                                         final String filename, final MultipartFile imageFile)
+            throws IOException, NoSuchAlgorithmException {
         String pathFileExten;
         ByteArrayInputStream byteArrayInputStream = null;
-        pathFileExten = String.format("%s/%s.webp",path,Digest.sha256Hash(fileName));
+        pathFileExten = String.format("%s/%s.webp", path, Digest.sha256Hash(filename));
 
         if (!createBucketIfNotExists(bucketname)) {
             throw new RuntimeException("Could not create Bucket");
@@ -55,8 +81,13 @@ public class ImageServiceImpl implements ImageService {
 
     }
 
+    /**
+     * @param imageFile file to be converted to webp
+     * @return bytes of the converted Image
+     * @throws IOException
+     */
     @Override
-    public ByteArrayOutputStream convertImageToWebp(MultipartFile imageFile) throws IOException {
+    public ByteArrayOutputStream convertImageToWebp(final MultipartFile imageFile) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         BufferedImage image = null;
         image = ImageIO.read(imageFile.getInputStream());
@@ -66,7 +97,11 @@ public class ImageServiceImpl implements ImageService {
         return byteArrayOutputStream;
     }
 
-    private boolean createBucketIfNotExists(String bucketName) {
+    /**
+     * @param bucketName name of the bucket to be created
+     * @return true if bucket could be created or already did exist
+     */
+    private boolean createBucketIfNotExists(final String bucketName) {
 
         try {
             boolean bucketExists;
@@ -84,8 +119,13 @@ public class ImageServiceImpl implements ImageService {
     }
 
 
+    /**
+     * @param bucketname name of the bucket to store the image into
+     * @param url        absolute path to the image
+     * @return true if image could be deleted
+     */
     @Override
-    public boolean deleteImage(String bucketname,String url) {
+    public boolean deleteImage(final String bucketname, final String url) {
         String pathFileExten = url.split(bucketname)[1];
         RemoveObjectArgs removeObjectArgs = RemoveObjectArgs.builder().
                 bucket(bucketname).object(pathFileExten).build();
@@ -96,13 +136,6 @@ public class ImageServiceImpl implements ImageService {
         }
         return true;
     }
-
-    @Override
-    public byte[] getImage(String imageDirectory, String imageName) throws IOException {
-        // TODO at some point
-        return new byte[0];
-    }
-
 
 
 }

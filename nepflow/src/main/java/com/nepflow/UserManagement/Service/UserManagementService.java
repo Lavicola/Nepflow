@@ -5,25 +5,71 @@ import com.nepflow.UserManagement.Model.User;
 
 import java.util.List;
 
+/**
+ * Model which defines Methods in order
+ * to return the right Label class at runtime.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 public interface UserManagementService {
 
-    public List<User> getAllUsers();
+    /**
+     * @return List of all Users
+     */
+    List<User> getAllUsers();
 
-    public User getUserByUsername(String username);
+    /**
+     * @param username
+     * @return
+     */
+    User getUserByUsername(String username);
 
-    public User getUserByOAuthId(String oauthId);
+    /**
+     * @param oauthId
+     * @return
+     */
+     User getUserByOAuthId(String oauthId);
 
-    public boolean isUsernameFree(String username);
+    /**
+     * @param username
+     * @return
+     */
+     boolean isUsernameFree(String username);
 
-    public User createMinimalUser(String userId,String username,String contactInformation, String countryName);
+    /**
+     * @param userId
+     * @param username
+     * @param contactInformation
+     * @param countryName
+     * @return
+     */
+     User createMinimalUser(String userId, String username, String contactInformation, String countryName);
 
-    public User updateUser(String userId, String contactInformation);
+    /**
+     * @param userId
+     * @param contactInformation
+     * @return
+     */
+     User updateUser(String userId, String contactInformation);
 
+    /**
+     * @param countryAsString
+     * @return
+     */
     Country saveCountry(String countryAsString);
 
+    /**
+     * @param countryAsString
+     * @return
+     */
     Country getCountry(String countryAsString);
 
 
-    public List<User> getUsers();
+    /**
+     * @return
+     */
+     List<User> getUsers();
 
 }

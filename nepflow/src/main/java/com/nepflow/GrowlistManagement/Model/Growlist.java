@@ -10,25 +10,47 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * Model which abstracts the Growlist, a Container holding every Specimen
+ * a User owns.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
 
 @Node
 @NoArgsConstructor
 public class Growlist {
 
+    /**
+     *
+     */
     @Id
     @GeneratedValue
     @Getter
-    protected String uuid;
+    private String uuid;
 
+    /**
+     *
+     */
     @Relationship(value = "CONTAINS_COLLECTION", direction = Relationship.Direction.INCOMING)
     @Getter
-    User user;
+    private User user;
+    /**
+     *
+     */
     @Relationship(value = "CONTAINS_SPECIMEN")
-    List<Specimen> specimenList;
+    private List<Specimen> specimenList;
+    /**
+     *
+     */
     @Getter
-    protected boolean isPublic;
+    private  boolean isPublic;
 
-    public Growlist(User user) {
+    /**
+     * @param user user which the growlist shall reference
+     */
+    public Growlist(final User user) {
         if (user == null) {
             throw new RuntimeException("User is Null");
         }
@@ -37,8 +59,12 @@ public class Growlist {
         this.isPublic = true;
     }
 
-    public boolean addSpecimen(Specimen specimen) {
-        if (specimen.getUser().equals(this.user)) {
+    /**
+     * @param specimen specimen which belongs to the User
+     * @return true if success, else false
+     */
+    public boolean addSpecimen(final Specimen specimen) {
+        if (specimen.isSpecimenOwner(this.user)) {
             this.specimenList.add(specimen);
             return true;
         } else {
@@ -46,6 +72,9 @@ public class Growlist {
         }
     }
 
+    /**
+     * @return all Specimens a User own
+     */
     public List<Specimen> getSpecimens() {
         return new ArrayList<>(specimenList);
     }

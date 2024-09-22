@@ -9,16 +9,25 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * This event is used to automatically create a Growlist for a new User
+ * Lister to asynchronous create a Growlist for an User.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
  */
 @Component
 public class UserEventListener {
 
+    /**
+     *
+     */
     @Autowired
-    Growlistservice growlistservice;
+    private Growlistservice growlistservice;
 
+    /**
+     * @param event
+     */
     @EventListener
-    public void handleUserCreatedEvent(UserCreatedEvent event) {
+    public void handleUserCreatedEvent(final UserCreatedEvent event) {
         User user = event.getUser();
         this.growlistservice.createGrowlist(user);
 

@@ -9,7 +9,9 @@ import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implementation of NepenthesRetrievalService.
@@ -38,8 +40,41 @@ public class NepenthesRetrievalServiceImpl implements NepenthesRetrievalService 
      * @return Clone object
      */
     @Override
-    public Clone getCloneByInternalId(final String internalCloneId) {
+    public Clone getCloneByInternalCloneId(final String internalCloneId) {
         return this.cloneRepository.findCloneByInternalCloneId(internalCloneId);
+    }
+
+    /**
+     * Method Implementation to retrieve a List of Clones using internal Clone Ids.
+     *
+     * @param internalCloneIds internal Ids of the clones
+     * @return List of Clone object
+     */
+    public List<Clone> getClonesByInternalCloneId(final Set<String> internalCloneIds) {
+        if (internalCloneIds.isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            return this.cloneRepository.findClonesByInternalCloneIdIn(internalCloneIds.stream().toList());
+        }
+
+    }
+
+
+    /**
+     * Method implementation to retrieve Clones using their cloneIds.
+     * the  cloneId itself is not unique!
+     *
+     * @param cloneIds ids  of the clones to retrieve
+     * @return Clone object
+     */
+    public List<Clone> getClonesByCloneId(final List<String> cloneIds) {
+        if (cloneIds.isEmpty()) {
+            return new ArrayList<>(0);
+        } else {
+            return this.cloneRepository.findClonesByCloneIdIn(cloneIds);
+        }
+
+
     }
 
 
@@ -66,6 +101,7 @@ public class NepenthesRetrievalServiceImpl implements NepenthesRetrievalService 
 
     /**
      * Implementation to retrieve all Labels of a specific subclass Label.
+     *
      * @param labelClass the name of a subclass of Label
      * @return Label object without references
      */

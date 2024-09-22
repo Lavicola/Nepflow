@@ -11,27 +11,51 @@ import org.springframework.data.neo4j.core.schema.TargetNode;
 
 import java.time.LocalDate;
 
+/**
+ * Custom Model which represents a Relationship property for PollenOffer.
+ * The Custom Model represents the references used to represent a flowering Specimen.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @RelationshipProperties
 @NoArgsConstructor
 public class SpecimenFlowerRelationshipValue {
+    /**
+     *
+     */
     @Id
     @GeneratedValue
     private String uuid;
 
+    /**
+     *
+     */
     @TargetNode
     @Getter
-    Specimen specimen;
+    private Specimen specimen;
 
+    /**
+     *
+     */
     @Getter
-    LocalDate startDate = LocalDate.now();
+    private LocalDate startDate = LocalDate.now();
 
 
-    public SpecimenFlowerRelationshipValue(Specimen specimen){
+    /**
+     * @param specimen
+     */
+    public SpecimenFlowerRelationshipValue(final Specimen specimen) {
         this.specimen = specimen;
     }
 
+    /**
+     * @param specimen
+     * @param startDate
+     */
     @PersistenceCreator
-    public SpecimenFlowerRelationshipValue(Specimen specimen,LocalDate startDate){
+    public SpecimenFlowerRelationshipValue(final Specimen specimen, final LocalDate startDate) {
         this.specimen = specimen;
         this.startDate = startDate;
     }

@@ -5,22 +5,37 @@
  */
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.GrowlistManagement.Dto.*;
+import com.nepflow.GrowlistManagement.Dto.CloneType;
+import com.nepflow.GrowlistManagement.Dto.GrowlistDTO;
+import com.nepflow.GrowlistManagement.Dto.GrowlistPublic;
+import com.nepflow.GrowlistManagement.Dto.LabelCloneDTO;
+import com.nepflow.GrowlistManagement.Dto.SpecimenCloneDTO;
+import com.nepflow.GrowlistManagement.Dto.SpecimenUpdateFlowerStatus;
+import com.nepflow.GrowlistManagement.Dto.SpecimenUpdateSex;
+import com.nepflow.GrowlistManagement.Dto.SpecimensBulkRequestDTO;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-19T17:24:29.681105600+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import java.util.List;
+import java.util.Map;
+import jakarta.annotation.Generated;
+
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-20T23:57:23.701653200+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Growlistmanagement", description = "Operations for the GrowlistManagement of an user")
 public interface GrowlistmanagementApi {
@@ -30,33 +45,38 @@ public interface GrowlistmanagementApi {
     }
 
     /**
-     * POST /growlist/clone/add/{internalCloneId} : Add an existing Clone of a Nepenthes to the Growlist.
+     * POST /growlist/add/clones : Addexisting clones of Nepenthes to Growlis.
      *
-     * @param internalCloneId  (required)
+     * @param requestBody  (optional)
      * @return OK (status code 200)
-     *         or Error, could not add Specimen to user (status code 500)
+     *         or returns the specimens which could be added (status code 207)
+     *         or errror, could not add Clone to user (status code 500)
      */
     @Operation(
-        operationId = "growlistCloneAddInternalCloneIdPost",
-        summary = "Add an existing Clone of a Nepenthes to the Growlist.",
+        operationId = "growlistAddClonesPost",
+        summary = "Addexisting clones of Nepenthes to Growlis.",
         tags = { "Growlistmanagement" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimenCloneDTO.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimensBulkRequestDTO.class))
             }),
-            @ApiResponse(responseCode = "500", description = "Error, could not add Specimen to user")
+            @ApiResponse(responseCode = "207", description = "returns the specimens which could be added", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SpecimensBulkRequestDTO.class))
+            }),
+            @ApiResponse(responseCode = "500", description = "errror, could not add Clone to user")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/growlist/clone/add/{internalCloneId}",
-        produces = { "application/json" }
+        value = "/growlist/add/clones",
+        produces = { "application/json" },
+        consumes = { "application/json" }
     )
     
-    default ResponseEntity<SpecimenCloneDTO> growlistCloneAddInternalCloneIdPost(
-        @Parameter(name = "internalCloneId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("internalCloneId") String internalCloneId
+    default ResponseEntity<SpecimensBulkRequestDTO> growlistAddClonesPost(
+        @Parameter(name = "request_body", description = "") @Valid @RequestBody(required = false) List<String> requestBody
     ) {
-        return getDelegate().growlistCloneAddInternalCloneIdPost(internalCloneId);
+        return getDelegate().growlistAddClonesPost(requestBody);
     }
 
 

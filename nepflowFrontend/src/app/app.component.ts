@@ -19,7 +19,8 @@ export class AppComponent  implements OnInit{
   title = 'nepflowFrontend';
   username!:string;
 
-  newNepenthesRoute: string = "nepenthes/add";
+  quickAdd: any = "nepenthes/quick/add";
+  newNepenthesRoute: string = "nepenthes/guided/add";
   publicGrowlistsRoute: string = "users/growlist";
   myGrowlistRoute: string = "growlist/"
   closedTrades:string = "trades/closed"

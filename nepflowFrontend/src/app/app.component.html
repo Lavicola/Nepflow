@@ -1,7 +1,13 @@
 <mat-toolbar>
   <h1>Nepflow</h1>
   <a mat-button [routerLink]="profileRoute">Profile</a>
-  <a mat-button [routerLink]="newNepenthesRoute">add Nepenthes</a>
+  <button mat-button [matMenuTriggerFor]="addNepenthes">add Nepenthes</button>
+  <mat-menu #addNepenthes="matMenu">
+    <button mat-menu-item [routerLink]="quickAdd">Quick Add</button>
+    <button mat-menu-item [routerLink]="newNepenthesRoute">Guided Add </button>
+  </mat-menu>
+
+
 
   <!-- Growlist Submenu -->
   <button mat-button [matMenuTriggerFor]="growlistMenu">Growlist</button>

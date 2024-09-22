@@ -1,20 +1,28 @@
 /* tslint:disable */
 /* eslint-disable */
 import { HttpClient, HttpContext } from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import {BaseService} from "../../../core/openApiGeneratedFiles/base-service";
 import {ApiConfiguration} from "../../../core/openApiGeneratedFiles/api-configuration";
-
-import {growlistGrowlistIdPublicPatch,GrowlistGrowlistIdPublicPatch$Params} from "../fn/growlistmanagement/growlist-growlist-id-public-patch";
 import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
-import {SpecimenCloneDto} from "../models/specimen-clone-dto";
-import {SpecimenUpdateSex} from "../models/specimen-update-sex";
-import {SpecimenUpdateFlowerStatus} from "../models/specimen-update-flower-status";
-import {GrowlistDto} from "../models/growlist-dto";
+
+import { growlistAddClonesPost } from '../fn/growlistmanagement/growlist-add-clones-post';
+import { GrowlistAddClonesPost$Params } from '../fn/growlistmanagement/growlist-add-clones-post';
+import { growlistCreateCloneCloneTypePost } from '../fn/growlistmanagement/growlist-create-clone-clone-type-post';
+import { GrowlistCreateCloneCloneTypePost$Params } from '../fn/growlistmanagement/growlist-create-clone-clone-type-post';
+import { growlistCreateNepenthesCloneTypePost } from '../fn/growlistmanagement/growlist-create-nepenthes-clone-type-post';
+import { GrowlistCreateNepenthesCloneTypePost$Params } from '../fn/growlistmanagement/growlist-create-nepenthes-clone-type-post';
+import { GrowlistDto } from '../models/growlist-dto';
+import { growlistGrowlistIdPublicPatch } from '../fn/growlistmanagement/growlist-growlist-id-public-patch';
+import { GrowlistGrowlistIdPublicPatch$Params } from '../fn/growlistmanagement/growlist-growlist-id-public-patch';
+import { GrowlistPublic } from '../models/growlist-public';
 import { growlistUsernameClonesGet } from '../fn/growlistmanagement/growlist-username-clones-get';
 import { GrowlistUsernameClonesGet$Params } from '../fn/growlistmanagement/growlist-username-clones-get';
+import { SpecimenCloneDto } from '../models/specimen-clone-dto';
+import { SpecimensBulkRequestDto } from '../models/specimens-bulk-request-dto';
 import { specimensSpecimenIdDelete } from '../fn/growlistmanagement/specimens-specimen-id-delete';
 import { SpecimensSpecimenIdDelete$Params } from '../fn/growlistmanagement/specimens-specimen-id-delete';
 import { specimensSpecimenIdFloweringPatch } from '../fn/growlistmanagement/specimens-specimen-id-flowering-patch';
@@ -25,22 +33,14 @@ import { specimensSpecimenIdImagePut } from '../fn/growlistmanagement/specimens-
 import { SpecimensSpecimenIdImagePut$Params } from '../fn/growlistmanagement/specimens-specimen-id-image-put';
 import { specimensSpecimenIdSexPatch } from '../fn/growlistmanagement/specimens-specimen-id-sex-patch';
 import { SpecimensSpecimenIdSexPatch$Params } from '../fn/growlistmanagement/specimens-specimen-id-sex-patch';
-import { growlistCloneAddInternalCloneIdPost } from '../fn/growlistmanagement/growlist-clone-add-internal-clone-id-post';
-import { GrowlistCloneAddInternalCloneIdPost$Params } from '../fn/growlistmanagement/growlist-clone-add-internal-clone-id-post';
-import { growlistCreateCloneCloneTypePost } from '../fn/growlistmanagement/growlist-create-clone-clone-type-post';
-import { GrowlistCreateCloneCloneTypePost$Params } from '../fn/growlistmanagement/growlist-create-clone-clone-type-post';
-import { growlistCreateNepenthesCloneTypePost } from '../fn/growlistmanagement/growlist-create-nepenthes-clone-type-post';
-import { GrowlistCreateNepenthesCloneTypePost$Params } from '../fn/growlistmanagement/growlist-create-nepenthes-clone-type-post';
-import {GrowlistPublic} from "../models/growlist-public";
-
-
-
+import { SpecimenUpdateFlowerStatus } from '../models/specimen-update-flower-status';
+import { SpecimenUpdateSex } from '../models/specimen-update-sex';
 
 
 /**
  * Operations for the GrowlistManagement of an user
  */
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class GrowlistmanagementService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
@@ -79,36 +79,36 @@ export class GrowlistmanagementService extends BaseService {
     );
   }
 
-  /** Path part for operation `growlistCloneAddInternalCloneIdPost()` */
-  static readonly GrowlistCloneAddInternalCloneIdPostPath = '/growlist/clone/add/{internalCloneId}';
+  /** Path part for operation `growlistAddClonesPost()` */
+  static readonly GrowlistAddClonesPostPath = '/growlist/add/clones';
 
   /**
-   * Add an existing Clone of a Nepenthes to the Growlist.
+   * Addexisting clones of Nepenthes to Growlis.
    *
    *
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `growlistCloneAddInternalCloneIdPost()` instead.
+   * To access only the response body, use `growlistAddClonesPost()` instead.
    *
-   * This method doesn't expect any request body.
+   * This method sends `application/json` and handles request body of type `application/json`.
    */
-  growlistCloneAddInternalCloneIdPost$Response(params: GrowlistCloneAddInternalCloneIdPost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpecimenCloneDto>> {
-    return growlistCloneAddInternalCloneIdPost(this.http, this.rootUrl, params, context);
+  growlistAddClonesPost$Response(params?: GrowlistAddClonesPost$Params, context?: HttpContext): Observable<StrictHttpResponse<SpecimensBulkRequestDto>> {
+    return growlistAddClonesPost(this.http, this.rootUrl, params, context);
   }
 
   /**
-   * Add an existing Clone of a Nepenthes to the Growlist.
+   * Addexisting clones of Nepenthes to Growlis.
    *
    *
    *
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `growlistCloneAddInternalCloneIdPost$Response()` instead.
+   * To access the full response (for headers, for example), `growlistAddClonesPost$Response()` instead.
    *
-   * This method doesn't expect any request body.
+   * This method sends `application/json` and handles request body of type `application/json`.
    */
-  growlistCloneAddInternalCloneIdPost(params: GrowlistCloneAddInternalCloneIdPost$Params, context?: HttpContext): Observable<SpecimenCloneDto> {
-    return this.growlistCloneAddInternalCloneIdPost$Response(params, context).pipe(
-      map((r: StrictHttpResponse<SpecimenCloneDto>): SpecimenCloneDto => r.body)
+  growlistAddClonesPost(params?: GrowlistAddClonesPost$Params, context?: HttpContext): Observable<SpecimensBulkRequestDto> {
+    return this.growlistAddClonesPost$Response(params, context).pipe(
+      map((r: StrictHttpResponse<SpecimensBulkRequestDto>): SpecimensBulkRequestDto => r.body)
     );
   }
 

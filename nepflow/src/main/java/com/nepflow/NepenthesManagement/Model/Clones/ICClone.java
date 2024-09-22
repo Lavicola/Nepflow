@@ -10,23 +10,53 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
+/**
+ * Model which abstracts a unique Clone ouf of a seed which is not propagated in IV.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
 @Node
 @NoArgsConstructor
 
 public abstract class ICClone extends Clone {
 
+    /**
+     *
+     */
     @Relationship("SOLD_BY")
     @Getter
-    Seller seller;
+    private Seller seller;
 
-    public ICClone(Label label, Sex sex, String cloneId, Location location, Seller seller) {
+    /**
+     * @param label    the label(or more specific species/hybrid) a clone will reference
+     * @param sex      the Sex of a Clone
+     * @param cloneId  the id of a clone
+     * @param location the origin of the clone
+     * @param seller   seller of the clone
+     */
+    public ICClone(final Label label, final Sex sex, final String cloneId, final Location location, final Seller seller) {
         super(label, sex, cloneId, location);
         this.seller = seller;
     }
 
+    /**
+     * @return seller as a String
+     */
     public String getSellerAsString() {
         return this.seller != null ? this.seller.getName() : "";
     }
 
+    /**
+     * ICClones can use the cloneId as internalCloneId, because ICClones are always truly unique
+     * and never refer to a batch of "seeds" like in IV.
+     *
+     * @param cloneId clone Id
+     * @param sex     sex
+     * @return internal Clone Id
+     */
+    public static String generateInternalCloneId(final String cloneId, final Sex sex) {
+        return cloneId;
+    }
 
 }

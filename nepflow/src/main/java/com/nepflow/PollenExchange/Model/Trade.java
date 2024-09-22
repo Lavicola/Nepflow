@@ -11,34 +11,63 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+
+/**
+ * Model which represents a Trade referencing PollenOffers and Users.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
 
 @Node
 @NoArgsConstructor
 public class Trade {
+    /**
+     *
+     */
     @Id
     @GeneratedValue
     @Getter
     private String uuid;
 
+    /**
+     * One user must initiate a Trade, this member represents this PollenOffer.
+     */
     @Relationship(value = "OFFERS", direction = Relationship.Direction.OUTGOING)
     @Getter
-    PollenOffer initiatedOffer;
+    private PollenOffer initiatedOffer;
+
+    /**
+     *
+     */
     @Relationship(value = "WANTS", direction = Relationship.Direction.OUTGOING)
     @Getter
-    PollenOffer requestedOffer;
+    private PollenOffer requestedOffer;
 
+    /**
+     *
+     */
     @Relationship(value = "INITIATED", direction = Relationship.Direction.OUTGOING)
-    User userOffers;
+    private User userOffers;
 
+    /**
+     * exact Date the Trade was initiated.
+     */
     @Getter
-    LocalDate tradeOpenedDate = LocalDate.now();
+    private LocalDate tradeOpenedDate = LocalDate.now();
 
 
+    /**
+     *
+     */
     @Relationship(value = "NEEDS_TO_ANSWER", direction = Relationship.Direction.OUTGOING)
-    TradeUserAnswersRelationshipValue userWhichAnswers;
+    private TradeUserAnswersRelationshipValue userWhichAnswers;
 
-    public Trade(PollenOffer pollenOffer, PollenOffer requestedOffer) {
+    /**
+     * @param pollenOffer    one user must initiate a Trade, this PollenOffer represents this exact PollenOffer
+     * @param requestedOffer the PollenOffer which the initiated user requested.
+     */
+    public Trade(final PollenOffer pollenOffer, final PollenOffer requestedOffer) {
         if (pollenOffer.getSexAsString().equals(requestedOffer.getSexAsString())) {
             throw new TradePollenOfferSameSexException(pollenOffer.getSexAsString(), requestedOffer.getSexAsString());
         }
@@ -53,86 +82,130 @@ public class Trade {
         this.userWhichAnswers = new TradeUserAnswersRelationshipValue(requestedOffer.getUser());
     }
 
-    public boolean isAllowedToAnswerTrade(User user) {
-        return this.isTradeOpen()  &&  this.userWhichAnswers.getUser().equals(user);
+    /**
+     * @param user user to be checked if allowed to answer the trade
+     * @return true if given User is allowed
+     */
+    public boolean isAllowedToAnswerTrade(final User user) {
+        return this.isTradeOpen() && this.userWhichAnswers.getUser().equals(user);
     }
 
 
-    public String convertOpenedDay(){
+    /**
+     * Helper method used for the ModelMapper.
+     *
+     * @return exact Date as String
+     */
+    public String convertOpenedDay() {
         return this.getTradeOpenedDate().toString();
     }
 
 
+    /**
+     * @return User who is allowed to Answer the Trade
+     */
     public User getUserWhoAnswersTrade() {
         return this.userWhichAnswers.getUser();
     }
 
+    /**
+     * @return User who initiated the Trade
+     */
     public User getUserWhoInitiatedTrade() {
         return this.userOffers;
     }
 
 
-
+    /**
+     *
+     */
     public void refuseTrade() {
         this.userWhichAnswers.refuseTrade();
     }
 
+    /**
+     *
+     */
     public void acceptTrade() {
         this.userWhichAnswers.acceptTrade();
     }
 
-    public void setTradeToExpired(){
-
-        ArrayList<Boolean> a = new ArrayList<>(10);
-
-
+    /**
+     *
+     */
+    public void setTradeToExpired() {
         this.userWhichAnswers.setTradeToExpired();
     }
 
 
-
-    public boolean isUserPartOfTrade(User user){
+    /**
+     * @param user user to be checked if he is part of the Trade
+     * @return true if user is part of Trade, else false
+     */
+    public boolean isUserPartOfTrade(final User user) {
         return this.userWhichAnswers.getUser().equals(user) || this.userOffers.equals(user);
 
     }
 
+    /**
+     * @return true if trade was refused
+     */
     public boolean wasTradeRefused() {
         return this.userWhichAnswers.wasTradeRefused();
     }
 
+    /**
+     * @return true if trade was  accepted
+     */
     public boolean wasTradeAccepted() {
         return this.userWhichAnswers.wasTradeAccepted();
     }
 
+    /**
+     * @return true if trade is not yet answered
+     */
     public boolean isTradeOpen() {
         return this.userWhichAnswers.isTradeOpen();
     }
 
-    public boolean isTradeExpired(){
-        if(this.initiatedOffer.isOpen() && this.requestedOffer.isOpen()){
-            return false;
-        }else{
-            return true;
-        }
+    /**
+     * @return true if one of the PollenOffers is not open anymore
+     */
+    public boolean isTradeExpired() {
+        return !(this.initiatedOffer.isOpen() && this.requestedOffer.isOpen());
+
     }
 
+    /**
+     * @return current Trading status as String
+     */
     public String getTradeStatus() {
         return this.userWhichAnswers.getCurrentTradeStatus();
     }
 
+    /**
+     * @return hashCode
+     */
     @Override
     public int hashCode() {
         return uuid.hashCode();
     }
 
+    /**
+     * @param obj Trade
+     * @return true if equal(same uuid)
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         return this.getUuid().equals(((Trade) obj).getUuid());
     }
 }

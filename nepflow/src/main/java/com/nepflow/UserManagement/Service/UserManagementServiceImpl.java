@@ -12,56 +12,96 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Model which defines Methods in order
+ * to return the right Label class at runtime.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
 
+    /**
+     *
+     */
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
+    /**
+     *
+     */
     @Autowired
-    CountryRepository countryRepository;
+    private CountryRepository countryRepository;
 
+    /**
+     *
+     */
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
+    /**
+     * @return
+     */
     @Override
     public List<User> getAllUsers() {
         return this.userRepository.getAllUsers();
     }
 
+    /**
+     * @param username
+     * @return
+     */
     @Override
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(final String username) {
         return this.userRepository.findUserByUsername(username);
     }
 
+    /**
+     * @param oauthId
+     * @return
+     */
     @Override
-    public User getUserByOAuthId(String oauthId) {
+    public User getUserByOAuthId(final String oauthId) {
         return this.userRepository.findUserByOAuthId(oauthId);
 
     }
 
+    /**
+     * @param username
+     * @return
+     */
     @Override
-    public boolean isUsernameFree(String username) {
+    public boolean isUsernameFree(final String username) {
         return this.userRepository.isUsernameFree(username);
     }
 
+    /**
+     * @param userId
+     * @param username
+     * @param contactInformation
+     * @param countryName
+     * @return
+     */
     @Override
-    public User createMinimalUser(String userId,String username,String contactInformation, String countryName) {
+    public User createMinimalUser(final String userId, final String username,
+                                  final String contactInformation, final String countryName) {
         // user_Id (provide|unique id) is unique https://auth0.com/docs/manage-users/user-accounts/identify-users
         User user;
         Country country;
-        if(!this.isUsernameFree(username)){
+        if (!this.isUsernameFree(username)) {
             return null;
         }
         country = this.getCountry(countryName);
-        if(country == null){
+        if (country == null) {
             return null;
         }
-        if(this.getUserByOAuthId(userId) !=  null){
+        if (this.getUserByOAuthId(userId) != null) {
             return null;
         }
 
-        user = new User(username,userId);
+        user = new User(username, userId);
         user.setCountry(country);
         user.setContactInformation(contactInformation);
         this.userRepository.save(user);
@@ -69,9 +109,14 @@ public class UserManagementServiceImpl implements UserManagementService {
         return user;
     }
 
+    /**
+     * @param oauthId
+     * @param contactInformation
+     * @return
+     */
     @Override
     @Transactional("transactionManager")
-    public User updateUser(String oauthId, String contactInformation) {
+    public User updateUser(final String oauthId, final String contactInformation) {
         User toUpdateUser = this.userRepository.findUserByOAuthId(oauthId);
         if (toUpdateUser == null) {
             return null;
@@ -81,21 +126,33 @@ public class UserManagementServiceImpl implements UserManagementService {
         return this.userRepository.save(toUpdateUser);
     }
 
+    /**
+     * @param countryAsString
+     * @return
+     */
     @Override
-    public Country saveCountry(String countryAsString) {
+    public Country saveCountry(final String countryAsString) {
         Country country = this.countryRepository.findCountryByName(countryAsString);
-        if(country != null){
+        if (country != null) {
             return country;
-        }else{
+        } else {
             return this.countryRepository.save(new Country(countryAsString));
         }
     }
+
+    /**
+     * @param countryAsString
+     * @return
+     */
     @Override
-    public Country getCountry(String countryAsString) {
+    public Country getCountry(final String countryAsString) {
         return this.countryRepository.findCountryByName(countryAsString);
 
     }
 
+    /**
+     * @return
+     */
     @Override
     public List<User> getUsers() {
         return this.userRepository.getAllUsers();

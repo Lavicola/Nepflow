@@ -8,65 +8,119 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 
+/**
+ * Custom Model which represents a Relationship property for Trade.
+ * The Custom Model represents the references used to have property on an edge User--Trade.
+ * Doing so allows to use the property to store the Answer of the User.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @RelationshipProperties
 @NoArgsConstructor
 public class TradeUserAnswersRelationshipValue {
 
+    /**
+     *
+     */
     @Id
     @GeneratedValue
     private String uuid;
 
+    /**
+     *
+     */
     @TargetNode
     @Getter
-    User user;
+    private User user;
 
-    UserAnswers status;
+    /**
+     *
+     */
+    private UserAnswers status;
 
-    public TradeUserAnswersRelationshipValue(User user) {
+    /**
+     * @param user user of a Trade who answers it
+     */
+    public TradeUserAnswersRelationshipValue(final User user) {
         this.user = user;
         this.status = UserAnswers.WAITING;
     }
 
-    public String getCurrentTradeStatus(){
+    /**
+     * @return current Status of the trade as a String
+     */
+    public String getCurrentTradeStatus() {
         return this.status.toString();
     }
 
+    /**
+     *
+     */
     public void refuseTrade() {
         if (this.status == UserAnswers.WAITING) {
             this.status = UserAnswers.REFUSED;
         }
     }
 
+    /**
+     *
+     */
     public void acceptTrade() {
         if (this.status == UserAnswers.WAITING) {
             this.status = UserAnswers.ACCEPTED;
         }
     }
 
-    public void setTradeToExpired(){
+    /**
+     *
+     */
+    public void setTradeToExpired() {
         this.status = UserAnswers.EXPIRED;
     }
 
 
-    public String getStatus(){
-        return this.status.toString();
-    }
-    public boolean wasTradeRefused(){
+    /**
+     * @return true if trade was refused, else false
+     */
+    public boolean wasTradeRefused() {
         return this.status.equals(UserAnswers.REFUSED);
     }
 
-    public boolean wasTradeAccepted(){
+    /**
+     * @return true if trade was accepted, else false
+     */
+    public boolean wasTradeAccepted() {
         return this.status.equals(UserAnswers.ACCEPTED);
     }
 
-    public boolean isTradeOpen(){
+    /**
+     * @return true if trade was not yet answered
+     */
+    public boolean isTradeOpen() {
         return this.status.equals(UserAnswers.WAITING);
     }
 
+    /**
+     *
+     */
     public enum UserAnswers {
+        /**
+         *
+         */
         WAITING,
+        /**
+         *
+         */
         ACCEPTED,
+        /**
+         *
+         */
         REFUSED,
+        /**
+         *
+         */
         EXPIRED,
     }
 

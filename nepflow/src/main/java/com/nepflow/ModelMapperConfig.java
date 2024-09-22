@@ -41,25 +41,25 @@ public class ModelMapperConfig {
         TypeMap<Label, LabelDTO> LabeltypeMap = modelMapper.createTypeMap(Label.class, LabelDTO.class)
                 .addMapping(Label::getName, LabelDTO::setNepenthesName);
         LabeltypeMap.include(Species.class, LabelDTO.class);
+
         // Mapping of Clone subclasses to CloneDTO
-        TypeMap<Clone, CloneDTO> CloneMap = modelMapper.createTypeMap(Clone.class, CloneDTO.class)
-                .addMapping(Clone::getLabelName, CloneDTO::setNepenthesName);
-        CloneMap.include(IVClone.class, CloneDTO.class);
-        CloneMap.include(IVPrimaryHybrid.class, CloneDTO.class);
-        CloneMap.include(IVMultiHybrid.class, CloneDTO.class);
+        TypeMap<Clone, CloneDTO> typeMap = modelMapper.createTypeMap(Clone.class, CloneDTO.class)
+                .addMapping(Clone::getLabelName, CloneDTO::setNepenthesName)
+                .addMapping(Clone::getSexAsString, CloneDTO::setSex)
+                .addMapping(Clone::getLocationAsString, CloneDTO::setLocation)
+                .addMapping(Clone::getSellerAsString, CloneDTO::setProducer)
+                .addMapping(Clone::getCloneId, CloneDTO::setCloneId)
+                .addMapping(Clone::getInternalCloneId, CloneDTO::setInternalCloneId);
+        typeMap.include(ICSpeciesClone.class, CloneDTO.class);
+        typeMap.include(IVSpeciesClone.class, CloneDTO.class);
+        typeMap.include(IVClone.class, CloneDTO.class);
+        typeMap.include(ICClone.class, CloneDTO.class);
+        typeMap.include(IVPrimaryHybrid.class, CloneDTO.class);
+        typeMap.include(ICPrimaryHybrid.class, CloneDTO.class);
+        typeMap.include(ICMultiHybrid.class, CloneDTO.class);
+        typeMap.include(IVMultiHybrid.class, CloneDTO.class);
 
-        CloneMap.include(ICClone.class, CloneDTO.class);
-        CloneMap.include(ICPrimaryHybrid.class, CloneDTO.class);
-        CloneMap.include(ICMultiHybrid.class, CloneDTO.class);
-
-        modelMapper.addMappings(new PropertyMap<IVSpeciesClone, CloneDTO>() {
-            @Override
-            protected void configure() {
-                map().setProducer(source.getProducer().getName());
-                map().setLocation(source.getLocationAsString());
-            }
-        });
-
+        //
         modelMapper.addMappings(new PropertyMap<Growlist, GrowlistDTO>() {
             @Override
             protected void configure() {
@@ -117,10 +117,9 @@ public class ModelMapperConfig {
                         .map(source, destination.getRequestedOffer().getUser().getUsername());
 
 
-
             }
         });
-        modelMapper.addMappings(new PropertyMap<TradeStartDate  , TradeDateContainerDTO>() {
+        modelMapper.addMappings(new PropertyMap<TradeStartDate, TradeDateContainerDTO>() {
             @Override
             protected void configure() {
                 map().setDate(source.getMonthYearId());
@@ -157,7 +156,6 @@ public class ModelMapperConfig {
 
 
     }
-
 
 
 }

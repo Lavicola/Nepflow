@@ -7,48 +7,96 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
+/**
+ * Model which represents a Rating  for a Trade.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Node
 public class TradeRating {
 
+    /**
+     *
+     */
     @Id
     @GeneratedValue
     @Getter
     private String uuid;
 
+    /**
+     *
+     */
     @Relationship("RATED_BY")
     @Getter
-    User user;
+    private User user;
+    /**
+     *
+     */
     @Relationship("RATING_FOR")
     @Getter
-    Trade trade;
+    private Trade trade;
 
-    String comment;
+    /**
+     *
+     */
+    private String comment;
 
+    /**
+     *
+     */
     @Getter
-    RATING rating;
+    private RATING rating;
 
 
-    public TradeRating(User user,Trade trade){
+    /**
+     * @param user
+     * @param trade
+     */
+    public TradeRating(final User user, final Trade trade) {
         this.user = user;
         this.trade = trade;
         this.rating = RATING.PENDING;
     }
 
-    public void setComment(String comment){
+    /**
+     * @param comment
+     */
+    public void setComment(final String comment) {
         this.comment = comment;
     }
 
-    public void rateTradeAsSuccess(){
+    /**
+     *
+     */
+    public void rateTradeAsSuccess() {
         this.rating = RATING.SUCCESS;
     }
-    public void rateTradeAsFailure(){
+
+    /**
+     *
+     */
+    public void rateTradeAsFailure() {
         this.rating = RATING.FAILURE;
     }
 
 
-    public  enum RATING{
+    /**
+     *
+     */
+    public enum RATING {
+        /**
+         *
+         */
         SUCCESS,
+        /**
+         *
+         */
         FAILURE,
+        /**
+         *
+         */
         PENDING
 
     }

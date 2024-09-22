@@ -6,25 +6,44 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 
+/**
+ * Abstract Class which abstracts concrete types of sellers.
+ * Abstraction allows optimized filtering.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
 @Node
 public abstract class Seller {
 
+    /**
+     *
+     */
     @Id
     @Property
     @Getter
-    String name;
+    private String name;
 
+    /**
+     * Link to website or other contact information.
+     */
     @Property
     @Getter
-    // link to FB or maybe website
-    String contact;
+    private String contact;
 
 
+    /**
+     *
+     */
     @Version
     private Long version;
 
 
-    public Seller(String name,String contact){
+    /**
+     * @param name
+     * @param contact
+     */
+    public Seller(final String name, final String contact) {
         assert !name.equals("");
         assert !contact.equals("");
         this.name = name;

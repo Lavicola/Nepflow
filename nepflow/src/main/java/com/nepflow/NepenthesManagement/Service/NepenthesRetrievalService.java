@@ -4,6 +4,7 @@ import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Interface which defines Methods to retrieve Nepenthes and Labels.
@@ -19,9 +20,22 @@ public interface NepenthesRetrievalService {
      * @param internalCloneId internale Id of a Clone
      * @return Clone object
      */
-    Clone getCloneByInternalId(String internalCloneId);
+    Clone getCloneByInternalCloneId(String internalCloneId);
+
+    /**
+     * Method definition to retrieve a List of Clones using internal Clone Ids.
+     * @param internalCloneIds internal Ids of the clones
+     * @return List of Clone object
+     */
+    List<Clone> getClonesByInternalCloneId(Set<String> internalCloneIds);
 
 
+    /**
+     * Method definition to retrieve Clones using their cloneIds.
+     * @param cloneIds ids  of the clones to retrieve
+     * @return Clone object
+     */
+    List<Clone> getClonesByCloneId(List<String> cloneIds);
 
 
     /**

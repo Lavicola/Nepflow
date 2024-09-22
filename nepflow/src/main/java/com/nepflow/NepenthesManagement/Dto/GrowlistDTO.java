@@ -1,24 +1,35 @@
 package com.nepflow.NepenthesManagement.Dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URI;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nepflow.NepenthesManagement.Dto.SpecimenCloneDTO;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * GrowlistDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:29.653523300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-19T17:31:01.094750100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class GrowlistDTO {
 
   private String id;
 
   private String username;
+
+  private Boolean isPublic;
 
   @Valid
   private List<SpecimenCloneDTO> specimens = new ArrayList<>();
@@ -63,6 +74,26 @@ public class GrowlistDTO {
     this.username = username;
   }
 
+  public GrowlistDTO isPublic(Boolean isPublic) {
+    this.isPublic = isPublic;
+    return this;
+  }
+
+  /**
+   * Get isPublic
+   * @return isPublic
+  */
+  
+  @Schema(name = "isPublic", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("isPublic")
+  public Boolean getIsPublic() {
+    return isPublic;
+  }
+
+  public void setIsPublic(Boolean isPublic) {
+    this.isPublic = isPublic;
+  }
+
   public GrowlistDTO specimens(List<SpecimenCloneDTO> specimens) {
     this.specimens = specimens;
     return this;
@@ -102,12 +133,13 @@ public class GrowlistDTO {
     GrowlistDTO growlistDTO = (GrowlistDTO) o;
     return Objects.equals(this.id, growlistDTO.id) &&
         Objects.equals(this.username, growlistDTO.username) &&
+        Objects.equals(this.isPublic, growlistDTO.isPublic) &&
         Objects.equals(this.specimens, growlistDTO.specimens);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, specimens);
+    return Objects.hash(id, username, isPublic, specimens);
   }
 
   @Override
@@ -116,6 +148,7 @@ public class GrowlistDTO {
     sb.append("class GrowlistDTO {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
     sb.append("    specimens: ").append(toIndentedString(specimens)).append("\n");
     sb.append("}");
     return sb.toString();

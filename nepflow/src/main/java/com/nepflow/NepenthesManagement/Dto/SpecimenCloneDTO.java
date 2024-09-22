@@ -1,16 +1,24 @@
 package com.nepflow.NepenthesManagement.Dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Generated;
-
+import java.net.URI;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * SpecimenCloneDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:29.653523300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-19T17:31:01.094750100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class SpecimenCloneDTO {
 
   private String nepenthesName;
@@ -30,6 +38,10 @@ public class SpecimenCloneDTO {
   private String location;
 
   private String specimenId;
+
+  private String filelocation;
+
+  private Boolean isFlowering;
 
   public SpecimenCloneDTO nepenthesName(String nepenthesName) {
     this.nepenthesName = nepenthesName;
@@ -211,6 +223,46 @@ public class SpecimenCloneDTO {
     this.specimenId = specimenId;
   }
 
+  public SpecimenCloneDTO filelocation(String filelocation) {
+    this.filelocation = filelocation;
+    return this;
+  }
+
+  /**
+   * Get filelocation
+   * @return filelocation
+  */
+  
+  @Schema(name = "filelocation", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("filelocation")
+  public String getFilelocation() {
+    return filelocation;
+  }
+
+  public void setFilelocation(String filelocation) {
+    this.filelocation = filelocation;
+  }
+
+  public SpecimenCloneDTO isFlowering(Boolean isFlowering) {
+    this.isFlowering = isFlowering;
+    return this;
+  }
+
+  /**
+   * Get isFlowering
+   * @return isFlowering
+  */
+  
+  @Schema(name = "isFlowering", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("isFlowering")
+  public Boolean getIsFlowering() {
+    return isFlowering;
+  }
+
+  public void setIsFlowering(Boolean isFlowering) {
+    this.isFlowering = isFlowering;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -228,12 +280,14 @@ public class SpecimenCloneDTO {
         Objects.equals(this.nickname, specimenCloneDTO.nickname) &&
         Objects.equals(this.producer, specimenCloneDTO.producer) &&
         Objects.equals(this.location, specimenCloneDTO.location) &&
-        Objects.equals(this.specimenId, specimenCloneDTO.specimenId);
+        Objects.equals(this.specimenId, specimenCloneDTO.specimenId) &&
+        Objects.equals(this.filelocation, specimenCloneDTO.filelocation) &&
+        Objects.equals(this.isFlowering, specimenCloneDTO.isFlowering);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nepenthesName, cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId);
+    return Objects.hash(nepenthesName, cloneId, internalCloneId, sex, description, nickname, producer, location, specimenId, filelocation, isFlowering);
   }
 
   @Override
@@ -249,6 +303,8 @@ public class SpecimenCloneDTO {
     sb.append("    producer: ").append(toIndentedString(producer)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    specimenId: ").append(toIndentedString(specimenId)).append("\n");
+    sb.append("    filelocation: ").append(toIndentedString(filelocation)).append("\n");
+    sb.append("    isFlowering: ").append(toIndentedString(isFlowering)).append("\n");
     sb.append("}");
     return sb.toString();
   }

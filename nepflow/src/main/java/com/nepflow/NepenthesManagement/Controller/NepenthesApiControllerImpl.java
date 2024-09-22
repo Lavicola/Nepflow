@@ -9,6 +9,7 @@ import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrievalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -90,6 +91,25 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate {
     }
 
 
+    public ResponseEntity<List<CloneDTO>> clonesGet(List<String> cloneIds) {
+        List<CloneDTO> dtoClones = new ArrayList<>();
+
+
+        if (cloneIds.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(dtoClones);
+        }
+        List<Clone> clones = this.nepenthesRetrievalService.getClonesByCloneId(cloneIds);
+        clones.stream().forEach(clone -> {
+            dtoClones.add(this.modelMapper.map(clone, CloneDTO.class));
+        });
+        return ResponseEntity.status(HttpStatus.OK).body(dtoClones);
+
+    }
+
+
+
+
+
     /**
      * Method to return all Labels of a specific subclass.
      *
@@ -134,6 +154,7 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate {
 
     /**
      * Helper Method to convert a list of Labels and their Clones to a DTO representation.
+     *
      * @param label a Label and it´s clones
      * @return DTO representation of a Label and it´s clones
      */
@@ -157,6 +178,7 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate {
 
     /**
      * Helper Method to convert the Clones of a Label to their DTO Representation.
+     *
      * @param label a Label and their clone references
      * @return DTO Representation of the Clones
      */
@@ -179,6 +201,7 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate {
 
         return cloneDTOS;
     }
+
 
 }
 

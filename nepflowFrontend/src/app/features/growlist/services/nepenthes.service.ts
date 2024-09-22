@@ -1,39 +1,72 @@
 /* tslint:disable */
 /* eslint-disable */
 import { HttpClient, HttpContext } from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import {BaseService} from "../../../core/openApiGeneratedFiles/base-service";
 import {ApiConfiguration} from "../../../core/openApiGeneratedFiles/api-configuration";
 import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
 
-import {
-  cloneNepenthesTypeCloneTypeNameGet,
-  CloneNepenthesTypeCloneTypeNameGet$Params
-} from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';
-import {
-  cloneNepenthesTypeCloneTypeNameInternalCloneIdPut,
-  CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params
-} from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-internal-clone-id-put';
-import {
-  cloneNepenthesTypeCloneTypeNamePost,
-  CloneNepenthesTypeCloneTypeNamePost$Params
-} from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-post';
-import {cloneNepenthesTypeGet, CloneNepenthesTypeGet$Params} from '../fn/nepenthes/clone-nepenthes-type-get';
-import {
-  cloneNepenthesTypeNameGet,
-  CloneNepenthesTypeNameGet$Params
-} from '../fn/nepenthes/clone-nepenthes-type-name-get';
-import {LabelCloneDto} from '../models/label-clone-dto';
-import {LabelClonesDto} from '../models/label-clones-dto';
-import {LabelDto} from '../models/label-dto';
+import { CloneDto } from '../models/clone-dto';
+import { cloneNepenthesTypeCloneTypeNameGet } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';
+import { CloneNepenthesTypeCloneTypeNameGet$Params } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-get';
+import { cloneNepenthesTypeCloneTypeNameInternalCloneIdPut } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-internal-clone-id-put';
+import { CloneNepenthesTypeCloneTypeNameInternalCloneIdPut$Params } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-internal-clone-id-put';
+import { cloneNepenthesTypeCloneTypeNamePost } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-post';
+import { CloneNepenthesTypeCloneTypeNamePost$Params } from '../fn/nepenthes/clone-nepenthes-type-clone-type-name-post';
+import { cloneNepenthesTypeGet } from '../fn/nepenthes/clone-nepenthes-type-get';
+import { CloneNepenthesTypeGet$Params } from '../fn/nepenthes/clone-nepenthes-type-get';
+import { cloneNepenthesTypeNameGet } from '../fn/nepenthes/clone-nepenthes-type-name-get';
+import { CloneNepenthesTypeNameGet$Params } from '../fn/nepenthes/clone-nepenthes-type-name-get';
+import { clonesGet } from '../fn/nepenthes/clones-get';
+import { ClonesGet$Params } from '../fn/nepenthes/clones-get';
+import { LabelCloneDto } from '../models/label-clone-dto';
+import { LabelClonesDto } from '../models/label-clones-dto';
+import { LabelDto } from '../models/label-dto';
 
+
+/**
+ * Operations to manage Nepenthes
+ */
 @Injectable({ providedIn: 'root' })
 export class NepenthesService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `clonesGet()` */
+  static readonly ClonesGetPath = '/clones';
+
+  /**
+   * get all Clones from Cloneid.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `clonesGet()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  clonesGet$Response(params: ClonesGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<CloneDto>>> {
+    return clonesGet(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * get all Clones from Cloneid.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `clonesGet$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  clonesGet(params: ClonesGet$Params, context?: HttpContext): Observable<Array<CloneDto>> {
+    return this.clonesGet$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<CloneDto>>): Array<CloneDto> => r.body)
+    );
   }
 
   /** Path part for operation `cloneNepenthesTypeGet()` */

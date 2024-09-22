@@ -41,6 +41,26 @@ paths:
                 $ref: '#/components/schemas/ProducerDTO'
         '500':
           description: Internal Error
+  /clones:
+    parameters:
+      - $ref: "#/components/parameters/cloneIds"
+    get:
+      summary: get all Clones from Cloneid
+      tags:
+        - nepenthes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CloneDTO'
+
+
+
+
   /clone/{nepenthesType}:
     parameters:
       - $ref: "#/components/parameters/nepenthesType"
@@ -154,24 +174,34 @@ paths:
                 $ref: '#/components/schemas/GrowlistPublic'
 
 
-
-
-  /growlist/clone/add/{internalCloneId}:
-    parameters:
-      - $ref: "#/components/parameters/internalCloneId"
+  /growlist/add/clones:
     post:
-      summary: Add an existing Clone of a Nepenthes to the Growlist.
+      summary: Addexisting clones of Nepenthes to Growlis.
       tags:
         - Growlistmanagement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SpecimenCloneDTO'
+                $ref: '#/components/schemas/SpecimensBulkRequestDTO'
+        '207':
+          description: returns the specimens which could be added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpecimensBulkRequestDTO'
         '500':
-          description: Error, could not add Specimen to user
+          description: errror, could not add Clone to user
 
   /growlist/create/clone/{cloneType}:
     parameters:
@@ -382,6 +412,16 @@ components:
       schema:
         type: string
 
+    cloneIds:
+      name: cloneIds
+      in: query
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
+
+
 
   schemas:
 
@@ -452,6 +492,18 @@ components:
               type: string
             isFlowering:
               type: boolean
+
+    SpecimensBulkRequestDTO:
+      type: object
+      properties:
+        success:
+          type: array
+          items:
+            $ref: '#/components/schemas/SpecimenCloneDTO'
+        failure:
+          type: array
+          items:
+            type: string
 
 
 

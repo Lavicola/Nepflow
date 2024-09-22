@@ -5,29 +5,37 @@
  */
 package com.nepflow.NepenthesManagement.Controller;
 
-import com.nepflow.NepenthesManagement.Dto.*;
+import com.nepflow.NepenthesManagement.Dto.CloneDTO;
+import com.nepflow.NepenthesManagement.Dto.CloneType;
+import com.nepflow.NepenthesManagement.Dto.LabelCloneDTO;
+import com.nepflow.NepenthesManagement.Dto.LabelClonesDTO;
+import com.nepflow.NepenthesManagement.Dto.LabelDTO;
+import com.nepflow.NepenthesManagement.Dto.NepenthesType;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import java.util.List;
+import java.util.Map;
+import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-07-02T19:30:29.653523300+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-19T17:31:01.094750100+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
-@Tag(name = "nepenthes", description = "the nepenthes API")
+@Tag(name = "nepenthes", description = "Operations to manage Nepenthes")
 public interface NepenthesApi {
 
     default NepenthesApiDelegate getDelegate() {
@@ -195,6 +203,35 @@ public interface NepenthesApi {
         @Parameter(name = "name", description = "", required = true, in = ParameterIn.PATH) @PathVariable("name") String name
     ) {
         return getDelegate().cloneNepenthesTypeNameGet(nepenthesType, name);
+    }
+
+
+    /**
+     * GET /clones : get all Clones
+     *
+     * @param cloneIds  (required)
+     * @return OK (status code 200)
+     */
+    @Operation(
+        operationId = "clonesGet",
+        summary = "get all Clones",
+        tags = { "nepenthes" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "OK", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = CloneDTO.class)))
+            })
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/clones",
+        produces = { "application/json" }
+    )
+    
+    default ResponseEntity<List<CloneDTO>> clonesGet(
+        @NotNull @Parameter(name = "cloneIds", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "cloneIds", required = true) List<String> cloneIds
+    ) {
+        return getDelegate().clonesGet(cloneIds);
     }
 
 }

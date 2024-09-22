@@ -1,0 +1,873 @@
+openapi: 3.0.0
+info:
+  description: API for Nepenthes Operations
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Nepflow Nepenthes
+  version: 1.0.0
+servers:
+- url: http://localhost:8080/api
+tags:
+- description: Operations to manage Nepenthes
+  name: nepenthes
+- description: not sure if actually necessary for now
+  name: NepenthesMetadata
+- description: Operations for the GrowlistManagement of an user
+  name: Growlistmanagement
+paths:
+  /producer:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProducerDTO"
+        description: DTO with all necessary Attributes
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProducerDTO"
+          description: OK
+        "500":
+          description: Internal Error
+      summary: add a new Producer
+      tags:
+      - NepenthesMetadata
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: NepenthesMetadata
+  /clones:
+    get:
+      parameters:
+      - explode: true
+        in: query
+        name: cloneIds
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/CloneDTO"
+                type: array
+          description: OK
+      summary: get all Clones from Cloneid
+      tags:
+      - nepenthes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: nepenthes
+  /clone/{nepenthesType}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: nepenthesType
+        required: true
+        schema:
+          $ref: "#/components/schemas/NepenthesType"
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  allOf:
+                  - $ref: "#/components/schemas/LabelDTO"
+                type: array
+          description: OK
+      summary: get all Nepenthes of a specific Nepenthestype
+      tags:
+      - nepenthes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: nepenthes
+  /clone/{nepenthesType}/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: nepenthesType
+        required: true
+        schema:
+          $ref: "#/components/schemas/NepenthesType"
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabelClonesDTO"
+          description: OK
+      summary: get all clones of a Nepenthes
+      tags:
+      - nepenthes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: nepenthes
+  /clone/{nepenthesType}/{cloneType}/{name}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: nepenthesType
+        required: true
+        schema:
+          $ref: "#/components/schemas/NepenthesType"
+        style: simple
+      - explode: false
+        in: path
+        name: cloneType
+        required: true
+        schema:
+          $ref: "#/components/schemas/CloneType"
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabelClonesDTO"
+          description: OK
+      summary: get either iv or ic clones of a Nepenthes
+      tags:
+      - nepenthes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: nepenthes
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: nepenthesType
+        required: true
+        schema:
+          $ref: "#/components/schemas/NepenthesType"
+        style: simple
+      - explode: false
+        in: path
+        name: cloneType
+        required: true
+        schema:
+          $ref: "#/components/schemas/CloneType"
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelCloneDTO"
+        description: Clone DTO with new values
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabelCloneDTO"
+          description: OK
+      summary: add a new clone to a nepenthes
+      tags:
+      - nepenthes
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: nepenthes
+  /clone/{nepenthesType}/{cloneType}/{name}/{internalCloneId}:
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: nepenthesType
+        required: true
+        schema:
+          $ref: "#/components/schemas/NepenthesType"
+        style: simple
+      - explode: false
+        in: path
+        name: cloneType
+        required: true
+        schema:
+          $ref: "#/components/schemas/CloneType"
+        style: simple
+      - explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: internalCloneId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabelCloneDTO"
+          description: OK
+      summary: update a Clone
+      tags:
+      - nepenthes
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: nepenthes
+  /growlist/{growlistId}/public:
+    patch:
+      parameters:
+      - explode: false
+        in: path
+        name: growlistId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GrowlistPublic"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrowlistPublic"
+          description: OK
+      summary: set Growlist to public or private
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/add/clones:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: string
+              type: array
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimensBulkRequestDTO"
+          description: OK
+        "207":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimensBulkRequestDTO"
+          description: returns the specimens which could be added
+        "500":
+          description: "errror, could not add Clone to user"
+      summary: Addexisting clones of Nepenthes to Growlis.
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/create/clone/{cloneType}:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: cloneType
+        required: true
+        schema:
+          $ref: "#/components/schemas/CloneType"
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelCloneDTO"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenCloneDTO"
+          description: OK
+        "500":
+          description: "Error, could not add Specimen to user"
+      summary: Create a new IV or IC Clone and Add it to the Growlist
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/create/nepenthes/{cloneType}:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: cloneType
+        required: true
+        schema:
+          $ref: "#/components/schemas/CloneType"
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LabelCloneDTO"
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenCloneDTO"
+          description: OK
+        "500":
+          description: "Error, could not add Specimen to user"
+      summary: Create a new Nepenthes and an additional IV or IC Clone and Add it
+        to the Growlist
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /specimens/{specimenId}:
+    delete:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: "Error, could not add Nepenthes Clone to user"
+      summary: "remove a specimen from the growlistist. If the removed plant was already\
+        \ used for a trade, only a soft delete will happen"
+      tags:
+      - Growlistmanagement
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenCloneDTO"
+          description: OK
+      tags:
+      - Growlistmanagement
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /specimens/{specimenId}/sex:
+    patch:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpecimenUpdateSex"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenUpdateSex"
+          description: OK
+        "500":
+          description: "Error, could not update Specimen Sex"
+      summary: "Update Sex of a specific Specimen, only works if Specimes current\
+        \ sex is unkown"
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /specimens/{specimenId}/flowering:
+    patch:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SpecimenUpdateFlowerStatus"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SpecimenUpdateFlowerStatus"
+          description: OK
+        "500":
+          description: "Error, could not update flowering status"
+      summary: Update the flowering status of a clone
+      tags:
+      - Growlistmanagement
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /specimens/{specimenId}/image:
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: specimenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/SpecimenUpdateImage"
+        required: false
+      responses:
+        "200":
+          description: OK
+        "500":
+          description: Could not update Specimen
+      summary: update Image
+      tags:
+      - Growlistmanagement
+      x-content-type: multipart/form-data
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+  /growlist/{username}/clones:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GrowlistDTO"
+          description: OK
+        "404":
+          description: "Error, User not found"
+      summary: "get all Specimens of a specific User, if Growlist is public"
+      tags:
+      - Growlistmanagement
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Growlistmanagement
+components:
+  parameters:
+    nepenthesType:
+      explode: false
+      in: path
+      name: nepenthesType
+      required: true
+      schema:
+        $ref: "#/components/schemas/NepenthesType"
+      style: simple
+    cloneType:
+      explode: false
+      in: path
+      name: cloneType
+      required: true
+      schema:
+        $ref: "#/components/schemas/CloneType"
+      style: simple
+    name:
+      explode: false
+      in: path
+      name: name
+      required: true
+      schema:
+        type: string
+      style: simple
+    internalCloneId:
+      explode: false
+      in: path
+      name: internalCloneId
+      required: true
+      schema:
+        type: string
+      style: simple
+    username:
+      explode: false
+      in: path
+      name: username
+      required: true
+      schema:
+        type: string
+      style: simple
+    specimenId:
+      explode: false
+      in: path
+      name: specimenId
+      required: true
+      schema:
+        type: string
+      style: simple
+    growlistId:
+      explode: false
+      in: path
+      name: growlistId
+      required: true
+      schema:
+        type: string
+      style: simple
+    cloneIds:
+      explode: true
+      in: query
+      name: cloneIds
+      required: true
+      schema:
+        items:
+          type: string
+        type: array
+      style: form
+  schemas:
+    ProducerDTO:
+      example:
+        contact: contact
+        name: name
+      properties:
+        name:
+          type: string
+        contact:
+          type: string
+      type: object
+    LabelDTO:
+      example:
+        prefix: prefix
+        nepenthesName: nepenthesName
+      properties:
+        nepenthesName:
+          type: string
+        prefix:
+          type: string
+      type: object
+    CloneDTO:
+      example:
+        sex: sex
+        nickname: nickname
+        description: description
+        producer: producer
+        nepenthesName: nepenthesName
+        internalCloneId: internalCloneId
+        cloneId: cloneId
+        Location: Location
+      properties:
+        nepenthesName:
+          type: string
+        cloneId:
+          type: string
+        internalCloneId:
+          type: string
+        sex:
+          type: string
+        description:
+          type: string
+        nickname:
+          type: string
+        producer:
+          type: string
+        Location:
+          type: string
+      type: object
+    LabelCloneDTO:
+      example:
+        clone:
+          sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          nepenthesName: nepenthesName
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        label:
+          prefix: prefix
+          nepenthesName: nepenthesName
+      properties:
+        label:
+          $ref: "#/components/schemas/LabelDTO"
+        clone:
+          $ref: "#/components/schemas/CloneDTO"
+      type: object
+    LabelClonesDTO:
+      example:
+        clones:
+        - sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          nepenthesName: nepenthesName
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        - sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          nepenthesName: nepenthesName
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        label:
+          prefix: prefix
+          nepenthesName: nepenthesName
+      properties:
+        label:
+          $ref: "#/components/schemas/LabelDTO"
+        clones:
+          items:
+            $ref: "#/components/schemas/CloneDTO"
+          type: array
+      type: object
+    SpecimenCloneDTO:
+      allOf:
+      - $ref: "#/components/schemas/CloneDTO"
+      - properties:
+          specimenId:
+            type: string
+          filelocation:
+            type: string
+          isFlowering:
+            type: boolean
+        type: object
+      example:
+        filelocation: filelocation
+        isFlowering: true
+        sex: sex
+        nickname: nickname
+        description: description
+        producer: producer
+        specimenId: specimenId
+        nepenthesName: nepenthesName
+        internalCloneId: internalCloneId
+        cloneId: cloneId
+        Location: Location
+    SpecimensBulkRequestDTO:
+      example:
+        success:
+        - filelocation: filelocation
+          isFlowering: true
+          sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          specimenId: specimenId
+          nepenthesName: nepenthesName
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        - filelocation: filelocation
+          isFlowering: true
+          sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          specimenId: specimenId
+          nepenthesName: nepenthesName
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        failure:
+        - failure
+        - failure
+      properties:
+        success:
+          items:
+            $ref: "#/components/schemas/SpecimenCloneDTO"
+          type: array
+        failure:
+          items:
+            type: string
+          type: array
+      type: object
+    SpecimenUpdateImage:
+      properties:
+        file:
+          format: binary
+          type: string
+      type: object
+    SpecimenUpdateSex:
+      example:
+        sex: sex
+      properties:
+        sex:
+          type: string
+      type: object
+    SpecimenUpdateFlowerStatus:
+      example:
+        isFlowering: true
+      properties:
+        isFlowering:
+          type: boolean
+      type: object
+    GrowlistPublic:
+      example:
+        isPublic: true
+      properties:
+        isPublic:
+          type: boolean
+      type: object
+    GrowlistDTO:
+      example:
+        isPublic: true
+        specimens:
+        - filelocation: filelocation
+          isFlowering: true
+          sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          specimenId: specimenId
+          nepenthesName: nepenthesName
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        - filelocation: filelocation
+          isFlowering: true
+          sex: sex
+          nickname: nickname
+          description: description
+          producer: producer
+          specimenId: specimenId
+          nepenthesName: nepenthesName
+          internalCloneId: internalCloneId
+          cloneId: cloneId
+          Location: Location
+        id: id
+        username: username
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        isPublic:
+          type: boolean
+        specimens:
+          items:
+            $ref: "#/components/schemas/SpecimenCloneDTO"
+          type: array
+      type: object
+    NepenthesType:
+      enum:
+      - Species
+      - MultiHybrid
+      - PrimaryHybrid
+      type: string
+      x-enum-varnames:
+      - species
+      - multihybrid
+      - primaryhybrid
+      x-enumNames:
+      - species
+      - multihybrid
+      - primaryhybrid
+    CloneType:
+      enum:
+      - iv
+      - ic
+      type: string
+      x-enum-varnames:
+      - iv
+      - ic
+      x-enumNames:
+      - iv
+      - ic

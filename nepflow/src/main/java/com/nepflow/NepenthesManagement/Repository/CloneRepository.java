@@ -2,28 +2,46 @@ package com.nepflow.NepenthesManagement.Repository;
 
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
-import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+/**
+ * CloneRepository which enables to save and retrieve any subclasses of Clones.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Repository
-public interface CloneRepository extends Neo4jRepository<Clone,String> {
+public interface CloneRepository extends Neo4jRepository<Clone, String> {
 
 
-    @Query("MATCH (n:`:#{literal(#label)}`)<-[r:CLONE_OF_SPECIES]-(c:`:#{literal(#cloneType)}`)" +
-            "WHERE n.name STARTS WITH $text "+
-            "RETURN c")
-    List<Clone> findClonesByLabelAndCloneTypeAndStartsWith(String label,String cloneType,String text);
-
-
-
+    /**
+     * @param internalCloneId internalCloneId
+     * @return concrete Clone
+     */
     Clone findCloneByInternalCloneId(String internalCloneId);
 
+    /**
+     * @param internalCloneIds internalCloneIds
+     * @return concrete clones
+     */
+    List<Clone> findClonesByInternalCloneIdIn(List<String> internalCloneIds);
 
 
+    /**
+     * @param cloneIds cloneIds
+     * @return concrete clones
+     */
+    List<Clone> findClonesByCloneIdIn(List<String> cloneIds);
+
+    /**
+     * @param cloneId cloneId
+     * @return true if a clone exists, else false
+     */
     boolean existsByInternalCloneId(String cloneId);
 
-    boolean existsByCloneId(String cloneId);
 
 }

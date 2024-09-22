@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementApiDelegate {
 
@@ -46,17 +48,25 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
 
     }
 
-    public ResponseEntity<SpecimenCloneDTO> growlistCloneAddInternalCloneIdPost(String internalCloneId) {
+    public ResponseEntity<SpecimensBulkRequestDTO> growlistAddClonesPost(List<String> internalCloneIds) {
         User user = this.authenticationService.getAuthenticatedUser();
-        SpecimenCloneDTO specimenCloneDTO;
-        Specimen specimen = null;
+        SpecimensBulkRequestDTO response = new SpecimensBulkRequestDTO();
+        List<Specimen> specimens;
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new SpecimenCloneDTO());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-        specimen = this.growlistservice.addExistingCloneToGrowList(user, internalCloneId);
-        specimenCloneDTO = this.modelMapper.map(specimen.getClone(), SpecimenCloneDTO.class);
-        return ResponseEntity.ok(specimenCloneDTO);
+        specimens = this.growlistservice.addExistingClonesToGrowlist(user, internalCloneIds);
+        specimens.forEach(specimen -> {
+            response.addSuccessItem(this.modelMapper.map(specimen, SpecimenCloneDTO.class));
+            internalCloneIds.remove(specimen.getClone().getCloneId());
+        });
+        internalCloneIds.forEach(response::addFailureItem);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+
     }
+
 
     public ResponseEntity<SpecimenCloneDTO> growlistCreateCloneCloneTypePost(CloneType cloneType,
                                                                              LabelCloneDTO labelCloneDTO) {

@@ -5,40 +5,71 @@ import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.neo4j.core.schema.*;
+import org.springframework.data.neo4j.core.schema.GeneratedValue;
+import org.springframework.data.neo4j.core.schema.Id;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.data.neo4j.core.schema.Property;
+
+/**
+ * Model which defines Methods in order
+ * to return the right Label class at runtime.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
 
 @Node
 @NoArgsConstructor
 public class Specimen {
 
 
+    /**
+     *
+     */
     @Id
     @Getter
     @GeneratedValue
-    protected String uuid;
+    private String uuid;
 
+    /**
+     *
+     */
     @Relationship(value = "INSTANCE_OF", direction = Relationship.Direction.OUTGOING)
     @Getter
-    Clone clone;
+    private Clone clone;
 
+    /**
+     *
+     */
     @Relationship(value = "GROWS_BY", direction = Relationship.Direction.OUTGOING)
     @Getter
-    User user;
+    private User user;
 
+    /**
+     * absolute Path of where the Image of the Specimen can be found.
+     */
     @Getter
     @Setter
-    String imagePath;
+    private String imagePath;
 
+    /**
+     *
+     */
     @Property
     @Getter
-    boolean isFlowering = false;
+    private boolean isFlowering = false;
 
 
-    public Specimen(Clone clone,User user) {
-        if(clone  ==  null){
+    /**
+     * @param clone
+     * @param user
+     */
+    public Specimen(final Clone clone, final User user) {
+        if (clone == null) {
             throw new RuntimeException("Clone is not allowd to  be  null");
         }
-        if(user ==  null){
+        if (user == null) {
             throw new RuntimeException("User is not allowd to  be  null");
         }
         this.clone = clone;
@@ -46,58 +77,96 @@ public class Specimen {
         this.isFlowering = false;
     }
 
-    public String getSellerAsString(){
+    /**
+     * @return name of the Seller as String
+     */
+    public String getSellerAsString() {
         return this.clone.getSellerAsString();
     }
 
-    public String getLocationAsString(){
+    /**
+     * @return name of the Location as String
+     */
+    public String getLocationAsString() {
         return this.clone.getLocationAsString();
     }
 
-    public String getSexAsString(){
+    /**
+     * @return sex as String
+     */
+    public String getSexAsString() {
         return this.clone.getSexAsString();
     }
 
-    public String getNepenthesname(){
+    /**
+     * @return A clone references a Nepenthes name which will be returned
+     */
+    public String getNepenthesname() {
         return this.clone.getLabelName();
     }
 
 
-    public String getCultivarName(){
+    /**
+     * @return cultivar Name of a Clone
+     */
+    public String getCultivarName() {
         return this.clone.getCultivarName();
     }
 
 
-    public void setClone(Clone clone){
+    /**
+     * @param clone clone which belongs to the specimen
+     */
+    public void setClone(final Clone clone) {
         this.clone = clone;
     }
 
-    public boolean getFlowerStatus(){
+    /**
+     * @return true if flowers else false
+     */
+    public boolean getFlowerStatus() {
         return this.isFlowering;
     }
 
-    public void setFlowerStatus(boolean isFlowering){
+    /**
+     * @param isFlowering true if flowering else false
+     */
+    public void setFlowerStatus(final boolean isFlowering) {
         this.isFlowering = isFlowering;
     }
 
 
-    public boolean isSpecimenOwner(User user){
+    /**
+     * @param user User to compare to the owner
+     * @return true if the user is owner, else false
+     */
+    public boolean isSpecimenOwner(final User user) {
         return this.user.equals(user);
     }
 
+    /**
+     * @return
+     */
     @Override
     public int hashCode() {
         return uuid.hashCode();
     }
 
+    /**
+     * @param obj
+     * @return
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         return this.uuid.equals(((Specimen) obj).uuid);
 
     }

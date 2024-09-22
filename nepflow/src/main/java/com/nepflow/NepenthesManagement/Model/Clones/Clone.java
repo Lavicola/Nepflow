@@ -1,4 +1,5 @@
 package com.nepflow.NepenthesManagement.Model.Clones;
+
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Grex;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
 import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
@@ -12,104 +13,187 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
+/**
+ * Abstract Model which represents a Clone.
+ * A clone is an individual out of a seed.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
 @Node
 @NoArgsConstructor
 public abstract class Clone {
 
-    @Relationship(value = "CLONE_OF_SPECIES",direction = Relationship.Direction.OUTGOING)
+    /**
+     *
+     */
+    @Relationship(value = "CLONE_OF_SPECIES", direction = Relationship.Direction.OUTGOING)
     @Getter
-    Label label;
+    private Label label;
 
 
+    /**
+     * a Seedgrown clone is always unique, while an IV clone is not.
+     * In this Domain however a clone id of an IV plant maybe a collection of clones
+     * or a single, selected clone.
+     * InternalCloneId therefore combines the Sex and the cloneId in order to simplify this dependency.
+     */
     @Id
     @Getter
-    // Internal Id is:
-    // for Seedgrown always the same as cloneId
-    // for IV: combination of cloneId and first letter of Sex since IV clones are sometimes a Pool of plants
-    protected String internalCloneId;
+    private String internalCloneId;
 
+    /**
+     * A clone is sometimes registered as a Cultivar or known under a specific name.
+     * E.g. smilodon --> rhh x diabolica from Simon Lumb
+     */
     @Getter
-    protected String cultivarName;
+    private String cultivarName;
 
+    /**
+     * A cloneId is either a single individual or a collection of several individuals sold under a specific Id.
+     */
     @Property
-    protected String cloneId;
+    private String cloneId;
 
+    /**
+     *
+     */
     @Setter
     @Getter
     @Relationship("HAS_SEX")
-    protected Sex sex;
+    private Sex sex;
 
+    /**
+     *
+     */
     @Relationship(value = "OFFSPRING_FROM", direction = Relationship.Direction.OUTGOING)
     @Getter
-    protected Grex grex;
+    private Grex grex;
 
+    /**
+     *
+     */
     @Version
     private Long version;
 
+    /**
+     *
+     */
     @Setter
     @Getter
     @Relationship("ORIGIN")
-    Location location;
+    private Location location;
 
-    public Clone(Label label, Sex sex, String cloneId, Location location){
+    /**
+     * @param label    the label(or more specific species/hybrid) a clone will reference
+     * @param sex      the Sex of a Clone
+     * @param cloneId  the id of a clone
+     * @param location the origin of the clone
+     */
+    public Clone(final Label label, final Sex sex, final String cloneId, final Location location) {
         this.label = label;
         this.sex = sex;
         this.cloneId = cloneId;
-        this.internalCloneId = Clone.generateInternalCloneId(cloneId,sex);
+        this.internalCloneId = Clone.generateInternalCloneId(cloneId, sex);
         this.location = location;
     }
 
-    // usually a cultivar is named later and not right after registering it, therefore a setter makes more sense
-    public void setCultivarName(String cultivarName){
+    /**
+     * @param cultivarName culativarename of the clone
+     */
+    public void setCultivarName(final String cultivarName) {
+        if (this.cultivarName == null || this.cultivarName.equals("")) {
+            return;
+        }
         this.cultivarName = cultivarName;
     }
 
-    public void setGrex(Grex grex){
-        this.grex =grex;
+    /**
+     * @param grex grex where the clone belongs to
+     */
+    public void setGrex(final Grex grex) {
+        if (this.grex == null) {
+            return;
+        }
+        this.grex = grex;
     }
 
-    public  String getCloneId() {
+    /**
+     * @return id of the clone
+     */
+    public String getCloneId() {
         return cloneId;
     }
 
-    public String getLocationAsString(){
-        return this.location != null ? this.location.getName():"";
+    /**
+     * @return location as String
+     */
+    public String getLocationAsString() {
+        return this.location != null ? this.location.getName() : "";
     }
 
-    public String getSexAsString(){
-        return this.sex != null ? this.sex.getSexAsString():"";
+    /**
+     * @return sex as String
+     */
+    public String getSexAsString() {
+        return this.sex != null ? this.sex.getSexAsString() : "";
     }
 
-    public String getLabelName(){return this.label != null ? this.label.getName():"";}
+    /**
+     * @return name of the label(e.g. species)
+     */
+    public String getLabelName() {
+        return this.label != null ? this.label.getName() : "";
+    }
 
-    abstract public String getSellerAsString();
+    /**
+     * @return name of the Seller
+     */
+    public abstract String getSellerAsString();
 
-    public static String generateInternalCloneId(String cloneId,Sex sex){
-        if(sex != null){
-            return String.format("%s-%s",cloneId,sex.getSexAsString().substring(0,1));
-        }else{
+    /**
+     * Due to fact mentioned in internal Clone id, this method is used to generate the internal Clone id.
+     *
+     * @param cloneId clone Id
+     * @param sex     sex
+     * @return internal Clone Id
+     */
+    public static String generateInternalCloneId(final String cloneId, final Sex sex) {
+        if (sex != null) {
+            return String.format("%s-%s", cloneId, sex.getSexAsString().substring(0, 1));
+        } else {
             return cloneId;
         }
     }
 
 
+    /**
+     * @return hashCode
+     */
     @Override
     public int hashCode() {
-        return 5;
+        return this.internalCloneId.hashCode();
     }
 
+    /**
+     * @param obj
+     * @return true if internalCloneId is same, else false
+     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
+
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         return ((Clone) obj).internalCloneId.equals(this.internalCloneId);
 
     }
 
-
-
 }
+

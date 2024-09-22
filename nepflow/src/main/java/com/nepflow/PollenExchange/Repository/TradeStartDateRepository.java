@@ -7,11 +7,22 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository to retrieve and save Trades by Months.
+ *
+ * @author David Schmidt
+ * @version 21. Nov 2024
+ */
+
 @Repository
 public interface TradeStartDateRepository extends Neo4jRepository<TradeStartDate, String> {
 
 
-
+    /**
+     * @param username username
+     * @param dates    dates in Format MM-yyyy
+     * @return List of TradeStartDate containing all Trades from a user
+     */
     @Query("MATCH (startDates:TradeStartDate)<-[opened:OPENED_IN]-(trades)-[i:OFFERS|WANTS]->(offer:PollenOffer)-[flower:FLOWERS|HAS_FLOWERED]->(s)-[grows:GROWS_BY]->(userInQuestion{username:$username})-[userRel]->(userNodes)\n" +
             "WHERE startDates.MonthYearId IN $dates\n" +
             "WITH *\n" +
@@ -52,10 +63,12 @@ public interface TradeStartDateRepository extends Neo4jRepository<TradeStartDate
             "    COLLECT(clone2),\n" +
             "    COLLECT(entities2)"
     )
-            List<TradeStartDate> getTradesByUsernameAndDates(String username,List<String> dates);
+    List<TradeStartDate> getTradesByUsernameAndDates(String username, List<String> dates);
 
 
-
+    /**
+     * @return all stored Dates in Format MM-yyyy
+     */
     @Query("match(p:TradeStartDate) return p.MonthYearId")
     List<String> getTradeDates();
 
