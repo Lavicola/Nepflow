@@ -16,8 +16,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataNeo4jTest
 @Import(value = {PollenExchangeTestDataInserter.class, PollenExchangeTestDataInserter.class})
@@ -87,6 +88,25 @@ public class TradeRepositoryTest {
         assertTrue(this.tradeRepository.tradeOrReverseTradeExists(offerUser1.getUuid(), offerUser2.getUuid()));
         assertTrue(this.tradeRepository.tradeOrReverseTradeExists(offerUser2.getUuid(), offerUser1.getUuid()));
     }
+
+    @Test
+    public void getTradeRatingsFromUserTest() {
+        PollenOffer offerUser1 =  new PollenOffer(updateEntityVersion(testDataInserter.user1Specimen2Male));
+        PollenOffer offerUser2 =  new PollenOffer(updateEntityVersion(testDataInserter.user2Specimen3Female));
+
+        Trade trade = new Trade(offerUser1, offerUser2);
+        Trade trade2 = new Trade(offerUser1, offerUser2);
+        trade.acceptTrade();
+        trade2.acceptTrade();
+        this.tradeRepository.save(trade);
+        this.tradeRepository.save(trade2);
+        List<Trade> trades = this.tradeRepository.getTradesWithTradeRatingsByUsername(offerUser1.getUser().getUsername());
+        assertEquals(2,trades.size());
+        assertEquals(1,trades.get(0).getRatings().size());
+        assertEquals(offerUser1.getUser(),trades.get(0).getRatings().get(0).getUser());
+        assertEquals(offerUser1.getUser(),trades.get(1).getRatings().get(0).getUser());
+    }
+
 
 
     private Specimen updateEntityVersion(Specimen specimen) {

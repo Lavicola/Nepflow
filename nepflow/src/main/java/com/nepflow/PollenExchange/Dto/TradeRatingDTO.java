@@ -1,25 +1,35 @@
 package com.nepflow.PollenExchange.Dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nepflow.PollenExchange.Model.TradeRating.RATING;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
-
+import java.net.URI;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.nepflow.PollenExchange.Dto.TradeStatus;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * TradeRatingDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-13T22:16:38.894889700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-29T23:21:38.328386900+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class TradeRatingDTO {
 
   private String tradeId;
 
+  private String username;
+
   private String date;
 
-  private RATING status;
+  private TradeStatus status;
 
   public TradeRatingDTO tradeId(String tradeId) {
     this.tradeId = tradeId;
@@ -39,6 +49,26 @@ public class TradeRatingDTO {
 
   public void setTradeId(String tradeId) {
     this.tradeId = tradeId;
+  }
+
+  public TradeRatingDTO username(String username) {
+    this.username = username;
+    return this;
+  }
+
+  /**
+   * Get username
+   * @return username
+  */
+  
+  @Schema(name = "username", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("username")
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public TradeRatingDTO date(String date) {
@@ -61,7 +91,7 @@ public class TradeRatingDTO {
     this.date = date;
   }
 
-  public TradeRatingDTO status(RATING status) {
+  public TradeRatingDTO status(TradeStatus status) {
     this.status = status;
     return this;
   }
@@ -73,11 +103,11 @@ public class TradeRatingDTO {
   @Valid 
   @Schema(name = "status", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("status")
-  public RATING getStatus() {
+  public TradeStatus getStatus() {
     return status;
   }
 
-  public void setStatus(RATING status) {
+  public void setStatus(TradeStatus status) {
     this.status = status;
   }
 
@@ -91,13 +121,14 @@ public class TradeRatingDTO {
     }
     TradeRatingDTO tradeRatingDTO = (TradeRatingDTO) o;
     return Objects.equals(this.tradeId, tradeRatingDTO.tradeId) &&
+        Objects.equals(this.username, tradeRatingDTO.username) &&
         Objects.equals(this.date, tradeRatingDTO.date) &&
         Objects.equals(this.status, tradeRatingDTO.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(tradeId, date, status);
+    return Objects.hash(tradeId, username, date, status);
   }
 
   @Override
@@ -105,6 +136,7 @@ public class TradeRatingDTO {
     StringBuilder sb = new StringBuilder();
     sb.append("class TradeRatingDTO {\n");
     sb.append("    tradeId: ").append(toIndentedString(tradeId)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");

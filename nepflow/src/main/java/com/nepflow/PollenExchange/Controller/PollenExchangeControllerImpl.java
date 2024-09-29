@@ -57,7 +57,7 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         if (tradeAnswerDTO.getAcceptTrade()) {
-            trade = this.pollenExchangeService.acceptTradeAndCreateRatings(user, tradeId);
+            trade = this.pollenExchangeService.acceptTrade(user, tradeId);
         } else {
             trade = this.pollenExchangeService.refuseTrade(user, tradeId);
         }
@@ -138,19 +138,15 @@ public class PollenExchangeControllerImpl implements PollenexchangeApiDelegate {
     @Autowired
     PollenOfferRepository pollenOfferRepository;
 
-    public ResponseEntity<TradeRatingsDTO> pollenexchangeUsernameTradeStatusGet(String username) {
-        List<TradeRating> ratings = this.pollenExchangeService.getTradesStatusWithDate(username);
-
-        TradeRatingsDTO tradeRatingsDTO = new TradeRatingsDTO();
-        tradeRatingsDTO.setUsername(username);
+    public ResponseEntity<List<TradeRatingDTO>> pollenexchangeUsernameTradeStatusGet(String username) {
+        List<Trade> ratings = this.pollenExchangeService.getTradesWithRating(username);
 
         if (ratings == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(tradeRatingsDTO);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        tradeRatingsDTO.setRatings(ratings.stream().map(rating ->
-                this.modelMapper.map(rating, TradeRatingDTO.class)).collect(Collectors.toList()));
 
-        return ResponseEntity.ok(tradeRatingsDTO);
+        return ResponseEntity.ok(ratings.stream().map(rating ->
+                this.modelMapper.map(rating, TradeRatingDTO.class)).collect(Collectors.toList()));
     }
 
     public ResponseEntity<List<PollenOfferSpeciesStatisticsDTO>> pollenexchangeUsernamePollenoffersStatisticsGet(String username) {

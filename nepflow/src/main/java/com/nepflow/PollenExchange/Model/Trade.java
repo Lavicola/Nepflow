@@ -11,6 +11,8 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Model which represents a Trade referencing PollenOffers and Users.
@@ -51,10 +53,22 @@ public class Trade {
     private User userOffers;
 
     /**
+     *
+     */
+    @Relationship(value = "RATING_FOR", direction = Relationship.Direction.OUTGOING)
+    private List<TradeRating> ratings;
+
+    /**
      * exact Date the Trade was initiated.
      */
     @Getter
     private LocalDate tradeOpenedDate = LocalDate.now();
+
+    /**
+     * exact Date the Trade status changed.
+     */
+    @Getter
+    private LocalDate tradeStatusChanged;
 
 
     /**
@@ -124,19 +138,34 @@ public class Trade {
     }
 
     /**
-     *
+     * Accept the Trade and create Ratings.
      */
     public void acceptTrade() {
+        this.setTradeStatusChanged();
         this.userWhichAnswers.acceptTrade();
+        this.ratings = new ArrayList<>(2);
+        this.ratings.add(new TradeRating(this.getUserWhoAnswersTrade()));
+        this.ratings.add(new TradeRating(this.getUserWhoInitiatedTrade()));
     }
 
     /**
      *
      */
     public void setTradeToExpired() {
+        this.setTradeStatusChanged();
         this.userWhichAnswers.setTradeToExpired();
     }
 
+
+    /**
+     * If not set yet, sets the TradeStatusChange value to the current Date.
+     */
+    private void setTradeStatusChanged() {
+        if (this.tradeStatusChanged == null) {
+            this.tradeStatusChanged = LocalDate.now();
+
+        }
+    }
 
     /**
      * @param user user to be checked if he is part of the Trade
@@ -182,6 +211,27 @@ public class Trade {
     public String getTradeStatus() {
         return this.userWhichAnswers.getCurrentTradeStatus();
     }
+
+    /**
+     * @return copy of the ratings if they were created, else empty list
+     */
+    public List<TradeRating> getRatings() {
+        return ratings == null ? new ArrayList<>(0) : new ArrayList<>(this.ratings);
+    }
+
+    /**
+     * @param user user of the rating to return to
+     * @return TradeRating which belongs to the given user or null
+     */
+    public TradeRating getRating(final User user) {
+        if (!this.isUserPartOfTrade(user)) {
+            return null;
+        }
+
+        return this.ratings.get(0).ratingFrom(user)
+                ? this.ratings.get(0) : this.ratings.get(1);
+    }
+
 
     /**
      * @return hashCode

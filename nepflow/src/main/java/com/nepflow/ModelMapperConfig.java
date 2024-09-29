@@ -20,6 +20,9 @@ import org.modelmapper.TypeMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Configuration
 public class ModelMapperConfig {
 
@@ -98,10 +101,12 @@ public class ModelMapperConfig {
                 map().getUser().setUsername(source.getUser().getUsername());
             }
         });
+        // Trade Mapping
         modelMapper.addMappings(new PropertyMap<Trade, TradeDTO>() {
             @Override
             protected void configure() {
-                map().setId(source.getUuid());
+                String tradeId = source.getUuid();
+                map().setId(tradeId);
                 map().setStatus(source.getTradeStatus());
 
                 map().setTradeOpenedDate(source.getTradeOpenedDate());
@@ -115,10 +120,31 @@ public class ModelMapperConfig {
 
                 using(ctx -> modelMapper.map(((Trade) ctx.getSource()).getRequestedOffer().getUser().getUsername(), UserDTO.class))
                         .map(source, destination.getRequestedOffer().getUser().getUsername());
+                using(ctx -> {
+                    // Define a variable within the using block
+                    return ((List<TradeRating>) ctx.getSource()).stream()
+                            .map(rating -> {
+                                TradeRatingDTO ratingDTO = modelMapper.map(rating, TradeRatingDTO.class);
+                                ratingDTO.setTradeId(tradeId);
+                                return ratingDTO;
+                            })
+                            .collect(Collectors.toList());
+                }).map(source.getRatings(), destination.getTradeRatingsDTO());
+            }
+
+        });
 
 
+        modelMapper.addMappings(new PropertyMap<TradeRating, TradeRatingDTO>() {
+            @Override
+            protected void configure() {
+                map().setStatus(TradeStatus.FAILURE);
+                map().setDate(source.getCreationDateAsString());
+                map().setUsername(source.getUser().getUsername());
             }
         });
+
+
         modelMapper.addMappings(new PropertyMap<TradeStartDate, TradeDateContainerDTO>() {
             @Override
             protected void configure() {
@@ -132,16 +158,7 @@ public class ModelMapperConfig {
                 map().setDate(source.getMonthYearId());
             }
         });
-        modelMapper.addMappings(new PropertyMap<TradeRating, TradeRatingDTO>() {
-            @Override
-            protected void configure() {
-                // TODO maybe check mapping in order to not have a wrapper method
-                map().setDate(source.getTrade().convertOpenedDay());
-                map().setStatus(source.getRating());
-                map().setTradeId(source.getTrade().getUuid());
-            }
 
-        });
         modelMapper.addMappings(new PropertyMap<PollenOfferSpeciesStatisticsDTOProjection, PollenOfferSpeciesStatisticsDTO>() {
             @Override
             protected void configure() {

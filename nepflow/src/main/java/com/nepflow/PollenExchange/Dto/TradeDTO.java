@@ -1,19 +1,31 @@
 package com.nepflow.PollenExchange.Dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDate;
+import java.net.URI;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
+import com.nepflow.PollenExchange.Dto.TradeRatingDTO;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
 
 /**
  * TradeDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-13T22:16:38.894889700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-29T23:21:38.328386900+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class TradeDTO {
 
   private String id;
@@ -23,6 +35,9 @@ public class TradeDTO {
   private PollenOfferDTO initiatedOffer;
 
   private PollenOfferDTO requestedOffer;
+
+  @Valid
+  private List<@Valid TradeRatingDTO> tradeRatingsDTO = new ArrayList<>();
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
   private LocalDate tradeOpenedDate;
@@ -107,6 +122,34 @@ public class TradeDTO {
     this.requestedOffer = requestedOffer;
   }
 
+  public TradeDTO tradeRatingsDTO(List<@Valid TradeRatingDTO> tradeRatingsDTO) {
+    this.tradeRatingsDTO = tradeRatingsDTO;
+    return this;
+  }
+
+  public TradeDTO addTradeRatingsDTOItem(TradeRatingDTO tradeRatingsDTOItem) {
+    if (this.tradeRatingsDTO == null) {
+      this.tradeRatingsDTO = new ArrayList<>();
+    }
+    this.tradeRatingsDTO.add(tradeRatingsDTOItem);
+    return this;
+  }
+
+  /**
+   * Get tradeRatingsDTO
+   * @return tradeRatingsDTO
+  */
+  @Valid 
+  @Schema(name = "TradeRatingsDTO", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("TradeRatingsDTO")
+  public List<@Valid TradeRatingDTO> getTradeRatingsDTO() {
+    return tradeRatingsDTO;
+  }
+
+  public void setTradeRatingsDTO(List<@Valid TradeRatingDTO> tradeRatingsDTO) {
+    this.tradeRatingsDTO = tradeRatingsDTO;
+  }
+
   public TradeDTO tradeOpenedDate(LocalDate tradeOpenedDate) {
     this.tradeOpenedDate = tradeOpenedDate;
     return this;
@@ -140,12 +183,13 @@ public class TradeDTO {
         Objects.equals(this.status, tradeDTO.status) &&
         Objects.equals(this.initiatedOffer, tradeDTO.initiatedOffer) &&
         Objects.equals(this.requestedOffer, tradeDTO.requestedOffer) &&
+        Objects.equals(this.tradeRatingsDTO, tradeDTO.tradeRatingsDTO) &&
         Objects.equals(this.tradeOpenedDate, tradeDTO.tradeOpenedDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, status, initiatedOffer, requestedOffer, tradeOpenedDate);
+    return Objects.hash(id, status, initiatedOffer, requestedOffer, tradeRatingsDTO, tradeOpenedDate);
   }
 
   @Override
@@ -156,6 +200,7 @@ public class TradeDTO {
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    initiatedOffer: ").append(toIndentedString(initiatedOffer)).append("\n");
     sb.append("    requestedOffer: ").append(toIndentedString(requestedOffer)).append("\n");
+    sb.append("    tradeRatingsDTO: ").append(toIndentedString(tradeRatingsDTO)).append("\n");
     sb.append("    tradeOpenedDate: ").append(toIndentedString(tradeOpenedDate)).append("\n");
     sb.append("}");
     return sb.toString();

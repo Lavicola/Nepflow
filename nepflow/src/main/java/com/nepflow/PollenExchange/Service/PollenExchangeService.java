@@ -59,7 +59,7 @@ public interface PollenExchangeService {
      * @param user                   user which initiated the trade
      * @param pollenOfferId          pollenofferId which the user offers
      * @param pollenOfferRequestedId pollenOffer Id which the user wants
-     * @return
+     * @return the opened Trade
      */
     Trade openTrade(User user, String pollenOfferId, String pollenOfferRequestedId);
 
@@ -111,23 +111,8 @@ public interface PollenExchangeService {
      * @param username
      * @return
      */
-    List<TradeRating> getTradesStatusWithDate(String username);
+    List<Trade> getTradesWithRating(String username);
 
-    /**
-     * TODO won´t be need anymore if Trade acts a root for TradeRating
-     *
-     * @param user1
-     * @param user2
-     * @param trade
-     */
-    void createTradeRatings(User user1, User user2, Trade trade);
-
-    /**
-     * @param user
-     * @param tradeId
-     * @return
-     */
-    Trade acceptTradeAndCreateRatings(User user, String tradeId);
 
     /**
      * @param username username the statistics shall be loaded

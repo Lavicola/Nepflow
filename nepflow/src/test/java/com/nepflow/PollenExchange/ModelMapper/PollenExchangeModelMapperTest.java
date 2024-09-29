@@ -72,8 +72,6 @@ public class PollenExchangeModelMapperTest {
         TradeDTO tradeDTO;
         PollenOffer initiatedPollenOffer;
         PollenOffer requestedPollenOffer;
-        User user1 = LabelCloneDefinitions.user1;
-        User user2 = LabelCloneDefinitions.user2;
         Specimen specimenM = LabelCloneDefinitions.specimenUser1Male;
         Specimen specimenF = LabelCloneDefinitions.specimenUser2Female;
 
@@ -112,6 +110,30 @@ public class PollenExchangeModelMapperTest {
 
 
     }
+
+
+    @Test
+    public void tradeWithRatingsToTradeDTOTest() {
+        Trade trade;
+        TradeDTO tradeDTO;
+        PollenOffer initiatedPollenOffer;
+        PollenOffer requestedPollenOffer;
+        Specimen specimenM = LabelCloneDefinitions.specimenUser1Male;
+        Specimen specimenF = LabelCloneDefinitions.specimenUser2Female;
+
+        initiatedPollenOffer = new PollenOffer( specimenM);
+        requestedPollenOffer = new PollenOffer( specimenF);
+        trade = new Trade(initiatedPollenOffer, requestedPollenOffer);
+        trade.acceptTrade();
+        tradeDTO = this.modelMapper.map(trade, TradeDTO.class);
+
+        PollenOfferGenericTester(initiatedPollenOffer, tradeDTO.getInitiatedOffer());
+        PollenOfferGenericTester(requestedPollenOffer, tradeDTO.getRequestedOffer());
+        assertEquals(trade.getRatings().size(),tradeDTO.getTradeRatingsDTO().size());
+
+
+    }
+
 
     private void PollenOfferGenericTester(PollenOffer pollenOffer, PollenOfferDTO pollenOfferDTO) {
         // should be null since  uuid is set by Database

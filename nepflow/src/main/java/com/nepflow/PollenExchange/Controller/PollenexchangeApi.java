@@ -5,24 +5,37 @@
  */
 package com.nepflow.PollenExchange.Controller;
 
-import com.nepflow.PollenExchange.Dto.*;
+import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
+import com.nepflow.PollenExchange.Dto.PollenOfferDateContainerDTO;
+import com.nepflow.PollenExchange.Dto.PollenOfferSpeciesStatisticsDTO;
+import com.nepflow.PollenExchange.Dto.TradeAnswerDTO;
+import com.nepflow.PollenExchange.Dto.TradeCreationDTO;
+import com.nepflow.PollenExchange.Dto.TradeDTO;
+import com.nepflow.PollenExchange.Dto.TradeDateContainerDTO;
+import com.nepflow.PollenExchange.Dto.TradeRatingDTO;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Generated;
-import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import java.util.List;
+import java.util.Map;
+import jakarta.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-13T22:16:38.894889700+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-09-29T23:21:38.328386900+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 @Validated
 @Tag(name = "Pollenexchange", description = "Operations to manage and retrive Users")
 public interface PollenexchangeApi {
@@ -294,7 +307,7 @@ public interface PollenexchangeApi {
         tags = { "Pollenexchange" },
         responses = {
             @ApiResponse(responseCode = "200", description = "..", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = TradeRatingsDTO.class))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = TradeRatingDTO.class)))
             }),
             @ApiResponse(responseCode = "404", description = "error")
         }
@@ -305,7 +318,7 @@ public interface PollenexchangeApi {
         produces = { "application/json" }
     )
     
-    default ResponseEntity<TradeRatingsDTO> pollenexchangeUsernameTradeStatusGet(
+    default ResponseEntity<List<TradeRatingDTO>> pollenexchangeUsernameTradeStatusGet(
         @Parameter(name = "username", description = "", required = true, in = ParameterIn.PATH) @PathVariable("username") String username
     ) {
         return getDelegate().pollenexchangeUsernameTradeStatusGet(username);

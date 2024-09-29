@@ -1,7 +1,6 @@
 package com.nepflow.PollenExchange.Service;
 
 import com.nepflow.GrowlistManagement.Model.Specimen;
-import com.nepflow.GrowlistManagement.Service.Growlistservice;
 import com.nepflow.PollenExchange.Model.*;
 import com.nepflow.PollenExchange.Projection.PollenOfferSpeciesStatisticsDTOProjection;
 import com.nepflow.PollenExchange.Repository.*;
@@ -243,42 +242,11 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     }
 
-    /**
-     * @param user1
-     * @param user2
-     * @param trade
-     */
-    @Override
-    @Transactional("transactionManager")
-
-    public void createTradeRatings(final User user1, final User user2, final Trade trade) {
-        List<TradeRating> tradeRatings = new ArrayList<>(2);
-        tradeRatings.add(new TradeRating(user1, trade));
-        tradeRatings.add(new TradeRating(user2, trade));
-        this.tradeRatingRepository.saveAll(tradeRatings);
-    }
-
-    /**
-     * @param user
-     * @param tradeId
-     * @return
-     */
-    @Override
-    @Transactional("transactionManager")
-    public Trade acceptTradeAndCreateRatings(final User user, final String tradeId) {
-        Trade trade = this.acceptTrade(user, tradeId);
-        if (trade != null) {
-            this.createTradeRatings(trade.getUserWhoInitiatedTrade(), trade.getUserWhoAnswersTrade(), trade);
-        } else {
-            return null;
-        }
-        return trade;
-    }
 
     /**
      * @param user    user who wants to accept a trade
      * @param tradeId id of the Trade
-     * @return the accepted trade
+     * @return the accepted trade or null in case user is not allowed to answer Trade.
      */
     @Override
     @Transactional("transactionManager")
@@ -309,7 +277,7 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
     @Override
     @Transactional("transactionManager")
 
-    public List<PollenOfferStartDate> getAllOpenPollenOffersByDateAndExcludeUsernames(List<String> dates, List<String> usernames) {
+    public List<PollenOfferStartDate> getAllOpenPollenOffersByDateAndExcludeUsernames(final List<String> dates, final List<String> usernames) {
         return this.pollenOfferStartDateRepository.getAllOpenPollenOffersUsingDatesAndExcludeUsers(dates, usernames);
     }
 
@@ -348,8 +316,8 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
      * @return
      */
     @Override
-    public List<TradeRating> getTradesStatusWithDate(final String username) {
-        return this.tradeRatingRepository.getTradeRatingByUsername(username);
+    public List<Trade> getTradesWithRating(final String username) {
+        return this.tradeRepository.getTradesWithTradeRatingsByUsername(username);
     }
 
     /**

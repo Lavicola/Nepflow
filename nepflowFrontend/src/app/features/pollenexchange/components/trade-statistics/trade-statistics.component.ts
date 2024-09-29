@@ -3,10 +3,10 @@ import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {UserDto} from "../../../../core/models/user-dto";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {TradeStatus} from "../../models/trade-status";
-import {TradeRatingsDto} from "../../models/trade-ratings-dto";
 import {
   Chart, PieController, ArcElement, Title, Legend,Tooltip
 } from 'chart.js'
+import {TradeRatingDto} from "../../models/trade-rating-dto";
 
 Chart.register(PieController, ArcElement, Title, Legend,Tooltip);
 
@@ -21,8 +21,8 @@ Chart.register(PieController, ArcElement, Title, Legend,Tooltip);
 export class TradeStatisticsComponent implements OnInit {
 
   @Input() username!: string;
-  tradeRatingsBehaviorSubject: BehaviorSubject<TradeRatingsDto> = new BehaviorSubject<TradeRatingsDto>({});
-  tradeRating: Observable<TradeRatingsDto> = this.tradeRatingsBehaviorSubject.asObservable();
+  tradeRatingsBehaviorSubject: BehaviorSubject<TradeRatingDto[]> = new BehaviorSubject<TradeRatingDto[]>([]);
+  tradeRating: Observable<TradeRatingDto[]> = this.tradeRatingsBehaviorSubject.asObservable();
   ratingCounter = new Map<string, number>;
   public chart: any;
   private data: any;
@@ -41,13 +41,13 @@ export class TradeStatisticsComponent implements OnInit {
 
     this.createChart();
     this.tradeService.pollenexchangeUsernameTradeStatusGet({username: this.username}).subscribe({
-      next: (trades: TradeRatingsDto) => this.tradeRatingsBehaviorSubject.next(trades)
+      next: (trades: TradeRatingDto[]) => this.tradeRatingsBehaviorSubject.next(trades)
     });
 
     // Use the tradeRatingsBehaviorSubject to count different rating statuses
     this.tradeRating.subscribe({
       next: (ratings) => {
-        ratings.ratings?.forEach(rating => {
+        ratings?.forEach(rating => {
           if (rating.status) {
             // @ts-ignore
             this.ratingCounter.set(rating.status, this.ratingCounter.get(rating.status) + 1)

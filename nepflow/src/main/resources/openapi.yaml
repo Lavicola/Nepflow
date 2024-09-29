@@ -1,54 +1,46 @@
 openapi: 3.0.0
 info:
-  description: API for Nepenthes Operations
+  description: API for Pollenexchange Operations
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  title: Nepflow Nepenthes
+  title: Nepflow Pollenexchange
   version: 1.0.0
 servers:
-- url: http://localhost:8080/api
+- url: http://localhost:4200/api
 tags:
-- description: Operations to manage Nepenthes
-  name: nepenthes
-- description: not sure if actually necessary for now
-  name: NepenthesMetadata
-- description: Operations for the GrowlistManagement of an user
-  name: Growlistmanagement
+- description: Operations to manage and retrive Users
+  name: Pollenexchange
 paths:
-  /producer:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ProducerDTO"
-        description: DTO with all necessary Attributes
-        required: true
+  /pollenexchange/pollenoffers/dates:
+    get:
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProducerDTO"
-          description: OK
-        "500":
-          description: Internal Error
-      summary: add a new Producer
+                items:
+                  type: string
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return stored dates (Month-Year)
       tags:
-      - NepenthesMetadata
-      x-content-type: application/json
+      - Pollenexchange
       x-accepts:
       - application/json
       x-tags:
-      - tag: NepenthesMetadata
-  /clones:
+      - tag: Pollenexchange
+  /pollenexchange/pollenoffers/open:
     get:
       parameters:
-      - explode: true
+      - description: "if dates is not send, the current date in germany will be used\
+          \ (date in Format MM-YYY)"
+        explode: true
         in: query
-        name: cloneIds
-        required: true
+        name: dates
+        required: false
         schema:
           items:
             type: string
@@ -60,472 +52,19 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: "#/components/schemas/CloneDTO"
+                  $ref: "#/components/schemas/PollenOfferDateContainerDTO"
                 type: array
-          description: OK
-      summary: get all Clones from Cloneid
+          description: ..
+        "404":
+          description: error
+      summary: return open PollenOffers by Month-Year
       tags:
-      - nepenthes
+      - Pollenexchange
       x-accepts:
       - application/json
       x-tags:
-      - tag: nepenthes
-  /clone/{nepenthesType}:
-    get:
-      parameters:
-      - explode: false
-        in: path
-        name: nepenthesType
-        required: true
-        schema:
-          $ref: "#/components/schemas/NepenthesType"
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                items:
-                  allOf:
-                  - $ref: "#/components/schemas/LabelDTO"
-                type: array
-          description: OK
-      summary: get all Nepenthes of a specific Nepenthestype
-      tags:
-      - nepenthes
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: nepenthes
-  /clone/{nepenthesType}/{name}:
-    get:
-      parameters:
-      - explode: false
-        in: path
-        name: nepenthesType
-        required: true
-        schema:
-          $ref: "#/components/schemas/NepenthesType"
-        style: simple
-      - explode: false
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LabelClonesDTO"
-          description: OK
-      summary: get all clones of a Nepenthes
-      tags:
-      - nepenthes
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: nepenthes
-  /clone/{nepenthesType}/{cloneType}/{name}:
-    get:
-      parameters:
-      - explode: false
-        in: path
-        name: nepenthesType
-        required: true
-        schema:
-          $ref: "#/components/schemas/NepenthesType"
-        style: simple
-      - explode: false
-        in: path
-        name: cloneType
-        required: true
-        schema:
-          $ref: "#/components/schemas/CloneType"
-        style: simple
-      - explode: false
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LabelClonesDTO"
-          description: OK
-      summary: get either iv or ic clones of a Nepenthes
-      tags:
-      - nepenthes
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: nepenthes
-    post:
-      parameters:
-      - explode: false
-        in: path
-        name: nepenthesType
-        required: true
-        schema:
-          $ref: "#/components/schemas/NepenthesType"
-        style: simple
-      - explode: false
-        in: path
-        name: cloneType
-        required: true
-        schema:
-          $ref: "#/components/schemas/CloneType"
-        style: simple
-      - explode: false
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LabelCloneDTO"
-        description: Clone DTO with new values
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LabelCloneDTO"
-          description: OK
-      summary: add a new clone to a nepenthes
-      tags:
-      - nepenthes
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: nepenthes
-  /clone/{nepenthesType}/{cloneType}/{name}/{internalCloneId}:
-    put:
-      parameters:
-      - explode: false
-        in: path
-        name: nepenthesType
-        required: true
-        schema:
-          $ref: "#/components/schemas/NepenthesType"
-        style: simple
-      - explode: false
-        in: path
-        name: cloneType
-        required: true
-        schema:
-          $ref: "#/components/schemas/CloneType"
-        style: simple
-      - explode: false
-        in: path
-        name: name
-        required: true
-        schema:
-          type: string
-        style: simple
-      - explode: false
-        in: path
-        name: internalCloneId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LabelCloneDTO"
-          description: OK
-      summary: update a Clone
-      tags:
-      - nepenthes
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: nepenthes
-  /growlist/{growlistId}/public:
-    patch:
-      parameters:
-      - explode: false
-        in: path
-        name: growlistId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/GrowlistPublic"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/GrowlistPublic"
-          description: OK
-      summary: set Growlist to public or private
-      tags:
-      - Growlistmanagement
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /growlist/add/clones:
-    post:
-      requestBody:
-        content:
-          application/json:
-            schema:
-              items:
-                type: string
-              type: array
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimensBulkRequestDTO"
-          description: OK
-        "207":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimensBulkRequestDTO"
-          description: returns the specimens which could be added
-        "500":
-          description: "errror, could not add Clone to user"
-      summary: Addexisting clones of Nepenthes to Growlis.
-      tags:
-      - Growlistmanagement
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /growlist/create/clone/{cloneType}:
-    post:
-      parameters:
-      - explode: false
-        in: path
-        name: cloneType
-        required: true
-        schema:
-          $ref: "#/components/schemas/CloneType"
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LabelCloneDTO"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimenCloneDTO"
-          description: OK
-        "500":
-          description: "Error, could not add Specimen to user"
-      summary: Create a new IV or IC Clone and Add it to the Growlist
-      tags:
-      - Growlistmanagement
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /growlist/create/nepenthes/{cloneType}:
-    post:
-      parameters:
-      - explode: false
-        in: path
-        name: cloneType
-        required: true
-        schema:
-          $ref: "#/components/schemas/CloneType"
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LabelCloneDTO"
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimenCloneDTO"
-          description: OK
-        "500":
-          description: "Error, could not add Specimen to user"
-      summary: Create a new Nepenthes and an additional IV or IC Clone and Add it
-        to the Growlist
-      tags:
-      - Growlistmanagement
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /specimens/{specimenId}:
-    delete:
-      parameters:
-      - explode: false
-        in: path
-        name: specimenId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          description: OK
-        "500":
-          description: "Error, could not add Nepenthes Clone to user"
-      summary: "remove a specimen from the growlistist. If the removed plant was already\
-        \ used for a trade, only a soft delete will happen"
-      tags:
-      - Growlistmanagement
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-    get:
-      parameters:
-      - explode: false
-        in: path
-        name: specimenId
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimenCloneDTO"
-          description: OK
-      tags:
-      - Growlistmanagement
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /specimens/{specimenId}/sex:
-    patch:
-      parameters:
-      - explode: false
-        in: path
-        name: specimenId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SpecimenUpdateSex"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimenUpdateSex"
-          description: OK
-        "500":
-          description: "Error, could not update Specimen Sex"
-      summary: "Update Sex of a specific Specimen, only works if Specimes current\
-        \ sex is unkown"
-      tags:
-      - Growlistmanagement
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /specimens/{specimenId}/flowering:
-    patch:
-      parameters:
-      - explode: false
-        in: path
-        name: specimenId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SpecimenUpdateFlowerStatus"
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SpecimenUpdateFlowerStatus"
-          description: OK
-        "500":
-          description: "Error, could not update flowering status"
-      summary: Update the flowering status of a clone
-      tags:
-      - Growlistmanagement
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /specimens/{specimenId}/image:
-    put:
-      parameters:
-      - explode: false
-        in: path
-        name: specimenId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: "#/components/schemas/SpecimenUpdateImage"
-        required: false
-      responses:
-        "200":
-          description: OK
-        "500":
-          description: Could not update Specimen
-      summary: update Image
-      tags:
-      - Growlistmanagement
-      x-content-type: multipart/form-data
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Growlistmanagement
-  /growlist/{username}/clones:
+      - tag: Pollenexchange
+  /pollenexchange/{username}/pollenoffers/open:
     get:
       parameters:
       - explode: false
@@ -540,47 +79,231 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GrowlistDTO"
-          description: OK
+                items:
+                  $ref: "#/components/schemas/PollenOfferDTO"
+                type: array
+          description: ..
         "404":
-          description: "Error, User not found"
-      summary: "get all Specimens of a specific User, if Growlist is public"
+          description: error
+      summary: return all open PollenOffers of the user
       tags:
-      - Growlistmanagement
+      - Pollenexchange
       x-accepts:
       - application/json
       x-tags:
-      - tag: Growlistmanagement
+      - tag: Pollenexchange
+  /pollenexchange/{username}/pollenoffers/statistics:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/PollenOfferSpeciesStatisticsDTO"
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return PollenOffer statistics on the different specimens
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/trades/dates:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return stored dates (Month-Year)
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/{username}/trades:
+    get:
+      parameters:
+      - description: "if dates is not send, the current date in germany will be used\
+          \ (date in Format MM-YYY)"
+        explode: true
+        in: query
+        name: dates
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/TradeDateContainerDTO"
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return all Trades and their status of the currently logged in user
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/create/trade:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TradeCreationDTO"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradeDTO"
+          description: Trade created successfully.
+        "404":
+          description: error  e.g userId and OfferId are wrong
+      summary: create a Trade
+      tags:
+      - Pollenexchange
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/trade/{tradeId}:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: tradeId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradeDTO"
+          description: Trade found.
+        "404":
+          description: error
+      summary: get a specific Trade
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+    put:
+      parameters:
+      - explode: false
+        in: path
+        name: tradeId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TradeAnswerDTO"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TradeDTO"
+          description: Trade created successfully.
+        "404":
+          description: error
+      summary: accept or refuse a trade
+      tags:
+      - Pollenexchange
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
+  /pollenexchange/{username}/trade/status:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/TradeRatingDTO"
+                type: array
+          description: ..
+        "404":
+          description: error
+      summary: return the status of all Trades from an User
+      tags:
+      - Pollenexchange
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Pollenexchange
 components:
   parameters:
-    nepenthesType:
+    offerId:
       explode: false
       in: path
-      name: nepenthesType
-      required: true
-      schema:
-        $ref: "#/components/schemas/NepenthesType"
-      style: simple
-    cloneType:
-      explode: false
-      in: path
-      name: cloneType
-      required: true
-      schema:
-        $ref: "#/components/schemas/CloneType"
-      style: simple
-    name:
-      explode: false
-      in: path
-      name: name
+      name: offerId
       required: true
       schema:
         type: string
       style: simple
-    internalCloneId:
+    tradeId:
       explode: false
       in: path
-      name: internalCloneId
+      name: tradeId
       required: true
       schema:
         type: string
@@ -593,281 +316,305 @@ components:
       schema:
         type: string
       style: simple
-    specimenId:
-      explode: false
-      in: path
-      name: specimenId
-      required: true
-      schema:
-        type: string
-      style: simple
-    growlistId:
-      explode: false
-      in: path
-      name: growlistId
-      required: true
-      schema:
-        type: string
-      style: simple
-    cloneIds:
+    dates:
+      description: "if dates is not send, the current date in germany will be used\
+        \ (date in Format MM-YYY)"
       explode: true
       in: query
-      name: cloneIds
-      required: true
+      name: dates
+      required: false
       schema:
         items:
           type: string
         type: array
       style: form
   schemas:
-    ProducerDTO:
+    TradeAnswerDTO:
       example:
-        contact: contact
-        name: name
+        acceptTrade: true
       properties:
-        name:
+        acceptTrade:
+          type: boolean
+      type: object
+    TradeCreationDTO:
+      example:
+        userInitiatedOffer: userInitiatedOffer
+        userRequestedOffer: userRequestedOffer
+        userInitiated: userInitiated
+        userRequested: userRequested
+      properties:
+        userInitiated:
           type: string
-        contact:
+        userInitiatedOffer:
+          type: string
+        userRequested:
+          type: string
+        userRequestedOffer:
           type: string
       type: object
-    LabelDTO:
+    UserDTO:
       example:
-        prefix: prefix
-        nepenthesName: nepenthesName
+        country: country
+        username: username
       properties:
-        nepenthesName:
+        username:
           type: string
-        prefix:
+        country:
           type: string
       type: object
-    CloneDTO:
+    PollenOfferDTO:
       example:
+        seller: seller
         sex: sex
-        nickname: nickname
-        description: description
-        producer: producer
         nepenthesName: nepenthesName
-        internalCloneId: internalCloneId
+        location: location
+        id: id
         cloneId: cloneId
-        Location: Location
+        user:
+          country: country
+          username: username
+        pollenOfferOpenedDate: 2000-01-23
+        imageLocation: imageLocation
       properties:
+        id:
+          type: string
+        user:
+          $ref: "#/components/schemas/UserDTO"
         nepenthesName:
           type: string
         cloneId:
           type: string
-        internalCloneId:
-          type: string
         sex:
           type: string
-        description:
+        location:
           type: string
-        nickname:
+        seller:
           type: string
-        producer:
+        imageLocation:
           type: string
-        Location:
+        pollenOfferOpenedDate:
+          format: date
           type: string
       type: object
-    LabelCloneDTO:
+    PollenOfferDateContainerDTO:
       example:
-        clone:
+        date: date
+        pollenOffers:
+        - seller: seller
           sex: sex
-          nickname: nickname
-          description: description
-          producer: producer
           nepenthesName: nepenthesName
-          internalCloneId: internalCloneId
+          location: location
+          id: id
           cloneId: cloneId
-          Location: Location
-        label:
-          prefix: prefix
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
+        - seller: seller
+          sex: sex
           nepenthesName: nepenthesName
+          location: location
+          id: id
+          cloneId: cloneId
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
       properties:
-        label:
-          $ref: "#/components/schemas/LabelDTO"
-        clone:
-          $ref: "#/components/schemas/CloneDTO"
-      type: object
-    LabelClonesDTO:
-      example:
-        clones:
-        - sex: sex
-          nickname: nickname
-          description: description
-          producer: producer
-          nepenthesName: nepenthesName
-          internalCloneId: internalCloneId
-          cloneId: cloneId
-          Location: Location
-        - sex: sex
-          nickname: nickname
-          description: description
-          producer: producer
-          nepenthesName: nepenthesName
-          internalCloneId: internalCloneId
-          cloneId: cloneId
-          Location: Location
-        label:
-          prefix: prefix
-          nepenthesName: nepenthesName
-      properties:
-        label:
-          $ref: "#/components/schemas/LabelDTO"
-        clones:
+        date:
+          description: MM-YYYY
+          type: string
+        pollenOffers:
           items:
-            $ref: "#/components/schemas/CloneDTO"
+            $ref: "#/components/schemas/PollenOfferDTO"
           type: array
       type: object
-    SpecimenCloneDTO:
-      allOf:
-      - $ref: "#/components/schemas/CloneDTO"
-      - properties:
-          specimenId:
-            type: string
-          filelocation:
-            type: string
-          isFlowering:
-            type: boolean
-        type: object
+    TradeDTO:
       example:
-        filelocation: filelocation
-        isFlowering: true
-        sex: sex
-        nickname: nickname
-        description: description
-        producer: producer
-        specimenId: specimenId
-        nepenthesName: nepenthesName
-        internalCloneId: internalCloneId
-        cloneId: cloneId
-        Location: Location
-    SpecimensBulkRequestDTO:
-      example:
-        success:
-        - filelocation: filelocation
-          isFlowering: true
+        RequestedOffer:
+          seller: seller
           sex: sex
-          nickname: nickname
-          description: description
-          producer: producer
-          specimenId: specimenId
           nepenthesName: nepenthesName
-          internalCloneId: internalCloneId
+          location: location
+          id: id
           cloneId: cloneId
-          Location: Location
-        - filelocation: filelocation
-          isFlowering: true
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
+        InitiatedOffer:
+          seller: seller
           sex: sex
-          nickname: nickname
-          description: description
-          producer: producer
-          specimenId: specimenId
           nepenthesName: nepenthesName
-          internalCloneId: internalCloneId
+          location: location
+          id: id
           cloneId: cloneId
-          Location: Location
-        failure:
-        - failure
-        - failure
-      properties:
-        success:
-          items:
-            $ref: "#/components/schemas/SpecimenCloneDTO"
-          type: array
-        failure:
-          items:
-            type: string
-          type: array
-      type: object
-    SpecimenUpdateImage:
-      properties:
-        file:
-          format: binary
-          type: string
-      type: object
-    SpecimenUpdateSex:
-      example:
-        sex: sex
-      properties:
-        sex:
-          type: string
-      type: object
-    SpecimenUpdateFlowerStatus:
-      example:
-        isFlowering: true
-      properties:
-        isFlowering:
-          type: boolean
-      type: object
-    GrowlistPublic:
-      example:
-        isPublic: true
-      properties:
-        isPublic:
-          type: boolean
-      type: object
-    GrowlistDTO:
-      example:
-        isPublic: true
-        specimens:
-        - filelocation: filelocation
-          isFlowering: true
-          sex: sex
-          nickname: nickname
-          description: description
-          producer: producer
-          specimenId: specimenId
-          nepenthesName: nepenthesName
-          internalCloneId: internalCloneId
-          cloneId: cloneId
-          Location: Location
-        - filelocation: filelocation
-          isFlowering: true
-          sex: sex
-          nickname: nickname
-          description: description
-          producer: producer
-          specimenId: specimenId
-          nepenthesName: nepenthesName
-          internalCloneId: internalCloneId
-          cloneId: cloneId
-          Location: Location
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
+        TradeRatingsDTO:
+        - date: date
+          tradeId: tradeId
+          username: username
+          status: SUCCESS
+        - date: date
+          tradeId: tradeId
+          username: username
+          status: SUCCESS
+        tradeOpenedDate: 2000-01-23
         id: id
-        username: username
+        status: status
       properties:
         id:
           type: string
-        username:
+        status:
           type: string
-        isPublic:
-          type: boolean
-        specimens:
+        InitiatedOffer:
+          $ref: "#/components/schemas/PollenOfferDTO"
+        RequestedOffer:
+          $ref: "#/components/schemas/PollenOfferDTO"
+        TradeRatingsDTO:
           items:
-            $ref: "#/components/schemas/SpecimenCloneDTO"
+            $ref: "#/components/schemas/TradeRatingDTO"
+          type: array
+        tradeOpenedDate:
+          format: date
+          type: string
+      type: object
+    TradeDateContainerDTO:
+      example:
+        date: date
+        trades:
+        - RequestedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
+          InitiatedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
+          TradeRatingsDTO:
+          - date: date
+            tradeId: tradeId
+            username: username
+            status: SUCCESS
+          - date: date
+            tradeId: tradeId
+            username: username
+            status: SUCCESS
+          tradeOpenedDate: 2000-01-23
+          id: id
+          status: status
+        - RequestedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
+          InitiatedOffer:
+            seller: seller
+            sex: sex
+            nepenthesName: nepenthesName
+            location: location
+            id: id
+            cloneId: cloneId
+            user:
+              country: country
+              username: username
+            pollenOfferOpenedDate: 2000-01-23
+            imageLocation: imageLocation
+          TradeRatingsDTO:
+          - date: date
+            tradeId: tradeId
+            username: username
+            status: SUCCESS
+          - date: date
+            tradeId: tradeId
+            username: username
+            status: SUCCESS
+          tradeOpenedDate: 2000-01-23
+          id: id
+          status: status
+      properties:
+        date:
+          description: MM-YYYY
+          type: string
+        trades:
+          items:
+            $ref: "#/components/schemas/TradeDTO"
           type: array
       type: object
-    NepenthesType:
+    TradeRatingDTO:
+      example:
+        date: date
+        tradeId: tradeId
+        username: username
+        status: SUCCESS
+      properties:
+        tradeId:
+          type: string
+        username:
+          type: string
+        date:
+          description: MM-YYYY
+          type: string
+        status:
+          $ref: "#/components/schemas/TradeStatus"
+      type: object
+    TradeStatus:
       enum:
-      - Species
-      - MultiHybrid
-      - PrimaryHybrid
+      - SUCCESS
+      - FAILURE
+      - PENDING
       type: string
       x-enum-varnames:
-      - species
-      - multihybrid
-      - primaryhybrid
+      - SUCCESS
+      - FAILURE
+      - PENDING
       x-enumNames:
-      - species
-      - multihybrid
-      - primaryhybrid
-    CloneType:
-      enum:
-      - iv
-      - ic
-      type: string
-      x-enum-varnames:
-      - iv
-      - ic
-      x-enumNames:
-      - iv
-      - ic
+      - SUCCESS
+      - FAILURE
+      - PENDING
+    PollenOfferSpeciesStatisticsDTO:
+      example:
+        floweringCount: 0
+        specimenId: specimenId
+        nepenthesName: nepenthesName
+        cloneId: cloneId
+      properties:
+        specimenId:
+          type: string
+        floweringCount:
+          type: integer
+        cloneId:
+          type: string
+        nepenthesName:
+          type: string
+      type: object

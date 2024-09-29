@@ -18,8 +18,8 @@ public class SpringDocConfiguration {
         return new OpenAPI()
                 .info(
                         new Info()
-                                .title("Nepflow Nepenthes")
-                                .description("API for Nepenthes Operations")
+                                .title("Nepflow Pollenexchange")
+                                .description("API for Pollenexchange Operations")
                                 .license(
                                         new License()
                                                 .name("Apache 2.0")

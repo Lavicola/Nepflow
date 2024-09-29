@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import {BaseService} from "../../../core/openApiGeneratedFiles/base-service";
+import {ApiConfiguration} from "../../../core/openApiGeneratedFiles/api-configuration";
+import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
 
 import { pollenexchangeCreateTradePost } from '../fn/pollenexchange/pollenexchange-create-trade-post';
 import { PollenexchangeCreateTradePost$Params } from '../fn/pollenexchange/pollenexchange-create-trade-post';
@@ -31,10 +34,7 @@ import { PollenOfferDto } from '../models/pollen-offer-dto';
 import { PollenOfferSpeciesStatisticsDto } from '../models/pollen-offer-species-statistics-dto';
 import { TradeDateContainerDto } from '../models/trade-date-container-dto';
 import { TradeDto } from '../models/trade-dto';
-import { TradeRatingsDto } from '../models/trade-ratings-dto';
-import {BaseService} from "../../../core/openApiGeneratedFiles/base-service";
-import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
-import {ApiConfiguration} from "../../../core/openApiGeneratedFiles/api-configuration";
+import { TradeRatingDto } from '../models/trade-rating-dto';
 
 
 /**
@@ -356,7 +356,7 @@ export class PollenexchangeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  pollenexchangeUsernameTradeStatusGet$Response(params: PollenexchangeUsernameTradeStatusGet$Params, context?: HttpContext): Observable<StrictHttpResponse<TradeRatingsDto>> {
+  pollenexchangeUsernameTradeStatusGet$Response(params: PollenexchangeUsernameTradeStatusGet$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<TradeRatingDto>>> {
     return pollenexchangeUsernameTradeStatusGet(this.http, this.rootUrl, params, context);
   }
 
@@ -370,9 +370,9 @@ export class PollenexchangeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  pollenexchangeUsernameTradeStatusGet(params: PollenexchangeUsernameTradeStatusGet$Params, context?: HttpContext): Observable<TradeRatingsDto> {
+  pollenexchangeUsernameTradeStatusGet(params: PollenexchangeUsernameTradeStatusGet$Params, context?: HttpContext): Observable<Array<TradeRatingDto>> {
     return this.pollenexchangeUsernameTradeStatusGet$Response(params, context).pipe(
-      map((r: StrictHttpResponse<TradeRatingsDto>): TradeRatingsDto => r.body)
+      map((r: StrictHttpResponse<Array<TradeRatingDto>>): Array<TradeRatingDto> => r.body)
     );
   }
 

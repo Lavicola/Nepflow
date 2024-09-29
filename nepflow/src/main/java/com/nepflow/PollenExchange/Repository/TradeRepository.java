@@ -2,9 +2,12 @@ package com.nepflow.PollenExchange.Repository;
 
 
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeRating;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * Repository mainly used to check for reverse Trades.
@@ -29,6 +32,15 @@ public interface TradeRepository extends Neo4jRepository<Trade, String> {
             "        AND elementId(p2) = $offerId2 \n" +
             "} as result\n")
     boolean tradeOrReverseTradeExists(String offerId, String offerId2);
+
+
+    /**
+     * @param username username of the User
+     * @return List of all Trades and Ratings references from a User
+     */
+    @Query("match(t:Trade)-[r]->(tr:TradeRating)-[ru]->(u:User{username:$username})\n" +
+            "return t, collect(r),collect(tr),collect(ru),collect(u)\n")
+    List<Trade> getTradesWithTradeRatingsByUsername(String username);
 
 
 }
