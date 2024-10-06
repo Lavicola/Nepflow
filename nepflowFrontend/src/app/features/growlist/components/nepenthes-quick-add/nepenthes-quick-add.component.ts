@@ -7,9 +7,14 @@ import {Observable} from "rxjs";
 import {CloneDto} from "../../models/clone-dto";
 import {
   MatCell,
-  MatCellDef, MatColumnDef,
+  MatCellDef,
+  MatColumnDef,
   MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
   MatTable,
   MatTableDataSource
 } from "@angular/material/table";
@@ -19,7 +24,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormsModule} from "@angular/forms";
 import {MatOption, MatSelect} from "@angular/material/select";
 import _default from "chart.js/dist/plugins/plugin.tooltip";
-import duration = _default.defaults.animation.duration;
 import {NgStyle} from "@angular/common";
 
 @Component({

@@ -3,7 +3,7 @@ import {SpecimenUpdateCloneDto} from "../../models/specimen-update-clone-dto";
 import {GrowlistmanagementService} from "../../services/growlistmanagement.service";
 import {ActivatedRoute} from "@angular/router";
 import {SpecimenCloneDto} from "../../models/specimen-clone-dto";
-import {async, BehaviorSubject, catchError, combineLatest, of, switchMap} from "rxjs";
+import {BehaviorSubject, catchError, combineLatest, of, switchMap} from "rxjs";
 import {GrowlistDto} from "../../models/growlist-dto";
 import {MatExpansionPanelActionRow} from "@angular/material/expansion";
 import {MatSlideToggle} from "@angular/material/slide-toggle";

@@ -2,7 +2,6 @@ package com.nepflow.PollenExchange.ModelMapper;
 
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.LabelCloneDefinitions;
-import com.nepflow.ModelMapperConfig;
 import com.nepflow.PollenExchange.Dto.PollenOfferDTO;
 import com.nepflow.PollenExchange.Dto.PollenOfferDateContainerDTO;
 import com.nepflow.PollenExchange.Dto.TradeDTO;
@@ -11,22 +10,25 @@ import com.nepflow.PollenExchange.Model.PollenOffer;
 import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
 import com.nepflow.PollenExchange.Model.TradeStartDate;
+import com.nepflow.PollenExchange.ModelMapperConfigPollenExchange;
 import com.nepflow.UserManagement.Model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ContextConfiguration(classes = ModelMapperConfig.class)
+@ContextConfiguration(classes = ModelMapperConfigPollenExchange.class)
 @ExtendWith(SpringExtension.class)
 public class PollenExchangeModelMapperTest {
 
 
     @Autowired
+    @Qualifier("modelMapperPollenExchange")
     ModelMapper modelMapper;
 
     @Test
@@ -111,28 +113,6 @@ public class PollenExchangeModelMapperTest {
 
     }
 
-
-    @Test
-    public void tradeWithRatingsToTradeDTOTest() {
-        Trade trade;
-        TradeDTO tradeDTO;
-        PollenOffer initiatedPollenOffer;
-        PollenOffer requestedPollenOffer;
-        Specimen specimenM = LabelCloneDefinitions.specimenUser1Male;
-        Specimen specimenF = LabelCloneDefinitions.specimenUser2Female;
-
-        initiatedPollenOffer = new PollenOffer( specimenM);
-        requestedPollenOffer = new PollenOffer( specimenF);
-        trade = new Trade(initiatedPollenOffer, requestedPollenOffer);
-        trade.acceptTrade();
-        tradeDTO = this.modelMapper.map(trade, TradeDTO.class);
-
-        PollenOfferGenericTester(initiatedPollenOffer, tradeDTO.getInitiatedOffer());
-        PollenOfferGenericTester(requestedPollenOffer, tradeDTO.getRequestedOffer());
-        assertEquals(trade.getRatings().size(),tradeDTO.getTradeRatingsDTO().size());
-
-
-    }
 
 
     private void PollenOfferGenericTester(PollenOffer pollenOffer, PollenOfferDTO pollenOfferDTO) {

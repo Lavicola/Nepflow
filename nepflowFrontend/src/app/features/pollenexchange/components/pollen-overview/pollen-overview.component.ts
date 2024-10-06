@@ -3,11 +3,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserDto} from "../../../../core/models/user-dto";
 import {PollenOfferDto} from "../../models/pollen-offer-dto";
 import {PollenOfferDateContainerDto} from "../../models/pollen-offer-date-container-dto";
-import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {AuthService} from "../../../../core/services/auth.service";
 import {BehaviorSubject, catchError, concatMap, of, tap} from "rxjs";
 import {TradeDto} from "../../models/trade-dto";
-import {TradeCreationDto} from "../../models/trade-creation-dto";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatSelect} from "@angular/material/select";
@@ -38,6 +36,8 @@ import {
 } from "@angular/material/expansion";
 import {NepenthesCardSimpleComponent} from "../nepenthes-card-simple/nepenthes-card-simple.component";
 import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-text.component";
+import {PollenoffersService} from "../../services/pollenoffers.service";
+import {TradesService} from "../../services/trades.service";
 
 @Component({
   selector: 'app-overview',
@@ -102,7 +102,8 @@ export class PollenOverviewComponent implements OnInit {
   filteredPollenOffers$ = this.filteredPollenOffersSubject.asObservable();
 
 
-  constructor(private pollenExchangeService: PollenexchangeService,
+  constructor(private pollenoffersService: PollenoffersService,
+              private tradeService: TradesService,
               private userService: AuthService,
               private snackBar: MatSnackBar) {
 
@@ -117,11 +118,11 @@ export class PollenOverviewComponent implements OnInit {
 
 
   fetchData(): void {
-    this.pollenExchangeService.pollenexchangePollenoffersDatesGet().pipe(
+    this.pollenoffersService.pollenexchangePollenoffersDatesGet().pipe(
       concatMap(dates => {
         this.allDates = dates;
         this.dates = dates.slice(0, this.datesToRender);
-        return this.pollenExchangeService.pollenexchangePollenoffersOpenGet({dates: this.dates});
+        return this.pollenoffersService.pollenexchangePollenoffersOpenGet({dates: this.dates});
       }),
       concatMap(containers => this.userService.getUser().pipe(
         tap(user => {
@@ -139,9 +140,8 @@ export class PollenOverviewComponent implements OnInit {
         if (!user || !user.username) {
           return of(null);
         }
-        this.pollenExchangeService.pollenexchangeUsernameTradesGet({
+        this.tradeService.pollenexchangeTradesGet({
           dates: this.dates,
-          username: user.username
         }).subscribe({
           next: (myTradeContainer) => {
             myTradeContainer.forEach(container => {

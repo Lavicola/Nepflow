@@ -1,30 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-basecard.component";
-import {
-  BehaviorSubject,
-  combineLatest,
-  combineLatestWith,
-  map,
-  Observable,
-  shareReplay,
-  startWith,
-  Subject,
-  tap, withLatestFrom
-} from "rxjs";
+import {BehaviorSubject, combineLatest, map, Observable, startWith} from "rxjs";
 import {TradeDto} from "../../models/trade-dto";
 import {AuthService} from "../../../../core/services/auth.service";
 import {UserDto} from "../../../../core/models/user-dto";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {MatFormField} from "@angular/material/form-field";
 import {MatButton} from "@angular/material/button";
-import {TradeAnswerDto} from "../../models/trade-answer-dto";
-import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {PollenOfferDto} from "../../models/pollen-offer-dto";
 import {getNameOfCross} from "../../services/male-female-name-combiner";
 import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-text.component";
 import {NepenthesCardSimpleComponent} from "../nepenthes-card-simple/nepenthes-card-simple.component";
+import {TradesService} from "../../services/trades.service";
 
 @Component({
   selector: 'app-user-trades-open',
@@ -60,7 +48,7 @@ export class UserTradesOpenComponent implements OnInit {
 
 
   constructor(private userService: AuthService,
-              private tradeService: PollenexchangeService,
+              private tradeService: TradesService,
               private snackBar: MatSnackBar) {
 
 

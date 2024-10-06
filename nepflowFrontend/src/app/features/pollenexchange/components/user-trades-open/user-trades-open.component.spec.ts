@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserTradesOpenComponent } from './user-trades-open.component';
+import {UserTradesOpenComponent} from './user-trades-open.component';
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 

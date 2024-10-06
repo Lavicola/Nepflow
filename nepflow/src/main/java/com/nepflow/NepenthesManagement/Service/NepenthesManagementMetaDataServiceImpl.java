@@ -1,10 +1,6 @@
 package com.nepflow.NepenthesManagement.Service;
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Seller;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.PrivateSeller;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 import com.nepflow.NepenthesManagement.Repository.LocationRepository;
 import com.nepflow.NepenthesManagement.Repository.SellerRepository;
 import com.nepflow.NepenthesManagement.Repository.SexRepository;

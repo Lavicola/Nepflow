@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import {UserDto} from "../../../core/models/user-dto";
+import {UserDto} from '../models/user-dto';
 
 export interface PollenOfferDto {
   cloneId?: string;

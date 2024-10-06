@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserTradesOverviwComponent } from './user-trades-overviw.component';
+import {UserTradesOverviwComponent} from './user-trades-overviw.component';
 import {provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {RouterModule} from "@angular/router";

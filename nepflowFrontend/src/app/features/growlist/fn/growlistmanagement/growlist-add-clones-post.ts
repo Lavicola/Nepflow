@@ -1,12 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {HttpClient, HttpContext, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 import {RequestBuilder} from "../../../../core/openApiGeneratedFiles/request-builder";
 import {StrictHttpResponse} from "../../../../core/openApiGeneratedFiles/strict-http-response";
 
-import { SpecimensBulkRequestDto } from '../../models/specimens-bulk-request-dto';
+import {SpecimensBulkRequestDto} from '../../models/specimens-bulk-request-dto';
 
 export interface GrowlistAddClonesPost$Params {
       body?: Array<string>

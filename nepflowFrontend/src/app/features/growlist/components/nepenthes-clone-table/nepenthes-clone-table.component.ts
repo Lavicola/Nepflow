@@ -2,18 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {GrowlistmanagementService} from "../../services/growlistmanagement.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {
-  MatCell,
-  MatCellDef, MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
-  MatTable,
-  MatTableDataSource, MatTableModule
-} from "@angular/material/table";
+import {MatTable, MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {CloneDto} from "../../models/clone-dto";
 import {Observable} from "rxjs";
-import {MatFormField, MatFormFieldControl} from "@angular/material/form-field";
+import {MatFormField} from "@angular/material/form-field";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
 import {MatIcon} from "@angular/material/icon";
@@ -43,7 +35,6 @@ import {MatButton} from "@angular/material/button";
 })
 export class NepenthesCloneTableComponent implements OnInit {
 
-  displayedColumns: string[] = ['cloneId', 'sex', "nickname", "producer", 'Location'];
   @Input() existingClones: Observable<CloneDto[]> = new Observable<CloneDto[]>();
 
   dataSource: MatTableDataSource<CloneDto> = new MatTableDataSource<CloneDto>();
@@ -139,16 +130,16 @@ export class NepenthesCloneTableComponent implements OnInit {
 
 
     if (element.internalCloneId) {
-      /*
-      this.growlistService.growlistCloneAddInternalCloneIdPost({body:element.internalCloneId}).subscribe({
-        next: () => this._snackBar.open("added Plant to Growlist!","Ok",{
+
+      this.growlistService.growlistAddClonesPost({body: [element.internalCloneId]}).subscribe({
+        next: () => this._snackBar.open("added Plant to Growlist!", "Ok", {
           duration: 1500,
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
           panelClass: ['snackbar-success']
 
         }),
-        error: ()=>   this._snackBar.open("Failed to add Plant to Growlist, please try again later","Ok",{
+        error: () => this._snackBar.open("Failed to add Plant to Growlist, please try again later", "Ok", {
           duration: 1500,
           horizontalPosition: 'center',
           verticalPosition: 'bottom',
@@ -156,8 +147,8 @@ export class NepenthesCloneTableComponent implements OnInit {
         })
       })
     }
-    */
 
-    }
+
   }
 }
+

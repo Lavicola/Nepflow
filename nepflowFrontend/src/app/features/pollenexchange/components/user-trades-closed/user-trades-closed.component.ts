@@ -6,7 +6,6 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-basecard.component";
 import {MatButton} from "@angular/material/button";
 import {getNameOfCross} from "../../services/male-female-name-combiner";
-import {PollenOfferDto} from "../../models/pollen-offer-dto";
 import {NepenthesCardSimpleComponent} from "../nepenthes-card-simple/nepenthes-card-simple.component";
 import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-text.component";
 
@@ -20,11 +19,14 @@ import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-
 export class UserTradesClosedComponent {
 
   @Input() allTrades:Observable<TradeDto[]> = new Observable<TradeDto[]>();
+
+
   acceptedTrades$:Observable<TradeDto[]> = new Observable<TradeDto[]>();
   declinedTrades$:Observable<TradeDto[]> = new Observable<TradeDto[]>();
 
 
   ngOnInit() {
+
     this.acceptedTrades$ = this.allTrades.pipe(
       map(trades => trades.filter(trade => trade.status === 'ACCEPTED'))
     );

@@ -119,9 +119,15 @@ task generateOpenAPIPollenExchange(type: org.openapitools.generator.gradle.plugi
 			useTags					  : "true",
 			modelPackage              : "com.nepflow.PollenExchange.Dto",
 	])
-	typeMappings = ['string+date-time': 'LocalDateTime']
+	typeMappings = ['string+date-time': 'LocalDateTime',
+					'ReviewType' : 'com.nepflow.PollenExchange.Model.TradeRating.RATING',
+					'org.springframework.core.io.Resource' : 'org.springframework.web.multipart.MultipartFile',
+
+
+	]
 	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
 					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+					  'Pageable': 'org.springframework.data.domain.Pageable',
 	]
 	inputSpec.set(openapi_spec)
 	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())

@@ -1,7 +1,9 @@
 openapi: 3.0.0
 tags:
-  - name: Pollenexchange
-    description: Operations to manage and retrive Users
+  - name: Pollenoffers
+    description: Operations to manage and retrive PollenOffers
+  - name: Trades
+    description: Operations to manage and retrive Trades and their related Entities
 info:
   title: Nepflow Pollenexchange
   description: |-
@@ -17,7 +19,7 @@ paths:
     get:
       summary: return stored dates (Month-Year)
       tags:
-        - Pollenexchange
+        - Pollenoffers
       responses:
         '200':
           description: ..
@@ -35,7 +37,7 @@ paths:
         - $ref: "#/components/parameters/dates"
       summary: return open PollenOffers by Month-Year
       tags:
-        - Pollenexchange
+        - Pollenoffers
       responses:
         '200':
           description: ..
@@ -53,7 +55,7 @@ paths:
         - $ref: "#/components/parameters/username"
       summary: return all open PollenOffers of the user
       tags:
-        - Pollenexchange
+        - Pollenoffers
       responses:
         '200':
           description: ..
@@ -71,7 +73,7 @@ paths:
         - $ref: "#/components/parameters/username"
       summary: return PollenOffer statistics on the different specimens
       tags:
-        - Pollenexchange
+        - Pollenoffers
       responses:
         '200':
           description: ..
@@ -84,12 +86,11 @@ paths:
         '404':
           description: error
 
-
   /pollenexchange/trades/dates:
     get:
-      summary: return stored dates (Month-Year)
+      summary: return stored dates (Month-Year) the current logged in user has trades
       tags:
-        - Pollenexchange
+        - Trades
       responses:
         '200':
           description: ..
@@ -101,17 +102,13 @@ paths:
                   type: string
         '404':
           description: error
-
-
-  /pollenexchange/{username}/trades:
+  /pollenexchange/trades:
     get:
       summary: return all Trades and their status of the currently logged in user
       parameters:
         - $ref: "#/components/parameters/dates"
-        - $ref: "#/components/parameters/username"
-
       tags:
-        - Pollenexchange
+        - Trades
       responses:
         '200':
           description: ..
@@ -128,7 +125,7 @@ paths:
     post:
       summary: create a Trade
       tags:
-        - Pollenexchange
+        - Trades
       requestBody:
         required: true
         content:
@@ -150,7 +147,7 @@ paths:
     put:
       summary: accept or refuse a trade
       tags:
-        - Pollenexchange
+        - Trades
       requestBody:
         required: true
         content:
@@ -169,7 +166,7 @@ paths:
     get:
       summary: get a specific Trade
       tags:
-        - Pollenexchange
+        - Trades
       responses:
         '200':
           description: Trade found.
@@ -179,24 +176,87 @@ paths:
                 $ref: '#/components/schemas/TradeDTO'
         '404':
           description: error
-  /pollenexchange/{username}/trade/status:
+
+
+  /pollenexchange/trades/rateable:
     get:
-      summary: return the status of all Trades from an User
-      parameters:
-        - $ref: "#/components/parameters/username"
+      summary: return all rateable trades of the currently logged in user
       tags:
-        - Pollenexchange
+        - Trades
       responses:
         '200':
-          description: ..
+          description: return all trades which are still rateable
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TradeRatingDTO'
+                  $ref: '#/components/schemas/TradeDTO'
         '404':
           description: error
+  /trades/{tradeId}/rating:
+    parameters:
+      - $ref: "#/components/parameters/tradeId"
+    post:
+      summary: leave feedback/rate a specific Trade
+      tags:
+        - Trades
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/NewRatingDTO'
+      responses:
+        '200':
+          description: feedback for the Trade was saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewRatingResponseDTO'
+        '404':
+          description: error
+  /trades/{username}/ratings:
+    parameters:
+      - $ref: "#/components/parameters/username"
+      - in: query
+        name: pageable
+        required: false
+        schema:
+          $ref: '#/components/schemas/Pageable'
+    get:
+      summary: get received ratings of a specific User
+      tags:
+        - Trades
+      responses:
+        '200':
+          description: received Ratings of a user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatingPage'
+        '404':
+          description: error
+
+  /pollenexchange/{username}/trades/status:
+    parameters:
+      - $ref: "#/components/parameters/username"
+    get:
+      summary: return the status of all Trades from the Viewpoint of the User
+      tags:
+        - Trades
+      responses:
+        '200':
+          description: status of all Trades from the Viewpoint of the User
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TradeStatusDTO'
+        '404':
+          description: error
+
 
 
 components:
@@ -232,17 +292,46 @@ components:
           type: string
 
 
+    page:
+      name: page
+      in: query
+      description: The page number (zero-based index) for paginated results.
+      required: true
+      schema:
+        type: integer
+        format: int32
+        default: 0
+      style: form
 
-
+    size:
+      name: size
+      in: query
+      description: The number of items per page.
+      required: true
+      schema:
+        type: integer
+        format: int32
+        default: 20
+      style: form
 
 
   schemas:
+    Pageable:
+      description: minimal Pageable query parameters
+      type: object
+      properties:
+        page:
+          type: integer
+        size:
+          type: integer
+
+
+
     TradeAnswerDTO:
       type: object
       properties:
         acceptTrade:
           type: boolean
-
     TradeCreationDTO:
       type: object
       properties:
@@ -256,6 +345,7 @@ components:
           type: string
 
 
+
     UserDTO:
       type: object
       properties:
@@ -263,8 +353,16 @@ components:
           type: string
         country:
           type: string
-
-
+    PollenOfferDateContainerDTO:
+      type: object
+      properties:
+        date:
+          type: string
+          description: MM-YYYY
+        pollenOffers:
+          type:  array
+          items:
+            $ref: '#/components/schemas/PollenOfferDTO'
     PollenOfferDTO:
       type: object
       properties:
@@ -287,19 +385,16 @@ components:
         pollenOfferOpenedDate:
           type: string
           format: date
-
-    PollenOfferDateContainerDTO:
+    TradeDateContainerDTO:
       type: object
       properties:
         date:
           type: string
           description: MM-YYYY
-        pollenOffers:
+        trades:
           type:  array
           items:
-            $ref: '#/components/schemas/PollenOfferDTO'
-
-
+            $ref: '#/components/schemas/TradeDTO'
 
     TradeDTO:
       type: object
@@ -312,53 +407,91 @@ components:
           $ref: '#/components/schemas/PollenOfferDTO'
         RequestedOffer:
           $ref: '#/components/schemas/PollenOfferDTO'
-        TradeRatingsDTO:
-          items:
-            $ref: '#/components/schemas/TradeRatingDTO'
         tradeOpenedDate:
           type: string
           format: date
 
-
-    TradeDateContainerDTO:
+    NewRatingDTO:
       type: object
       properties:
-        date:
+        comment:
           type: string
-          description: MM-YYYY
-        trades:
-          type:  array
-          items:
-            $ref: '#/components/schemas/TradeDTO'
+        file:
+          type: string
+          format: binary
+        reviewType:
+          $ref: '#/components/schemas/ReviewType'
 
 
-    TradeRatingDTO:
+    NewRatingResponseDTO:
+      type: object
+      properties:
+        comment:
+          type: string
+        imageLocation:
+          type: string
+        reviewType:
+          $ref: '#/components/schemas/ReviewType'
+
+
+    RatingDTO:
       type: object
       properties:
         tradeId:
           type: string
-        username:
+        comment:
           type: string
-        date:
+        rater:
           type: string
-          description: MM-YYYY
+        receivedOn:
+          type: string
+        file:
+          type: string
+          format: binary
+        reviewType:
+          $ref: '#/components/schemas/ReviewType'
+
+    RatingPage:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+        pageNumber:
+          type: integer
+        totalPages:
+          type: integer
+        ratings:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingDTO'
+
+    TradeStatusDTO:
+      type: object
+      description: the Status of a Trade from a viewpoint of a specific User
+      properties:
+        tradeId:
+          type: string
+        creationDate:
+          description: the date the trade was accepted
+          type: string
+          format: date
         status:
-          $ref: '#/components/schemas/TradeStatus'
+          $ref: '#/components/schemas/ReviewType'
 
 
 
-
-    TradeStatus:
+    ReviewType:
       type: string
-      enum: &TradeStatus
+      enum: &ReviewType
         - SUCCESS
         - FAILURE
         - PENDING
-      x-enum-varnames: *TradeStatus
+      x-enum-varnames: *ReviewType
       x-enumNames:
         - SUCCESS
         - FAILURE
         - PENDING
+
 
     PollenOfferSpeciesStatisticsDTO:
       type: object

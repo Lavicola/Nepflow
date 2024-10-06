@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { BehaviorSubject, combineLatestWith, map, Observable, startWith} from "rxjs";
+import {BehaviorSubject, combineLatestWith, map, Observable, startWith} from "rxjs";
 import {UsermanagementService} from "../../../user-management/services/usermanagement.service";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {UserPrivacyDto} from "../../../../core/models/user-privacy-dto";

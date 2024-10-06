@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserTradesClosedComponent } from './user-trades-closed.component';
+import {UserTradesClosedComponent} from './user-trades-closed.component';
 
 describe('UserTradesClosedComponent', () => {
   let component: UserTradesClosedComponent;

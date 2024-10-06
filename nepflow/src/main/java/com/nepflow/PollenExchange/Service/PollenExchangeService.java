@@ -3,7 +3,12 @@ package com.nepflow.PollenExchange.Service;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.PollenExchange.Model.*;
 import com.nepflow.PollenExchange.Projection.PollenOfferSpeciesStatisticsDTOProjection;
+import com.nepflow.PollenExchange.Projection.TradeStatus;
+import com.nepflow.PollenExchange.Projection.UserRating;
 import com.nepflow.UserManagement.Model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -90,9 +95,10 @@ public interface PollenExchangeService {
     List<PollenOfferStartDate> getAllOpenPollenOffersByDateAndExcludeUsernames(List<String> dates, List<String> usernames);
 
     /**
+     * @param username username
      * @return all existing Dates of Trades in Format MM-yyyy
      */
-    List<String> getAllDatesTrades();
+    List<String> getAllDatesTradesOfUser(String username);
 
     /**
      * @return all existing Dates of PollenOffers in Format MM-yyyy
@@ -106,12 +112,27 @@ public interface PollenExchangeService {
     Trade getTradeById(String id);
 
     /**
-     * TODO might need refactoring
+     * Method definition which returns all Trades a User has not yet rated.
      *
-     * @param username
-     * @return
+     * @param username username of the User to check for Trades to be rated
+     * @return list of all Trades the user needs to rate with only reference to his own TradeRating
      */
-    List<Trade> getTradesWithRating(String username);
+    List<Trade> getTradesUserNeedsToRate(String username);
+
+
+    /**
+     * Method definition to allow an user to rate a specific Trade.
+     *
+     * @param tradeId the id of the Trade
+     * @param comment comment
+     * @param file    file
+     * @param rating  rating
+     * @param user    the User the rating belongs to
+     * @return the newly created TradeRating, else null
+     */
+    TradeRating setRatingForTrade(String tradeId,
+                                  String comment, MultipartFile file,
+                                  TradeRating.RATING rating, User user);
 
 
     /**
@@ -120,5 +141,22 @@ public interface PollenExchangeService {
      */
     List<PollenOfferSpeciesStatisticsDTOProjection> getPollenOfferStatistics(String username);
 
+
+    /**
+     * depending on the Viewpoint of a Trade, the TradeRatings decides
+     * the current TradeStatus for a specific User.
+     *
+     * @param username username
+     * @return list of TradeStatus
+     */
+    List<TradeStatus> getReceivedRatingsStatus(String username);
+
+
+    /**
+     * @param username username
+     * @param pageable pageable with size and page
+     * @return page of UserRatings
+     */
+    Page<UserRating> getUserRatings(String username, Pageable pageable);
 
 }

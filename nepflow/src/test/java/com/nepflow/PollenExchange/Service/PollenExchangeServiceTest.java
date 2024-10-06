@@ -4,15 +4,16 @@ package com.nepflow.PollenExchange.Service;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
+import com.nepflow.PollenExchange.Dto.RatingDTO;
 import com.nepflow.PollenExchange.Model.PollenOffer;
 import com.nepflow.PollenExchange.Model.PollenOfferStartDate;
 import com.nepflow.PollenExchange.Model.Trade;
+import com.nepflow.PollenExchange.Model.TradeRating;
 import com.nepflow.PollenExchange.PollenExchangeTestDataInserter;
 import com.nepflow.PollenExchange.Repository.PollenOfferRepository;
 import com.nepflow.PollenExchange.Repository.PollenOfferStartDateRepository;
 import com.nepflow.PollenExchange.Repository.TradeRepository;
 import com.nepflow.PollenExchange.Repository.TradeStartDateRepository;
-import com.nepflow.UserManagement.Repository.UserRepository;
 import com.nepflow.UserManagement.Service.AuthenticationService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -234,9 +235,6 @@ public class PollenExchangeServiceTest {
 
     }
 
-    @Autowired
-    UserRepository userRepository;
-
     @Test
     @Transactional
     public void openTradeTest() {
@@ -281,7 +279,7 @@ public class PollenExchangeServiceTest {
             pollenOffer2 = this.pollenOfferRepository.save(pollenOffer2);
             // retrieve the PollenOffer since in a Trade creation the  offer version will always be retrieved
             // otherwise Optimistic Locking
-            tradeNextMonth =  new Trade(
+            tradeNextMonth = new Trade(
                     this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
                     this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
             pollenExchangeService.addTradeToMonthYearContainer(tradeNextMonth);
@@ -289,11 +287,8 @@ public class PollenExchangeServiceTest {
         }
 
 
-
         assertEquals(2, this.tradeStartDateRepository.findAll().size());
         assertEquals(2, this.tradeRepository.findAll().size());
-
-
 
 
     }
@@ -308,13 +303,11 @@ public class PollenExchangeServiceTest {
         Trade trade = new Trade(
                 this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
                 this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
-        trade  = this.tradeRepository.save(trade);
-        trade = this.pollenExchangeService.refuseTrade(pollenOffer2.getUser(),trade.getUuid());
+        trade = this.tradeRepository.save(trade);
+        trade = this.pollenExchangeService.refuseTrade(pollenOffer2.getUser(), trade.getUuid());
 
         assertTrue(trade.wasTradeRefused());
-        assertEquals(1,tradeRepository.findAll().size());
-
-
+        assertEquals(1, tradeRepository.findAll().size());
 
 
     }
@@ -329,21 +322,50 @@ public class PollenExchangeServiceTest {
         Trade trade = new Trade(
                 this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
                 this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
-        trade  = this.tradeRepository.save(trade);
-        trade = this.pollenExchangeService.acceptTrade(pollenOffer2.getUser(),trade.getUuid());
+        trade = this.tradeRepository.save(trade);
+        trade = this.pollenExchangeService.acceptTrade(pollenOffer2.getUser(), trade.getUuid());
         assertTrue(trade.wasTradeAccepted());
-        assertEquals(1,tradeRepository.findAll().size());
+        assertEquals(1, tradeRepository.findAll().size());
     }
-
-
 
 
     @Test
     @Transactional
-    public void getAllDatesTradestest() {
+    public void setRatingForTradeTest() {
+        LocalDate timeToWaitForRate = LocalDate.now().plusMonths(1);
 
+        PollenOffer pollenOffer1;
+        PollenOffer pollenOffer2;
+        Trade trade;
+        Trade tradeAfterRatingSave;
+        TradeRating tradeRating;
+        RatingDTO ratingDTO = new RatingDTO();
+        String testComment = "test";
+
+        ratingDTO.setComment(testComment);
+        ratingDTO.setReviewType(TradeRating.RATING.SUCCESS);
+        pollenOffer1 = new PollenOffer(updateEntityVersion(testDataInserter.user2Specimen2Male));
+        pollenOffer1 = this.pollenOfferRepository.save(pollenOffer1);
+        pollenOffer2 = new PollenOffer(updateEntityVersion(testDataInserter.user3Specimen3Female));
+        pollenOffer2 = this.pollenOfferRepository.save(pollenOffer2);
+        trade = new Trade(
+                this.pollenOfferRepository.findById(pollenOffer1.getUuid()).get(),
+                this.pollenOfferRepository.findById(pollenOffer2.getUuid()).get());
+        trade.acceptTrade();
+        trade = this.tradeRepository.save(trade);
+        try (MockedStatic mocked = Mockito.mockStatic(LocalDate.class, Mockito.CALLS_REAL_METHODS)) {
+            mocked.when(LocalDate::now).thenReturn(timeToWaitForRate);
+            tradeRating = this.pollenExchangeService.setRatingForTrade(trade.getUuid(), ratingDTO.getComment(),
+                    null, ratingDTO.getReviewType(), pollenOffer1.getUser());
+
+        }
+
+        tradeAfterRatingSave = this.tradeRepository.findById(trade.getUuid()).get();
+
+        assertEquals(tradeRating.getUuid(), tradeAfterRatingSave.getRating(pollenOffer1.getUser()).getUuid());
+        assertEquals(tradeRating.getRating(), tradeAfterRatingSave.getRating(pollenOffer1.getUser()).getRating());
+        assertEquals(tradeRating.getComment(), tradeAfterRatingSave.getRating(pollenOffer1.getUser()).getComment());
     }
-
 
 
     private Specimen updateEntityVersion(Specimen specimen) {

@@ -1,7 +1,6 @@
 package org.openapitools.configuration;
 
-import com.nepflow.PollenExchange.Dto.TradeStatus;
-
+import com.nepflow.PollenExchange.Dto.ReviewType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -9,12 +8,12 @@ import org.springframework.core.convert.converter.Converter;
 @Configuration
 public class EnumConverterConfiguration {
 
-    @Bean(name = "org.openapitools.configuration.EnumConverterConfiguration.tradeStatusConverter")
-    Converter<String, TradeStatus> tradeStatusConverter() {
-        return new Converter<String, TradeStatus>() {
+    @Bean(name = "org.openapitools.configuration.EnumConverterConfiguration.reviewTypeConverter")
+    Converter<String, ReviewType> reviewTypeConverter() {
+        return new Converter<String, ReviewType>() {
             @Override
-            public TradeStatus convert(String source) {
-                return TradeStatus.fromValue(source);
+            public ReviewType convert(String source) {
+                return ReviewType.fromValue(source);
             }
         };
     }

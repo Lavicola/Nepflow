@@ -23,13 +23,16 @@ export class AppComponent  implements OnInit{
   newNepenthesRoute: string = "nepenthes/guided/add";
   publicGrowlistsRoute: string = "users/growlist";
   myGrowlistRoute: string = "growlist/"
+
   closedTrades:string = "trades/closed"
   pendingTrades:string = "trades/pending"
+  rateTrades:string = "trades/rate"
 
   profileRoute: string = "user/overview";
   isLoggedIn:boolean = false;
   pollenOffersRoute: string = "pollenoffers"
 
+  userRatingRoute: string = "user/ratings"
 
   constructor(public authService: AuthService,
   ) {

@@ -1,14 +1,16 @@
-
 <div class="split left">
 
 
+  <app-trade-statistics *ngIf="this.user && this.user.username" [username]="this.user.username"></app-trade-statistics>
+  <app-user-ratings *ngIf="this.user && this.user.username" [username]="this.user.username"></app-user-ratings>
 
-<app-trade-statistics *ngIf="this.user && this.user.username"  [username]="this.user.username"></app-trade-statistics>
+
 </div>
 
 <div class="split right">
 
-  <app-specimen-statistics *ngIf="this.user && this.user.username"  [username]="this.user.username"></app-specimen-statistics>
+  <app-specimen-statistics *ngIf="this.user && this.user.username"
+                           [username]="this.user.username"></app-specimen-statistics>
 
 </div>
 

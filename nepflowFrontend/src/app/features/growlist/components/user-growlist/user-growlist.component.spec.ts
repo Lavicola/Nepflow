@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserGrowlistComponent } from './user-growlist.component';
-import { provideHttpClientTesting } from "@angular/common/http/testing";
+import {UserGrowlistComponent} from './user-growlist.component';
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {RouterModule} from "@angular/router";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 
 describe('UserGrowlistComponent', () => {
   let component: UserGrowlistComponent;

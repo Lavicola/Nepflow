@@ -67,9 +67,12 @@ public interface TradeStartDateRepository extends Neo4jRepository<TradeStartDate
 
 
     /**
+     * @param username username
      * @return all stored Dates in Format MM-yyyy
      */
-    @Query("match(p:TradeStartDate) return p.MonthYearId")
-    List<String> getTradeDates();
+    @Query("match(u:User {username:$username}) <--(t:Trade)-->(p:TradeStartDate)\n" +
+            "return distinct(p.MonthYearId)")
+    List<String> getTradeDates(String username);
+
 
 }

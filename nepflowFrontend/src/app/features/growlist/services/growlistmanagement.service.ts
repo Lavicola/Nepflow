@@ -1,40 +1,57 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {HttpClient, HttpContext} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import {BaseService} from "../../../core/openApiGeneratedFiles/base-service";
 import {ApiConfiguration} from "../../../core/openApiGeneratedFiles/api-configuration";
 import {StrictHttpResponse} from "../../../core/openApiGeneratedFiles/strict-http-response";
 
-import { growlistAddClonesPost } from '../fn/growlistmanagement/growlist-add-clones-post';
-import { GrowlistAddClonesPost$Params } from '../fn/growlistmanagement/growlist-add-clones-post';
-import { growlistCreateCloneCloneTypePost } from '../fn/growlistmanagement/growlist-create-clone-clone-type-post';
-import { GrowlistCreateCloneCloneTypePost$Params } from '../fn/growlistmanagement/growlist-create-clone-clone-type-post';
-import { growlistCreateNepenthesCloneTypePost } from '../fn/growlistmanagement/growlist-create-nepenthes-clone-type-post';
-import { GrowlistCreateNepenthesCloneTypePost$Params } from '../fn/growlistmanagement/growlist-create-nepenthes-clone-type-post';
-import { GrowlistDto } from '../models/growlist-dto';
-import { growlistGrowlistIdPublicPatch } from '../fn/growlistmanagement/growlist-growlist-id-public-patch';
-import { GrowlistGrowlistIdPublicPatch$Params } from '../fn/growlistmanagement/growlist-growlist-id-public-patch';
-import { GrowlistPublic } from '../models/growlist-public';
-import { growlistUsernameClonesGet } from '../fn/growlistmanagement/growlist-username-clones-get';
-import { GrowlistUsernameClonesGet$Params } from '../fn/growlistmanagement/growlist-username-clones-get';
-import { SpecimenCloneDto } from '../models/specimen-clone-dto';
-import { SpecimensBulkRequestDto } from '../models/specimens-bulk-request-dto';
-import { specimensSpecimenIdDelete } from '../fn/growlistmanagement/specimens-specimen-id-delete';
-import { SpecimensSpecimenIdDelete$Params } from '../fn/growlistmanagement/specimens-specimen-id-delete';
-import { specimensSpecimenIdFloweringPatch } from '../fn/growlistmanagement/specimens-specimen-id-flowering-patch';
-import { SpecimensSpecimenIdFloweringPatch$Params } from '../fn/growlistmanagement/specimens-specimen-id-flowering-patch';
-import { specimensSpecimenIdGet } from '../fn/growlistmanagement/specimens-specimen-id-get';
-import { SpecimensSpecimenIdGet$Params } from '../fn/growlistmanagement/specimens-specimen-id-get';
-import { specimensSpecimenIdImagePut } from '../fn/growlistmanagement/specimens-specimen-id-image-put';
-import { SpecimensSpecimenIdImagePut$Params } from '../fn/growlistmanagement/specimens-specimen-id-image-put';
-import { specimensSpecimenIdSexPatch } from '../fn/growlistmanagement/specimens-specimen-id-sex-patch';
-import { SpecimensSpecimenIdSexPatch$Params } from '../fn/growlistmanagement/specimens-specimen-id-sex-patch';
-import { SpecimenUpdateFlowerStatus } from '../models/specimen-update-flower-status';
-import { SpecimenUpdateSex } from '../models/specimen-update-sex';
+import {growlistAddClonesPost, GrowlistAddClonesPost$Params} from '../fn/growlistmanagement/growlist-add-clones-post';
+import {
+  growlistCreateCloneCloneTypePost,
+  GrowlistCreateCloneCloneTypePost$Params
+} from '../fn/growlistmanagement/growlist-create-clone-clone-type-post';
+import {
+  growlistCreateNepenthesCloneTypePost,
+  GrowlistCreateNepenthesCloneTypePost$Params
+} from '../fn/growlistmanagement/growlist-create-nepenthes-clone-type-post';
+import {GrowlistDto} from '../models/growlist-dto';
+import {
+  growlistGrowlistIdPublicPatch,
+  GrowlistGrowlistIdPublicPatch$Params
+} from '../fn/growlistmanagement/growlist-growlist-id-public-patch';
+import {GrowlistPublic} from '../models/growlist-public';
+import {
+  growlistUsernameClonesGet,
+  GrowlistUsernameClonesGet$Params
+} from '../fn/growlistmanagement/growlist-username-clones-get';
+import {SpecimenCloneDto} from '../models/specimen-clone-dto';
+import {SpecimensBulkRequestDto} from '../models/specimens-bulk-request-dto';
+import {
+  specimensSpecimenIdDelete,
+  SpecimensSpecimenIdDelete$Params
+} from '../fn/growlistmanagement/specimens-specimen-id-delete';
+import {
+  specimensSpecimenIdFloweringPatch,
+  SpecimensSpecimenIdFloweringPatch$Params
+} from '../fn/growlistmanagement/specimens-specimen-id-flowering-patch';
+import {
+  specimensSpecimenIdGet,
+  SpecimensSpecimenIdGet$Params
+} from '../fn/growlistmanagement/specimens-specimen-id-get';
+import {
+  specimensSpecimenIdImagePut,
+  SpecimensSpecimenIdImagePut$Params
+} from '../fn/growlistmanagement/specimens-specimen-id-image-put';
+import {
+  specimensSpecimenIdSexPatch,
+  SpecimensSpecimenIdSexPatch$Params
+} from '../fn/growlistmanagement/specimens-specimen-id-sex-patch';
+import {SpecimenUpdateFlowerStatus} from '../models/specimen-update-flower-status';
+import {SpecimenUpdateSex} from '../models/specimen-update-sex';
 
 
 /**

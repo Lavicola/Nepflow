@@ -1,0 +1,18 @@
+<div *ngFor="let trade of trades$ | async">
+  <div class="trade-container">
+    <ng-container *ngIf="trade.InitiatedOffer && trade.RequestedOffer && trade.id && !this.ratedTradesId.has(trade.id)">
+      <h2 class="trade-title"> {{getNameOfCross(trade.InitiatedOffer, trade.RequestedOffer)}}
+      </h2>
+      <div class="rate-button">
+        <button (click)="openDialog(trade.id)" mat-stroked-button>Rate Trade</button>
+      </div>
+      <div class="trade-container-cards">
+        <app-nepenthes-card-text [offer]="trade.InitiatedOffer">
+        </app-nepenthes-card-text>
+        <app-nepenthes-card-text [offer]="trade.RequestedOffer">
+        </app-nepenthes-card-text>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

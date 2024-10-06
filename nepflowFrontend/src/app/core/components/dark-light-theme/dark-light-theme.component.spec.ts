@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DarkLightThemeComponent } from './dark-light-theme.component';
+import {DarkLightThemeComponent} from './dark-light-theme.component';
 
 describe('DarkLightThemeComponent', () => {
   let component: DarkLightThemeComponent;

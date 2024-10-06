@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NepenthesCardTextComponent } from './nepenthes-card-text.component';
+import {NepenthesCardTextComponent} from './nepenthes-card-text.component';
 
 describe('NepenthesCardTextComponent', () => {
   let component: NepenthesCardTextComponent;

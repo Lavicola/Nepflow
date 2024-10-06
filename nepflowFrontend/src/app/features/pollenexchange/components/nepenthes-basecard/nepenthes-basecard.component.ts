@@ -1,18 +1,17 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
 import {
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardLgImage,
-    MatCardSubtitle,
-    MatCardTitle
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardLgImage,
+  MatCardSubtitle,
+  MatCardTitle
 } from "@angular/material/card";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
-import {PollenOfferDto} from "../../models/pollen-offer-dto";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatTooltip} from "@angular/material/tooltip";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";

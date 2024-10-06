@@ -1,11 +1,7 @@
 package com.nepflow.NepenthesManagement.Service;
 
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Location;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Seller;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.PrivateSeller;
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Producer;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.*;
 
 /**
  * Interface which defines Methods to manage Metadata.

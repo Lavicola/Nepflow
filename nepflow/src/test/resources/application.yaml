@@ -23,3 +23,7 @@ minio:
 growlist:
   bucketname: nepflow
   path: upload-specimens
+
+pollenExchange:
+  bucketname: nepflow
+  path: upload-ratingImages

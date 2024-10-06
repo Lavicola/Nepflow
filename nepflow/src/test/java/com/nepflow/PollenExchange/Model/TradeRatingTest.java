@@ -22,11 +22,11 @@ public class TradeRatingTest {
     public void isRateableTest() {
         TradeRating rating = new TradeRating(new User("", ""));
         LocalDate waitingTimeInDays = LocalDate.now().plusDays(TradeRating.MIN_AGE_TO_RATE_IN_DAYS + 1);
-        Assertions.assertFalse(rating.rateTradeAsSuccess(null));
+        Assertions.assertFalse(rating.rateTrade(TradeRating.RATING.FAILURE,null));
         try (MockedStatic mocked = Mockito.mockStatic(LocalDate.class, Mockito.CALLS_REAL_METHODS)) {
             mocked.when(LocalDate::now).thenReturn(waitingTimeInDays);
-            assertTrue(rating.rateTradeAsSuccess(null));
-            assertFalse(rating.rateTradeAsFailure(null));
+            assertTrue(rating.rateTrade(TradeRating.RATING.SUCCESS,null));
+            assertFalse(rating.rateTrade(TradeRating.RATING.FAILURE,null));
 
         }
     }

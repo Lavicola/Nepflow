@@ -2,6 +2,7 @@ package com.nepflow.PollenExchange.Model;
 
 import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -11,7 +12,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import java.time.LocalDate;
 
 /**
- * Model which represents a Rating  for a Trade.
+ * Model which represents Feedback for a Trade.
  *
  * @author David Schmidt
  * @version 21. Nov 2024
@@ -45,7 +46,15 @@ public class TradeRating {
     /**
      *
      */
+    @Getter
     private String comment;
+
+    /**
+     *
+     */
+    @Getter
+    @Setter
+    private String imageLocation;
 
     /**
      *
@@ -53,11 +62,19 @@ public class TradeRating {
     @Getter
     private RATING rating;
 
+
     /**
      *
      */
     @Getter
     private LocalDate creationDate = LocalDate.now();
+
+
+    /**
+     * the time the Rating was given.
+     */
+    @Getter
+    private LocalDate receivedOn;
 
 
     /**
@@ -69,10 +86,15 @@ public class TradeRating {
     }
 
     /**
-     * @param comment
+     * allows to set a comment to the rating if it is currently not set.
+     *
+     * @param comment comment for the rating
      */
     public void setComment(final String comment) {
-        this.comment = comment;
+        if (this.comment == null || this.comment.equals("")) {
+            this.comment = comment;
+        }
+
     }
 
 
@@ -97,13 +119,12 @@ public class TradeRating {
 
 
     /**
-     * @param comment optional additional information
+     * @param rating if rating should be set to success or failure
      * @return true if Rating could be set, else false
      */
-    public boolean rateTradeAsSuccess(final String comment) {
+    public boolean rateTrade(final RATING rating) {
         if (this.isRateableNow()) {
-            this.rating = RATING.SUCCESS;
-            this.comment = comment != null ? comment : "";
+            this.rating = rating;
             return true;
         } else {
             return false;
@@ -111,18 +132,21 @@ public class TradeRating {
     }
 
     /**
-     * @param comment optional additional information
+     * @param rating  if rating should be set to success or failure
+     * @param comment additional comment to the trade
      * @return true if Rating could be set, else false
      */
-    public boolean rateTradeAsFailure(final String comment) {
+    public boolean rateTrade(final RATING rating, final String comment) {
         if (this.isRateableNow()) {
-            this.rating = RATING.FAILURE;
+            this.rating = rating;
             this.comment = comment != null ? comment : "";
+            this.receivedOn = LocalDate.now();
             return true;
         } else {
             return false;
         }
     }
+
 
     /**
      * @param user user to compare to

@@ -9,6 +9,7 @@ import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrievalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ public class NepenthesApiControllerImpl implements NepenthesApiDelegate {
 
     /*** ModelMapper. */
     @Autowired
+    @Qualifier("modelMapperNepenthes")
     private ModelMapper modelMapper;
 
     /**

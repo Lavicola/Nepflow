@@ -1,4 +1,13 @@
-  <mat-label class="toggle-group-label">Filter by Date:</mat-label>
+<div *ngIf="status == 'rate'; then rateTemplate else otherTemplate">
+</div>
+<ng-template #rateTemplate>
+  <app-trade-ratings-overview></app-trade-ratings-overview>
+</ng-template>
+
+<ng-template #otherTemplate>
+
+
+<mat-label class="toggle-group-label">Filter by Date:</mat-label>
   <br>
   <mat-button-toggle-group multiple="false">
     <mat-button-toggle *ngFor="let date of dates$ | async" (click)="updateByDate(date)">
@@ -10,11 +19,12 @@
   </div>
 
   <ng-template #thenTemplateName>
-    <app-user-trades-open  [allTrades]="selectedTrades$"></app-user-trades-open>
+    <app-user-trades-open  [allTrades]="trades$"></app-user-trades-open>
   </ng-template>
 
   <ng-template #elseTemplateName>
-    <app-user-trades-closed  [allTrades]="selectedTrades$"></app-user-trades-closed>
+    <app-user-trades-closed [allTrades]="trades$"></app-user-trades-closed>
   </ng-template>
 
+</ng-template>
 

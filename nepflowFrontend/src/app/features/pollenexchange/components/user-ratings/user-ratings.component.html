@@ -1,0 +1,28 @@
+<div class="container">
+  <div class='top'>
+      <h2>Feedback</h2>
+  </div>
+  <div class='bottom'>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="comment">
+        <th mat-header-cell *matHeaderCellDef> Comment </th>
+        <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reviewType">
+        <th mat-header-cell *matHeaderCellDef> reviewType </th>
+        <td mat-cell *matCellDef="let element"> {{element.reviewType}} </td>
+      </ng-container>
+
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+
+  </div>
+</div>

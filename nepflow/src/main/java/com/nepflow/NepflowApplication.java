@@ -10,23 +10,19 @@ import org.springframework.context.annotation.Bean;
 @EnableEncryptableProperties
 public class NepflowApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
 
-		SpringApplication.run(NepflowApplication.class, args);
-	}
+        SpringApplication.run(NepflowApplication.class, args);
+    }
 
 
+    @Bean
+    org.neo4j.cypherdsl.core.renderer.Configuration cypherDslConfiguration() {
 
-
-	@Bean
-	org.neo4j.cypherdsl.core.renderer.Configuration cypherDslConfiguration() {
-
-		return org.neo4j.cypherdsl.core.renderer.Configuration.newConfig()
-				.withDialect(Dialect.NEO4J_5).build();
-	}
-
-
+        return org.neo4j.cypherdsl.core.renderer.Configuration.newConfig()
+                .withDialect(Dialect.NEO4J_5).build();
+    }
 
 
 }

@@ -1,27 +1,42 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {UserDto} from "../../../../core/models/user-dto";
 import {UsermanagementService} from "../../services/usermanagement.service";
 import {AuthService} from "../../../../core/services/auth.service";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatOption, MatSelect} from "@angular/material/select";
+import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {NgForOf} from "@angular/common";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
+import {CountrySelectorComponent} from "../country-selector/country-selector.component";
+import {FileUploadComponent} from "../../../../core/components/file-upload/file-upload.component";
+import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {MatIcon} from "@angular/material/icon";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @Component({
   selector: 'app-user-first-step',
   standalone: true,
   imports: [
+    MatLabel,
     MatFormField,
+    MatRadioGroup,
+    MatCardTitle,
+    MatCard,
+    MatCardContent,
+    MatRadioButton,
+    MatButton,
+    MatFormFieldModule,
     MatInputModule,
+    MatIcon,
+    MatIconButton,
+    NgForOf,
+    ReactiveFormsModule,
+    FileUploadComponent,
+    CountrySelectorComponent,
     MatSelect,
     MatOption,
-    ReactiveFormsModule,
-    MatLabel,
-    MatOption,
-    NgForOf,
-    MatButton
+
   ],
   templateUrl: './user-first-step.component.html',
   styleUrl: './user-first-step.component.sass'
@@ -32,19 +47,21 @@ export class UserFirstStepComponent implements OnInit {
   userService!: UsermanagementService;
   public authService!: AuthService;
   userForm: FormGroup
+  protected readonly countries = supported_countries;
 
 
   constructor(useService: UsermanagementService,
               authService: AuthService,
+              private formBuilder:FormBuilder
   ) {
     this.authService = authService;
     this.userService = useService;
-    this.userForm = new FormGroup({
-      username: new FormControl(""),
-      contactInformation: new FormControl(""),
-      country: new FormControl(),
-
+    this.userForm = this.formBuilder.group({
+      username:['',[Validators.required]], //TODO async validator for username
+      contactInformation:['',Validators.required],
+      country:["IN"]
     });
+
 
 
   }
@@ -91,15 +108,13 @@ export class UserFirstStepComponent implements OnInit {
     this.authService.login()
   }
 
-  onSubmit(userForm: FormGroup) {
+  onSubmit() {
     let userDto: UserDto = {};
-    Object.assign(userDto, userForm.value);
+    Object.assign(userDto, this.userForm.value);
     // TODO maybe a better solution one day
     if (this.user.username) {
-      console.log("put")
       this.createUserPutRequest(userDto);
     } else {
-      console.log("post")
       this.createUserPostRequest(userDto);
     }
 
@@ -118,7 +133,19 @@ export class UserFirstStepComponent implements OnInit {
 
   }
 
-  protected readonly countries = supported_countries;
+  submit() {
+    let userDto: UserDto = {};
+    console.log(this.userForm.value)
+    return
+    Object.assign(userDto, this.userForm.value);
+    // TODO maybe a better solution one day
+    if (this.user.username) {
+      this.createUserPutRequest(userDto);
+    } else {
+      this.createUserPostRequest(userDto);
+    }
+
+  }
 }
 
 // Instead of additional API for Countries, store supported Countries in global Variable

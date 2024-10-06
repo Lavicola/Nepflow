@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NepenthesBasecardComponent } from './nepenthes-basecard.component';
+import {NepenthesBasecardComponent} from './nepenthes-basecard.component';
 
 describe('NepenthesBasecardComponent', () => {
   let component: NepenthesBasecardComponent;

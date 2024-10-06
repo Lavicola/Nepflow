@@ -1,19 +1,18 @@
 
-<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)">
+<form [formGroup]="userForm">
   <div>
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Username:</mat-label>
       <input matInput formControlName="username">
     </mat-form-field>
   </div>
 
   <div>
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label>Contact Information:</mat-label>
       <input matInput formControlName="contactInformation">
     </mat-form-field>
   </div>
-
 
   <mat-form-field>
     <mat-select placeholder="Select Country" formControlName="country">
@@ -22,6 +21,10 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+
   <br>
-  <button mat-button type="submit" mat-raised-button color="primary">Submit</button>
+  <button [disabled]="!userForm.valid" mat-raised-button color="primary" (click)="submit()">Submit</button>
+
+
 </form>

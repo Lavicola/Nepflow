@@ -8,8 +8,8 @@ import {PollenOfferDto} from "../../models/pollen-offer-dto";
 import {Observable} from "rxjs";
 import {TradeCreationDto} from "../../models/trade-creation-dto";
 import {TradeDto} from "../../models/trade-dto";
-import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {TradesService} from "../../services/trades.service";
 
 @Component({
   selector: 'app-nepenthes-card-dropdown',
@@ -38,7 +38,7 @@ export class NepenthesCardDropdownComponent implements OnInit {
   selectedOwnOffer: PollenOfferDto | undefined = undefined
 
 
-  constructor(private tradeService: PollenexchangeService,
+  constructor(private tradeService: TradesService,
               private snackBar: MatSnackBar) {
 
   }

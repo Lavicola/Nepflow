@@ -1,10 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PollenexchangeService} from "../../services/pollenexchange.service";
 import {BehaviorSubject, Observable} from "rxjs";
 import {PollenOfferSpeciesStatisticsDto} from "../../models/pollen-offer-species-statistics-dto";
-import {
-  Chart, BarController, Title, Legend, CategoryScale, LinearScale, BarElement
-} from 'chart.js'
+import {BarController, BarElement, CategoryScale, Chart, Legend, LinearScale, Title} from 'chart.js'
+import {PollenoffersService} from "../../services/pollenoffers.service";
 
 Chart.register(BarController, Title, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -24,14 +22,14 @@ export class SpecimenStatisticsComponent implements OnInit {
   private labels: string[] = []
   private data: number[] = []
 
-  constructor(private tradeService: PollenexchangeService) {
+  constructor(private pollenService: PollenoffersService) {
   }
 
   ngOnInit(): void {
     this.createChart();
 
 
-    this.tradeService.pollenexchangeUsernamePollenoffersStatisticsGet({username: this.username}).subscribe({
+    this.pollenService.pollenexchangeUsernamePollenoffersStatisticsGet({username: this.username}).subscribe({
       next: (stats) => this.specimenStatisticBehaviourSubject.next(stats),
       error: (err) => console.log(err)
 

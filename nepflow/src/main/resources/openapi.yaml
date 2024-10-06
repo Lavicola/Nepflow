@@ -9,8 +9,10 @@ info:
 servers:
 - url: http://localhost:4200/api
 tags:
-- description: Operations to manage and retrive Users
-  name: Pollenexchange
+- description: Operations to manage and retrive PollenOffers
+  name: Pollenoffers
+- description: Operations to manage and retrive Trades and their related Entities
+  name: Trades
 paths:
   /pollenexchange/pollenoffers/dates:
     get:
@@ -27,11 +29,11 @@ paths:
           description: error
       summary: return stored dates (Month-Year)
       tags:
-      - Pollenexchange
+      - Pollenoffers
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Pollenoffers
   /pollenexchange/pollenoffers/open:
     get:
       parameters:
@@ -59,11 +61,11 @@ paths:
           description: error
       summary: return open PollenOffers by Month-Year
       tags:
-      - Pollenexchange
+      - Pollenoffers
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Pollenoffers
   /pollenexchange/{username}/pollenoffers/open:
     get:
       parameters:
@@ -87,11 +89,11 @@ paths:
           description: error
       summary: return all open PollenOffers of the user
       tags:
-      - Pollenexchange
+      - Pollenoffers
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Pollenoffers
   /pollenexchange/{username}/pollenoffers/statistics:
     get:
       parameters:
@@ -115,11 +117,11 @@ paths:
           description: error
       summary: return PollenOffer statistics on the different specimens
       tags:
-      - Pollenexchange
+      - Pollenoffers
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Pollenoffers
   /pollenexchange/trades/dates:
     get:
       responses:
@@ -133,14 +135,14 @@ paths:
           description: ..
         "404":
           description: error
-      summary: return stored dates (Month-Year)
+      summary: return stored dates (Month-Year) the current logged in user has trades
       tags:
-      - Pollenexchange
+      - Trades
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
-  /pollenexchange/{username}/trades:
+      - tag: Trades
+  /pollenexchange/trades:
     get:
       parameters:
       - description: "if dates is not send, the current date in germany will be used\
@@ -154,13 +156,6 @@ paths:
             type: string
           type: array
         style: form
-      - explode: false
-        in: path
-        name: username
-        required: true
-        schema:
-          type: string
-        style: simple
       responses:
         "200":
           content:
@@ -174,11 +169,11 @@ paths:
           description: error
       summary: return all Trades and their status of the currently logged in user
       tags:
-      - Pollenexchange
+      - Trades
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Trades
   /pollenexchange/create/trade:
     post:
       requestBody:
@@ -198,12 +193,12 @@ paths:
           description: error  e.g userId and OfferId are wrong
       summary: create a Trade
       tags:
-      - Pollenexchange
+      - Trades
       x-content-type: application/json
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Trades
   /pollenexchange/trade/{tradeId}:
     get:
       parameters:
@@ -225,11 +220,11 @@ paths:
           description: error
       summary: get a specific Trade
       tags:
-      - Pollenexchange
+      - Trades
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Trades
     put:
       parameters:
       - explode: false
@@ -256,13 +251,99 @@ paths:
           description: error
       summary: accept or refuse a trade
       tags:
-      - Pollenexchange
+      - Trades
       x-content-type: application/json
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
-  /pollenexchange/{username}/trade/status:
+      - tag: Trades
+  /pollenexchange/trades/rateable:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/TradeDTO"
+                type: array
+          description: return all trades which are still rateable
+        "404":
+          description: error
+      summary: return all rateable trades of the currently logged in user
+      tags:
+      - Trades
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Trades
+  /trades/{tradeId}/rating:
+    post:
+      parameters:
+      - explode: false
+        in: path
+        name: tradeId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/NewRatingDTO"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewRatingResponseDTO"
+          description: feedback for the Trade was saved.
+        "404":
+          description: error
+      summary: leave feedback/rate a specific Trade
+      tags:
+      - Trades
+      x-content-type: multipart/form-data
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Trades
+  /trades/{username}/ratings:
+    get:
+      parameters:
+      - explode: false
+        in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: pageable
+        required: false
+        schema:
+          $ref: "#/components/schemas/Pageable"
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RatingPage"
+          description: received Ratings of a user.
+        "404":
+          description: error
+      summary: get received ratings of a specific User
+      tags:
+      - Trades
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Trades
+  /pollenexchange/{username}/trades/status:
     get:
       parameters:
       - explode: false
@@ -278,18 +359,18 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: "#/components/schemas/TradeRatingDTO"
+                  $ref: "#/components/schemas/TradeStatusDTO"
                 type: array
-          description: ..
+          description: status of all Trades from the Viewpoint of the User
         "404":
           description: error
-      summary: return the status of all Trades from an User
+      summary: return the status of all Trades from the Viewpoint of the User
       tags:
-      - Pollenexchange
+      - Trades
       x-accepts:
       - application/json
       x-tags:
-      - tag: Pollenexchange
+      - tag: Trades
 components:
   parameters:
     offerId:
@@ -328,7 +409,37 @@ components:
           type: string
         type: array
       style: form
+    page:
+      description: The page number (zero-based index) for paginated results.
+      explode: true
+      in: query
+      name: page
+      required: true
+      schema:
+        default: 0
+        format: int32
+        type: integer
+      style: form
+    size:
+      description: The number of items per page.
+      explode: true
+      in: query
+      name: size
+      required: true
+      schema:
+        default: 20
+        format: int32
+        type: integer
+      style: form
   schemas:
+    Pageable:
+      description: minimal Pageable query parameters
+      properties:
+        page:
+          type: integer
+        size:
+          type: integer
+      type: object
     TradeAnswerDTO:
       example:
         acceptTrade: true
@@ -360,40 +471,6 @@ components:
         username:
           type: string
         country:
-          type: string
-      type: object
-    PollenOfferDTO:
-      example:
-        seller: seller
-        sex: sex
-        nepenthesName: nepenthesName
-        location: location
-        id: id
-        cloneId: cloneId
-        user:
-          country: country
-          username: username
-        pollenOfferOpenedDate: 2000-01-23
-        imageLocation: imageLocation
-      properties:
-        id:
-          type: string
-        user:
-          $ref: "#/components/schemas/UserDTO"
-        nepenthesName:
-          type: string
-        cloneId:
-          type: string
-        sex:
-          type: string
-        location:
-          type: string
-        seller:
-          type: string
-        imageLocation:
-          type: string
-        pollenOfferOpenedDate:
-          format: date
           type: string
       type: object
     PollenOfferDateContainerDTO:
@@ -431,58 +508,37 @@ components:
             $ref: "#/components/schemas/PollenOfferDTO"
           type: array
       type: object
-    TradeDTO:
+    PollenOfferDTO:
       example:
-        RequestedOffer:
-          seller: seller
-          sex: sex
-          nepenthesName: nepenthesName
-          location: location
-          id: id
-          cloneId: cloneId
-          user:
-            country: country
-            username: username
-          pollenOfferOpenedDate: 2000-01-23
-          imageLocation: imageLocation
-        InitiatedOffer:
-          seller: seller
-          sex: sex
-          nepenthesName: nepenthesName
-          location: location
-          id: id
-          cloneId: cloneId
-          user:
-            country: country
-            username: username
-          pollenOfferOpenedDate: 2000-01-23
-          imageLocation: imageLocation
-        TradeRatingsDTO:
-        - date: date
-          tradeId: tradeId
-          username: username
-          status: SUCCESS
-        - date: date
-          tradeId: tradeId
-          username: username
-          status: SUCCESS
-        tradeOpenedDate: 2000-01-23
+        seller: seller
+        sex: sex
+        nepenthesName: nepenthesName
+        location: location
         id: id
-        status: status
+        cloneId: cloneId
+        user:
+          country: country
+          username: username
+        pollenOfferOpenedDate: 2000-01-23
+        imageLocation: imageLocation
       properties:
         id:
           type: string
-        status:
+        user:
+          $ref: "#/components/schemas/UserDTO"
+        nepenthesName:
           type: string
-        InitiatedOffer:
-          $ref: "#/components/schemas/PollenOfferDTO"
-        RequestedOffer:
-          $ref: "#/components/schemas/PollenOfferDTO"
-        TradeRatingsDTO:
-          items:
-            $ref: "#/components/schemas/TradeRatingDTO"
-          type: array
-        tradeOpenedDate:
+        cloneId:
+          type: string
+        sex:
+          type: string
+        location:
+          type: string
+        seller:
+          type: string
+        imageLocation:
+          type: string
+        pollenOfferOpenedDate:
           format: date
           type: string
       type: object
@@ -514,15 +570,6 @@ components:
               username: username
             pollenOfferOpenedDate: 2000-01-23
             imageLocation: imageLocation
-          TradeRatingsDTO:
-          - date: date
-            tradeId: tradeId
-            username: username
-            status: SUCCESS
-          - date: date
-            tradeId: tradeId
-            username: username
-            status: SUCCESS
           tradeOpenedDate: 2000-01-23
           id: id
           status: status
@@ -550,15 +597,6 @@ components:
               username: username
             pollenOfferOpenedDate: 2000-01-23
             imageLocation: imageLocation
-          TradeRatingsDTO:
-          - date: date
-            tradeId: tradeId
-            username: username
-            status: SUCCESS
-          - date: date
-            tradeId: tradeId
-            username: username
-            status: SUCCESS
           tradeOpenedDate: 2000-01-23
           id: id
           status: status
@@ -571,24 +609,141 @@ components:
             $ref: "#/components/schemas/TradeDTO"
           type: array
       type: object
-    TradeRatingDTO:
+    TradeDTO:
       example:
-        date: date
+        RequestedOffer:
+          seller: seller
+          sex: sex
+          nepenthesName: nepenthesName
+          location: location
+          id: id
+          cloneId: cloneId
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
+        InitiatedOffer:
+          seller: seller
+          sex: sex
+          nepenthesName: nepenthesName
+          location: location
+          id: id
+          cloneId: cloneId
+          user:
+            country: country
+            username: username
+          pollenOfferOpenedDate: 2000-01-23
+          imageLocation: imageLocation
+        tradeOpenedDate: 2000-01-23
+        id: id
+        status: status
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        InitiatedOffer:
+          $ref: "#/components/schemas/PollenOfferDTO"
+        RequestedOffer:
+          $ref: "#/components/schemas/PollenOfferDTO"
+        tradeOpenedDate:
+          format: date
+          type: string
+      type: object
+    NewRatingDTO:
+      properties:
+        comment:
+          type: string
+        file:
+          format: binary
+          type: string
+        reviewType:
+          $ref: "#/components/schemas/ReviewType"
+      type: object
+    NewRatingResponseDTO:
+      example:
+        reviewType: SUCCESS
+        comment: comment
+        imageLocation: imageLocation
+      properties:
+        comment:
+          type: string
+        imageLocation:
+          type: string
+        reviewType:
+          $ref: "#/components/schemas/ReviewType"
+      type: object
+    RatingDTO:
+      example:
+        file: ""
+        rater: rater
+        receivedOn: receivedOn
+        reviewType: SUCCESS
+        comment: comment
         tradeId: tradeId
-        username: username
+      properties:
+        tradeId:
+          type: string
+        comment:
+          type: string
+        rater:
+          type: string
+        receivedOn:
+          type: string
+        file:
+          format: binary
+          type: string
+        reviewType:
+          $ref: "#/components/schemas/ReviewType"
+      type: object
+    RatingPage:
+      example:
+        pageNumber: 6
+        ratings:
+        - file: ""
+          rater: rater
+          receivedOn: receivedOn
+          reviewType: SUCCESS
+          comment: comment
+          tradeId: tradeId
+        - file: ""
+          rater: rater
+          receivedOn: receivedOn
+          reviewType: SUCCESS
+          comment: comment
+          tradeId: tradeId
+        totalPages: 1
+        pageSize: 0
+      properties:
+        pageSize:
+          type: integer
+        pageNumber:
+          type: integer
+        totalPages:
+          type: integer
+        ratings:
+          items:
+            $ref: "#/components/schemas/RatingDTO"
+          type: array
+      type: object
+    TradeStatusDTO:
+      description: the Status of a Trade from a viewpoint of a specific User
+      example:
+        creationDate: 2000-01-23
+        tradeId: tradeId
         status: SUCCESS
       properties:
         tradeId:
           type: string
-        username:
-          type: string
-        date:
-          description: MM-YYYY
+        creationDate:
+          description: the date the trade was accepted
+          format: date
           type: string
         status:
-          $ref: "#/components/schemas/TradeStatus"
+          $ref: "#/components/schemas/ReviewType"
       type: object
-    TradeStatus:
+    ReviewType:
       enum:
       - SUCCESS
       - FAILURE

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {LabelClonesDto} from "../../models/label-clones-dto";
 import {NepenthesRequestWrapper} from "../../services/NepenthesRequestWrapper";

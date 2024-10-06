@@ -1,12 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PollenexchangeService} from "../../services/pollenexchange.service";
-import {UserDto} from "../../../../core/models/user-dto";
-import {BehaviorSubject, map, Observable} from "rxjs";
-import {TradeStatus} from "../../models/trade-status";
-import {
-  Chart, PieController, ArcElement, Title, Legend,Tooltip
-} from 'chart.js'
-import {TradeRatingDto} from "../../models/trade-rating-dto";
+import {BehaviorSubject, Observable} from "rxjs";
+import {ArcElement, Chart, Legend, PieController, Title, Tooltip} from 'chart.js'
+import {TradeStatusDto} from "../../models/trade-status-dto";
+import {ReviewType} from "../../models/review-type";
+import {TradesService} from "../../services/trades.service";
 
 Chart.register(PieController, ArcElement, Title, Legend,Tooltip);
 
@@ -21,17 +18,17 @@ Chart.register(PieController, ArcElement, Title, Legend,Tooltip);
 export class TradeStatisticsComponent implements OnInit {
 
   @Input() username!: string;
-  tradeRatingsBehaviorSubject: BehaviorSubject<TradeRatingDto[]> = new BehaviorSubject<TradeRatingDto[]>([]);
-  tradeRating: Observable<TradeRatingDto[]> = this.tradeRatingsBehaviorSubject.asObservable();
+  tradeRatingsBehaviorSubject: BehaviorSubject<TradeStatusDto[]> = new BehaviorSubject<TradeStatusDto[]>([]);
+  tradeRating: Observable<TradeStatusDto[]> = this.tradeRatingsBehaviorSubject.asObservable();
   ratingCounter = new Map<string, number>;
   public chart: any;
   private data: any;
 
 
-  constructor(private tradeService: PollenexchangeService) {
-    this.ratingCounter.set(TradeStatus.PENDING, 0);
-    this.ratingCounter.set(TradeStatus.SUCCESS, 0);
-    this.ratingCounter.set(TradeStatus.FAILURE, 0);
+  constructor(private tradeService: TradesService) {
+    this.ratingCounter.set(ReviewType.PENDING, 0);
+    this.ratingCounter.set(ReviewType.SUCCESS, 0);
+    this.ratingCounter.set(ReviewType.FAILURE, 0);
 
 
   }
@@ -40,8 +37,10 @@ export class TradeStatisticsComponent implements OnInit {
   ngOnInit(): void {
 
     this.createChart();
-    this.tradeService.pollenexchangeUsernameTradeStatusGet({username: this.username}).subscribe({
-      next: (trades: TradeRatingDto[]) => this.tradeRatingsBehaviorSubject.next(trades)
+    this.tradeService.pollenexchangeUsernameTradesStatusGet({username: this.username}).subscribe({
+
+
+      next: (trades: TradeStatusDto[]) => this.tradeRatingsBehaviorSubject.next(trades)
     });
 
     // Use the tradeRatingsBehaviorSubject to count different rating statuses
@@ -66,9 +65,9 @@ export class TradeStatisticsComponent implements OnInit {
   createChart() {
 
     this.data = {
-      labels: [TradeStatus.PENDING.toLowerCase(),
-        TradeStatus.SUCCESS.toLowerCase(),
-        TradeStatus.FAILURE.toLowerCase(),],
+      labels: [ReviewType.PENDING.toLowerCase(),
+        ReviewType.SUCCESS.toLowerCase(),
+        ReviewType.FAILURE.toLowerCase(),],
       datasets: [{
         label: 'Trading Status',
 
@@ -98,9 +97,9 @@ export class TradeStatisticsComponent implements OnInit {
 
   getNewData() {
 
-    return [this.ratingCounter.get(TradeStatus.PENDING),
-      this.ratingCounter.get(TradeStatus.SUCCESS),
-      this.ratingCounter.get(TradeStatus.FAILURE)]
+    return [this.ratingCounter.get(ReviewType.PENDING),
+      this.ratingCounter.get(ReviewType.SUCCESS),
+      this.ratingCounter.get(ReviewType.FAILURE)]
 
   }
 

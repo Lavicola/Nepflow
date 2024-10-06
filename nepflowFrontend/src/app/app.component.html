@@ -17,8 +17,10 @@
   </mat-menu>
   <button mat-button [matMenuTriggerFor]="tradeMenu">Trades</button>
   <mat-menu #tradeMenu="matMenu">
-    <button mat-menu-item [routerLink]="closedTrades">Closed Trades</button>
-    <button mat-menu-item [routerLink]="pendingTrades">Pending Trades</button>
+    <button mat-menu-item [routerLink]="closedTrades">Closed</button>
+    <button mat-menu-item [routerLink]="pendingTrades">Pending</button>
+    <button mat-menu-item [routerLink]="rateTrades">Rate</button>
+
   </mat-menu>
 
 

@@ -7,6 +7,7 @@ import com.nepflow.UserManagement.Service.AuthenticationService;
 import com.nepflow.UserManagement.Service.UserManagementService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ public class UsermanagementControllerImpl implements UsermanagementApiDelegate {
     AuthenticationService authenticationService;
 
     @Autowired
+
+    @Qualifier("modelMapperUser")
     ModelMapper modelMapper;
 
     public ResponseEntity<UserDTO> userPost(UserDTO userDTO) {

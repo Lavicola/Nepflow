@@ -19,12 +19,14 @@ public interface ImageService {
      * @param bucketname name of the bucket to store the image into
      * @param path       path of where the  bucket can be found
      * @param filename   name of the file
-     * @param imageFile  image
+     * @param imageFile  image as MultipartFile
      * @return absolute Path where the Image can be found
      * @throws IOException
      * @throws NoSuchAlgorithmException
      */
-    String saveImageToStorageWebp(String bucketname, String path, String filename, MultipartFile imageFile) throws IOException, NoSuchAlgorithmException;
+    String saveImageToStorageWebp(String bucketname, String path, String filename, MultipartFile imageFile)
+            throws IOException, NoSuchAlgorithmException;
+
 
     /**
      * @param imageFile file to be converted to webp

@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
-import { TradeDto } from '../models/trade-dto';
+import {TradeDto} from '../models/trade-dto';
+
 export interface TradeDateContainerDto {
 
   /**

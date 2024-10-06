@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {UserFirstStepComponent} from "./features/user-management/components/user-first-step/user-first-step.component";
 import {
   AddExistingNepenthesComponent
@@ -10,11 +10,13 @@ import {
   UserTradesOverviwComponent
 } from "./features/pollenexchange/components/user-trades-overviw/user-trades-overviw.component";
 import {UserStatisticsComponent} from "./features/user-management/components/user-statistics/user-statistics.component";
-import {authGuardAuthenticated} from "./core/guards/authGuardAuthenticated";
-import {firstStepGuard} from "./core/guards/first-step.guard";
 import {
   NepenthesQuickAddComponent
 } from "./features/growlist/components/nepenthes-quick-add/nepenthes-quick-add.component";
+import {
+  TradeRatingsOverviewComponent
+} from "./features/pollenexchange/components/trade-ratings-overview/trade-ratings-overview.component";
+import {UserRatingsComponent} from "./features/pollenexchange/components/user-ratings/user-ratings.component";
 
 export const routes: Routes = [
 
@@ -52,6 +54,18 @@ export const routes: Routes = [
   },
   {path: "trades/:status",
     component: UserTradesOverviwComponent,
+    // canActivate: [authGuardAuthenticated]
+  },
+  {path: "trades/:status",
+    component: TradeRatingsOverviewComponent,
+    // canActivate: [authGuardAuthenticated]
+  },
+  {path: "user/ratings",
+    component: UserRatingsComponent,
+    // canActivate: [authGuardAuthenticated]
+  },
+  {path: "user/:username/ratings",
+    component: UserRatingsComponent,
     // canActivate: [authGuardAuthenticated]
   },
 

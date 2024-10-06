@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatButton} from "@angular/material/button";
 

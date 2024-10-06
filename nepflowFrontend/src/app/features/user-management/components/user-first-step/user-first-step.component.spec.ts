@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserFirstStepComponent } from './user-first-step.component';
-import { provideHttpClientTesting } from "@angular/common/http/testing";
+import {UserFirstStepComponent} from './user-first-step.component';
+import {provideHttpClientTesting} from "@angular/common/http/testing";
 import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 
 describe('UserFirstStepComponent', () => {
   let component: UserFirstStepComponent;

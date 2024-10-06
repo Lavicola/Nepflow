@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext } from '@angular/common/http';
+import {HttpClient, HttpContext} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -13,9 +13,7 @@ import {usersUsernameGet, UsersUsernameGet$Params} from '../fn/usermanagement/us
 import {userGet, UserGet$Params} from '../fn/usermanagement/user-get';
 import {userPost, UserPost$Params} from '../fn/usermanagement/user-post';
 import {UserPrivacyDto} from "../../../core/models/user-privacy-dto";
-import {UserPut$Params, userPut} from "../fn/usermanagement/user-put";
-
-
+import {userPut, UserPut$Params} from "../fn/usermanagement/user-put";
 
 
 /**

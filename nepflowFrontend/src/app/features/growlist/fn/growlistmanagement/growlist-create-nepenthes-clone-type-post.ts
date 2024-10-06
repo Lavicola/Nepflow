@@ -1,13 +1,13 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {HttpClient, HttpContext, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 import {RequestBuilder} from "../../../../core/openApiGeneratedFiles/request-builder";
 import {StrictHttpResponse} from "../../../../core/openApiGeneratedFiles/strict-http-response";
-import { CloneType } from '../../models/clone-type';
-import { LabelCloneDto } from '../../models/label-clone-dto';
-import { SpecimenCloneDto } from '../../models/specimen-clone-dto';
+import {CloneType} from '../../models/clone-type';
+import {LabelCloneDto} from '../../models/label-clone-dto';
+import {SpecimenCloneDto} from '../../models/specimen-clone-dto';
 
 export interface GrowlistCreateNepenthesCloneTypePost$Params {
   cloneType: CloneType;

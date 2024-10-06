@@ -1,12 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
-import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {HttpClient, HttpContext, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 import {RequestBuilder} from "../../../../core/openApiGeneratedFiles/request-builder";
 import {StrictHttpResponse} from "../../../../core/openApiGeneratedFiles/strict-http-response";
 
-import { CloneDto } from '../../models/clone-dto';
+import {CloneDto} from '../../models/clone-dto';
 
 export interface ClonesGet$Params {
   cloneIds: Array<string>;
