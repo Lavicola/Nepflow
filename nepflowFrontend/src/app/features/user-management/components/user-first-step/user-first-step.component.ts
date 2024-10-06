@@ -7,7 +7,6 @@ import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form
 import {MatInputModule} from "@angular/material/input";
 import {NgForOf} from "@angular/common";
 import {MatButton, MatIconButton} from "@angular/material/button";
-import {CountrySelectorComponent} from "../country-selector/country-selector.component";
 import {FileUploadComponent} from "../../../../core/components/file-upload/file-upload.component";
 import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
@@ -33,7 +32,6 @@ import {MatOption, MatSelect} from "@angular/material/select";
     NgForOf,
     ReactiveFormsModule,
     FileUploadComponent,
-    CountrySelectorComponent,
     MatSelect,
     MatOption,
 

@@ -3,7 +3,9 @@ package com.nepflow.PollenExchange.Model;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.LabelCloneDefinitions;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class TradeTest {
 
