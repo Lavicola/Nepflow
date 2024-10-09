@@ -1,0 +1,54 @@
+<ng-container *ngIf="trade && trade.InitiatedOffer && trade.RequestedOffer">
+  <div class="main-container">
+    <div class="title-container">
+      <h3 class="title">Rate your Trade with {{otherUser}}</h3>
+      <h2 class="subtitle">{{trade.InitiatedOffer.nepenthesName}} x {{trade.RequestedOffer.nepenthesName}}</h2>
+    </div>
+    <div class="container">
+      <div class="pollen-offer-container">
+        <app-nepenthes-card-simple [hasBorder]="cardWithBorder" [offer]="trade.InitiatedOffer"></app-nepenthes-card-simple>
+      </div>
+      <div class="x-symbol">X</div>
+      <div class="pollen-offer-container">
+        <app-nepenthes-card-simple [hasBorder]="cardWithBorder" [offer]="trade.RequestedOffer"></app-nepenthes-card-simple>
+      </div>
+    </div>
+    <div class="text-container">
+      <h2>Trade Successful?</h2>
+      <form [formGroup]="ratingForm">
+        <mat-button-toggle-group formControlName="reviewType">
+          <mat-button-toggle
+            *ngFor="let reviewType of reviewTypes, let i = index" [value]="reviewType"
+            class="button-reviewType button-reviewType-{{i}}"
+            [ngClass]="{
+    'bg-green':selectedReviewType === ReviewType.SUCCESS,
+    'bg-red':selectedReviewType === ReviewType.FAILURE}"
+            (click)="selectedReviewType = reviewType">
+            {{reviewType.charAt(0)}}{{reviewType.slice(1).toLowerCase()}}
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-grid-list cols="10" rowHeight="5:1">
+          <mat-grid-tile
+            [colspan]="9"
+            [rowspan]="3"
+
+          >
+            <textarea
+              matInput formControlName="comment"
+              placeholder="Additional Comments..." class="text-area"
+            ></textarea></mat-grid-tile>
+          <mat-grid-tile
+            [colspan]="1"
+            [rowspan]="3"
+          >
+            <div class="file-upload-div">
+              <app-file-upload formControlName="file" id="image"></app-file-upload>
+            </div>
+
+          </mat-grid-tile>
+        </mat-grid-list>
+        <button class="rate-button" [disabled]="!ratingForm.valid" mat-raised-button (click)="submit()">Submit</button>
+      </form>
+    </div>
+  </div>
+</ng-container>

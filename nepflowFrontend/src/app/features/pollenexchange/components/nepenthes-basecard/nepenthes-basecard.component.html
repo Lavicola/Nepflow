@@ -1,4 +1,4 @@
-<mat-card  appearance="outlined" class="pollen-offer-card ">
+<mat-card class="pollen-offer-card" [appearance]="hasBorder ? 'outlined' : 'raised'">
   <mat-card-header>
     <ng-content select="[slot=header]">
     </ng-content>

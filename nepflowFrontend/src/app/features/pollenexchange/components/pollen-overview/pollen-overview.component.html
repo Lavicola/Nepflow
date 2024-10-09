@@ -1,14 +1,12 @@
 <div class="container">
-
   <mat-expansion-panel hideToggle>
     <mat-expansion-panel-header>
-      <mat-panel-title> Filters</mat-panel-title>
+      <mat-panel-title>Filters</mat-panel-title>
     </mat-expansion-panel-header>
     <div class="filterbox">
       <app-filterbox (filteredElements)="onFiltered($event)" [offerContainers$]="otherPollenOffers$"></app-filterbox>
     </div>
   </mat-expansion-panel>
-
 
   <div class="content">
     <div class="card" *ngFor="let container of (filteredPollenOffers$ | async)">
@@ -18,13 +16,14 @@
       <div class="pollen-offer-containers">
         <div *ngFor="let offer of container.pollenOffers" class="pollen-offer-container">
           <app-nepenthes-card-simple [offer]="offer">
-            <div slot="afterContent">
-              <app-nepenthes-card-dropdown
-                [lookup]="lookup"
-                [selectedOffer]="offer"
-                [myPollenOffers]="myPollenOffers$">
-              </app-nepenthes-card-dropdown>
-            </div>
+
+            <app-nepenthes-card-dropdown
+              slot="afterContent"
+              [lookup]="lookup" [selectedOffer]="offer"
+                                         [myPollenOffers]="myPollenOffers$">
+
+            </app-nepenthes-card-dropdown>
+
           </app-nepenthes-card-simple>
         </div>
       </div>

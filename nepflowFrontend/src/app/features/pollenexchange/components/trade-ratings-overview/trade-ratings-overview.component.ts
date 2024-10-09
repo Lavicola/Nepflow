@@ -1,13 +1,13 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TradesService} from "../../services/trades.service";
 import {TradeDto} from "../../models/trade-dto";
-import {Subject} from "rxjs";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
-import {getNameOfCross} from "../../services/male-female-name-combiner";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {AsyncPipe, KeyValuePipe, NgForOf, NgIf} from "@angular/common";
 import {NepenthesCardTextComponent} from "../nepenthes-card-text/nepenthes-card-text.component";
 import {MatButton} from "@angular/material/button";
-import {MatDialog} from "@angular/material/dialog";
-import {TradeRatingDialogComponent} from "../trade-rating-dialog/trade-rating-dialog.component";
+import {RateTradeComponent} from "../rate-trade/rate-trade.component";
+import {UsernameService} from "../../../../core/services/UsernameService";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-trade-ratings-overview',
@@ -18,59 +18,58 @@ import {TradeRatingDialogComponent} from "../trade-rating-dialog/trade-rating-di
     NgIf,
     NgForOf,
     MatButton,
-
+    RateTradeComponent,
+    KeyValuePipe,
   ],
   templateUrl: './trade-ratings-overview.component.html',
   styleUrl: './trade-ratings-overview.component.sass'
 })
 export class TradeRatingsOverviewComponent implements OnInit {
 
-  tradesSubject: Subject<TradeDto[]> = new Subject<TradeDto[]>();
-  trades$ = this.tradesSubject.asObservable();
+  private tradesMapSubject: BehaviorSubject<Map<string, TradeDto>> = new BehaviorSubject<Map<string, TradeDto>>(new Map<string, TradeDto>());
+  tradesMap$ = this.tradesMapSubject.asObservable();
+  trades$: Observable<TradeDto[]> = this.tradesMap$.pipe(
+    map(tradesMap => Array.from(tradesMap.values())) // Convert the Map to an array of TradeDto
+  );
+  username: string = ""
   // the trades which were rated until user switched page
   ratedTradesId: Map<string, boolean> = new Map();
 
-  readonly dialog = inject(MatDialog);
 
-
-  constructor(private tradesService: TradesService) {
+  constructor(private tradesService: TradesService,
+              private userService: UsernameService) {
   }
 
   ngOnInit(): void {
-
-
     this.tradesService.pollenexchangeTradesRateableGet().subscribe({
-      next: (trades: TradeDto[]) => this.tradesSubject.next(trades),
+      next: (trades: TradeDto[]) => {
+        let tradeMap = new Map<string, TradeDto>()
+        trades.forEach(trade => {
+          if (trade.id != null) {
+            tradeMap.set(trade.id, trade);
+          }
+        });
+        console.log(tradeMap)
+        this.tradesMapSubject.next(tradeMap)
+      },
       error: () => console.log("error, rating trade")
 
+    })
+
+    this.userService.getUsernameObs().subscribe({
+      next: (username) => this.username = username
     })
 
 
   }
 
-  protected readonly getNameOfCross = getNameOfCross;
 
-  openDialog(tradeId: string | undefined) {
-
-    const dialogRef = this.dialog.open(TradeRatingDialogComponent, {
-      height: '400px',
-      width: '500px',
-      data: {
-        tradeId: tradeId
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result.success) {
-        // Handle success, e.g., refresh data or show a success message
-        this.ratedTradesId.set(result.tradeId, true)
-      } else {
-        // Handle failure if needed
-        console.log('Rating addition failed.');
-      }
-    });
-
-
+  handleRatingEvent(event: { success: boolean; tradeId: string }) {
+    if (event.success) {
+      const currentMap = this.tradesMapSubject.value
+      currentMap.delete(event.tradeId)
+      this.tradesMapSubject.next(currentMap);
+    }
   }
-
 
 }

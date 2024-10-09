@@ -1,5 +1,21 @@
-<div>
-  <span>Choose file</span>
-  <span>{{ file ? file.name : 'or drag and drop file here' }}</span>
-  <input class="file-input" type="file" (change)="onFileSelected($event)">
+<div class="file-upload-proxy" (click)="onClick($event)">
+  <ng-container *ngIf="!fileUrl; else showImage">
+    <mat-icon>add</mat-icon>
+  </ng-container>
+  <ng-template #showImage>
+    <img [src]="fileUrl" alt="Uploaded Image" class="uploaded-image" />
+    <mat-icon (click)="removeImage($event)" class="remove-icon">remove</mat-icon>
+
+  </ng-template>
+
 </div>
+
+
+<input #fileUpload
+       type="file"
+       class="input_fileupload--hidden"
+       (input)="onInput($event)"
+       (change)="onFileSelected($event)"
+       [(ngModel)]="inputFileName"
+       [accept]="accept"
+>

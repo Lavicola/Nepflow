@@ -76,7 +76,7 @@ import {TradesService} from "../../services/trades.service";
     MatExpansionPanelTitle,
     MatExpansionPanelDescription,
     NepenthesCardSimpleComponent,
-    NepenthesCardTextComponent
+    NepenthesCardTextComponent,
   ],
   templateUrl: './pollen-overview.component.html',
   styleUrl: './pollen-overview.component.sass'

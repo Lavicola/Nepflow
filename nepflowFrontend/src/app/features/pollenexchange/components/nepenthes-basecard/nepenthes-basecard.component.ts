@@ -1,15 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Renderer2} from '@angular/core';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {MatButton} from "@angular/material/button";
 import {
-  MatCard,
+  MatCard, MatCardAppearance,
   MatCardContent,
   MatCardHeader,
   MatCardLgImage,
   MatCardSubtitle,
   MatCardTitle
 } from "@angular/material/card";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatFormField, MatFormFieldAppearance, MatLabel} from "@angular/material/form-field";
 import {MatOption} from "@angular/material/autocomplete";
 import {MatSelect} from "@angular/material/select";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -47,6 +47,26 @@ import {MaleDirective} from "../../directives/SVGIconMaleAttributesDirective";
   templateUrl: './nepenthes-basecard.component.html',
   styleUrl: './nepenthes-basecard.component.sass'
 })
-export class NepenthesBasecardComponent {
+export class NepenthesBasecardComponent implements OnInit {
 
+
+  @Input() public hasBorder: boolean = true
+
+
+  constructor(private renderer: Renderer2, private el: ElementRef) {
+  }
+
+  // ngClass is not working, therefore workaround
+  ngOnInit(): void {
+    const matCard = this.el.nativeElement.querySelector('mat-card');
+
+
+    if (this.hasBorder) {
+      this.renderer.removeClass(matCard, 'mat-elevation-z0');
+    } else {
+      this.renderer.addClass(matCard, 'mat-elevation-z0');
+    }
+
+
+  }
 }

@@ -5,6 +5,8 @@
 
 @include mat.core()
 
+$current_theme: light
+
 html
   @include mat.all-component-themes(light.$light-theme)
   //@include mat.all-component-themes(dark.$dark-theme)
@@ -12,9 +14,13 @@ html
 
 .light-mode
   @include mat.all-component-colors(light.$light-theme)
+  $current_theme: light
+
 
 .dark-mode
   @include mat.all-component-colors(dark.$dark-theme)
+  $current_theme: dark
+
 
 
 

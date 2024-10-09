@@ -28,6 +28,7 @@ import {NepenthesBasecardComponent} from "../nepenthes-basecard/nepenthes-baseca
 export class NepenthesCardSimpleComponent {
 
   @Input() offer: PollenOfferDto = {};
+  @Input() hasBorder: boolean = true;
 
 
 }

@@ -1,18 +1,25 @@
+$pollenoffer-height: 400px
+$pollenoffer-width: 400px
+
+mat-card
+  height: $pollenoffer-height
+  width: $pollenoffer-width
+
 .pollen-offer-container
-  padding-bottom: 100px
+  width: 400px
+  height: 500px
+  margin-right: 10px
+  margin-bottom: 50px
   display: flex
+  flex-direction: column
 
 .pollen-offer-containers
   display: flex
   flex-wrap: wrap
 
-
-
 app-nepenthes-card-simple
-  --mat-card-height: 400px
-  --mat-card-width: 400px
+  --container-height: #{$pollenoffer-height}
+  --container-widht: #{$pollenoffer-width}
 
 
-app-nepenthes-card-text
-  --mat-card-height: 650px
-  --mat-card-width: 400px
+

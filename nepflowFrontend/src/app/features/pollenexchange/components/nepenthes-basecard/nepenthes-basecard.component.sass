@@ -1,19 +1,7 @@
-$img_width: 300px
-$img_height: 500px
+@use "src/styles.sass" as theme
 
-
-mat-card
-  background-size: cover
-  img
-    object-fit: cover
-    width: $img_width
-    height: $img_height
-    max-height: 300px
-    background-size: cover
-  height: var(--mat-card-height,600px)
-  width: var(--mat-card-width,600px)
-
-
+.pollen-offer-card
+  background-color: var(--background-card , theme.$current_theme)
 
 
 
