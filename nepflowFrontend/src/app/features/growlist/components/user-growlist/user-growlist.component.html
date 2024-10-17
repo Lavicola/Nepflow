@@ -24,7 +24,7 @@
             <img mat-card-lg-image
                  [src]="offer.filelocation || 'assets/placeholder.jpg'"
                  alt="{{ offer.nepenthesName }}"
-                 (click)="onImageClick(i)" layout-fill>
+                 (click)="onImageClick(i)">
             <input
               type="file"
               accept="image/*"
@@ -56,16 +56,3 @@
 </ng-template>
 
 
-<!--
-<image-cropper
-  [imageChangedEvent]="imageChangedEvent"
-  [maintainAspectRatio]="true"
-  [aspectRatio]="4 / 3"
-  format="png"
-  (imageCropped)="imageCropped($event)"
-  (imageLoaded)="imageLoaded($event)"
-  (cropperReady)="cropperReady()"
-  (loadImageFailed)="loadImageFailed()"
-
-></image-cropper>
--->

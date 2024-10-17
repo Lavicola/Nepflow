@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {SpecimenUpdateCloneDto} from "../../models/specimen-update-clone-dto";
 import {GrowlistmanagementService} from "../../services/growlistmanagement.service";
 import {ActivatedRoute} from "@angular/router";
@@ -24,6 +24,10 @@ import {MatButton} from "@angular/material/button";
 import {AuthService} from "../../../../core/services/auth.service";
 import {ImageCroppedEvent, ImageCropperComponent, LoadedImage} from "ngx-image-cropper";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {
+  ImageCropperDialogComponent
+} from "../../../../core/components/image-cropper-dialog/image-cropper-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-user-growlist',
@@ -54,6 +58,7 @@ export class UserGrowlistComponent implements OnInit {
   growlistSubject = new BehaviorSubject<GrowlistDto>({});
   growlist = this.growlistSubject.asObservable();
   specimens: SpecimenCloneDto[] = [];
+  readonly dialog = inject(MatDialog);
 
   isOwnGrowlistSubject = new BehaviorSubject(false);
   isOwnGrowlist$ = this.isOwnGrowlistSubject.asObservable()
@@ -64,7 +69,7 @@ export class UserGrowlistComponent implements OnInit {
   constructor(private growmanagementService: GrowlistmanagementService,
               private usernameService: AuthService,
               private route: ActivatedRoute,
-              private sanitizer:DomSanitizer
+              private sanitizer: DomSanitizer
   ) {
 
   }
@@ -85,17 +90,36 @@ export class UserGrowlistComponent implements OnInit {
     }
     let file = input.files.item(0)
 
-    let tmp: SpecimenUpdateCloneDto = {
-      file: file as Blob,
-    }
-    // @ts-ignore
-    this.growmanagementService.specimensSpecimenIdImagePut({specimenId: specimenId, body: tmp}).subscribe({
-      // @ts-ignore
-      next: () => this.specimens[index].filelocation = URL.createObjectURL(file),
-      error: (err) => console.log(err)
-    })
+    const dialogRef = this.dialog.open(ImageCropperDialogComponent, {
+      data: {
+        file: file
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.success) {
+        file = result.file
+        let tmp: SpecimenUpdateCloneDto = {
+          file: file as Blob,
+        }
+        // @ts-ignore
+        this.growmanagementService.specimensSpecimenIdImagePut({specimenId: specimenId, body: tmp}).subscribe({
+          next: () => {
+            // @ts-ignore
+            this.specimens[index].filelocation = URL.createObjectURL(file)
+          },
+          error: (err) => console.log(err)
+        })
+      } else {
+      }
+
+    });
+    // Reset to allow selecting the file same several times
+    input.value = ''
+
 
   }
+
+
 
   changeOfferStatus(i: number) {
     let specimenId = this.specimens[i]?.specimenId ?? undefined;
@@ -129,7 +153,6 @@ export class UserGrowlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
 
 
     // Combine both observables
@@ -176,7 +199,7 @@ export class UserGrowlistComponent implements OnInit {
         // @ts-ignore
         this.isGrowlistPublicSubject.next(growlist.isPublic)
       },
-      error: () => console.log("error")
+      error: (err) => console.log(err)
     })
 
   }
@@ -198,24 +221,29 @@ export class UserGrowlistComponent implements OnInit {
 
 
   }
+
   imageChangedEvent: Event | null = null;
-  croppedImage: SafeUrl  = '';
+  croppedImage: SafeUrl = '';
 
   fileChangeEvent(event: Event): void {
     this.imageChangedEvent = event;
   }
+
   imageCropped(event: ImageCroppedEvent) {
     if (event.objectUrl != null) {
       this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
     }
     // event.blob can be used to upload the cropped image
   }
+
   imageLoaded(image: LoadedImage) {
     // show cropper
   }
+
   cropperReady() {
     // cropper ready
   }
+
   loadImageFailed() {
     // show message
   }

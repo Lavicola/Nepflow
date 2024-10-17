@@ -1,0 +1,16 @@
+<div class="image-cropper-container">
+  <input class="input_fileupload-hidden" type="file" #fileInput (change)="fileChangeEvent($event)" />
+  <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 5"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded($event)"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+  ></image-cropper>
+</div>
+
+<button (click)="emitFile()" mat-raised-button> Upload</button>
+<button (click)="destroyFile()" mat-raised-button> Cancel</button>
