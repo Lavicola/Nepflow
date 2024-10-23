@@ -22,6 +22,9 @@ public class GrowlistTestDataInserter {
 
     public Sex male = new Sex("Male");
     public Sex female = new Sex("Female");
+
+    public Sex unkown = new Sex("");
+
     public User user1 = new User("user1","user1");
     public User user2 = new User("user2","user2");
     public Country country = new Country("USA");
@@ -31,10 +34,10 @@ public class GrowlistTestDataInserter {
     public Clone ivSpeciesCloneMale = new IVSpeciesClone(species,"IV-55",male,location,producer);
     public Clone ivSpeciesCloneFemale = new IVSpeciesClone(species,"IV-55",female,location,producer);
 
-    public Clone icSpeciesClone = new ICSpeciesClone(species,null,"IC-5555",location,producer);
+    public Clone icSpeciesClone = new ICSpeciesClone(species,unkown,"IC-5555",location,producer);
 
     public Clone cloneNotInDBIV = new IVSpeciesClone(species,"IV-551",male,location,producer);
-    public Clone cloneNotInDBIC = new ICSpeciesClone(species,null,"NO-5555",location,producer);
+    public Clone cloneNotInDBIC = new ICSpeciesClone(species,unkown,"NO-5555",location,producer);
 
 
     @Autowired

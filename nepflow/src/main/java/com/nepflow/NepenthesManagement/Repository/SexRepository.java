@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface SexRepository extends Neo4jRepository<Sex, String> {
+public interface SexRepository extends Neo4jRepository<Sex, Sex.SEX> {
 
 
     /**
      * @param sex sex as string
      * @return concrete sex objects
      */
-    Sex findSexBySexAsString(String sex);
+    Sex findSexBySex(Sex.SEX sex);
 }

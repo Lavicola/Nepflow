@@ -138,7 +138,7 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
      */
     @Override
     public Sex getSex(final String sexAsString) {
-        return this.sexRepository.findSexBySexAsString(sexAsString);
+        return this.sexRepository.findSexBySex(Sex.sexAsStringToSEX(sexAsString));
     }
     /**
      * Method implementation to store a sex String as Sex Object into the Database.
@@ -147,13 +147,15 @@ public class NepenthesManagementMetaDataServiceImpl implements NepenthesManageme
      */
     @Override
     public Sex saveSex(final String sexAsString) {
-        Sex rSex = this.sexRepository.findSexBySexAsString(sexAsString);
+        Sex rSex = this.sexRepository.findSexBySex(Sex.sexAsStringToSEX(sexAsString));
         if (rSex != null) {
             return rSex;
         } else {
             return this.sexRepository.save(new Sex(sexAsString));
         }
-
     }
+
+
+
 
 }

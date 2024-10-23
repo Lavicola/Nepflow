@@ -23,11 +23,13 @@ public class LabelCloneDefinitions {
 
     public static Sex male = new Sex("Male");
     public static Sex female = new Sex("Female");
+    public static Sex Unkown = new Sex("");
+
     public static Location location  = new Location("MT Murud");
 
     public static Species species = new Species("aaa",0);
 
-    public static Clone icSpeciesCloneNoSex = new ICSpeciesClone(species,null,"IC-5555",location,producer);
+    public static Clone icSpeciesCloneNoSex = new ICSpeciesClone(species,Unkown,"IC-5555",location,producer);
 
     public static Clone icSpeciesClone = new ICSpeciesClone(species,male,"IC-5555",location,producer);
     public static Clone icSpeciesClone2 = new ICSpeciesClone(species,female,"IC-5555",location,producer);

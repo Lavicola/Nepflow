@@ -8,7 +8,7 @@
       <mat-slide-toggle [checked]="growlistSubject.value.isPublic"
                         (change)="updateGrowlistVisibility()"></mat-slide-toggle>
       <span
-            class="switch-label">Growlist is currently:  {{ this.growlistSubject.value.isPublic ? '   public' : '  private' }}</span>
+        class="switch-label">Growlist is currently:  {{ this.growlistSubject.value.isPublic ? '   public' : '  private' }}</span>
     </div>
     <mat-divider></mat-divider>
   </div>
@@ -18,7 +18,7 @@
         <mat-card appearance="outlined" class="pollen-offer-card">
           <mat-card-header>
             <mat-card-title>{{ offer.nepenthesName || 'No Name' }}</mat-card-title>
-            <mat-card-subtitle>Location: {{ offer.Location || 'Unknown' }}</mat-card-subtitle>
+            <mat-card-subtitle>Clone Id: {{ offer.cloneId || 'Unknown' }}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
             <img mat-card-lg-image
@@ -31,9 +31,24 @@
               (change)="onFileSelected($event, i, offer.specimenId)"
               #fileInput
               style="display: none;">
-            <p><strong>Origin:</strong> {{ offer.producer || 'N/A' }}</p>
-            <p><strong>Location:</strong> {{ offer.Location || 'N/A' }}</p>
-            <p><strong>Sex:</strong> {{ offer.sex || 'N/A' }}</p>
+            <p><strong>Seller:</strong> {{ offer.producer || 'N/A' }}</p>
+            <p><strong>Location:</strong>{{ offer.Location || 'N/A' }}</p>
+
+            <p><strong>Sex:</strong>
+            <ng-container *ngIf="offer.sex != 'UNKNOWN'; else setSex">
+              {{offer.sex?.toLowerCase()}}
+            </ng-container>
+
+            <ng-template #setSex>
+              <select #sex (change)="setSpecimenSex(sex.value,i)" matNativeControl>
+                <option value="">Set Sex</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </ng-template>
+            </p>
+
+
             <ng-content>
             </ng-content>
           </mat-card-content>

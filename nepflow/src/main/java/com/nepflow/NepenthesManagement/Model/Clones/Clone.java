@@ -136,7 +136,7 @@ public abstract class Clone {
      * @return sex as String
      */
     public String getSexAsString() {
-        return this.sex != null ? this.sex.getSexAsString() : "";
+        return Sex.sexToSexAsString(this.sex);
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class Clone {
      */
     public static String generateInternalCloneId(final String cloneId, final Sex sex) {
         if (sex != null) {
-            return String.format("%s-%s", cloneId, sex.getSexAsString().substring(0, 1));
+            return String.format("%s-%s", cloneId, sex.getSexAsString().charAt(0));
         } else {
             return cloneId;
         }

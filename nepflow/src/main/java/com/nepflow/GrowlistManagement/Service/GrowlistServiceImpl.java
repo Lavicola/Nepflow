@@ -8,6 +8,7 @@ import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
 import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
 import com.nepflow.NepenthesManagement.Exception.CloneAlreadyHasASex;
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrievalService;
@@ -124,6 +125,8 @@ public class GrowlistServiceImpl implements Growlistservice {
     }
 
     /**
+     * Method to add a List of clone to the User. By default all added clones will have unknown sex.
+     *
      * @param user             User which will be referenced in the created Specimen
      * @param internalCloneIds clones (primary key) which will be referenced in the created Specimens
      * @return Specimen
@@ -137,7 +140,9 @@ public class GrowlistServiceImpl implements Growlistservice {
             return new ArrayList<>(0);
         }
         Growlist growlist = this.growListRepository.findById(growlistId).get();
-        List<Clone> clones = this.nepenthesRetrievalService.getClonesByInternalCloneId(cloneMap.keySet());
+        List<Clone> clones = this.nepenthesRetrievalService.getClonesByInternalCloneId(cloneMap.keySet().stream()
+                .map(cloneId -> Clone.generateInternalCloneId(cloneId, null))
+                .collect(Collectors.toSet()));
         List<Specimen> specimenList = new ArrayList<>(internalCloneIds.size());
         for (Clone clone : clones) {
             for (int i = 0; i < cloneMap.get(clone.getInternalCloneId()); i++) {

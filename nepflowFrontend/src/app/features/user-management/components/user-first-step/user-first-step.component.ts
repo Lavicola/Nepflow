@@ -134,7 +134,6 @@ export class UserFirstStepComponent implements OnInit {
   submit() {
     let userDto: UserDto = {};
     console.log(this.userForm.value)
-    return
     Object.assign(userDto, this.userForm.value);
     // TODO maybe a better solution one day
     if (this.user.username) {

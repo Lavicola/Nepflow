@@ -66,7 +66,7 @@ public class PollenOffer {
      * @param specimen the Specimen for which a PollenOffer shall be opened
      */
     public PollenOffer(final Specimen specimen) {
-        if (specimen.getSexAsString().equals("")) {
+        if (!specimen.isSexSet()) {
             throw new PollenOfferSpecimenNoSexException(specimen.getUuid());
         }
         this.specimenFlowerRelationshipValue = new SpecimenFlowerRelationshipValue(specimen);

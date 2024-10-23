@@ -28,6 +28,8 @@ import {
   ImageCropperDialogComponent
 } from "../../../../core/components/image-cropper-dialog/image-cropper-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {MatInput} from "@angular/material/input";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-user-growlist',
@@ -48,7 +50,8 @@ import {MatDialog} from "@angular/material/dialog";
     MatCardSubtitle,
     MatCardTitle,
     MatButton,
-    ImageCropperComponent
+    ImageCropperComponent,
+    MatInput
   ],
   templateUrl: './user-growlist.component.html',
   styleUrl: './user-growlist.component.sass'
@@ -66,7 +69,8 @@ export class UserGrowlistComponent implements OnInit {
   isGrowlistPublic$ = this.isOwnGrowlistSubject.asObservable()
 
 
-  constructor(private growmanagementService: GrowlistmanagementService,
+  constructor(private growlistmanagementService: GrowlistmanagementService,
+              private _snackBar: MatSnackBar,
               private usernameService: AuthService,
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer
@@ -102,7 +106,7 @@ export class UserGrowlistComponent implements OnInit {
           file: file as Blob,
         }
         // @ts-ignore
-        this.growmanagementService.specimensSpecimenIdImagePut({specimenId: specimenId, body: tmp}).subscribe({
+        this.growlistmanagementService.specimensSpecimenIdImagePut({specimenId: specimenId, body: tmp}).subscribe({
           next: () => {
             // @ts-ignore
             this.specimens[index].filelocation = URL.createObjectURL(file)
@@ -120,12 +124,11 @@ export class UserGrowlistComponent implements OnInit {
   }
 
 
-
   changeOfferStatus(i: number) {
     let specimenId = this.specimens[i]?.specimenId ?? undefined;
     let flowering = this.specimens[i]?.isFlowering ?? undefined;
     if (specimenId && flowering != undefined && this.isOwnGrowlist$) {
-      this.growmanagementService.specimensSpecimenIdFloweringPatch({
+      this.growlistmanagementService.specimensSpecimenIdFloweringPatch({
         specimenId: specimenId,
         body: {isFlowering: !flowering}
       }).subscribe({
@@ -142,7 +145,7 @@ export class UserGrowlistComponent implements OnInit {
       return;
     }
 
-    this.growmanagementService.growlistGrowlistIdPublicPatch$Response({
+    this.growlistmanagementService.growlistGrowlistIdPublicPatch$Response({
       growlistId: this.growlistSubject.value.id,
       body: {isPublic: !this.growlistSubject.value.isPublic}
     }).subscribe({
@@ -193,7 +196,7 @@ export class UserGrowlistComponent implements OnInit {
   }
 
   getGrowlist(username: string) {
-    this.growmanagementService.growlistUsernameClonesGet({username: username}).subscribe({
+    this.growlistmanagementService.growlistUsernameClonesGet({username: username}).subscribe({
       next: (growlist) => {
         this.growlistSubject.next(growlist)
         // @ts-ignore
@@ -205,10 +208,11 @@ export class UserGrowlistComponent implements OnInit {
   }
 
   deleteSpecimen(index: number, specimenId: string | undefined) {
+
     if (specimenId == undefined) {
       return;
     }
-    this.growmanagementService.specimensSpecimenIdDelete({specimenId: specimenId}).subscribe({
+    this.growlistmanagementService.specimensSpecimenIdDelete({specimenId: specimenId}).subscribe({
       next: () => {
         const updatedSpecimens = this.specimens.filter((_, i) => i !== index);
         this.growlistSubject.next({
@@ -222,33 +226,39 @@ export class UserGrowlistComponent implements OnInit {
 
   }
 
-  imageChangedEvent: Event | null = null;
-  croppedImage: SafeUrl = '';
 
-  fileChangeEvent(event: Event): void {
-    this.imageChangedEvent = event;
-  }
-
-  imageCropped(event: ImageCroppedEvent) {
-    if (event.objectUrl != null) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+  setSpecimenSex(sex: string, index: number) {
+    if (!sex) {
+      return
     }
-    // event.blob can be used to upload the cropped image
+    const updatedSpecimen = this.specimens.filter((_, i) => i == index)[0];
+    const updatedSpecimens = this.specimens.filter((_, i) => i !== index);
+    // @ts-ignore
+    this.growlistmanagementService.specimensSpecimenIdSexPatch({specimenId: updatedSpecimen.specimenId, body: {sex: sex}}).subscribe({
+      next: (sex) => {
+        updatedSpecimen.sex = sex.sex;
+        this.growlistSubject.next({
+          ...this.specimens,
+          specimens: [ ...updatedSpecimens.slice(0,index)
+            ,updatedSpecimen,
+            ...updatedSpecimens.slice(index+1,updatedSpecimens.length)]
+        });
+
+
+        this._snackBar.open("Sex was Changed", "Close", {
+          duration: 5000
+        })
+      },
+      error: () => this._snackBar.open("Could not change Sex, maybe it was already set?", "Close", {
+        duration: 5000
+      })
+
+
+    })
+    console.log(sex)
+
+
   }
-
-  imageLoaded(image: LoadedImage) {
-    // show cropper
-  }
-
-  cropperReady() {
-    // cropper ready
-  }
-
-  loadImageFailed() {
-    // show message
-  }
-
-
 }
 
 

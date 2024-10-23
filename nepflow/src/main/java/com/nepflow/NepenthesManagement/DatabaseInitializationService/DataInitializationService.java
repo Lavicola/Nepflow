@@ -1,6 +1,7 @@
 package com.nepflow.NepenthesManagement.DatabaseInitializationService;
 
 
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.Species;
 import com.nepflow.NepenthesManagement.Repository.LabelRepository;
@@ -103,8 +104,8 @@ public class DataInitializationService {
                 this.userManagementService.saveCountry(countyLine);
             }
             // store sex
-            for (String sexLine : this.getLines(SexSQL)) {
-                this.nepenthesManagementMetaDataService.saveSex(sexLine);
+            for (Sex.SEX sex : Sex.SEX.values()) {
+                this.nepenthesManagementMetaDataService.saveSex(sex.name());
             }
             // store valid Producers
             for (String producerLine : this.getLines(ProducerSQL)) {

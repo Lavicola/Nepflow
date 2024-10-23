@@ -1,5 +1,6 @@
 package com.nepflow.GrowlistManagement.Model;
 
+import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
@@ -73,6 +74,14 @@ public class Specimen {
         this.isFlowering = false;
     }
 
+
+    /**
+     * @return enum which represents the sex
+     */
+    public boolean isSexSet() {
+        return this.clone.getSex().isSEXSet();
+    }
+
     /**
      * @return name of the Seller as String
      */
@@ -93,6 +102,7 @@ public class Specimen {
     public String getSexAsString() {
         return this.clone.getSexAsString();
     }
+
 
     /**
      * @return A clone references a Nepenthes name which will be returned

@@ -139,7 +139,7 @@ public class NepenthesServiceManagementTest {
 
         Producer producer = LabelCloneDefinitions.producer;
         Label species = new Species("villosa",0); // even after deleting everything it won´t work using static
-        IVClone ivSpeciesClone = new IVSpeciesClone(species,"IV-55",null,null,producer);
+        IVClone ivSpeciesClone = new IVSpeciesClone(species,"IV-55",new Sex("unkown"),null,producer);
         Clone ivCloneMale = null;
         Clone ivCloneFemale = null;
         Sex male = LabelCloneDefinitions.male;
