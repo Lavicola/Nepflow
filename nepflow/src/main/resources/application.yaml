@@ -60,3 +60,11 @@ pollenExchange:
   bucketname: nepflow
   path: upload-ratingImages
 
+nepflow:
+  basemodules:
+    auth-user-service:
+      clientId: ENC(5QHD+M18dE2XqcptUzpIrUjxqfdrjGaIgjc04yo2RElBqLNWX2cLqlIcMhloK09X)
+      clientSecret: ENC(konHhXh+NY4iYIPJaTspYKLKN4F4UVq3MNYavr/be4g8+yd2LFFZk6MP0DDkART2fWGqXkIozI2qEILqw1sfmD7redYoQXIIs8b0QHaNiqw=)
+      audience: ENC(j+BlVsps95Yyt/4OcVztSa3BRwv5fDR40/2UFVqoib1GvBF3n80LFnFwFaXYU3CJMl+ioNEL4kJ6htDuPWyJXg==)
+      get-token-url: ENC(jiutdWz4lFxOYiAue/w2eveYQMioh0u1Q/Ec0QDFyPWQ8H4XytNRLO9CnZfVrq2PoJglvuW+DmKBKrjA2+UnPQ==)
+      public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhjf940asOH7mqfHXjEDI0esmTF6xmGOhgEhHGFUrOuZcYouIGt6NHdRnYBItdRI+pSqtESaIriLfkXrvF3aRhKSKKfCYRUAC4dRL6apazFlXIlZhM/ERhuihzGBwQKJ28QrF9a33qeiUNM5u4Aj1E0qeYXE2IjsUsssq8HiqS68hUDj1M99+qaDUkNDuHqp6TsK6zpeKrRXYV9QFP7kwVoxCaQxca0r80MJuskAU5aB6ceqjfycR84RMIwlPXR4VUH3HalLc5wMWBvfZpvYUWO2J20UW+MwJ3OOXx5ScpNAHt1htiURr0iCB0niegN2s+r+PKnIIYsle1kzB09xihwIDAQAB

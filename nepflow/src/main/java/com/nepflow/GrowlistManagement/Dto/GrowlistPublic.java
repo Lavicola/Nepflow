@@ -10,7 +10,7 @@ import java.util.Objects;
  * GrowlistPublic
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-01T00:08:47.441615400+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-10-25T23:31:26.301276400+02:00[Europe/Berlin]", comments = "Generator version: 7.6.0")
 public class GrowlistPublic {
 
   private Boolean isPublic;

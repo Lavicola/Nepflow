@@ -332,7 +332,7 @@ public class PollenExchangeServiceTest {
     @Test
     @Transactional
     public void setRatingForTradeTest() {
-        LocalDate timeToWaitForRate = LocalDate.now().plusMonths(1);
+        LocalDate timeToWaitForRate = LocalDate.now().plusDays(31);
 
         PollenOffer pollenOffer1;
         PollenOffer pollenOffer2;

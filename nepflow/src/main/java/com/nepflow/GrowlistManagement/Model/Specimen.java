@@ -1,6 +1,5 @@
 package com.nepflow.GrowlistManagement.Model;
 
-import com.nepflow.NepenthesManagement.Model.CloneMetadata.Sex;
 import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.UserManagement.Model.User;
 import lombok.Getter;
