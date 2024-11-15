@@ -63,12 +63,22 @@ public class PollenOffer {
     private SpecimenStoppedFloweringRelationshipValue specimenStoppedFloweringRelationshipValue;
 
     /**
+     * a User may change the Image of a specimen anytime.
+     * In order to prevent abuse etc. after opening a PollenOffer, the copy of the URL will be stored
+     * as well.
+     */
+    @Getter
+    private String snapshotSpecimenImageURL;
+
+
+    /**
      * @param specimen the Specimen for which a PollenOffer shall be opened
      */
     public PollenOffer(final Specimen specimen) {
         if (!specimen.isSexSet()) {
             throw new PollenOfferSpecimenNoSexException(specimen.getUuid());
         }
+        this.snapshotSpecimenImageURL = specimen.getImagePath();
         this.specimenFlowerRelationshipValue = new SpecimenFlowerRelationshipValue(specimen);
     }
 

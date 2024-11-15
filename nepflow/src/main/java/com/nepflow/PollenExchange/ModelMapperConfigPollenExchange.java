@@ -31,7 +31,7 @@ public class ModelMapperConfigPollenExchange {
                 map().setSeller(source.getSpecimen().getSellerAsString());
                 map().setSex(source.getSpecimen().getSexAsString());
                 map().setCloneId(source.getSpecimen().getClone().getCloneId());
-                map().setImageLocation(source.getSpecimen().getImagePath());
+                map().setImageLocation(source.getSnapshotSpecimenImageURL());
                 map().setPollenOfferOpenedDate(source.getStartDate());
                 map().getUser().setCountry(source.getUser().getCountry().getName());
                 map().getUser().setUsername(source.getUser().getUsername());
