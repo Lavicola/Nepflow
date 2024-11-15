@@ -19,8 +19,19 @@ spring:
     authentication:
       username: neo4j
       password: ENC(EbVOfPGZAJfCi+fhWvvAG0sJNLRwTgcn)
+  mail:
+    host: ENC(36WiSD0MOlhTgCT5/0l9mzDb9O+Cl+WYI2nd2R36HIk=)
+    username: ENC(zGm0/nd2pF/EztqmKTY6WDtszQMAfdJRDmnVPFc1PlM=)
+    password: ENC(mawNGeXmz9aG5agI+/yXDA6TmxInbwj2Ic/sXXEhK14=)
+    port: 587
 
-
+  thymeleaf:
+    check-template-location: true
+    prefix: classpath:/templates
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    cache: true
 
 minio:
   url: http://192.168.188.44
