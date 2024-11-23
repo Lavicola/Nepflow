@@ -34,7 +34,7 @@ spring:
     cache: true
 
 minio:
-  url: http://192.168.188.44
+  url: http://127.0.0.1
   port: 9000
   secure: false
   access:
@@ -70,6 +70,7 @@ growlist:
 pollenExchange:
   bucketname: nepflow
   path: upload-ratingImages
+  pathSpecimenSnapshot: specimenSnapshot
 
 nepflow:
   basemodules:

@@ -1,6 +1,6 @@
 package com.nepflow.Growlistmanagement.Service;
 
-import com.nepflow.BaseModules.ImageModule.Service.ImageService;
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.GrowlistRepository;
@@ -46,7 +46,7 @@ public class GrowlistManagementServiceTest {
     AuthenticationService authenticationService;
 
     @MockBean
-    ImageService imageService;
+    BucketImageService bucketImageService;
 
     @Autowired
     Growlistservice growlistservice;
@@ -76,7 +76,7 @@ public class GrowlistManagementServiceTest {
         // for now, since TestInstance.Lifecycle.PER_CLASS is not possible due to initializeNeo4j
         if(!executedOnce){
             when(authenticationService.getAuthenticatedUser()).thenReturn(growlistTestDataInserter.user1);
-            when(imageService.deleteImage(bucketname,url)).thenReturn(true);
+            when(bucketImageService.deleteImage(bucketname,url)).thenReturn(true);
             this.growlistTestDataInserter.insertData();
             this.growlistRepository.save(new Growlist(growlistTestDataInserter.user1));
             this.growlistRepository.save(new Growlist(growlistTestDataInserter.user2));

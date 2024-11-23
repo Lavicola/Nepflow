@@ -1,5 +1,6 @@
 package com.nepflow.NepenthesManagement.Service;
 
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.LabelCloneDefinitions;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
 import com.nepflow.NepenthesManagement.Exception.CloneAlreadyHasASex;
@@ -41,6 +42,8 @@ public class NepenthesServiceManagementTest {
     @MockBean
     DataInitializationService dataInitializationService;
 
+    @MockBean
+    BucketImageService bucketImageService;
     private static Neo4j embeddedDatabaseServer;
 
 

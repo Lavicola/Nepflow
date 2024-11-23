@@ -1,6 +1,6 @@
 package com.nepflow.PollenExchange.Service;
 
-import com.nepflow.BaseModules.ImageModule.Service.ImageService;
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.PollenExchange.Model.*;
 import com.nepflow.PollenExchange.Projection.PollenOfferSpeciesStatisticsDTOProjection;
@@ -41,7 +41,7 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
      *
      */
     @Autowired
-    private ImageService imageService;
+    private BucketImageService bucketImageService;
 
     /**
      *
@@ -54,6 +54,13 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
      */
     @Value("${pollenExchange.path}")
     private String path;
+
+
+    /**
+     *
+     */
+    @Value("${pollenExchange.pathSpecimenSnapshot}")
+    private String specimenSnapshotPath;
 
 
     /**
@@ -130,6 +137,7 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
         if (pollenOfferId == null) {
             // Create a new pollen offer if none exists
+            // TODO catch error if snapshot image could not have been saved
             pollenOffer = createNewPollenOffer(specimen);
             this.addPollenOfferToMonthYearContainer(pollenOffer);
         } else {
@@ -141,7 +149,6 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
             } else {
                 // Create a new pollen offer, if the existing one cannot be opened
                 pollenOffer = createNewPollenOffer(specimen);
-                this.addPollenOfferToMonthYearContainer(pollenOffer);
             }
         }
         return pollenOffer;
@@ -158,7 +165,16 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
 
     public PollenOffer createNewPollenOffer(final Specimen specimen) {
         PollenOffer pollenOffer = new PollenOffer(specimen);
-        addPollenOfferToMonthYearContainer(pollenOffer);
+        String snapshot;
+        if (specimen.getImagePath() != null) {
+            try {
+                snapshot = this.bucketImageService.copyImageByUrl(specimen.getImagePath(), this.bucketname, this.specimenSnapshotPath);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+            pollenOffer.setSnapshotImageURL(snapshot);
+        }
+        this.addPollenOfferToMonthYearContainer(pollenOffer);
         return pollenOffer;
     }
 
@@ -387,7 +403,7 @@ public class PollenExchangeServiceImpl implements PollenExchangeService {
         }
         if (file != null) {
             try {
-                imageLocation = this.imageService.saveImageToStorageWebp(this.bucketname, this.path,
+                imageLocation = this.bucketImageService.convertAndSaveImageRoutine(this.bucketname, this.path,
                         file.getOriginalFilename(), file);
                 tradeRating.setImageLocation(imageLocation);
 

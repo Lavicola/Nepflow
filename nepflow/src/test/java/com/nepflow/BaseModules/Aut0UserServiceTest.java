@@ -1,5 +1,6 @@
 package com.nepflow.BaseModules;
 
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.UserManagement.Service.Auth0UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class Aut0UserServiceTest {
     @Autowired
     Auth0UserService auth0UserService;
 
+    @MockBean
+    BucketImageService bucketImageService;
 
     @Test
     public void getUserEmailsTest() {

@@ -1,6 +1,6 @@
 package com.nepflow.GrowlistManagement.Controller;
 
-import com.nepflow.BaseModules.ImageModule.Service.ImageService;
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.GrowlistManagement.Dto.*;
 import com.nepflow.GrowlistManagement.Model.Growlist;
 import com.nepflow.GrowlistManagement.Model.Specimen;
@@ -31,7 +31,7 @@ public class GrowlistmanagementApiControllerImpl implements GrowlistmanagementAp
     ModelMapper modelMapper;
 
     @Autowired
-    ImageService imageService;
+    BucketImageService bucketImageService;
 
 
     public ResponseEntity<GrowlistDTO> growlistUsernameClonesGet(String username) {

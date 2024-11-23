@@ -1,6 +1,6 @@
 package com.nepflow.GrowlistManagement.Service;
 
-import com.nepflow.BaseModules.ImageModule.Service.ImageService;
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.GrowlistManagement.Event.SpecimenFloweringEvent;
 import com.nepflow.GrowlistManagement.Event.SpecimenStoppedFloweringEvent;
 import com.nepflow.GrowlistManagement.Model.Growlist;
@@ -55,7 +55,7 @@ public class GrowlistServiceImpl implements Growlistservice {
      *
      */
     @Autowired
-    private ImageService imageService;
+    private BucketImageService bucketImageService;
 
     /**
      *
@@ -202,7 +202,7 @@ public class GrowlistServiceImpl implements Growlistservice {
         }
 
         try {
-            location = this.imageService.saveImageToStorageWebp(this.bucketname, this.path, multipartFile.getOriginalFilename(), multipartFile);
+            location = this.bucketImageService.convertAndSaveImageRoutine(this.bucketname, this.path, multipartFile.getOriginalFilename(), multipartFile);
         } catch (IOException | NoSuchAlgorithmException | RuntimeException e) {
             return false;
         }
@@ -295,7 +295,7 @@ public class GrowlistServiceImpl implements Growlistservice {
             return false;
         }
         this.specimenRepository.delete(specimen);
-        this.imageService.deleteImage(bucketname, imageLocation);
+        this.bucketImageService.deleteImage(bucketname, imageLocation);
 
         return true;
     }

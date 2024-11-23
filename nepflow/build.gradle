@@ -55,6 +55,7 @@ dependencies {
 	}
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation "org.testcontainers:minio:1.20.3"
 
 
 	testImplementation(group: 'org.neo4j.test', name: 'neo4j-harness', version: '5.10.0'){

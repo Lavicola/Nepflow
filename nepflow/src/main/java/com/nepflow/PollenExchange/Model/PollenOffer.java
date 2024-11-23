@@ -78,7 +78,6 @@ public class PollenOffer {
         if (!specimen.isSexSet()) {
             throw new PollenOfferSpecimenNoSexException(specimen.getUuid());
         }
-        this.snapshotSpecimenImageURL = specimen.getImagePath();
         this.specimenFlowerRelationshipValue = new SpecimenFlowerRelationshipValue(specimen);
     }
 
@@ -178,6 +177,19 @@ public class PollenOffer {
      */
     public boolean pollenOfferBelongsToUser(final User user) {
         return this.getUser().equals(user);
+    }
+
+    /**
+     * @param snapshotSpecimenImageURL
+     * @return false if snapshotSpecimenImageURL was already set
+     */
+    public boolean setSnapshotImageURL(final String snapshotSpecimenImageURL) {
+        if (this.getSnapshotSpecimenImageURL() == null) {
+            this.snapshotSpecimenImageURL = snapshotSpecimenImageURL;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

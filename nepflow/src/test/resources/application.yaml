@@ -10,12 +10,12 @@ spring:
       password: password
 
 minio:
-  url: http://192.168.188.44
+  url: http://localhost
   port: 9000
   secure: false
   access:
-    name: minioadmin
-    secret: minioadmin
+    name: testuser
+    secret: testpassword
 
 
 jasypt:
@@ -31,6 +31,7 @@ growlist:
 pollenExchange:
   bucketname: nepflow
   path: upload-ratingImages
+  pathSpecimenSnapshot: specimenSnapshot
 
 nepflow:
   basemodules:

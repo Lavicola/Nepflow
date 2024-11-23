@@ -1,5 +1,6 @@
 package com.nepflow;
 
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +12,9 @@ class NepflowApplicationTests {
 	// for now simply mock it, since dataInitializationService depends on files and database connection
 	@MockBean
 	DataInitializationService dataInitializationService;
+
+	@MockBean
+	BucketImageService bucketImageService;
 
 	@Test
 	void contextLoads() {

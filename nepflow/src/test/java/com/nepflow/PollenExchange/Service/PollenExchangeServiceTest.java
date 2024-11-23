@@ -1,6 +1,7 @@
 
 package com.nepflow.PollenExchange.Service;
 
+import com.nepflow.BaseModules.ImageModule.Service.BucketImageService;
 import com.nepflow.GrowlistManagement.Model.Specimen;
 import com.nepflow.GrowlistManagement.Repository.SpecimenRepository;
 import com.nepflow.NepenthesManagement.DatabaseInitializationService.DataInitializationService;
@@ -30,13 +31,17 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class PollenExchangeServiceTest {
+    @MockBean
+    BucketImageService bucketImageService;
 
     private static Neo4j embeddedDatabaseServer;
 
@@ -108,7 +113,7 @@ public class PollenExchangeServiceTest {
 
     @Test
     @Transactional
-    public void createNewPollenOfferTest() {
+    public void createNewPollenOfferTest() throws IOException {
         Specimen specimen = updateEntityVersion(this.testDataInserter.user3Specimen2Male);
         PollenOffer pollenOffer = pollenExchangeService.createNewPollenOffer(specimen);
 
@@ -195,6 +200,14 @@ public class PollenExchangeServiceTest {
 
         assertNotEquals(pollenOffer, newPollenOffer);
         assertEquals(2, this.pollenOfferRepository.findAll().size());
+
+    }
+
+
+    @Test
+    @Transactional
+    public void createPollenofferWithImageTest() {
+        //TODO
 
     }
 
