@@ -28,4 +28,4 @@ jobs:
       - name: execute Tests
         env:
             JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -P password=${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }} 
+        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -P password=TEST 
