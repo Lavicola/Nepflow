@@ -26,6 +26,6 @@ jobs:
               java-version: '21'
               distribution: 'zulu'
       - name: execute Tests
-        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" 
         env:
             jasypt.encryptor.password: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -Djasypt.encryptor.password=${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }} 
