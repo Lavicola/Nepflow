@@ -293,7 +293,6 @@ task generateOpenAPIChat(type: org.openapitools.generator.gradle.plugin.tasks.Ge
 
 
 tasks.named('test') {
-
     doFirst {
         if (!System.getenv('jasypt.encryptor.password')) {
             password = findProperty("password")
