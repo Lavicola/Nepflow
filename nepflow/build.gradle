@@ -57,6 +57,11 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	testImplementation "org.testcontainers:minio:1.20.3"
 
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'org.postgresql:postgresql'
+// https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+
 
 	testImplementation(group: 'org.neo4j.test', name: 'neo4j-harness', version: '5.10.0'){
 		exclude group: "org.slf4j"
@@ -254,8 +259,42 @@ task generateOpenAPIFileManagement(type: org.openapitools.generator.gradle.plugi
 
 }
 
+task generateOpenAPIChat(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+	doNotTrackState("")
+	generatorName.set("spring")
+	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/ChatModule/openAPI/ChatOpenAPI.yaml")
+	def openapi_spec = openapiSpecFile.absolutePath
+	configOptions.set([
+			delegatePattern           : "true",
+			useJakartaEe			  : "true",
+			globalProperty            : "apis",
+			generateApiDocumentation  : "true",
+			generateModelTests        : "false",
+			generateModelDocumentation: "false",
+			generateApiTests          : "false",
+			models                    : "false",
+			generateModels            : "false",
+			useTags					  : "true",
+			modelPackage              : "com.nepflow.ChatModule.Dto",
+	])
+	typeMappings = ['string+date-time': 'Instant',
+
+
+	]
+	importMappings = ['Instant'  : 'java.time.Instant',
+					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+					  'Pageable': 'org.springframework.data.domain.Pageable',
+	]
+	inputSpec.set(openapi_spec)
+	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+	apiPackage.set("com.nepflow.ChatModule.Controller")
+	invokerPackage.set("")
+
+}
+
+
+
 tasks.named('test') {
-	environment "jasypt.encryptor.password", "0NTD5jHVivGTVs4RxWTu"
 	useJUnitPlatform()
 
 	reports {

@@ -5,6 +5,7 @@ import com.nepflow.UserManagement.Dto.UserPrivacyDTO;
 import com.nepflow.UserManagement.Model.User;
 import com.nepflow.UserManagement.Service.AuthenticationService;
 import com.nepflow.UserManagement.Service.UserManagementService;
+import com.nepflow.UserManagement.Service.UserRetrievalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +27,9 @@ public class UsermanagementControllerImpl implements UsermanagementApiDelegate {
     AuthenticationService authenticationService;
 
     @Autowired
+    UserRetrievalService userRetrievalService;
 
+    @Autowired
     @Qualifier("modelMapperUser")
     ModelMapper modelMapper;
 
@@ -46,7 +49,7 @@ public class UsermanagementControllerImpl implements UsermanagementApiDelegate {
         if (id == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        User user = this.userManagementService.getUserByOAuthId(id);
+        User user = this.userRetrievalService.getUserByOAuthId(id);
         if (user == null) {
             return ResponseEntity.ok(new UserDTO());
 

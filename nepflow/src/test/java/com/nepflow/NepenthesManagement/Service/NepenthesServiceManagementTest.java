@@ -15,14 +15,13 @@ import com.nepflow.NepenthesManagement.Model.Clones.IVSpeciesClone;
 import com.nepflow.NepenthesManagement.Model.Labels.Label;
 import com.nepflow.NepenthesManagement.Model.Labels.PrimaryHybrid;
 import com.nepflow.NepenthesManagement.Model.Labels.Species;
+import com.nepflow.NepenthesManagement.Repository.CloneRepository;
+import com.nepflow.NepenthesManagement.Repository.LabelRepository;
 import com.nepflow.NepenthesManagement.Repository.ProducerRepository;
 import com.nepflow.NepenthesManagement.Repository.SexRepository;
 import jakarta.transaction.Transactional;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.neo4j.harness.Neo4j;
 import org.neo4j.harness.Neo4jBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +55,11 @@ public class NepenthesServiceManagementTest {
     @Autowired
     ProducerRepository producerRepository;
 
+    @Autowired
+    LabelRepository labelRepository;
 
-
+    @Autowired
+    CloneRepository cloneRepository;
 
 
 
@@ -66,6 +68,15 @@ public class NepenthesServiceManagementTest {
         embeddedDatabaseServer = Neo4jBuilders.newInProcessBuilder()
                 .withDisabledServer()
                 .build();
+    }
+
+    @BeforeEach
+    public void updateEntitiyVersions() {
+        this.producerRepository.deleteAll();
+        this.sexRepository.deleteAll();
+        this.labelRepository.deleteAll();
+        this.cloneRepository.deleteAll();
+
     }
 
 
@@ -102,10 +113,10 @@ public class NepenthesServiceManagementTest {
     @Test
     @Transactional
     public void addIVCloneWithSexTest() {
-        String cloneID = LabelCloneDefinitions.icSpeciesClone.getCloneId();
-        Sex male = new Sex(LabelCloneDefinitions.male.getSexAsString());
-        Sex female = new Sex(LabelCloneDefinitions.female.getSexAsString());
         Producer producer = LabelCloneDefinitions.producer;
+        String cloneID = LabelCloneDefinitions.icSpeciesClone.getCloneId();
+        Sex male = LabelCloneDefinitions.male;
+        Sex female = LabelCloneDefinitions.female;
         Location location = new Location("Borneo");
 
         String maleCloneID = IVClone.generateInternalCloneId(cloneID, male);
@@ -140,9 +151,10 @@ public class NepenthesServiceManagementTest {
     @Transactional
     public void getOrCreateSexedCloneIVCloneTest() {
 
-        Producer producer = LabelCloneDefinitions.producer;
-        Label species = new Species("villosa",0); // even after deleting everything it won´t work using static
-        IVClone ivSpeciesClone = new IVSpeciesClone(species,"IV-55",new Sex("unkown"),null,producer);
+        Producer producer = this.producerRepository.findProducerByName(LabelCloneDefinitions.producer.getName()) == null
+                ? LabelCloneDefinitions.producer : this.producerRepository.findProducerByName(LabelCloneDefinitions.producer.getName());
+        Label species = new Species("villosa", 0);
+        IVClone ivSpeciesClone = new IVSpeciesClone(species, "IV-55", new Sex("unkown"), null, producer);
         Clone ivCloneMale = null;
         Clone ivCloneFemale = null;
         Sex male = LabelCloneDefinitions.male;
@@ -178,13 +190,12 @@ public class NepenthesServiceManagementTest {
     public void getOrCreateSexedCloneICCloneTest() {
 
         Producer producer = LabelCloneDefinitions.producer;
-        Label species = new Species("hamata",0);
+        Label species = new Species("hamata", 0);
         ICClone icSpeciesClone = (ICClone) LabelCloneDefinitions.icSpeciesCloneNoSex;
         ICClone createdICClone = null;
         Clone cloneMale = null;
         Sex male = LabelCloneDefinitions.male;
         Sex female = LabelCloneDefinitions.female;
-
         this.producerRepository.save(producer);
         this.sexRepository.save(male);
         this.sexRepository.save(female);

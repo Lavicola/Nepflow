@@ -33,6 +33,13 @@ public class UserManagementServiceImpl implements UserManagementService {
      *
      */
     @Autowired
+    private UserRetrievalService userRetrievalService;
+
+
+    /**
+     *
+     */
+    @Autowired
     private CountryRepository countryRepository;
 
     /**
@@ -49,24 +56,6 @@ public class UserManagementServiceImpl implements UserManagementService {
         return this.userRepository.getAllUsers();
     }
 
-    /**
-     * @param username
-     * @return
-     */
-    @Override
-    public User getUserByUsername(final String username) {
-        return this.userRepository.findUserByUsername(username);
-    }
-
-    /**
-     * @param oauthId
-     * @return
-     */
-    @Override
-    public User getUserByOAuthId(final String oauthId) {
-        return this.userRepository.findUserByOAuthId(oauthId);
-
-    }
 
     /**
      * @param username
@@ -97,7 +86,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         if (country == null) {
             return null;
         }
-        if (this.getUserByOAuthId(userId) != null) {
+        if (this.userRetrievalService.getUserByOAuthId(userId) != null) {
             return null;
         }
 
@@ -105,7 +94,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         user.setCountry(country);
         user.setContactInformation(contactInformation);
         this.userRepository.save(user);
-        applicationEventPublisher.publishEvent(new UserCreatedEvent(this, user));
+        applicationEventPublisher.publishEvent(new UserCreatedEvent(this, user.getOAuthId(), user.getUsername()));
         return user;
     }
 

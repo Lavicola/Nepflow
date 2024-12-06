@@ -48,6 +48,7 @@ public class GrowlistManagementServiceTest {
     @MockBean
     BucketImageService bucketImageService;
 
+
     @Autowired
     Growlistservice growlistservice;
     @Autowired

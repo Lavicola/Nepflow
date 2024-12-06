@@ -19,6 +19,26 @@ spring:
     authentication:
       username: neo4j
       password: ENC(EbVOfPGZAJfCi+fhWvvAG0sJNLRwTgcn)
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: admin
+  jpa:
+    hibernate:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          boot:
+            allow_jdbc_metadata_access:
+              database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+
+      ddl-auto: create-drop
+    open-in-view: false
+
+
   mail:
     host: ENC(36WiSD0MOlhTgCT5/0l9mzDb9O+Cl+WYI2nd2R36HIk=)
     username: ENC(zGm0/nd2pF/EztqmKTY6WDtszQMAfdJRDmnVPFc1PlM=)
@@ -41,7 +61,11 @@ minio:
     name: minioadmin
     secret: minioadmin
 
-
+log4j:
+  logger:
+    org:
+      hibernate:
+        SQL: DEBUG
 
 logging:
   level:

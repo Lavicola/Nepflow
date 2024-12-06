@@ -36,7 +36,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class PollenExchangeServiceTest {
@@ -88,11 +87,14 @@ public class PollenExchangeServiceTest {
     @BeforeEach
     public void setUp() {
         if (!executedOnce) {
-            //   this.testDataInserter.insertData();
+               this.testDataInserter.insertData();
             executedOnce = true;
         }
-        this.testDataInserter.deleteData();
-        this.testDataInserter.insertData();
+        this.pollenOfferRepository.deleteAll();
+        this.tradeRepository.deleteAll();
+        this.pollenOfferStartDateRepository.deleteAll();
+//        this.testDataInserter.deleteData();
+  //      this.testDataInserter.insertData();
 
     }
 
@@ -144,6 +146,7 @@ public class PollenExchangeServiceTest {
     @Test
     @Transactional
     public void createOrReOpenPollenOfferNoOfferAtFirstTest() {
+        List<PollenOffer> a = this.pollenOfferRepository.findAll();
         Specimen specimen = updateEntityVersion(testDataInserter.user3Specimen2Male);
         PollenOffer pollenOffer = this.pollenExchangeService.createOrReOpenPollenOffer(specimen);
 

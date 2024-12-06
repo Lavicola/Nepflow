@@ -24,19 +24,7 @@ public interface UserManagementService {
      * @param username
      * @return
      */
-    User getUserByUsername(String username);
-
-    /**
-     * @param oauthId
-     * @return
-     */
-     User getUserByOAuthId(String oauthId);
-
-    /**
-     * @param username
-     * @return
-     */
-     boolean isUsernameFree(String username);
+    boolean isUsernameFree(String username);
 
     /**
      * @param userId
@@ -45,14 +33,14 @@ public interface UserManagementService {
      * @param countryName
      * @return
      */
-     User createMinimalUser(String userId, String username, String contactInformation, String countryName);
+    User createMinimalUser(String userId, String username, String contactInformation, String countryName);
 
     /**
      * @param userId
      * @param contactInformation
      * @return
      */
-     User updateUser(String userId, String contactInformation);
+    User updateUser(String userId, String contactInformation);
 
     /**
      * @param countryAsString
@@ -70,6 +58,6 @@ public interface UserManagementService {
     /**
      * @return
      */
-     List<User> getUsers();
+    List<User> getUsers();
 
 }

@@ -1,6 +1,6 @@
 package com.nepflow.UserManagement.Event;
 
-import com.nepflow.UserManagement.Model.User;
+import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 /**
@@ -14,23 +14,25 @@ public class UserCreatedEvent extends ApplicationEvent {
     /**
      *
      */
-    private final User user;
+    @Getter
+    private String id;
+
+    /**
+     *
+     */
+    @Getter
+    private String username;
 
 
     /**
      * @param source
-     * @param user
+     * @param id
+     * @param username
      */
-    public UserCreatedEvent(final Object source, final User user) {
+    public UserCreatedEvent(final Object source, final String id, final String username) {
         super(source);
-        this.user = user;
-    }
-
-    /**
-     * @return
-     */
-    public User getUser() {
-        return this.user;
+        this.id = id;
+        this.username = username;
     }
 
 }
