@@ -1,8 +1,8 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.4'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id "org.openapi.generator" version "7.6.0"
+    id 'java'
+    id 'org.springframework.boot' version '3.2.4'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id "org.openapi.generator" version "7.6.0"
 
 }
 
@@ -10,296 +10,301 @@ group = 'com.nepflow'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
 dependencies {
 
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation group: 'org.springframework.data', name: 'spring-data-neo4j', version: '7.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation group: 'org.springframework.data', name: 'spring-data-neo4j', version: '7.3.0'
 
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'com.okta.spring', name: 'okta-spring-boot-starter', version: '3.0.6'
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: '2.2.0'
-	implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.6'
-	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
-	implementation 'commons-io:commons-io:2.6'
-	implementation group: 'org.sejda.imageio', name: 'webp-imageio', version: '0.1.6'
-	implementation 'io.minio:minio:8.5.10'
-	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.0'
-	implementation 'com.mashape.unirest:unirest-java:1.4.9'
-	implementation 'io.jsonwebtoken:jjwt:0.12.6'
-	implementation 'org.springframework.boot:spring-boot-starter-mail:1.2.0.RELEASE'
-	implementation 'com.sun.mail:jakarta.mail:2.0.1'
-	implementation 'org.thymeleaf:thymeleaf-spring5:3.1.2.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation group: 'com.okta.spring', name: 'okta-spring-boot-starter', version: '3.0.6'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webflux-ui', version: '2.2.0'
+    implementation group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.2.6'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+    implementation 'commons-io:commons-io:2.6'
+    implementation group: 'org.sejda.imageio', name: 'webp-imageio', version: '0.1.6'
+    implementation 'io.minio:minio:8.5.10'
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.2.0'
+    implementation 'com.mashape.unirest:unirest-java:1.4.9'
+    implementation 'io.jsonwebtoken:jjwt:0.12.6'
+    implementation 'org.springframework.boot:spring-boot-starter-mail:1.2.0.RELEASE'
+    implementation 'com.sun.mail:jakarta.mail:2.0.1'
+    implementation 'org.thymeleaf:thymeleaf-spring5:3.1.2.RELEASE'
 
-	runtimeOnly group: 'com.h2database', name: 'h2', version: '2.2.220'
+    runtimeOnly group: 'com.h2database', name: 'h2', version: '2.2.220'
 
-	compileOnly 'org.projectlombok:lombok'
-	compileOnly group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
-	compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    compileOnly 'org.projectlombok:lombok'
+    compileOnly group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test") {
-		exclude group: "com.vaadin.external.google", module:"android-json"
-	}
-	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	testImplementation "org.testcontainers:minio:1.20.3"
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "com.vaadin.external.google", module: "android-json"
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation "org.testcontainers:minio:1.20.3"
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.postgresql:postgresql'
 // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
 
-	testImplementation(group: 'org.neo4j.test', name: 'neo4j-harness', version: '5.10.0'){
-		exclude group: "org.slf4j"
-		exclude group: "commons-logging"
-	}
+    testImplementation(group: 'org.neo4j.test', name: 'neo4j-harness', version: '5.10.0') {
+        exclude group: "org.slf4j"
+        exclude group: "commons-logging"
+    }
 
-	implementation group: 'com.google.guava', name: 'guava', version: '33.1.0-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '33.1.0-jre'
 
-	annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
 
 }
 task generateOpenAPINepenthesManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-	doNotTrackState("")
-	generatorName.set("spring")
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
-	def openapi_spec = openapiSpecFile.absolutePath
+    doNotTrackState("")
+    generatorName.set("spring")
+    def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
+    def openapi_spec = openapiSpecFile.absolutePath
 
 
-	configOptions.set([
-			delegatePattern           : "true",
-			useJakartaEe			  : "true",
-			globalProperty            : "apis",
-			generateApiDocumentation  : "true",
-			generateModelTests        : "false",
-			generateModelDocumentation: "false",
-			generateApiTests          : "false",
-			models                    : "false",
-			generateModels            : "false",
-			useTags					  : "true",
-			modelPackage              : "com.nepflow.NepenthesManagement.Dto",
+    configOptions.set([
+            delegatePattern           : "true",
+            useJakartaEe              : "true",
+            globalProperty            : "apis",
+            generateApiDocumentation  : "true",
+            generateModelTests        : "false",
+            generateModelDocumentation: "false",
+            generateApiTests          : "false",
+            models                    : "false",
+            generateModels            : "false",
+            useTags                   : "true",
+            modelPackage              : "com.nepflow.NepenthesManagement.Dto",
 
-	])
-	importMappings = ['Resource'  : 'org.springframework.web.multipart.MultipartFile',
-					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
-	]
-
-
-	inputSpec.set(openapi_spec)
-	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
-	apiPackage.set("com.nepflow.NepenthesManagement.Controller")
-	invokerPackage.set("")
+    ])
+    importMappings = ['Resource'       : 'org.springframework.web.multipart.MultipartFile',
+                      'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+    ]
 
 
-	doLast {
-		println "OpenAPI Generation Completed, Deleting not needed Controller Classes"
-		def directory = file("${projectDir}/src/main/java/com/nepflow/NepenthesManagement/Controller")
-		def pattern = '*Growlist*' // Adjust this pattern as needed to match your controller classes
-		def filesToDelete = fileTree(dir: directory, include: pattern)
-		filesToDelete.each { File file ->
-			delete file
-		}
+    inputSpec.set(openapi_spec)
+    outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+    apiPackage.set("com.nepflow.NepenthesManagement.Controller")
+    invokerPackage.set("")
 
-	}
+
+    doLast {
+        println "OpenAPI Generation Completed, Deleting not needed Controller Classes"
+        def directory = file("${projectDir}/src/main/java/com/nepflow/NepenthesManagement/Controller")
+        def pattern = '*Growlist*' // Adjust this pattern as needed to match your controller classes
+        def filesToDelete = fileTree(dir: directory, include: pattern)
+        filesToDelete.each { File file ->
+            delete file
+        }
+
+    }
 
 }
 
 task generateOpenAPIPollenExchange(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-	doNotTrackState("")
-	generatorName.set("spring")
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/PollenExchange/openAPI/PollenExchangeOpenAPI.yaml")
-	def openapi_spec = openapiSpecFile.absolutePath
-	configOptions.set([
-			delegatePattern           : "true",
-			useJakartaEe			  : "true",
-			globalProperty            : "apis",
-			generateApiDocumentation  : "true",
-			generateModelTests        : "false",
-			generateModelDocumentation: "false",
-			generateApiTests          : "false",
-			models                    : "false",
-			generateModels            : "false",
-			useTags					  : "true",
-			modelPackage              : "com.nepflow.PollenExchange.Dto",
-	])
-	typeMappings = ['string+date-time': 'LocalDateTime',
-					'ReviewType' : 'com.nepflow.PollenExchange.Model.TradeRating.RATING',
-					'org.springframework.core.io.Resource' : 'org.springframework.web.multipart.MultipartFile',
+    doNotTrackState("")
+    generatorName.set("spring")
+    def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/PollenExchange/openAPI/PollenExchangeOpenAPI.yaml")
+    def openapi_spec = openapiSpecFile.absolutePath
+    configOptions.set([
+            delegatePattern           : "true",
+            useJakartaEe              : "true",
+            globalProperty            : "apis",
+            generateApiDocumentation  : "true",
+            generateModelTests        : "false",
+            generateModelDocumentation: "false",
+            generateApiTests          : "false",
+            models                    : "false",
+            generateModels            : "false",
+            useTags                   : "true",
+            modelPackage              : "com.nepflow.PollenExchange.Dto",
+    ])
+    typeMappings = ['string+date-time'                    : 'LocalDateTime',
+                    'ReviewType'                          : 'com.nepflow.PollenExchange.Model.TradeRating.RATING',
+                    'org.springframework.core.io.Resource': 'org.springframework.web.multipart.MultipartFile',
 
 
-	]
-	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
-					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
-					  'Pageable': 'org.springframework.data.domain.Pageable',
-	]
-	inputSpec.set(openapi_spec)
-	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
-	apiPackage.set("com.nepflow.PollenExchange.Controller")
-	invokerPackage.set("")
+    ]
+    importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
+                      'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+                      'Pageable'       : 'org.springframework.data.domain.Pageable',
+    ]
+    inputSpec.set(openapi_spec)
+    outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+    apiPackage.set("com.nepflow.PollenExchange.Controller")
+    invokerPackage.set("")
 
 }
 
 
-
 task generateOpenAPIUserManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-	doNotTrackState("")
-	generatorName.set("spring")
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/UserManagement/openAPI/UserManagementOpenAPI.yaml")
-	def openapi_spec = openapiSpecFile.absolutePath
-	configOptions.set([
-			delegatePattern           : "true",
-			useJakartaEe			  : "true",
-			globalProperty            : "apis",
-			generateApiDocumentation  : "true",
-			generateModelTests        : "false",
-			generateModelDocumentation: "false",
-			generateApiTests          : "false",
-			models                    : "false",
-			generateModels            : "false",
-			useTags					  : "true",
-			modelPackage              : "com.nepflow.UserManagement.Dto",
-	])
-	typeMappings = ['string+date-time': 'LocalDateTime']
-	importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
-					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
-	]
-	inputSpec.set(openapi_spec)
-	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
-	apiPackage.set("com.nepflow.UserManagement.Controller")
-	invokerPackage.set("")
+    doNotTrackState("")
+    generatorName.set("spring")
+    def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/UserManagement/openAPI/UserManagementOpenAPI.yaml")
+    def openapi_spec = openapiSpecFile.absolutePath
+    configOptions.set([
+            delegatePattern           : "true",
+            useJakartaEe              : "true",
+            globalProperty            : "apis",
+            generateApiDocumentation  : "true",
+            generateModelTests        : "false",
+            generateModelDocumentation: "false",
+            generateApiTests          : "false",
+            models                    : "false",
+            generateModels            : "false",
+            useTags                   : "true",
+            modelPackage              : "com.nepflow.UserManagement.Dto",
+    ])
+    typeMappings = ['string+date-time': 'LocalDateTime']
+    importMappings = ['LocalDateTime'  : 'java.time.LocalDateTime',
+                      'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+    ]
+    inputSpec.set(openapi_spec)
+    outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+    apiPackage.set("com.nepflow.UserManagement.Controller")
+    invokerPackage.set("")
 
 }
 
 task generateOpenAPIGrowlistManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-	doNotTrackState("")
+    doNotTrackState("")
 
-	generatorName.set("spring")
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
-	def openapi_spec = openapiSpecFile.absolutePath
-	configOptions.set([
-			delegatePattern           : "true",
-			useJakartaEe			  : "true",
-			globalProperty            : "apis",
-			generateApiDocumentation  : "true",
-			generateModelTests        : "false",
-			generateModelDocumentation: "false",
-			generateApiTests          : "false",
-			models                    : "false",
-			generateModels            : "false",
-			useTags					  : "true",
-			modelPackage              : "com.nepflow.GrowlistManagement.Dto",
-	])
+    generatorName.set("spring")
+    def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/NepenthesManagement/openAPI/NepenthesManagementOpenAPI.yaml")
+    def openapi_spec = openapiSpecFile.absolutePath
+    configOptions.set([
+            delegatePattern           : "true",
+            useJakartaEe              : "true",
+            globalProperty            : "apis",
+            generateApiDocumentation  : "true",
+            generateModelTests        : "false",
+            generateModelDocumentation: "false",
+            generateApiTests          : "false",
+            models                    : "false",
+            generateModels            : "false",
+            useTags                   : "true",
+            modelPackage              : "com.nepflow.GrowlistManagement.Dto",
+    ])
 
-	inputSpec.set(openapi_spec)
-	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
-	apiPackage.set("com.nepflow.GrowlistManagement.Controller")
-	invokerPackage.set("")
+    inputSpec.set(openapi_spec)
+    outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+    apiPackage.set("com.nepflow.GrowlistManagement.Controller")
+    invokerPackage.set("")
 
-	//importMappings.set([
-	//		'LabelCloneDTO': 'com.nepflow.NepenthesManagement.Dto.LabelCloneDTO',
-	//		'CloneType': 'com.nepflow.NepenthesManagement.Dto.CloneType',
-	//		'NepenthesType': 'com.nepflow.NepenthesManagement.Dto.NepenthesType',
-	//])
+    //importMappings.set([
+    //		'LabelCloneDTO': 'com.nepflow.NepenthesManagement.Dto.LabelCloneDTO',
+    //		'CloneType': 'com.nepflow.NepenthesManagement.Dto.CloneType',
+    //		'NepenthesType': 'com.nepflow.NepenthesManagement.Dto.NepenthesType',
+    //])
 
 
-	doLast {
-		println "OpenAPI Generation Completed, Deleting not needed Controller Classes"
-		def directory = file("${projectDir}/src/main/java/com/nepflow/GrowlistManagement/Controller")
-		def pattern = '*Nepenthes*'
-		def filesToDelete = fileTree(dir: directory, include: pattern)
-		filesToDelete.each { File file ->
-			delete file
-		}
+    doLast {
+        println "OpenAPI Generation Completed, Deleting not needed Controller Classes"
+        def directory = file("${projectDir}/src/main/java/com/nepflow/GrowlistManagement/Controller")
+        def pattern = '*Nepenthes*'
+        def filesToDelete = fileTree(dir: directory, include: pattern)
+        filesToDelete.each { File file ->
+            delete file
+        }
 
-	}
+    }
 
 }
 
 
 task generateOpenAPIFileManagement(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-	doNotTrackState("")
-	generatorName.set("spring")
+    doNotTrackState("")
+    generatorName.set("spring")
 
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/BaseModules/ImageModule/openAPI/FileManagemenOpenAPI.yaml")
-	def openapi_spec = openapiSpecFile.absolutePath
-	configOptions.set([
-			delegatePattern           : "true",
-			useJakartaEe			  : "true",
-			globalProperty            : "apis",
-			generateApiDocumentation  : "true",
-			generateModelTests        : "false",
-			generateModelDocumentation: "false",
-			generateApiTests          : "false",
-			models                    : "false",
-			generateModels            : "false",
-			useTags					  : "true",
-			modelPackage              : "com.nepflow.BaseModules.ImageModule.Dto",
-	])
+    def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/BaseModules/ImageModule/openAPI/FileManagemenOpenAPI.yaml")
+    def openapi_spec = openapiSpecFile.absolutePath
+    configOptions.set([
+            delegatePattern           : "true",
+            useJakartaEe              : "true",
+            globalProperty            : "apis",
+            generateApiDocumentation  : "true",
+            generateModelTests        : "false",
+            generateModelDocumentation: "false",
+            generateApiTests          : "false",
+            models                    : "false",
+            generateModels            : "false",
+            useTags                   : "true",
+            modelPackage              : "com.nepflow.BaseModules.ImageModule.Dto",
+    ])
 
-	inputSpec.set(openapi_spec)
-	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
-	apiPackage.set("com.nepflow.BaseModules.ImageModule.Controller")
-	invokerPackage.set("")
+    inputSpec.set(openapi_spec)
+    outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+    apiPackage.set("com.nepflow.BaseModules.ImageModule.Controller")
+    invokerPackage.set("")
 
 
 }
 
 task generateOpenAPIChat(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
-	doNotTrackState("")
-	generatorName.set("spring")
-	def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/ChatModule/openAPI/ChatOpenAPI.yaml")
-	def openapi_spec = openapiSpecFile.absolutePath
-	configOptions.set([
-			delegatePattern           : "true",
-			useJakartaEe			  : "true",
-			globalProperty            : "apis",
-			generateApiDocumentation  : "true",
-			generateModelTests        : "false",
-			generateModelDocumentation: "false",
-			generateApiTests          : "false",
-			models                    : "false",
-			generateModels            : "false",
-			useTags					  : "true",
-			modelPackage              : "com.nepflow.ChatModule.Dto",
-	])
-	typeMappings = ['string+date-time': 'Instant',
+    doNotTrackState("")
+    generatorName.set("spring")
+    def openapiSpecFile = new File(project.rootProject.projectDir, "src/main/java/com/nepflow/ChatModule/openAPI/ChatOpenAPI.yaml")
+    def openapi_spec = openapiSpecFile.absolutePath
+    configOptions.set([
+            delegatePattern           : "true",
+            useJakartaEe              : "true",
+            globalProperty            : "apis",
+            generateApiDocumentation  : "true",
+            generateModelTests        : "false",
+            generateModelDocumentation: "false",
+            generateApiTests          : "false",
+            models                    : "false",
+            generateModels            : "false",
+            useTags                   : "true",
+            modelPackage              : "com.nepflow.ChatModule.Dto",
+    ])
+    typeMappings = ['string+date-time': 'Instant',
 
 
-	]
-	importMappings = ['Instant'  : 'java.time.Instant',
-					  'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
-					  'Pageable': 'org.springframework.data.domain.Pageable',
-	]
-	inputSpec.set(openapi_spec)
-	outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
-	apiPackage.set("com.nepflow.ChatModule.Controller")
-	invokerPackage.set("")
+    ]
+    importMappings = ['Instant'        : 'java.time.Instant',
+                      'ParameterObject': 'org.springdoc.core.annotations.ParameterObject',
+                      'Pageable'       : 'org.springframework.data.domain.Pageable',
+    ]
+    inputSpec.set(openapi_spec)
+    outputDir.set(project.rootProject.getProjectDir().getAbsolutePath())
+    apiPackage.set("com.nepflow.ChatModule.Controller")
+    invokerPackage.set("")
 
 }
 
 
-
 tasks.named('test') {
-	useJUnitPlatform()
 
-	reports {
-		junitXml.required.set(false)
-		html.required.set(true)
-	}
+
+    doFirst {
+        if (!System.getenv('jasypt.encryptor.password')) {
+            throw new GradleException("Environment variable 'jasypt.encryptor.password' is not set. Task cannot proceed.")
+        }
+    }
+    useJUnitPlatform()
+
+    reports {
+        junitXml.required.set(false)
+        html.required.set(true)
+    }
 
 }
