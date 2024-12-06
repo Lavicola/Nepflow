@@ -12,6 +12,7 @@ import com.nepflow.NepenthesManagement.Model.Clones.Clone;
 import com.nepflow.NepenthesManagement.Service.NepenthesManagementService;
 import com.nepflow.NepenthesManagement.Service.NepenthesRetrievalService;
 import com.nepflow.UserManagement.Model.User;
+import com.nepflow.UserManagement.Service.UserRetrievalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -44,6 +45,9 @@ public class GrowlistServiceImpl implements Growlistservice {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
 
+
+    @Autowired
+    private UserRetrievalService userRetrievalService;
 
     /**
      *
@@ -89,11 +93,14 @@ public class GrowlistServiceImpl implements Growlistservice {
 
 
     /**
-     * @param user
+     *
      */
     @Override
-    public void createGrowlist(final User user) {
-        this.growListRepository.save(new Growlist(user));
+    public void createGrowlist(final String id) {
+        User user = this.userRetrievalService.getUserByOAuthId(id);
+        if (user != null) {
+            this.growListRepository.save(new Growlist(user));
+        }
     }
 
     /**

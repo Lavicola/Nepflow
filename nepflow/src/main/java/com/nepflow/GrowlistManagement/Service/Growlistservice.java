@@ -19,9 +19,9 @@ import java.util.List;
 public interface Growlistservice {
 
     /**
-     * @param user User for which a new Growlist shall be created
+     * @param id
      */
-    void createGrowlist(User user);
+    void createGrowlist(String id);
 
     /**
      * @param username username of the User to
