@@ -18,6 +18,12 @@ jobs:
           - 7687:7687
 
     steps:
+      - name: "check if JASYPT_ENCRYPTOR_PASSWORD exists"
+        env: 
+            JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+        if: ${{ env.JASYPT_ENCRYPTOR_PASSWORD == '' }}
+        run: 'echo "echo the secret \"JASYPT_ENCRYPTOR_PASSWORD\" has not been made; echo please go to \"settings \> secrets \> actions\" to create it"
+
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: install java
@@ -25,13 +31,7 @@ jobs:
         with:
               java-version: '21'
               distribution: 'zulu'
-              
-              
-      - name: Check if JASYPT_ENCRYPTOR_PASSWORD is set
-        env:
-            JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-
-        run: echo "$JASYPT_ENCRYPTOR_PASSWORD" 
+                   
       - name: execute Tests
         env:
             JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
