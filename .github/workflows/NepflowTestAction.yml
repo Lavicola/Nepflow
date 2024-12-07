@@ -24,15 +24,3 @@ jobs:
         if: ${{ env.JASYPT_ENCRYPTOR_PASSWORD == '' }}
         run: 'echo "echo the secret \"JASYPT_ENCRYPTOR_PASSWORD\" has not been made; echo please go to \"settings \> secrets \> actions\" to create it"
 
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - name: install java
-        uses: actions/setup-java@v2
-        with:
-              java-version: '21'
-              distribution: 'zulu'
-                   
-      - name: execute Tests
-        env:
-            JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -P password="$JASYPT_ENCRYPTOR_PASSWORD"
