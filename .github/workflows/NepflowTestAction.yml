@@ -31,13 +31,7 @@ jobs:
         env:
             JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
 
-        run: |
-          if [ -z "$JASYPT_ENCRYPTOR_PASSWORD" ]; then
-            echo "Error: Environment variable 'JASYPT_ENCRYPTOR_PASSWORD' is not set. Please set the environment variable or pass it as a secret."
-            exit 1
-          else
-            echo "Environment variable 'JASYPT_ENCRYPTOR_PASSWORD' is set."
-          fi
+        run: echo "$JASYPT_ENCRYPTOR_PASSWORD" 
       - name: execute Tests
         env:
             JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
