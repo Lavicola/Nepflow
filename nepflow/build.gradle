@@ -304,6 +304,7 @@ tasks.named('test') {
             }
         }
     }
+
     useJUnitPlatform()
 
     reports {
