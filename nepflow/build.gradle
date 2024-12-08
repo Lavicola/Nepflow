@@ -294,24 +294,21 @@ task generateOpenAPIChat(type: org.openapitools.generator.gradle.plugin.tasks.Ge
 
 tasks.named('test') {
 
-    doFirst {
-        if (!System.getenv('jasypt.encryptor.password')) {
-            password = findProperty("password")
-            if (password) {
-                environment "jasypt.encryptor.password", password
-            } else {
-                throw new GradleException("Environment variable 'jasypt.encryptor.password' is not set. Task cannot proceed." +
-                        "Either set the Environment variable or use -P password=INSERTPASSWORD")
-            }
+    if (!System.getenv('jasypt.encryptor.password')) {
+        password = findProperty("password")
+        if (password) {
+            environment "jasypt.encryptor.password", password
+        } else {
+            throw new GradleException("Environment variable 'jasypt.encryptor.password' is not set. Task cannot proceed." +
+                    "Either set the Environment variable or use -P password=INSERTPASSWORD")
         }
     }
 
+useJUnitPlatform()
 
-    useJUnitPlatform()
-
-    reports {
-        junitXml.required.set(false)
-        html.required.set(true)
-    }
+reports {
+    junitXml.required.set(false)
+    html.required.set(true)
+}
 
 }
