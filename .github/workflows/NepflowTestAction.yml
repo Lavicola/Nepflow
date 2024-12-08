@@ -25,3 +25,8 @@ jobs:
         run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -P password=${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }} 
         env:
             jasypt.encryptor.password: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: nepflow/build/reports/tests/test
