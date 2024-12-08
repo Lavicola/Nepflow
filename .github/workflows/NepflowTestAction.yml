@@ -22,9 +22,9 @@ jobs:
               java-version: '21'
               distribution: 'zulu'
       - name: execute Tests
-        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -P password=${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }} 
+        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -P password="$PASSWORD" 
         env:
-            jasypt.encryptor.password: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+            PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
       - name: Upload Test Reports
         uses: actions/upload-artifact@v3
         with:
