@@ -1,13 +1,27 @@
 name: Nepflow Gradle Test Action
 on: push
+  
 jobs:
-  my-jobname:
+  container-job:
     runs-on: ubuntu-latest
-    env:
-       JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-    steps:
-      - name: test JASYPT_ENCRYPTOR_PASSWORD exists
-        run: echo "$JASYPT_ENCRYPTOR_PASSWORD"
+    services:
+      neo4j:
+        image: neo4j
+        # prevent change password dialog
         env:
-           JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
- 
+          NEO4J_AUTH: neo4j/password
+        ports:
+          - 7687:7687
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: install java
+        uses: actions/setup-java@v2
+        with:
+              java-version: '21'
+              distribution: 'zulu'
+      - name: execute Tests
+        run:  cd nepflow && chmod +x gradlew && ./gradlew test --tests "com.nepflow.*" -P password="$JASYPT_ENCRYPTOR_PASSWORD" 
+        env:
+            jasypt.encryptor.password: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
