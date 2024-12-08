@@ -7,7 +7,7 @@ jobs:
        JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
     steps:
       - name: test JASYPT_ENCRYPTOR_PASSWORD exists
-      run: |
-      example-command "$JASYPT_ENCRYPTOR_PASSWORD"
+      run: 
+      echo "$JASYPT_ENCRYPTOR_PASSWORD"
         env:
            JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
