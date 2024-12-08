@@ -6,8 +6,13 @@ jobs:
     env:
        JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
     steps:
-      - name: Submit sonar qube report
+      - name: test JASYPT_ENCRYPTOR_PASSWORD
         if: ${{ env.JASYPT_ENCRYPTOR_PASSWORD == 'true' }}
+        run: echo "I have the token!"
+        env:
+           JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
+      - name: test JASYPT_ENCRYPTOR_PASSWORD false
+        if: ${{ env.JASYPT_ENCRYPTOR_PASSWORD == 'false' }}
         run: echo "I have the token!"
         env:
            JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
