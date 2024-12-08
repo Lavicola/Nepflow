@@ -7,7 +7,7 @@ jobs:
        JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
     steps:
       - name: test JASYPT_ENCRYPTOR_PASSWORD exists
-        if: ${{ env.JASYPT_ENCRYPTOR_PASSWORD == 'true' }}
-        run: echo "I have the token!"
+      run: |
+      example-command "$JASYPT_ENCRYPTOR_PASSWORD"
         env:
            JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
