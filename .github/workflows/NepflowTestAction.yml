@@ -1,26 +1,13 @@
 name: Nepflow Gradle Test Action
-on:
-  push:
-    paths:
-    - "nepflow/**"
-  
-
+on: push
 jobs:
-  container-job:
+  my-jobname:
     runs-on: ubuntu-latest
-    services:
-      neo4j:
-        image: neo4j
-        # prevent change password dialog
-        env:
-          NEO4J_AUTH: neo4j/password
-        ports:
-          - 7687:7687
-
+    env:
+       JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
     steps:
-      - name: "check if JASYPT_ENCRYPTOR_PASSWORD exists"
-        env: 
-            JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
-        if: ${{ env.JASYPT_ENCRYPTOR_PASSWORD == '' }}
-        run: echo "echo the secret \"JASYPT_ENCRYPTOR_PASSWORD\" has not been made; echo please go to \"settings \> secrets \> actions\" to create it"
-
+      - name: Submit sonar qube report
+        if: ${{ env.JASYPT_ENCRYPTOR_PASSWORD == 'true' }}
+        run: echo "I have the token!"
+        env:
+           JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_ENCRYPTOR_PASSWORD }}
